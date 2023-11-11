@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
 
-    @PostMapping("/join")
-    public void insetUser(@RequestBody  UserDTO userDTO){
-        userService.
+    @Autowired
+    UserService userService;
+
+    @PostMapping()
+    public void joinUser(@RequestBody  UserDTO userDTO){
+        userService.join(userDTO);
     }
 }
