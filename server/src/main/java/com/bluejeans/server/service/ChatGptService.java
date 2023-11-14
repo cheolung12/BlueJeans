@@ -44,11 +44,14 @@ public class ChatGptService {
 
     // 응답을 받아오는 일련의 과정 수행
     public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
+
+        String combinedQuestion = requestDto.getQuestion() + " " + requestDto.getAdditionalSentence();
+
         return this.getResponse(
                 this.buildHttpEntity(
                         new ChatGptRequestDto(
                                 chatGptConfig.getMODEL(),
-                                requestDto.getQuestion(),
+                                combinedQuestion,
                                 chatGptConfig.getMAX_TOKEN(),
                                 chatGptConfig.getTEMPERATURE(),
                                 chatGptConfig.getTOP_P()
