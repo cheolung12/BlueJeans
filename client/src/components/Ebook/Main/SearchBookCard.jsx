@@ -9,9 +9,12 @@ export default function SearchBookCard() {
   const { searchInput } = useParams();
   const navigate = useNavigate();
 
+  //책 클릭시 상세페이지로 이동
   const bookClick = (bookId) => {
     navigate(`/ebook/detail/${bookId}`);
   };
+
+  //제목, 저자명 검색 필터
   const filterBooks = books.filter(
     (book) =>
       book.title.includes(searchInput) || book.author.includes(searchInput)

@@ -11,7 +11,6 @@ export default function EBookDetail() {
 
   return (
     <div>
-      <div>책 아이디 : {bookId}</div>
       {books.map((book) => (
         <div key={book.id}>
           {book.id === bookId ? (

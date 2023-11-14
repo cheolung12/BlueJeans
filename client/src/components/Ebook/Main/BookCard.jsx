@@ -7,9 +7,11 @@ const books = bookList.books;
 export default function BookCard() {
   const navigate = useNavigate();
 
+  //책 클릭시 상세페이지로 이동
   const bookClick = (bookId) => {
     navigate(`/ebook/detail/${bookId}`);
   };
+
   return (
     <div className='flex flex-wrap'>
       {books.map((book) => (
