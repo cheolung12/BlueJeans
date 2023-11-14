@@ -1,12 +1,17 @@
 import React from 'react';
 import bookList from '../../../data/bookList.json';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const books = bookList.books;
 
 export default function SearchBookCard() {
   const { searchInput } = useParams();
+  const navigate = useNavigate();
 
+  const bookClick = (bookId) => {
+    navigate(`/ebook/detail/${bookId}`);
+  };
   const filterBooks = books.filter(
     (book) =>
       book.title.includes(searchInput) || book.author.includes(searchInput)
@@ -19,7 +24,11 @@ export default function SearchBookCard() {
       <div className='flex'>
         {filterBooks.length > 0 ? (
           filterBooks.map((book) => (
-            <div key={book.id} className='w-1/5 p-2'>
+            <div
+              key={book.id}
+              className='w-1/5 p-2'
+              onClick={() => bookClick(book.id)}
+            >
               <img src={book.thumbnail} alt='book' />
             </div>
           ))
