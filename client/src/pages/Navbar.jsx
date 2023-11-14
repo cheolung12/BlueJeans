@@ -21,8 +21,10 @@ export default function Navbar() {
 
       <div className='flex justify-center'>
         <ul className='flex'>
-          {menuList.map(menu => (
-            <li className='p-10'>{menu}</li>
+          {menuList.map((menu, idx) => (
+            <li className='p-10' key={idx}>
+              {menu}
+            </li>
           ))}
         </ul>
         <div className='absolute right-4 flex pt-10 border-b border-zinc-900'>
