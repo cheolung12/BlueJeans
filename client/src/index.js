@@ -10,6 +10,7 @@ import Chat from './pages/Chat';
 import Essay from './pages/Essay';
 import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
+import EbookDetail from './pages/EBook/EbookDetail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: 'recuritment', element: <Recruitment /> },
       { path: 'ebook', element: <EBook /> },
       { path: 'ebook/keyword/:searchInput', element: <EBook /> },
+      { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
       { path: 'chat', element: <Chat /> },
       { path: 'essay', element: <Essay /> },
       { path: 'findhome', element: <FindHome /> },

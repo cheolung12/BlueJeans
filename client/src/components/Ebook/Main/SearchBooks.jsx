@@ -4,24 +4,28 @@ import { useNavigate } from 'react-router-dom';
 
 const books = bookList.books;
 
-function SearchBooks() {
+export default function SearchBooks() {
   const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState('');
   const [bookLists, setBookLists] = useState([]);
 
+  // 폼 제출
   const searchSubmit = (e) => {
     e.preventDefault();
-    // navigate(`/ebook/keword/${searchInput}`);
 
-    const filteredBooks = books.filter(
+    // 제목, 저자명 검색 필터
+    const filterBooks = books.filter(
       (book) =>
         book.title.includes(searchInput) || book.author.includes(searchInput)
     );
 
-    setBookLists(filteredBooks);
+    setBookLists(filterBooks);
     setSearchInput('');
-    console.log(filteredBooks);
+    console.log(filterBooks);
+
+    //검색어 페이지로 이동
+    navigate(`/ebook/keyword/${searchInput}`);
   };
 
   return (
@@ -35,14 +39,6 @@ function SearchBooks() {
         />
         <button disabled={searchInput.length === 0}>검색</button>
       </form>
-
-      {bookLists.map((book) => {
-        <ul>
-          <li>{book.thumbnail}</li>
-        </ul>;
-      })}
     </>
   );
 }
-
-export default SearchBooks;
