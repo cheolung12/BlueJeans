@@ -1,13 +1,29 @@
 package com.bluejeans.server.config;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@Getter
 public class ChatGptConfig {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer ";
-    public static final String API_KEY = "";
-    public static final String MODEL = "text-davinci-003";
-    public static final Integer MAX_TOKEN = 300;
-    public static final Double TEMPERATURE = 0.0;
-    public static final Double TOP_P = 1.0;
-    public static final String MEDIA_TYPE = "application/json; charset=UTF-8";
-    public static final String URL = "https://api.openai.com/v1/completions";
+
+    @Value("${OPEN_AI_API_KEY}")
+    private String API_KEY;
+
+    @Value("${OPEN_AI_API_MODEL}")
+    private String MODEL;
+    @Value("${OPEN_AI_API_MAX_TOKEN}")
+    private Integer MAX_TOKEN;
+    @Value("${OPEN_AI_API_TEMPERATURE}")
+    private Double TEMPERATURE;
+    @Value("${OPEN_AI_API_TOP_P}")
+    private Double TOP_P;
+    @Value("${OPEN_AI_API_MEDIA_TYPE}")
+    private String MEDIA_TYPE;
+    @Value("${OPEN_AI_API_URL}")
+    private String URL;
 }
