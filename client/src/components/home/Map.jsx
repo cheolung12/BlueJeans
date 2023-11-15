@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import '../home/AddressButton';
 
 //onClick 하기전
 //현위치를 기반으로 지도 보여주기
@@ -11,44 +12,53 @@ import React, { useEffect, useRef } from 'react';
 ///<2~~3연결하는 하고>///
 //티맵 네비경로 가져오기
 
-const Map = () => {
+const Map = ({ userAddress }) => {
   const mapContainerRef = useRef();
+  const mapInitialized = useRef(false);
+
+  console.log('버튼에서 가져옴', userAddress);
+
+  //귀여운전자사전 >_________________<
 
   useEffect(() => {
     const handleGeoLocation = position => {
-      const script = document.createElement('script');
-
-      script.id = 'tmapScript';
-
-      console.log(position);
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
+      const nowPosition = { latitude, longitude };
 
-      console.log(latitude, longitude);
-      const scriptContent =
-        'const map = new Tmapv2.Map("' +
-        mapContainerRef.current.id +
-        '", {' +
-        'center: new Tmapv2.LatLng(' +
-        latitude +
-        ', ' +
-        longitude +
-        '),' +
-        'zoom: 17,' +
-        '});';
+      console.log('now', nowPosition);
 
-      script.innerHTML = scriptContent;
-      script.type = 'text/javascript';
-      script.async = true;
-      document.head.appendChild(script);
-
-      console.log(mapContainerRef.current.id);
+      if (!mapInitialized.current) {
+        initTmap(nowPosition);
+        mapInitialized.current = true;
+      }
     };
 
     if (!document.getElementById('tmapScript')) {
       navigator.geolocation.getCurrentPosition(handleGeoLocation);
     }
-  }, [mapContainerRef]);
+  }, []);
+  //공식문서에서 window. 붙이면 오류안
+  const initTmap = nowPosition => {
+    const map = new window.Tmapv2.Map(mapContainerRef.current.id, {
+      center: new window.Tmapv2.LatLng(
+        nowPosition.latitude,
+        nowPosition.longitude
+      ),
+      zoom: 17,
+    });
+
+    // 마커
+    const marker = new window.Tmapv2.Marker({
+      position: new window.Tmapv2.LatLng(
+        nowPosition.latitude,
+        nowPosition.longitude
+      ),
+      // icon: 'https://imagescdn.gettyimagesbank.com/500/18/612/899/0/953455822.jpg',
+      // size: new window.Size(24, 38),
+      map: map,
+    });
+  };
 
   return (
     <div

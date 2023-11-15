@@ -1,29 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FcHome } from 'react-icons/fc';
 
-const yk = {
-  position: '서울특별시 송파구 법원로 55',
-};
-
-export default function AddressButton() {
-  const [userAddress, setUserAddress] = useState(null);
-  const [endPosition, setEndPosition] = useState(null);
-
-  const address = () => {
-    setUserAddress(yk);
-    setEndPosition(yk.position);
+export default function AddressButton({ setUserAddress }) {
+  const handleClick = () => {
+    setUserAddress('서울특별시 송파구 법원로 55');
   };
-  console.log('address', userAddress);
-
-  console.log('end', endPosition);
 
   return (
     <>
-      <button
-        onClick={() => {
-          address();
-        }}
-      >
+      <button onClick={handleClick}>
         <FcHome />
       </button>
     </>
