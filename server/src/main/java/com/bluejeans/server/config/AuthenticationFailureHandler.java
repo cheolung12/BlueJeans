@@ -3,7 +3,9 @@ package com.bluejeans.server.config;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +21,18 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
             HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
 
-        // 여기에서 실패 원인을 확인하고 적절한 동작을 수행
-        if (exception.getMessage().equals("Bad credentials")) {
-            // 비밀번호가 틀렸을 때의 처리
-            // 로그인 페이지로 리다이렉트하면서 실패 원인을 전달할 수 있습니다.
-            getRedirectStrategy().sendRedirect(request, response, "/login?error=password");
-        } else if (exception.getMessage().equals("User not found with username: ...")) {
-            // 해당 사용자가 없을 때의 처리
-            getRedirectStrategy().sendRedirect(request, response, "/login?error=userNotFound");
-        } else {
-            // 그 외의 실패 원인에 대한 처리
-            getRedirectStrategy().sendRedirect(request, response, "/login?error=other");
+        String errorMessage;
+
+        if (exception instanceof UsernameNotFoundException) {
+            errorMessage = "User not found."; //왜 안되지...
+        }else if (exception instanceof BadCredentialsException) {
+            errorMessage = "Invalid username or password."; //따로 설정불가...
+        }else {
+            errorMessage = "Authentication failed.";
         }
+
+        // errorMessage를 활용하여 원하는 처리를 수행
+
+        getRedirectStrategy().sendRedirect(request, response, "/login?error=" + errorMessage);
     }
 }
