@@ -51,14 +51,20 @@ public class UserController {
     @GetMapping("/home")
     @ResponseBody
     public UserEntity home(@AuthenticationPrincipal UserEntity user ){ //여기서 세션을..
-        System.out.println(user.getAddress() + "테스트");
+//        System.out.println(user.getAddress() + "테스트");
         return user;
     }
 
 
-    //겟방식 로그인??
+    //겟방식 로그인?? //예외처리
     @GetMapping("/login")
-    public String login(){
+    public String loginPage(@RequestParam(required = false) String error) {
+        if (error != null) {
+            // 실패 시에만 에러 메시지를 전달하도록 처리
+            System.out.println(error);
+            return "redirect:/login?error=" + error;
+        }
+        // 그 외의 경우에는 단순히 로그인 페이지를 반환
         return "login";
     }
 

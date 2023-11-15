@@ -33,7 +33,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeRequests()
-                .requestMatchers("/login", "/signup","/user", "/chat-gpt/question").permitAll()
+
+                .requestMatchers("/login", "/signup","/user","/essays","essays/detail/{essay_id}").permitAll() //허가없이 접근가능한 경로
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(customizer-> customizer.loginPage("/login")
