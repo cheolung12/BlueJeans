@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 public class ChatGptService {
 
@@ -45,13 +47,24 @@ public class ChatGptService {
     // 응답을 받아오는 일련의 과정 수행
     public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
 
-        String combinedQuestion = requestDto.getQuestion() + " " + requestDto.getAdditionalSentence();
+        StringBuilder combinedQuestion = new StringBuilder();
+        List<String> previousConversation = requestDto.getPreviousConversation();
+        for (int i = 0; i < previousConversation.size(); i++) {
+            if (i % 2 == 0) {
+                combinedQuestion.append("Q: ").append(previousConversation.get(i)).append("\n");
+            } else {
+                combinedQuestion.append("A: ").append(previousConversation.get(i)).append("\n");
+            }
+        }
+        combinedQuestion.append("Q: ").append(requestDto.getQuestion()).append("\n").append(requestDto.getAdditionalSentence());
+
+        String finalCombinedQuestion = combinedQuestion.toString();
 
         return this.getResponse(
                 this.buildHttpEntity(
                         new ChatGptRequestDto(
                                 chatGptConfig.getMODEL(),
-                                combinedQuestion,
+                                finalCombinedQuestion,
                                 chatGptConfig.getMAX_TOKEN(),
                                 chatGptConfig.getTEMPERATURE(),
                                 chatGptConfig.getTOP_P()
