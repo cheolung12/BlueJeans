@@ -28,6 +28,7 @@ yarn-error.log*
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+.pnp.cjs
 yarn.lock
 
 # vscode
@@ -35,3 +36,4 @@ yarn.lock
 
 # DS_Store
 .DS_Store
+
