@@ -33,7 +33,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeRequests()
-                .requestMatchers("/login", "/signup","/user").permitAll()
+                .requestMatchers("/login", "/signup","/user", "/chat-gpt/question").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(customizer-> customizer.loginPage("/login")
