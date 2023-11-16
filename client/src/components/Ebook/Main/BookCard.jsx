@@ -5,12 +5,17 @@ import { useNavigate } from 'react-router-dom';
 const books = bookList.books;
 
 export default function BookCard() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   //책 클릭시 상세페이지로 이동
   const bookClick = (bookId) => {
     navigate(`/ebook/detail/${bookId}`);
+     scrollToTop();
   };
+  
+   const scrollToTop = () => {
+        window.scrollTo({ top: 0 });
+    };
 
   return (
     <div className='flex flex-wrap'>
@@ -21,8 +26,7 @@ export default function BookCard() {
           onClick={() => bookClick(book.id)}
         >
           <img src={book.thumbnail} alt='book' />
+
         </div>
-      ))}
-    </div>
-  );
+    );
 }
