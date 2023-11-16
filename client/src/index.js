@@ -11,6 +11,7 @@ import Essay from './pages/Essay';
 import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
+import EbookViewer from './pages/EBook/EbookViewer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: 'ebook', element: <EBook /> },
       { path: 'ebook/keyword/:searchInput', element: <EBook /> },
       { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
+      { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
       { path: 'chat', element: <Chat /> },
       { path: 'essay', element: <Essay /> },
       { path: 'findhome', element: <FindHome /> },
