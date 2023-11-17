@@ -1,6 +1,22 @@
 import React from 'react';
 
 export default function ChatContent({ chatMessages, name }) {
+  // 줄바꿈 함수 추가
+  const LineChange = (text) => {
+    if (text.length > 25) {
+      const firstPart = text.slice(0, 25);
+      const secondPart = text.slice(25);
+      return (
+        <>
+          {firstPart}
+          <br />
+          {secondPart}
+        </>
+      );
+    } else {
+      return text;
+    }
+  }
 
   return (
     <>
@@ -21,7 +37,7 @@ export default function ChatContent({ chatMessages, name }) {
                    : 'bg-green-800 rounded-tl-none mr-auto ml-10'
                }`}
           >
-            {message.text}
+            {LineChange(message.text)}
           </div>
         </div>
       ))}
