@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
-public class Choice implements Serializable {
+public class ChatGptChoiceDTO implements Serializable {
     // 선택지의 텍스트 내용
     private String text;
     // 선택지의 인덱스 번호
@@ -19,7 +19,7 @@ public class Choice implements Serializable {
     private String finishReason;
 
     @Builder
-    public Choice(String text, Integer index, String finishReason) {
+    public ChatGptChoiceDTO(String text, Integer index, String finishReason) {
         this.text = text;
         this.index = index;
         this.finishReason = finishReason;
