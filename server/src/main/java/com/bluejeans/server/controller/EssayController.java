@@ -22,7 +22,6 @@ public class EssayController {
 
     //에세이 전체 조회
     @GetMapping("/essays")
-    @ResponseBody
     public List<EssayDTO> findAll(){
         List<EssayDTO> result = essayService.findAll();
         System.out.println(result.get(0).getTitle());
