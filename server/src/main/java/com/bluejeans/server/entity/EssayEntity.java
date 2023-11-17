@@ -1,5 +1,6 @@
 package com.bluejeans.server.entity;
 
+import com.bluejeans.server.dto.EssayDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +37,7 @@ public class EssayEntity {
     @ManyToOne
     @JoinColumn(name = "user_id") // 조인 컬럼 및 필수 설정
     private UserEntity user;
+
 
 
 }

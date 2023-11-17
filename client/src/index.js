@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
 import Main from './pages/Main';
-import Recruitment from './pages/Recruitment';
+import Recruitment from './pages/Recruitment/Recruitment';
 import Chat from './pages/Chat';
 import Essay from './pages/Essay';
 import FindHome from './pages/FindHome';
