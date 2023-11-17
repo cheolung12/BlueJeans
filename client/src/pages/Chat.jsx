@@ -15,6 +15,10 @@ const ChatApp = () => {
     // 빈 값 예외처리
     if (inputText.trim() === '') {
       inputRef.current.focus();
+      inputRef.current.style.outline = '2px solid red'
+      setTimeout(() => {
+        inputRef.current.style.outline = '';
+      }, 2000);
       return;
     }
 
@@ -26,14 +30,26 @@ const ChatApp = () => {
     setChatMessages(newChatMessages);
     setInputText('');
 
+    // 이전 대화 저장
+    const previousConversation =
+      chatMessages.length >= 4
+        ? chatMessages.slice(-4).map((message) => message.text)
+        : chatMessages.map((message) => message.text);
+
     // 챗봇에게 응답 받아와서 추가
     try {
       const response = await axios({
         method: 'POST',
         url: 'http://localhost:8080/chat-gpt/question',
-        data: { question: inputText },
+        data: {
+          question: inputText,
+          previousConversation,
+        },
       });
-      const responseText = response.data.choices[0].text;
+
+      const responseText = response.data.choices[0].text
+        .replace(/\n/g, '')
+        .replace('A: ', ''); // 형식 맞추기
       const updatedChatMessages = [
         ...newChatMessages,
         { text: responseText, isMine: false },
@@ -43,11 +59,12 @@ const ChatApp = () => {
       console.log('전송 오류: ', error);
     } finally {
       setIsLoading(false);
+      console.log(previousConversation);
     }
   };
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center fade-in mb-28'>
       {/* content wrapper */}
       <div className='w-3/5'>
         <ChatBox

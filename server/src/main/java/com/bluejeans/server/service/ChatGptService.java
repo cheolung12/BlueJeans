@@ -4,6 +4,7 @@ import com.bluejeans.server.config.ChatGptConfig;
 import com.bluejeans.server.dto.ChatGptRequestDto;
 import com.bluejeans.server.dto.ChatGptResponseDto;
 import com.bluejeans.server.dto.QuestionRequestDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ChatGptService {
 
     @Autowired
@@ -49,16 +51,21 @@ public class ChatGptService {
 
         StringBuilder combinedQuestion = new StringBuilder();
         List<String> previousConversation = requestDto.getPreviousConversation();
+        combinedQuestion.append(requestDto.getAdditionalSentence()).append("\n");
+        // 질문과 답변 분리
         for (int i = 0; i < previousConversation.size(); i++) {
+            System.out.println(previousConversation.get(i));
             if (i % 2 == 0) {
                 combinedQuestion.append("Q: ").append(previousConversation.get(i)).append("\n");
             } else {
                 combinedQuestion.append("A: ").append(previousConversation.get(i)).append("\n");
             }
         }
-        combinedQuestion.append("Q: ").append(requestDto.getQuestion()).append("\n").append(requestDto.getAdditionalSentence());
+        combinedQuestion.append("Q: ").append(requestDto.getQuestion());
 
         String finalCombinedQuestion = combinedQuestion.toString();
+        // 완성된 입력 값 출력
+        log.info("입력 값: {}", finalCombinedQuestion);
 
         return this.getResponse(
                 this.buildHttpEntity(
