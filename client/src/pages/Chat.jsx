@@ -64,7 +64,7 @@ const ChatApp = () => {
   };
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center fade-in mb-28'>
       {/* content wrapper */}
       <div className='w-3/5'>
         <ChatBox

@@ -8,7 +8,7 @@ export default function ChatBox({ inputText, chatMessages, isLoading }) {
 
   return (
     // 높이 조정 필요!
-    <div className='flex flex-col-reverse w-full h-screen border overflow-auto'>
+    <div className='flex flex-col-reverse w-full h-96 border overflow-auto'>
       <div className='flex flex-col'>
         <InitialMsg name={NAME} />
         <ChatContent chatMessages={chatMessages} name={NAME} />
