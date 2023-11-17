@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ChatGptResponseDto implements Serializable {
+public class ChatGptResponseDTO implements Serializable {
     // ChatGptResponseDto의 고유 식별자
     private String id;
     // 객체의 유형을 나타내는 문자열
@@ -20,12 +20,12 @@ public class ChatGptResponseDto implements Serializable {
     // GPT 모델 식별자
     private String model;
     // 선택지 목록
-    private List<Choice> choices;
+    private List<ChatGptChoiceDTO> choices;
 
     @Builder
-    public ChatGptResponseDto(String id, String object,
+    public ChatGptResponseDTO(String id, String object,
                               LocalDate created, String model,
-                              List<Choice> choices) {
+                              List<ChatGptChoiceDTO> choices) {
         this.id = id;
         this.object = object;
         this.created = created;

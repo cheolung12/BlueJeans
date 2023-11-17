@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class QuestionRequestDto implements Serializable {
+public class ChatGptQuestionRequestDTO implements Serializable {
     // 사용자에게 받는 값
     private String question;
     // 상수로 추가 문장 정의
