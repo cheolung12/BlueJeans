@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import bookList from '../../../data/bookList.json';
 import { useNavigate } from 'react-router-dom';
 
-const books = bookList.books;
-
-export default function SearchBooks() {
+export default function SearchBooks({ book }) {
   const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState('');
   const [bookLists, setBookLists] = useState([]);
 
-  // 폼 제출
   const searchSubmit = (e) => {
     e.preventDefault();
 
-    // 제목, 저자명 검색 필터
-    const filterBooks = books.filter(
+    // 제목, 작가 검색
+    const filterBooks = book.filter(
       (book) =>
         book.title.includes(searchInput) || book.author.includes(searchInput)
     );
@@ -24,7 +20,6 @@ export default function SearchBooks() {
     setSearchInput('');
     console.log(filterBooks);
 
-    //검색어 페이지로 이동
     navigate(`/ebook/keyword/${searchInput}`);
   };
 
