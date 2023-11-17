@@ -1,7 +1,6 @@
 package com.bluejeans.server.config;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,6 @@ public class ChatGptConfig {
 
     @Value("${OPEN_AI_API_KEY}")
     private String API_KEY;
-
     @Value("${OPEN_AI_API_MODEL}")
     private String MODEL;
     @Value("${OPEN_AI_API_MAX_TOKEN}")

@@ -1,22 +1,17 @@
 import React from 'react';
-import bookList from '../../../data/bookList.json';
-import { useNavigate } from 'react-router-dom';
+import { FaHeart } from 'react-icons/fa';
 
-const books = bookList.books;
-
-export default function BookCard() {
-    const navigate = useNavigate();
-
-    const bookClick = (bookId) => {
-        navigate(`/ebook/detail/${bookId}`);
-    };
-    return (
-        <div className="flex flex-wrap">
-            {books.map((book) => (
-                <div key={book.id} className="w-1/5 p-4" onClick={() => bookClick(book.id)}>
-                    <img src={book.thumbnail} alt="book" />
-                </div>
-            ))}
+export default function BookCard({ id, thumbnail, title, author }) {
+  return (
+    <div>
+      <div key={id} className='w-1/5 p-2'>
+        <img src={thumbnail} alt='book' />
+        <div>{title}</div>
+        <div>{author}</div>
+        <div>
+          <FaHeart /> <p>10</p>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
