@@ -7,9 +7,11 @@ export default function Ellipsis({ inputText, isLoading }) {
     <>
       {(inputText || isLoading) && (
         <div
-          className={`${inputText && 'ml-auto'} ${
-            isLoading && 'mr-auto'
-          } px-2 py-1`}
+          className={`
+          ${isLoading && inputText || inputText && 'ml-auto'} 
+          ${isLoading && 'mr-auto'} 
+          px-2 py-1`
+        }
         >
           <FontAwesomeIcon icon={faEllipsis} fade size='3x' />
         </div>
