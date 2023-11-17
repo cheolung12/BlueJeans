@@ -11,31 +11,30 @@ import Essay from './pages/Essay';
 import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
+import EbookViewer from './pages/EBook/EbookViewer';
 
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
-
-    {
-        path: '/',
-        element: <App />,
-        errorElement: <NotFound />,
-        children: [
-            { index: true, element: <Main /> },
-            { path: 'recruitment', element: <Recruitment /> },
-            { path: 'ebook', element: <EBook /> },
-            { path: 'ebook/keyword/:searchInput', element: <EBook /> },
-            { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
-            { path: 'chat', element: <Chat /> },
-            { path: 'essay', element: <Essay /> },
-            { path: 'findhome', element: <FindHome /> },
-        ],
-    },
-
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      { index: true, element: <Main /> },
+      { path: 'recuritment', element: <Recruitment /> },
+      { path: 'ebook', element: <EBook /> },
+      { path: 'ebook/keyword/:searchInput', element: <EBook /> },
+      { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
+      { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
+      { path: 'chat', element: <Chat /> },
+      { path: 'essay', element: <Essay /> },
+      { path: 'findhome', element: <FindHome /> },
+    ],
+  },
 ]);
 
 root.render(
-    <>
-        <RouterProvider router={router} />
-    </>
+  <>
+    <RouterProvider router={router} />
+  </>
 );
