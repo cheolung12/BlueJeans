@@ -9,11 +9,6 @@ export default function BookCard() {
 
     const bookClick = (bookId) => {
         navigate(`/ebook/detail/${bookId}`);
-        scrollToTop();
-    };
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0 });
     };
     return (
         <div className="flex flex-wrap">
