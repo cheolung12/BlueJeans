@@ -6,6 +6,7 @@ import App from './App';
 import NotFound from './pages/NotFound';
 import Main from './pages/Main';
 import Recruitment from './pages/Recruitment/Recruitment';
+import RecruitmentDetail from './pages/Recruitment/RecruitmentDetail';
 import Chat from './pages/Chat';
 import Essay from './pages/Essay';
 import FindHome from './pages/FindHome';
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Main /> },
       { path: 'recuritment', element: <Recruitment /> },
+      // { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
+      { path: 'recruitment/detail', element: <RecruitmentDetail /> },
       { path: 'ebook', element: <EBook /> },
       { path: 'ebook/keyword/:searchInput', element: <EBook /> },
       { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
