@@ -5,7 +5,7 @@ export default function ChatInput({ inputText, setInputText, handleSendClick, in
   return (
     <input
       ref={inputRef}
-      className='w-3/4 rounded-sm border focus:outline-none'
+      className='w-3/4 rounded-sm border focus:outline-none shadow-md'
       placeholder='메세지를 입력해주세요.'
       value={inputText}
       onChange={(e) => setInputText(e.target.value)}

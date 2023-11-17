@@ -15,6 +15,10 @@ const ChatApp = () => {
     // 빈 값 예외처리
     if (inputText.trim() === '') {
       inputRef.current.focus();
+      inputRef.current.style.outline = '2px solid red'
+      setTimeout(() => {
+        inputRef.current.style.outline = '';
+      }, 2000);
       return;
     }
 
