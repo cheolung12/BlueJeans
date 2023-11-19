@@ -30,7 +30,7 @@ export default function EBook() {
             <>
               {searchInput && <p>{`'${searchInput}'의 검색결과`}</p>}
               {filterBooks.map((book) => (
-                <Link to={`/ebook/detail/${book.id}`}>
+                <Link to={`/ebook/detail/${book.id}`} class='w-1/5 p-2'>
                   <BookCard
                     id={book.id}
                     thumbnail={book.thumbnail}
