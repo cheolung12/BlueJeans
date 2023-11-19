@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 //현위체 마커가이쏘
 //버튼의
 
@@ -6,6 +7,17 @@ function Map({ userAddress }) {
   const mapContainerRef = useRef();
   const mapInstanceRef = useRef(null);
   const [endMarkerPosition, setEndMarkerPosition] = useState(null);
+
+  //start랑 end 각 포인트들을 배열에 담아서 for 문 담에서 각각의 값을 연결해주는 코드 만들긩
+  const [positions, setPositions] = useState([]);
+
+  //경더위도 순서로 넣어줘야함
+
+  const imgUrlS =
+    'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+
+  const imgUrlE =
+    'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
 
   // Tmap 초기화
   const initTmap = nowPosition => {
@@ -17,29 +29,39 @@ function Map({ userAddress }) {
           nowPosition.latitude,
           nowPosition.longitude
         ),
-        zoom: 16,
+        zoom: 17,
       },
       []
     );
-
+    console.log(window.Tmapv2);
     // 시작 현위치  마커
     const startMarker = new window.Tmapv2.Marker({
       position: new window.Tmapv2.LatLng(
         nowPosition.latitude,
         nowPosition.longitude
       ),
+
+      // icon: new window.Tmapv2.Img("<img src= '../home/homeImg/red.png'></img>"),
+      icon: imgUrlS,
+      iconSize: new window.Tmapv2.Size(46, 68),
       map: map,
     });
 
     // 도착점 즉 집
     if (endMarkerPosition) {
+      console.log('df');
       // userAddress가 있을 때만 마커 생성
       //else안해도됨?
-      new window.Tmapv2.Marker({
+
+      const endMarker = new window.Tmapv2.Marker({
         position: new window.Tmapv2.LatLng(
           endMarkerPosition.latitude,
           endMarkerPosition.longitude
         ),
+
+        //마커를 찍는게 적용이 안됨.... 흠
+        icon: imgUrlE,
+        iconSize: new window.Tmapv2.Size(56, 78),
         map: map,
       });
     }
