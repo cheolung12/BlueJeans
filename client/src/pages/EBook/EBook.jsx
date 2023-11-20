@@ -25,23 +25,27 @@ export default function EBook() {
     : { display: 'flex' };
 
   return (
-    <section className='px-60 relative h-screen'>
+    <section className='px-[11rem]'>
       <div>
         <Title />
-        <div className='flex items-center justify-between relative top-3'>
+        <div className='flex items-center justify-between '>
           <Filter />
           <SearchBooks book={books} />
         </div>
 
         <div
           style={containerStyle}
-          className='flex flex-wrap bg-gray-300 relative top-10 justify-center'
+          className='flex flex-wrap bg-gray-300 justify-center'
         >
           {filterBooks.length > 0 ? (
             <>
               {searchInput && <p>{`'${searchInput}'의 검색결과`}</p>}
               {filterBooks.map((book) => (
-                <Link to={`/ebook/detail/${book.id}`} class='w-1/5 p-2'>
+                <Link
+                  to={`/ebook/detail/${book.id}`}
+                  className='p-2'
+                  key={book.id}
+                >
                   <BookCard
                     id={book.id}
                     thumbnail={book.thumbnail}

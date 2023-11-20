@@ -6,7 +6,7 @@ export default function BookCard({ id, thumbnail, title, author }) {
     <div>
       <div
         key={id}
-        className=' flex flex-col items-center justify-around bg-gray-400 w-40 h-96'
+        className=' flex flex-col items-center justify-around bg-gray-400 w-40 h-[23rem]'
       >
         <div>
           <img src={thumbnail} alt='book' className=' w-32 h-40' />
