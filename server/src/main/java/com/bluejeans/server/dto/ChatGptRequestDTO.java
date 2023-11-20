@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
-public class ChatGptRequestDto implements Serializable {
+public class ChatGptRequestDTO implements Serializable {
     // GPT 모델 식별자
     private String model;
     // 생성할 문장의 시작 부분
@@ -24,7 +24,7 @@ public class ChatGptRequestDto implements Serializable {
     private Double topP;
 
     @Builder
-    public ChatGptRequestDto(String model, String prompt,
+    public ChatGptRequestDTO(String model, String prompt,
                              Integer maxTokens, Double temperature,
                              Double topP) {
         this.model = model;

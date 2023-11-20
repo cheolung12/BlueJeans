@@ -1,9 +1,10 @@
 package com.bluejeans.server.service;
 
 import com.bluejeans.server.config.ChatGptConfig;
-import com.bluejeans.server.dto.ChatGptRequestDto;
-import com.bluejeans.server.dto.ChatGptResponseDto;
-import com.bluejeans.server.dto.QuestionRequestDto;
+import com.bluejeans.server.dto.ChatGptRequestDTO;
+import com.bluejeans.server.dto.ChatGptResponseDTO;
+import com.bluejeans.server.dto.ChatGptQuestionRequestDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ChatGptService {
 
     @Autowired
@@ -26,7 +28,7 @@ public class ChatGptService {
     private static RestTemplate restTemplate = new RestTemplate();
 
     // HTTP 요청을 위한 HttpEntity 생성
-    public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
+    public HttpEntity<ChatGptRequestDTO> buildHttpEntity(ChatGptRequestDTO requestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(chatGptConfig.getMEDIA_TYPE()));
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + chatGptConfig.getAPI_KEY());
@@ -35,34 +37,39 @@ public class ChatGptService {
 
     // GPT 모델로부터 응답을 받아오는 메서드
     // ResponseEntity를 사용하여 받아온다
-    public ChatGptResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
-        ResponseEntity<ChatGptResponseDto> responseEntity = restTemplate.postForEntity(
+    public ChatGptResponseDTO getResponse(HttpEntity<ChatGptRequestDTO> chatGptRequestDtoHttpEntity) {
+        ResponseEntity<ChatGptResponseDTO> responseEntity = restTemplate.postForEntity(
                 chatGptConfig.getURL(),
                 chatGptRequestDtoHttpEntity,
-                ChatGptResponseDto.class);
+                ChatGptResponseDTO.class);
 
         return responseEntity.getBody();
     }
 
     // 응답을 받아오는 일련의 과정 수행
-    public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
+    public ChatGptResponseDTO askQuestion(ChatGptQuestionRequestDTO requestDto) {
 
         StringBuilder combinedQuestion = new StringBuilder();
         List<String> previousConversation = requestDto.getPreviousConversation();
+        combinedQuestion.append(requestDto.getAdditionalSentence()).append("\n");
+        // 질문과 답변 분리
         for (int i = 0; i < previousConversation.size(); i++) {
+            System.out.println(previousConversation.get(i));
             if (i % 2 == 0) {
                 combinedQuestion.append("Q: ").append(previousConversation.get(i)).append("\n");
             } else {
                 combinedQuestion.append("A: ").append(previousConversation.get(i)).append("\n");
             }
         }
-        combinedQuestion.append("Q: ").append(requestDto.getQuestion()).append("\n").append(requestDto.getAdditionalSentence());
+        combinedQuestion.append("Q: ").append(requestDto.getQuestion());
 
         String finalCombinedQuestion = combinedQuestion.toString();
+        // 완성된 입력 값 출력
+        log.info("입력 값: {}", finalCombinedQuestion);
 
         return this.getResponse(
                 this.buildHttpEntity(
-                        new ChatGptRequestDto(
+                        new ChatGptRequestDTO(
                                 chatGptConfig.getMODEL(),
                                 finalCombinedQuestion,
                                 chatGptConfig.getMAX_TOKEN(),
