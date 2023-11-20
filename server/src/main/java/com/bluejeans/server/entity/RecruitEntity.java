@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +20,16 @@ public class RecruitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToMany(mappedBy = "recruitId", cascade = CascadeType.REMOVE)
+    private List<RecruitFileEntity> recruitFiles;
+
+    @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
+    private List<RecruitDibsEntity> recruitDibs;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity userId;
 
     @Column(nullable = false)
     private String title;
