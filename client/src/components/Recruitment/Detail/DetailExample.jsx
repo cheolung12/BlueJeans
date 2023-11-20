@@ -1,10 +1,11 @@
 import React from 'react';
 
-export default function DetailExample() {
+export default function DetailExample({ id }) {
     return (
         <>
             <article>
                 <section>
+                    <div>============={id}번 일자리===============</div>
                     대충 이미지 섹션
                     <div>
                         <img src="" alt="직업 소개 이미지" />
@@ -17,6 +18,7 @@ export default function DetailExample() {
                     <div>대충 설명</div>
                 </section>
             </article>
+            {/* {title} {money} {region} {contact} */}
         </>
     );
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import workC from '../../../data/workC.json';
 import '../../../App.css';
+import { Link } from 'react-router-dom';
 
 export default function Paging() {
     const [data, setData] = useState([]);
@@ -13,23 +14,34 @@ export default function Paging() {
     const works = workC.works;
 
     // axios get
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/데이터요청api'); // 해당 엔드포인트에 GET 요청
-                setData(response.data); // 받은 데이터를 상태에 업데이트
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:3000/recruitment',
+                data: {
+                    id: '1',
+                    title: '제목임',
+                    money: '급여임',
+                    region: '지역임',
+                    contact: '연락처임',
+                },
+            });
+            console.log(response); // 받은 데이터를 상태에 업데이트
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-        fetchData();
-    }, []);
+    // 데이터 get 버튼
+    const handleClick = () => {
+        fetchData(); // 데이터 요청 함수 호출
+    };
 
     // 현재 페이지의 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = works.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = works.slice(indexOfFirstItem, indexOfLastItem); // 백엔드 통신시 work => response.data변수
 
     // 페이지 변경 처리
     const handlePageChange = (pageNumber) => {
@@ -44,13 +56,15 @@ export default function Paging() {
 
     return (
         <div>
+            {/* 데이터 요청 버튼 */}
+            <button onClick={handleClick}>일자리 불러오기</button>
             <div>
                 {/* 데이터 표시 */}
                 <div class="flex justify-center flex-wrap">
                     {currentItems.map((currentItem) => (
                         <article class="w-96 h-48 justify-center" key={currentItem.id}>
-                            <div class="flex justify-center">
-                                <a class="flex flex-row" href="">
+                            <div class="flex flex-row justify-center">
+                                <Link to={`/recruitment/detail/${currentItem.id}`}>
                                     <div class="bg-slate-400 w-1/2">
                                         <img class="rounded-md border-solid" src="" alt="이미지" />
                                     </div>
@@ -60,13 +74,12 @@ export default function Paging() {
                                         <div>{currentItem.region}</div>
                                         <div>{currentItem.contact}</div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         </article>
                     ))}
                 </div>
             </div>
-
             {/* 페이지네이션 */}
             <Pagination
                 activePage={currentPage}
