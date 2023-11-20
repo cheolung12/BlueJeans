@@ -1,10 +1,8 @@
 package com.bluejeans.server.entity;
 
+import com.bluejeans.server.dto.RecruitDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +10,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,4 +40,12 @@ public class RecruitEntity {
 
     @UpdateTimestamp
     private Timestamp updated_at;
+
+    public void updateFields(RecruitDTO recruitDTO) {
+        this.setTitle(recruitDTO.getTitle());
+        this.setContent(recruitDTO.getContent());
+        this.setMoney(recruitDTO.getMoney());
+        this.setRegion(recruitDTO.getRegion());
+        this.setContact(recruitDTO.getContact());
+    }
 }
