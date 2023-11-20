@@ -19,18 +19,29 @@ export default function EBook() {
       )
     : books;
 
+  // 검색어가 있는 경우 레이아웃 변경
+  const containerStyle = searchInput
+    ? { display: 'block' }
+    : { display: 'flex' };
+
   return (
-    <section>
+    <section className='px-60 relative h-screen'>
       <div>
         <Title />
-        <Filter />
-        <SearchBooks book={books} />
-        <div className='flex flex-wrap'>
+        <div className='flex items-center justify-between relative top-3'>
+          <Filter />
+          <SearchBooks book={books} />
+        </div>
+
+        <div
+          style={containerStyle}
+          className='flex flex-wrap bg-gray-300 relative top-10 justify-center'
+        >
           {filterBooks.length > 0 ? (
             <>
               {searchInput && <p>{`'${searchInput}'의 검색결과`}</p>}
               {filterBooks.map((book) => (
-                <Link to={`/ebook/detail/${book.id}`}>
+                <Link to={`/ebook/detail/${book.id}`} class='w-1/5 p-2'>
                   <BookCard
                     id={book.id}
                     thumbnail={book.thumbnail}
