@@ -1,17 +1,18 @@
 package com.bluejeans.server.controller;
 
 import com.bluejeans.server.dto.RecruitDTO;
+import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-
-
 @RequestMapping("/jobs")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecruitController {
     @Autowired
     private RecruitService recruitService;
@@ -42,8 +43,8 @@ public class RecruitController {
 
     // 일자리 등록
     @PostMapping
-    public boolean registerRecruit(@RequestBody RecruitDTO recruitDTO){
-        return recruitService.registerRecruit(recruitDTO);
+    public boolean registerRecruit(@RequestBody RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user){
+        return recruitService.registerRecruit(recruitDTO, user);
     }
 
     // 일자리 상세
@@ -64,7 +65,17 @@ public class RecruitController {
         return recruitService.deleteRecruit(job_id);
     }
 
+    // 좋아요 누름 or 취소
+    @PostMapping("/like/{job_id}")
+    public boolean likeClick(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user){
+        return recruitService.likeClick(job_id, user);
+    }
 
+    // 내가 좋아요한 공고
+    @GetMapping("/like")
+    public List<RecruitDTO> myLikeRecruit(@AuthenticationPrincipal UserEntity user) {
+        return recruitService.myLikeRecruit(user);
+    }
 }
 
 
