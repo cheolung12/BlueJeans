@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class EssayDibsEntityKey implements Serializable {
-    private int essay;  // EssayEntity의 ID 타입과 일치해야 합니다.
-    private int user;   // UserEntity의 ID 타입과 일치해야 합니다.
+    private int essay;  // EssayEntity의 ID 타입과 일치
+    private int user;   // UserEntity의 ID 타입과 일치
 
     // 기본 생성자
     public EssayDibsEntityKey() {}
