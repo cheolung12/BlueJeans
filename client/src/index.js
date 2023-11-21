@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Main /> },
-      { path: 'recuritment', element: <Recruitment /> },
+      { path: 'recruitment', element: <Recruitment /> },
       // { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
       { path: 'recruitment/detail', element: <RecruitmentDetail /> },
       { path: 'ebook', element: <EBook /> },
