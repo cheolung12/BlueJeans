@@ -1,7 +1,6 @@
 import React from 'react';
-import { FaHeart } from 'react-icons/fa';
 
-export default function BookCard({ id, thumbnail, title, author }) {
+export default function BookCardSearch({ id, thumbnail, title, author }) {
   return (
     <div>
       <div

@@ -4,9 +4,15 @@ function Filter() {
   return (
     <div>
       <ul className='flex'>
-        <li className='p-1'>전체보기</li>
-        <li className='p-1'>인기순</li>
-        <li className='p-1'>최신순</li>
+        <li className='flex justify-center p-1'>
+          <span>전체보기</span>
+        </li>
+        <li className='flex justify-center p-1'>
+          <span>인기순</span>
+        </li>
+        <li className='flex justify-center p-1'>
+          <span>최신순</span>
+        </li>
       </ul>
     </div>
   );

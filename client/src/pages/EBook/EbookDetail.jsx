@@ -20,6 +20,7 @@ export default function EBookDetail() {
         {findBook ? (
           <div key={findBook.id}>
             <BookCardDetail
+              id={findBook.id}
               thumbnail={findBook.thumbnail}
               title={findBook.title}
               author={findBook.author}
@@ -28,12 +29,12 @@ export default function EBookDetail() {
           </div>
         ) : null}
       </div>
-      <div className='flex justify-center'>
+      {/* <div className='flex justify-center'>
         <ResButton text='찜하기' />
         <Link to={`/ebook/detail/viewer/${findBook.id}`} key={findBook.id}>
           <ResButton text='바로 읽기' />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
