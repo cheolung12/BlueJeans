@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+////banner1
+import books from '../data/bookList.json';
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
 import { FiBookOpen } from 'react-icons/fi';
@@ -9,10 +11,49 @@ import { MdChat } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 
 ///////////////
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-import AliceCarousel from 'react-alice-carousel';
+import { Pagination, Navigation } from 'swiper/modules';
 
 export default function Main() {
+  const [swiperRef, setSwiperRef] = useState(null);
+  let appendNumber = 4;
+  let prependNumber = 1;
+
+  const prepend2 = () => {
+    swiperRef.prependSlide([
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+    ]);
+  };
+
+  const prepend = () => {
+    swiperRef.prependSlide(
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
+    );
+  };
+
+  const append = () => {
+    swiperRef.appendSlide(
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
+    );
+  };
+
+  const append2 = () => {
+    swiperRef.appendSlide([
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+    ]);
+  };
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    progressCircle.current.style.setProperty('--progress', 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
+
   return (
     <div>
       <div>
@@ -20,7 +61,7 @@ export default function Main() {
 
         <div className=' flex justify-center'>
           <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-24 w-3/4 mb-16 '>
-            <Link to='/recuritment' className=''>
+            <Link to='/recruitment' className=''>
               <p className='text-[#FE8080]'>
                 <IoMdBriefcase className='' />
                 일자리
@@ -67,9 +108,37 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <div className='w-2/3'>
-            <div className=''></div>
-          </div>
+
+          {/* books.thumbnail이랑 books.name 가져오기*/}
+
+          <Swiper
+            className='w-2/3 h-3/4 self-center'
+            onSwiper={setSwiperRef}
+            slidesPerView={3}
+            loop={true}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
+            spaceBetween={30}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+          >
+            <SwiperSlide className='h-72 w-52 bg-slate-300'>{}</SwiperSlide>
+            <SwiperSlide className=' h-72 w-52 bg-red-300'>Slide 2</SwiperSlide>
+            <SwiperSlide className='h-72 w-52 bg-blue-200'>Slide 3</SwiperSlide>
+            <SwiperSlide className='h-72 w-52 bg-green-300'>
+              Slide 4
+            </SwiperSlide>
+            <svg ref={progressCircle}>
+              <circle cx='24' cy='24' r='20'></circle>
+            </svg>
+          </Swiper>
         </div>
 
         {/* 2 */}
