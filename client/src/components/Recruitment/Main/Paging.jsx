@@ -17,15 +17,8 @@ export default function Paging() {
     const fetchData = async () => {
         try {
             const response = await axios({
-                method: 'POST',
-                url: 'http://localhost:3000/recruitment',
-                data: {
-                    id: '1',
-                    title: '제목임',
-                    money: '급여임',
-                    region: '지역임',
-                    contact: '연락처임',
-                },
+                method: 'GET',
+                url: 'http://localhost:8080/api/jobs',
             });
             console.log(response); // 받은 데이터를 상태에 업데이트
         } catch (error) {
