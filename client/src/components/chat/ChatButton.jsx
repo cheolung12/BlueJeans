@@ -5,13 +5,15 @@ export default function ChatButton({ inputText, handleSendClick, enterKeyPressed
   return (
     <div
       onClick={handleSendClick}
-      className={`${inputText && 'text-green-800 border-green-800'} 
-      hover:text-green-800 hover:border-green-800
-      active:bg-green-800 active:text-white 
-      ${enterKeyPressed && 'bg-green-800 text-white'}
-      flex justify-center items-center rounded-full border text-2xl px-4 py-4`}
-    >
-      <FiSend />
+      className={`flex flex-col justify-center items-center w-1/6 h-full border rounded-md py-2 shadow-md box-border 
+      hover:text-chatColor hover:border-chatColor hover:border-2
+      active:bg-chatColor active:text-white
+      ${enterKeyPressed && 'bg-chatColor text-white'}
+      ${inputText ? 'text-chatColor border-chatColor border-2' : 'text-slate-600 '}`}
+      
+    > 
+      <FiSend className='text-3xl mb-1.5'/> 
+      <div className='text-sm  font-semibold'>전송</div>
     </div>
   );
 }
