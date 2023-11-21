@@ -2,10 +2,10 @@ package com.bluejeans.server.service;
 
 import com.bluejeans.server.dto.EssayDTO;
 import com.bluejeans.server.dto.UserDTO;
-//import com.bluejeans.server.entity.EssayDibsEntity;
+import com.bluejeans.server.entity.EssayDibsEntity;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
-//import com.bluejeans.server.repository.EssayDibRepository;
+import com.bluejeans.server.repository.EssayDibRepository;
 import com.bluejeans.server.repository.EssayRepository;
 import com.bluejeans.server.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,8 @@ public class EssayService {
     @Autowired
     EssayRepository essayRepository;
 
-//    @Autowired
-//    EssayDibRepository essayDibRepository;
+    @Autowired
+    EssayDibRepository essayDibRepository;
 
 
     //모든 에세이 리스트 반환
@@ -66,10 +66,23 @@ public class EssayService {
         essay.ifPresent(essayRepository::delete);
     }
 
-//    public void dib(int essayId, UserDTO userdto) {
-//        EssayEntity essay = essayRepository.findById(essayId).orElse(null);
-//        UserEntity user = UserDTO.userDtoToEntity(userdto);
-//        EssayDibsEntity dib = new EssayDibsEntity(essay,user);
+
+    public void dib(int essayId, UserEntity userEntity) {
+        EssayEntity essay = essayRepository.findById(essayId).orElse(null);
+        Optional<EssayDibsEntity> existingDib = essayDibRepository.findByEssayAndUser(essay, userEntity);
+        if (existingDib.isPresent()) {
+            // 이미 존재하면 삭제
+            essayDibRepository.delete(existingDib.get());
+        } else {
+            // 존재하지 않으면 추가
+//            EssayEntity essay = essayRepository.findById(essayId).orElse(null);
+            if (essay != null) {
+                EssayDibsEntity dib = new EssayDibsEntity(essay, userEntity);
+                essayDibRepository.save(dib);
+            }
+        }
+
+//        EssayDibsEntity dib = new EssayDibsEntity(essay,userEntity);
 //        essayDibRepository.save(dib);
-//    }
+    }
 }

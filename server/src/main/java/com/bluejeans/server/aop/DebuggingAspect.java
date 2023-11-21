@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class DebuggingAspect {
-    @Pointcut("execution(* com.bluejeans.server.service..*.*(..))")
+    @Pointcut("execution(* com.bluejeans.server.service..*.*(..))")  //경로설정 (service의 폴더 모두 적용)
     private void cut() {}
 
     @Before("cut()")
