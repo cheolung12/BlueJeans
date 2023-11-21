@@ -1,13 +1,11 @@
 package com.bluejeans.server.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,10 +16,14 @@ public class EssayFileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "essay_id", nullable = false)
-    private EssayEntity essayEntity;
+    private EssayEntity essay;
 
     @Column(nullable = true)
     private String img_path;
+
+//    public void updateImgPath(String imgPath) {
+//        this.setImg_path(imgPath);
+//    }
 }
