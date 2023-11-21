@@ -63,19 +63,21 @@ export default function Paging() {
                 <div class="flex justify-center flex-wrap">
                     {currentItems.map((currentItem) => (
                         <article class="w-96 h-48 justify-center" key={currentItem.id}>
-                            <div class="flex flex-row justify-center">
-                                <Link to={`/recruitment/detail/${currentItem.id}`}>
-                                    <div class="bg-slate-400 w-1/2">
-                                        <img class="rounded-md border-solid" src="" alt="이미지" />
-                                    </div>
-                                    <div class="bg-slate-500 w-2/3">
-                                        <h2>{currentItem.title}</h2>
-                                        <div>{currentItem.money}</div>
-                                        <div>{currentItem.region}</div>
-                                        <div>{currentItem.contact}</div>
-                                    </div>
-                                </Link>
-                            </div>
+                            <Link
+                                class="flex flex-row justify-center"
+                                to={`/recruitment/detail/${currentItem.id}`}
+                                state={{ dataDetail: currentItem }}
+                            >
+                                <div class="bg-slate-400 w-1/2">
+                                    <img class="rounded-md border-solid" src="" alt="이미지" />
+                                </div>
+                                <div class="bg-slate-500 w-2/3">
+                                    <h2>{currentItem.title}</h2>
+                                    <div>{currentItem.money}</div>
+                                    <div>{currentItem.region}</div>
+                                    <div>{currentItem.contact}</div>
+                                </div>
+                            </Link>
                         </article>
                     ))}
                 </div>

@@ -13,6 +13,7 @@ import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
 import EbookViewer from './pages/EBook/EbookViewer';
+import RecruitmentCreate from './pages/Recruitment/RecruitmentCreate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
             { path: 'recruitment', element: <Recruitment /> },
             { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
             { path: 'recruitment/detail', element: <RecruitmentDetail /> },
+            { path: 'recruitment/create', element: <RecruitmentCreate /> },
             { path: 'ebook', element: <EBook /> },
             { path: 'ebook/keyword/:searchInput', element: <EBook /> },
             { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
