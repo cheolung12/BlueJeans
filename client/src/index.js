@@ -13,9 +13,11 @@ import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
 import EbookViewer from './pages/EBook/EbookViewer';
+import RecruitmentCreate from './pages/Recruitment/RecruitmentCreate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
+
   {
     path: '/',
     element: <App />,
@@ -37,7 +39,7 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <>
-    <RouterProvider router={router} />
-  </>
+    <>
+        <RouterProvider router={router} />
+    </>
 );
