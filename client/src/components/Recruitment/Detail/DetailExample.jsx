@@ -37,7 +37,7 @@ export default function DetailExample({ data }) {
                     )}
                 </section>
             </section>
-            {/* {title} {money} {region} {contact} */}
+            {/* {title} {money} {region} {contact} {content} {workDay} {workTime} */}
         </>
     );
 }
