@@ -37,10 +37,10 @@ export default function ChatContent({ chatMessages, name }) {
           )}
           <div
             style={{ width: 'fit-content' }}
-            className={`text-white rounded-md py-2 px-2 mb-2 text-xl
+            className={`text-white rounded-md py-2 px-2 mb-2 sm:text-xl text-md
                ${
                  message.isMine
-                   ? 'bg-gray-200 rounded-tr-none ml-auto mr-2'
+                   ? 'bg-gray-800 rounded-tr-none ml-auto mr-2'
                    : 'bg-chatColor rounded-tl-none mr-auto ml-10'
                }`}
           >
