@@ -6,7 +6,7 @@ import com.bluejeans.server.service.ChatGptService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/chat")
+@RequestMapping("/api/chat")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatGptController {
 
