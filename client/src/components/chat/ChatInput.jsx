@@ -21,7 +21,7 @@ export default function ChatInput({
   }, [transcript, listening, setInputText]);
 
   return (
-    <div className='border w-full h-full flex shadow-md rounded- px-2.5 text-lg rounded-md'>
+    <div className='border w-full h-full flex shadow-md rounded- px-2.5 sm:text-lg text-sm rounded-sm'>
       <textarea
         ref={inputRef}
         className='w-5/6 focus:outline-none py-2 resize-none'
@@ -47,19 +47,19 @@ export default function ChatInput({
       />
       <div
         onClick={toggleListening}
-        className='flex flex-col justify-center items-center w-1/6 text-slate-600 py-2 cursor-pointer hover:text-chatColor'
+        className='flex flex-col justify-center items-center lg:w-1/6 w-1/4  text-slate-600 py-2 cursor-pointer hover:text-chatColor'
       >
         {listening ? (
           <FontAwesomeIcon
             icon={faMicrophone}
             fade
-            className='mb-2 text-chatColor text-3xl'
+            className='mb-2 text-chatColor lg:text-3xl text-2xl'
           />
         ) : (
-          <FontAwesomeIcon icon={faMicrophone} className='mb-2 text-3xl' />
+          <FontAwesomeIcon icon={faMicrophone} className='mb-2 lg:text-3xl text-2xl' />
         )}
         <div
-          className={`text-sm font-semibold  ${listening && 'text-chatColor'}`}
+          className={`lg:text-sm font-semibold ${listening && 'text-chatColor'} sm:text-xs sm:block hidden`}
         >
           {listening ? '음성인식 중지' : '음성인식 시작'}
         </div>

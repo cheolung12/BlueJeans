@@ -1,38 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { IoMdBriefcase } from 'react-icons/io';
+import { FiBookOpen } from 'react-icons/fi';
+import { FaPenNib } from 'react-icons/fa6';
+import { MdChat } from 'react-icons/md';
+import { GoHome } from 'react-icons/go';
 
 export default function Navbar() {
-  const menuList = [
-    '일자리 구하기',
-    '백일장',
-    'e북',
-    '이야기 친구',
-    '집으로 가기',
-  ];
-  return (
-    <div>
-      <div className='flex justify-end'>
-        <button className='p-5'>로그인</button>
-        <button className='p-5'>회원가입</button>
-      </div>
+  <>
+    <div className=' flex justify-center'>
+      <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-24 w-3/4 mb-16 '>
+        <Link to='/' className=''>
+          <p className='text-[#FE8080]'>
+            <IoMdBriefcase className='' />
+            일자리
+          </p>
+        </Link>
 
-      <div className='flex justify-center items-center bg-sky-100 h-20 text-center'>
-        <div>로고</div>
-      </div>
+        <Link to='/ebook' className=''>
+          <p className='text-[#FED001]'>
+            <FiBookOpen />
+            e-book
+          </p>
+        </Link>
 
-      <div className='flex justify-center'>
-        <ul className='flex'>
-          {menuList.map((menu, idx) => (
-            <li className='p-10' key={idx}>
-              {menu}
-            </li>
-          ))}
-        </ul>
-        <div className='absolute right-4 flex pt-10 border-b border-zinc-900'>
-          🔍
-          {/* <button className='mr-2'>검색</button> */}
-          <input type='text' placeholder='검색' />
-        </div>
+        <Link to='/essay' className=''>
+          <p className='text-[#5495B1]'>
+            <FaPenNib />
+            백일장
+          </p>
+        </Link>
+        <Link to='/chat' className=''>
+          <p className='text-[#6694D5]'>
+            <MdChat />
+            챗봇
+          </p>
+        </Link>
+        <Link to='/findhome' className=''>
+          <p className='text-[#8D62E9]'>
+            <GoHome />
+            집찾기
+          </p>
+        </Link>
       </div>
     </div>
-  );
+  </>;
 }

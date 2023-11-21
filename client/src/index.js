@@ -25,8 +25,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Main /> },
       { path: 'recruitment', element: <Recruitment /> },
-      // { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
+      { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
       { path: 'recruitment/detail', element: <RecruitmentDetail /> },
+      { path: 'recruitment/create', element: <RecruitmentCreate /> },
       { path: 'ebook', element: <EBook /> },
       { path: 'ebook/keyword/:searchInput', element: <EBook /> },
       { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
