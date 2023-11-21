@@ -10,12 +10,12 @@ const ChatApp = () => {
   const [isLoading, setIsLoading] = useState(false); // 말줄임표 표시용
   const inputRef = useRef(null); // input focus를 위한 ref
   const [enterKeyPressed, setEnterKeyPressed] = useState(false); //enter키 입력 시 버튼 스타일 변화
-
+  
   const handleSendClick = async () => {
     // 빈 값 예외처리
     if (inputText.trim() === '') {
       inputRef.current.focus();
-      inputRef.current.style.outline = '2px solid red'
+      inputRef.current.style.outline = '2px solid red';
       setTimeout(() => {
         inputRef.current.style.outline = '';
       }, 2000);
@@ -40,7 +40,7 @@ const ChatApp = () => {
     try {
       const response = await axios({
         method: 'POST',
-        url: 'http://localhost:8080/chat-gpt/question',
+        url: 'http://localhost:8080/api/chat/question',
         data: {
           question: inputText,
           previousConversation,
@@ -64,16 +64,18 @@ const ChatApp = () => {
   };
 
   return (
-    <div className='flex justify-center fade-in mb-28'>
+    <div className='flex justify-center items-center fade-in h-screen'>
       {/* content wrapper */}
-      <div className='w-3/5'>
-        <ChatBox
-          inputText={inputText}
-          chatMessages={chatMessages}
-          isLoading={isLoading}
-        />
+      <div className='w-3/5 h-4/5 shadow-xl flex flex-col justify-between'>
+        <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
+          <ChatBox
+            inputText={inputText}
+            chatMessages={chatMessages}
+            isLoading={isLoading}
+          />
+        </div>
         {/* input wrapper */}
-        <div className='flex justify-end'>
+        <div className='flex justify-end lg:h-1/6 md:h-20 '>
           <ChatInput
             inputText={inputText}
             setInputText={setInputText}

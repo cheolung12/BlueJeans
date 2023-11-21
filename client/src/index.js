@@ -17,25 +17,25 @@ import RecruitmentCreate from './pages/Recruitment/RecruitmentCreate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <App />,
-        errorElement: <NotFound />,
-        children: [
-            { index: true, element: <Main /> },
-            { path: 'recruitment', element: <Recruitment /> },
-            { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
-            { path: 'recruitment/detail', element: <RecruitmentDetail /> },
-            { path: 'recruitment/create', element: <RecruitmentCreate /> },
-            { path: 'ebook', element: <EBook /> },
-            { path: 'ebook/keyword/:searchInput', element: <EBook /> },
-            { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
-            { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
-            { path: 'chat', element: <Chat /> },
-            { path: 'essay', element: <Essay /> },
-            { path: 'findhome', element: <FindHome /> },
-        ],
-    },
+
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      { index: true, element: <Main /> },
+      { path: 'recruitment', element: <Recruitment /> },
+      // { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
+      { path: 'recruitment/detail', element: <RecruitmentDetail /> },
+      { path: 'ebook', element: <EBook /> },
+      { path: 'ebook/keyword/:searchInput', element: <EBook /> },
+      { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
+      { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
+      { path: 'chat', element: <Chat /> },
+      { path: 'essay', element: <Essay /> },
+      { path: 'findhome', element: <FindHome /> },
+    ],
+  },
 ]);
 
 root.render(
