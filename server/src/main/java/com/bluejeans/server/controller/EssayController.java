@@ -69,5 +69,15 @@ public class EssayController {
 //    }
 
 
+    ///////////////에세이 좋아요
+    @GetMapping("/essays/detail/{essay_id}/favorite")
+    public boolean essayDib(@PathVariable int essay_id, @AuthenticationPrincipal UserEntity userEntity){
+        System.out.println(userEntity);
+        essayService.dib(essay_id,userEntity);
+        return true;
+    }
+
+
+
 
 }
