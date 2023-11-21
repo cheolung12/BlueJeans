@@ -6,7 +6,7 @@ import '../../../App.css';
 import { Link } from 'react-router-dom';
 
 export default function Paging() {
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10); // 페이지당 아이템 수
 

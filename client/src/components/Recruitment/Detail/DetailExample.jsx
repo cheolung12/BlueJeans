@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 export default function DetailExample({ data }) {
+    const dataD = data.state.dataDetail;
     const [editA, setEditA] = useState(true); // 권한 여부
     // if ('권한있으면') {
     //     setEditA(true);
@@ -14,13 +15,13 @@ export default function DetailExample({ data }) {
     return (
         <>
             <section className="w-3/5">
-                <div>============={data.state.dataDetail.id}번 일자리===============</div>
+                <div>============={dataD.id}번 일자리===============</div>
                 대충 이미지 섹션
                 <div>
                     <img src="" alt="직업 소개 이미지" />
                 </div>
                 <hr />
-                <h1>대충 제목</h1>
+                <div>제목 {dataD.title}</div>
                 <section>
                     대충 설명 섹션
                     <div>대충 설명</div>
