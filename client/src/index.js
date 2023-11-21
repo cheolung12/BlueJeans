@@ -13,16 +13,18 @@ import FindHome from './pages/FindHome';
 import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
 import EbookViewer from './pages/EBook/EbookViewer';
+import RecruitmentCreate from './pages/Recruitment/RecruitmentCreate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
+
   {
     path: '/',
     element: <App />,
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Main /> },
-      { path: 'recuritment', element: <Recruitment /> },
+      { path: 'recruitment', element: <Recruitment /> },
       // { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
       { path: 'recruitment/detail', element: <RecruitmentDetail /> },
       { path: 'ebook', element: <EBook /> },
@@ -37,7 +39,7 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <>
-    <RouterProvider router={router} />
-  </>
+    <>
+        <RouterProvider router={router} />
+    </>
 );

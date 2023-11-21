@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import ResButton from './ResButton';
 
 export default function BookCardDetail({
+  id,
   thumbnail,
   title,
   author,
@@ -19,6 +22,10 @@ export default function BookCardDetail({
                 <h1>{title}</h1>
                 <div className='mt-2'>{author}</div>
               </div>
+              <ResButton text='찜하기' />
+              <Link to={`/ebook/detail/viewer/${id}`} key={id}>
+                <ResButton text='바로 읽기' />
+              </Link>
             </div>
           </section>
           <section className='flex flex-col items-center bg-slate-200 ml-2 w-[40rem] h-[33rem] overflow-y-auto'>

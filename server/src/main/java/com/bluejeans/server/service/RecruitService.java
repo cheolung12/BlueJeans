@@ -2,10 +2,13 @@ package com.bluejeans.server.service;
 
 import com.bluejeans.server.dto.EssayDTO;
 import com.bluejeans.server.dto.RecruitDTO;
-import com.bluejeans.server.entity.EssayEntity;
-import com.bluejeans.server.entity.RecruitEntity;
+import com.bluejeans.server.entity.*;
+import com.bluejeans.server.repository.RecruitDibRepository;
+import com.bluejeans.server.repository.RecruitFileRepository;
 import com.bluejeans.server.repository.RecruitRepository;
+import com.bluejeans.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,15 +21,28 @@ public class RecruitService {
     @Autowired
     private RecruitRepository recruitRepository;
 
+    @Autowired
+    private RecruitFileRepository recruitFileRepository;
+
+    @Autowired
+    private RecruitDibRepository recruitDibRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+
     // 엔티티 리스트를 DTO리스트로
     private List<RecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
         List<RecruitDTO> result = new ArrayList<>();
+
         if (recruitList.isEmpty()) {
             return result;
         }
         // 엔티티 -> DTO
         for (RecruitEntity recruit : recruitList) {
-            result.add(RecruitDTO.toDTO(recruit));
+            RecruitFileEntity file = recruitFileRepository.findByRecruitId(recruit.getId()).orElse(null);
+            int like = recruitDibRepository.countByRecruit_Id(recruit.getId());
+            result.add(RecruitDTO.toDTO(recruit, file, like));
         }
 
         return result;
@@ -56,12 +72,17 @@ public class RecruitService {
         return entityListToDTOList(searchedList);
     }
 
-    public boolean registerRecruit(RecruitDTO recruitDTO) {
+    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user) {
         // DTO -> 엔티티
-        RecruitEntity added = RecruitDTO.toEntity(recruitDTO);
+        RecruitEntity added = RecruitDTO.toEntity(recruitDTO, user);
 
         try {
-            recruitRepository.save(added);
+            RecruitEntity saved = recruitRepository.save(added);
+            RecruitFileEntity file = RecruitFileEntity.builder()
+                    .recruitId(saved)
+                    .img_path(recruitDTO.getImg_path())
+                    .build();
+            recruitFileRepository.save(file);
             return true;
         } catch (Exception e) {
             // 추후 AOP를 통해 에러로그
@@ -72,17 +93,30 @@ public class RecruitService {
 
     public RecruitDTO recruitDetail(int id) {
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
-        return recruit.map(RecruitDTO::toDTO).orElse(null);
+        RecruitFileEntity file = recruitFileRepository.findByRecruitId(id).orElse(null);
+        int like = recruitDibRepository.countByRecruit_Id(id);
+        if(recruit.isPresent()){
+            return RecruitDTO.toDTO(recruit.get(), file, like);
+        } else {
+            return null;
+        }
     }
 
     public boolean editRecruit(int id, RecruitDTO recruitDTO) {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
+        Optional<RecruitFileEntity>  file = recruitFileRepository.findByRecruitId(id);
         // 수정
         if(recruit.isPresent()) {
-            RecruitEntity existingEntity = recruit.get();  // 가져오기
-            existingEntity.updateFields(recruitDTO);  // 업데이트
-            recruitRepository.save(existingEntity);  // 저장
+            RecruitEntity existingEntity = recruit.get();
+            existingEntity.updateFields(recruitDTO);
+            recruitRepository.save(existingEntity);
+
+            if(file.isPresent()){
+                RecruitFileEntity fileEntity = file.get();
+                fileEntity.updateImgPath(recruitDTO.getImg_path());
+                recruitFileRepository.save(fileEntity);
+            }
 
             return true;
         }else {
@@ -103,4 +137,39 @@ public class RecruitService {
         }
     }
 
+    public boolean likeClick(int jobId, UserEntity userEntity) {
+        int userId = userEntity.getId();
+        // 좋아요 여부를 확인하기 위한 키를 생성
+        RecruitDibsEntityKey key = new RecruitDibsEntityKey(jobId, userId);
+        Optional<RecruitDibsEntity> existingDibs = recruitDibRepository.findById(key);
+
+        // 상태에따라 추가 혹은 삭제
+        if (existingDibs.isPresent()) {
+            recruitDibRepository.deleteById(key);
+            return false;
+        } else {
+            // 좋아요가 안되어 있으면 추가
+            RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
+            UserEntity user = userRepository.findById(userId).orElse(null);
+
+            if (recruit != null && user != null) {
+                RecruitDibsEntity newDibs = RecruitDibsEntity.builder()
+                        .recruit(recruit)
+                        .user(user)
+                        .build();
+
+                recruitDibRepository.save(newDibs);
+                return true; // 좋아요 추가
+            } else {
+                return false; // 공고나 유저를 찾을 수 없음
+            }
+        }
+    }
+
+    public List<RecruitDTO> myLikeRecruit(UserEntity user) {
+        int userId = user.getId();
+        List<RecruitEntity> likedRecruits = recruitRepository.findByRecruitDibsUserId(userId);
+
+        return entityListToDTOList(likedRecruits);
+    }
 }
