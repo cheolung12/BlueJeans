@@ -17,7 +17,7 @@ export default function InitialMsg({ name }) {
       <div
         style={{ width: 'fit-content' }}
         className={
-          'text-white rounded-md py-2 px-2 bg-chatColor rounded-tl-none mr-auto ml-10 text-xl'
+          'text-white rounded-md py-2 px-2 bg-chatColor rounded-tl-none sm:mr-auto mr-4 ml-10  sm:text-xl text-md'
         }
       >
         안녕! 나는 {name}야! <br />
