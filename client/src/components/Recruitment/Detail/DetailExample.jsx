@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
