@@ -115,6 +115,7 @@ export default function BookViewer({ data }) {
         {/* 페이지 쪽수 */}
         <span>
           {((currentMove + data.length) % data.length) + 1} / {data.length}
+
         </span>
       </div>
     </div>

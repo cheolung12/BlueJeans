@@ -15,14 +15,22 @@ public interface RecruitRepository extends JpaRepository<RecruitEntity, Integer>
     @Query(value="SELECT * FROM recruit WHERE region LIKE %:region%", nativeQuery = true)
     List<RecruitEntity> findByRegion(@Param("region")String region);
 
-    // 필터링 (좋아요 따로 추가해야됨)
-    @Query(value = "SELECT * FROM recruit ORDER BY " +
-            "CASE WHEN :order = 'latest' THEN created_at END DESC", nativeQuery = true)
+    @Query(value = "SELECT r.* " +
+            "FROM recruit r " +
+            "LEFT JOIN (SELECT rc_id, COUNT(*) AS like_count FROM recruit_dibs GROUP BY rc_id) rd " +
+            "ON r.id = rd.rc_id " +
+            "ORDER BY CASE " +
+            "    WHEN :order = 'latest' THEN r.created_at " +
+            "    WHEN :order = 'favorite' THEN like_count " +
+            "END DESC", nativeQuery = true)
     List<RecruitEntity> filteringRecruit(@Param("order") String order);
 
     // 키워드로 조회
     @Query(value = "SELECT * FROM recruit WHERE title LIKE %:keyword%", nativeQuery = true)
     List<RecruitEntity> searchByKeyword(String keyword);
+
+    // 내가 찜한 게시물
+    List<RecruitEntity> findByRecruitDibsUserId(int userId);
 
 
 }

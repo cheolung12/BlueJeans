@@ -29,6 +29,7 @@ export default function EBook() {
           <SearchBooks book={books} />
         </div>
 
+
         <div className='flex flex-wrap justify-center'>
           <>
             {filterBooks.map((book) => (
@@ -45,6 +46,7 @@ export default function EBook() {
                     author={book.author}
                   />
                 ) : (
+
                   <BookCard
                     id={book.id}
                     thumbnail={book.thumbnail}

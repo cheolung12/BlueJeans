@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -32,7 +33,7 @@ public class DebuggingAspect {
     }
 
     @AfterReturning(value = "cut()", returning = "returnObj")
-    public void loggingReturnValue(JoinPoint joinPoint, Object returnObj){
+    public void loggingReturnValue(@NotNull JoinPoint joinPoint, Object returnObj){
         String className = joinPoint.getTarget()
                 .getClass()
                 .getSimpleName();
