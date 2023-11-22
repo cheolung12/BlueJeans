@@ -149,9 +149,9 @@ export default function Main({ id, thumbnail, title }) {
                             className='h-full w-full text-blue-700'
                           />
                         </div>
-                        <div className='text-white'>
+                        {/* <div className='text-white'>
                           {book.title || 'No Title'}
-                        </div>
+                        </div> */}
                         <div className='text-white'>{book.title}</div>
                       </SwiperSlide>
                     </React.Fragment>
@@ -191,15 +191,14 @@ export default function Main({ id, thumbnail, title }) {
           </div>
         </div>
         {/* 3 */}
-        <div className='h-[37.5rem] bg-[#F28080] flex'>
-          <div className='w-1/3'>
-            <div className=' bg-emerald-200 h-16 w-11'>1</div>
-          </div>
-          <div className='w-1/3'>
-            <div>2</div>
-          </div>
-          <div className='w-1/3'>
-            <div>3</div>
+        <div className='flex flex-col bg-[#F28080] h-[37.5rem] items-center'>
+          <p className='text-4xl font-semibold mt-9 items-start pl-16  text-white'>
+            추천 공고
+          </p>
+          <div className='flex items-center justify-evenly w-full h-full'>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
           </div>
         </div>
       </div>
