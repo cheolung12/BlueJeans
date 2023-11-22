@@ -59,39 +59,39 @@ export default function Main({ id, thumbnail, title }) {
   return (
     <div>
       <div>
-        <div className=' h-[700px] w-full'></div>
+        <div className=' h-[650px] w-full'></div>
 
         <div className=' flex justify-center'>
-          <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-24 w-3/4 mb-16 '>
-            <Link to='/recruitment' className=''>
-              <p className='text-[#FE8080]'>
-                <IoMdBriefcase className='' />
+          <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-36 w-3/4 mb-24 text-lg'>
+            <Link to='/recruitment' className='justify-center'>
+              <p className=' font-bold h-16 w-16 text-center'>
+                <IoMdBriefcase className=' h-full w-full text-[#FE8080]' />
                 일자리
               </p>
             </Link>
 
             <Link to='/ebook' className=''>
-              <p className='text-[#FED001]'>
-                <FiBookOpen />
+              <p className='font-bold h-16 w-16 text-center'>
+                <FiBookOpen className='text-[#FED001]  h-full w-full' />
                 e-book
               </p>
             </Link>
 
             <Link to='/essay' className=''>
-              <p className='text-[#5495B1]'>
-                <FaPenNib />
+              <p className=' font-bold h-16 w-16 text-center'>
+                <FaPenNib className=' text-[#5495B1] h-full w-full' />
                 백일장
               </p>
             </Link>
             <Link to='/chat' className=''>
-              <p className='text-[#6694D5]'>
-                <MdChat />
+              <p className=' font-bold h-16 w-16 text-center'>
+                <MdChat className=' text-[#6694D5] h-full w-full' />
                 챗봇
               </p>
             </Link>
             <Link to='/findhome' className=''>
-              <p className='text-[#8D62E9]'>
-                <GoHome />
+              <p className=' font-bold h-16 w-16 text-center'>
+                <GoHome className='text-[#8D62E9] h-full w-full' />
                 집찾기
               </p>
             </Link>
@@ -114,7 +114,7 @@ export default function Main({ id, thumbnail, title }) {
           {/* books.thumbnail이랑 books.name 가져오기*/}
 
           <Swiper
-            className='w-3/5 h-3/4 self-center'
+            className=' w-[55rem] h-[28rem] self-center'
             onSwiper={setSwiperRef}
             slidesPerView={3}
             loop={true}
@@ -131,28 +131,24 @@ export default function Main({ id, thumbnail, title }) {
             navigation={true}
             modules={[Pagination, Navigation]}
           >
-            {/* {booksArray.map((value) => {
-              return value.map((book) => console.log(book.title));
-            })} */}
-
             {booksArray.map((value) =>
               value.map(
                 (book) => (
                   console.log(book),
                   (
                     <React.Fragment key={book.id}>
-                      <SwiperSlide className='h-72 w-40 bg-slate-300'>
+                      <SwiperSlide className=' h-full w-full'>
                         <div>
                           <img
                             src={book.thumbnail}
                             alt={book.title || 'No Title'}
-                            className='h-full w-full text-blue-700'
+                            className='h-[25rem] w-full text-blue-700'
                           />
                         </div>
                         {/* <div className='text-white'>
                           {book.title || 'No Title'}
                         </div> */}
-                        <div className='text-white'>{book.title}</div>
+                        {/* <div className='text-white'>{book.title}</div> */}
                       </SwiperSlide>
                     </React.Fragment>
                   )
