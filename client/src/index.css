@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 중복되는 스타일 저장 */
+@layer utilities {
+  .signup-input-wrapper {
+    @apply flex flex-col items-start w-3/5 mb-4;
+  }
+  .signup-input-header {
+    @apply w-full mb-2 flex justify-between items-end
+  }
+  .signup-input-label {
+    @apply text-base text-gray-600 font-semibold;
+  }
+  .signup-input {
+    @apply w-full h-12 p-2.5 text-base block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus:ring focus:ring-indigo-400;
+  }
+  .signup-input-duplicable {
+    @apply flex justify-between items-center box-border w-full h-12 p-2.5 text-base border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring focus-within:ring-indigo-400;
+  }
+}
+
 /* animation */
 .fade-in {
   opacity: 0;
