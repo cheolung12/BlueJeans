@@ -5,7 +5,7 @@ export default function BookCardSearch({ id, thumbnail, title, author }) {
     <div>
       <div
         key={id}
-        className=' flex flex-col items-center justify-around bg-gray-400 w-[11rem] h-[22rem] rounded-[0.5rem] bg-gray-200'
+        className=' flex flex-col items-center justify-around w-[11rem] h-[22rem] rounded-[0.5rem] bg-gray-200'
       >
         <div>
           <img src={thumbnail} alt='book' className=' w-[7rem] h-40' />

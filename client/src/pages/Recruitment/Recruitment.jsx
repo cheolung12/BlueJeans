@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import SelectRecruit from '../../components/Recruitment/Main/SelectRecruit';
 import { Link } from 'react-router-dom';
-import ResButton from '../../components/Ebook/Detail/ResButton';
+
+
+import ResButton from '../../components/common/ResButton';
 import JobCard from '../../components/Recruitment/Main/JobCard';
 import workC from '../../data/workC.json';
 import axios from 'axios';
@@ -124,4 +126,5 @@ export default function Recruitment() {
             </section>
         </>
     );
+
 }
