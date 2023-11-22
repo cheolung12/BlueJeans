@@ -3,6 +3,8 @@ package com.bluejeans.server.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.File;
+
 @Entity
 @Getter
 @Setter
