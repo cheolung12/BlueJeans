@@ -14,6 +14,8 @@ import EBook from './pages/EBook/EBook';
 import EbookDetail from './pages/EBook/EbookDetail';
 import EbookViewer from './pages/EBook/EbookViewer';
 import RecruitmentCreate from './pages/Recruitment/RecruitmentCreate';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -24,6 +26,8 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Main /> },
+      { path: 'signup', element: <Signup />},
+      { path: 'login', element: <Login />},
       { path: 'recruitment', element: <Recruitment /> },
       { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
       { path: 'recruitment/detail', element: <RecruitmentDetail /> },
