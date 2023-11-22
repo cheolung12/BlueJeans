@@ -114,7 +114,7 @@ export default function Main({ id, thumbnail, title }) {
           {/* books.thumbnail이랑 books.name 가져오기*/}
 
           <Swiper
-            className='w-3/5 h-3/4 self-center'
+            className=' w-[55rem] h-[28rem] self-center'
             onSwiper={setSwiperRef}
             slidesPerView={3}
             loop={true}
@@ -131,28 +131,24 @@ export default function Main({ id, thumbnail, title }) {
             navigation={true}
             modules={[Pagination, Navigation]}
           >
-            {/* {booksArray.map((value) => {
-              return value.map((book) => console.log(book.title));
-            })} */}
-
             {booksArray.map((value) =>
               value.map(
                 (book) => (
                   console.log(book),
                   (
                     <React.Fragment key={book.id}>
-                      <SwiperSlide className='h-72 w-40 bg-slate-300'>
+                      <SwiperSlide className=' h-full w-full'>
                         <div>
                           <img
                             src={book.thumbnail}
                             alt={book.title || 'No Title'}
-                            className='h-full w-full text-blue-700'
+                            className='h-[25rem] w-full text-blue-700'
                           />
                         </div>
                         {/* <div className='text-white'>
                           {book.title || 'No Title'}
                         </div> */}
-                        <div className='text-white'>{book.title}</div>
+                        {/* <div className='text-white'>{book.title}</div> */}
                       </SwiperSlide>
                     </React.Fragment>
                   )
