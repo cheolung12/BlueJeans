@@ -1,6 +1,7 @@
 package com.bluejeans.server.controller;
 
 import com.bluejeans.server.dto.RecruitDTO;
+import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.List;
 public class RecruitController {
     @Autowired
     private RecruitService recruitService;
-
+/*
     // 모든 공고 불러오기
     @GetMapping
     public List<RecruitDTO> findAll() {
@@ -41,23 +42,23 @@ public class RecruitController {
         return recruitService.searchByKeyword(keyword);
     }
 
-    // 일자리 등록
-    @PostMapping
-    public boolean registerRecruit(@RequestBody RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user){
-        return recruitService.registerRecruit(recruitDTO, user);
-    }
+//    // 일자리 등록
+//    @PostMapping
+//    public boolean registerRecruit(@RequestBody RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user){
+//        return recruitService.registerRecruit(recruitDTO, user);
+//    }
 
     // 일자리 상세
     @GetMapping("/{job_id}")
-    public RecruitDTO recruitDetail(@PathVariable int job_id){
+    public ResRecruitDTO recruitDetail(@PathVariable int job_id){
         return recruitService.recruitDetail(job_id);
     }
 
-    // 일자리 수정
-    @PatchMapping("/{job_id}")
-    public boolean editRecruit(@PathVariable int job_id, @RequestBody RecruitDTO recruitDTO){
-        return recruitService.editRecruit(job_id, recruitDTO);
-    }
+//    // 일자리 수정
+//    @PatchMapping("/{job_id}")
+//    public boolean editRecruit(@PathVariable int job_id, @RequestBody RecruitDTO recruitDTO){
+//        return recruitService.editRecruit(job_id, recruitDTO);
+//    }
 
     // 일자리 삭제
     @DeleteMapping("/{job_id}")
@@ -76,6 +77,8 @@ public class RecruitController {
     public List<RecruitDTO> myLikeRecruit(@AuthenticationPrincipal UserEntity user) {
         return recruitService.myLikeRecruit(user);
     }
+
+ */
 }
 
 
