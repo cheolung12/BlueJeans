@@ -21,8 +21,14 @@ export default function Signup() {
   });
   const isFormValid = Object.values(formValid).every((value) => value === true);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const imageUrls = ['/images/s1.jpeg', '/images/s2.jpeg', '/images/s3.jpeg', '/images/s4.jpeg'];
+  const imageUrls = [
+    '/images/s1.jpeg',
+    '/images/s2.jpeg',
+    '/images/s3.jpeg',
+    '/images/s4.jpeg',
+  ];
   const currentImageUrl = imageUrls[currentImageIndex];
   const navigate = useNavigate();
 
@@ -39,15 +45,14 @@ export default function Signup() {
       ...prevData,
       [name]: value,
     }));
-    
+
     setFormValid((prevData) => {
       let updatedData = { ...prevData };
-      if(name === 'userID') {
+      if (name === 'userID') {
         updatedData.userID = null;
-      } else if(name === 'nickname') {
+      } else if (name === 'nickname') {
         updatedData.nickname = null;
-      }
-      else if (name === 'password') {
+      } else if (name === 'password') {
         updatedData.password = value === formData.pwCheck;
       } else if (name === 'pwCheck') {
         updatedData.password = formData.password === value;
@@ -56,8 +61,42 @@ export default function Signup() {
     });
   };
 
+  function fadingEffect(elementId) {
+    const button = document.getElementById(elementId);
+    let opacity = 1;
+    const fadingInterval = setInterval(() => {
+      button.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
+      opacity -= 0.05;
+      if (opacity <= 0) {
+        clearInterval(fadingInterval);
+      }
+    }, 100);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isFormSubmitting) {
+      setIsFormSubmitting(true);
+      setTimeout(() => {
+        setIsFormSubmitting(false);
+      }, 1000); 
+    }
+
+    if (!formValid.userID) {
+      fadingEffect('id-duplication');
+      return;
+    } else if (!formValid.nickname) {
+      fadingEffect('nickname-duplication');
+      return;
+    } else if (!formValid.password) {
+      fadingEffect('pwCheck');
+      return;
+      return;
+    } else if (!formValid.address) {
+      fadingEffect('address');
+      return;
+    }
 
     try {
       const res = await axios({
@@ -139,7 +178,6 @@ export default function Signup() {
     setIsOpen(false);
   };
 
-
   return (
     <div className='w-screen h-screen flex'>
       <div
@@ -160,7 +198,7 @@ export default function Signup() {
             <div className='sm:text-4xl text-3xl font-bold mb-2 text-[#2e375d]'>
               회원가입
             </div>
-            <div className='sm:text-base text-sm font-light sm:mb-10 mb-6'>
+            <div className='sm:text-base text-sm font-light sm:mb-8 mb-6'>
               블루진스에 오신걸 환영합니다~!
             </div>
           </div>
@@ -191,9 +229,11 @@ export default function Signup() {
                 onChange={handleChange}
                 autoComplete='off'
                 onKeyDown={blockSpace}
+                placeholder='아이디를 입력해주세요.'
                 className='w-full h-full bg-inherit outline-none border-none focus:outline-none rounded-lg'
               />
               <button
+                id='id-duplication'
                 type='button'
                 onClick={() => checkDuplication('userID')}
                 className='sm:w-24 w-20 sm:h-8 h-6 border sm:text-sm text-xs bg-white rounded-md'
@@ -228,9 +268,11 @@ export default function Signup() {
                 value={formData.nickname}
                 onChange={handleChange}
                 autoComplete='off'
+                placeholder='닉네임을 입력해주세요.'
                 className='w-full h-full bg-inherit outline-none border-none focus:outline-none rounded-lg'
               />
               <button
+                id='nickname-duplication'
                 type='button'
                 onClick={() => checkDuplication('nickname')}
                 className='sm:w-24 w-20 sm:h-8 h-6 border sm:text-sm text-xs bg-white rounded-md'
@@ -253,6 +295,7 @@ export default function Signup() {
               name='password'
               value={formData.password}
               onChange={handleChange}
+              placeholder='비밀번호를 입력해주세요.'
               className='signup-input'
             />
           </div>
@@ -275,6 +318,7 @@ export default function Signup() {
               name='pwCheck'
               value={formData.pwCheck}
               onChange={handleChange}
+              placeholder='비밀번호를 한번 더 입력해주세요.'
               className='signup-input'
             />
           </div>
@@ -295,6 +339,7 @@ export default function Signup() {
               autoComplete='off'
               onClick={modalToggle}
               readOnly
+              placeholder='클릭하면 주소검색창이 나타납니다.'
               className='signup-input'
             />
             <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
@@ -313,7 +358,7 @@ export default function Signup() {
                   ? 'opacity-none cursor-pointer hover:opacity-95'
                   : 'opacity-70 cursor-not-allowed'
               }`}
-              disabled={!isFormValid}
+              disabled={isFormSubmitting}
             >
               가입 하기
             </button>
