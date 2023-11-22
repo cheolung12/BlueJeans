@@ -33,7 +33,11 @@ export default function BookViewer({ data }) {
   return (
     <div className='px-30 h-[41rem]'>
       <div className='flex justify-center'>
-        <button onClick={preHandler} className='pr-3 cursor-pointer'>
+        <button
+          onClick={preHandler}
+          // disabled={currentMove === 0}
+          className='pr-3 cursor-pointer w-[7rem] flex items-center justify-end'
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='32'
@@ -58,23 +62,23 @@ export default function BookViewer({ data }) {
             </defs>{' '}
           </svg>{' '}
         </button>
-        <div className='flex overflow-hidden w-[48rem]'>
+        <div className='flex overflow-hidden w-[54rem]'>
           <div className='flex'>
             {data.map((item) => (
               <div>
                 <div
                   className={`flex transition`}
                   // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                  style={{ transform: `translateX(-${48 * currentMove}rem)` }}
+                  style={{ transform: `translateX(-${54 * currentMove}rem)` }}
                 >
                   <div
-                    className='w-96 h-[32rem] p-10 text-lg tracking-wider'
+                    className='w-[27rem] h-[32rem] p-10 text-lg tracking-wider leading-loose'
                     key={item.id}
                   >
                     {item.content}
                   </div>
                   <div
-                    className=' w-96 h-[32rem] p-10 text-lg tracking-wider'
+                    className=' w-[27rem] h-[32rem] p-10 text-lg tracking-wider leading-loose'
                     key={item.id}
                   >
                     {item.content}
@@ -84,7 +88,10 @@ export default function BookViewer({ data }) {
             ))}
           </div>
         </div>
-        <button onClick={nextHandler} className='pl-3 cursor-pointer'>
+        <button
+          onClick={nextHandler}
+          className='pl-3 cursor-pointer w-[7rem] flex items-center'
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='32'
@@ -115,7 +122,6 @@ export default function BookViewer({ data }) {
         {/* 페이지 쪽수 */}
         <span>
           {((currentMove + data.length) % data.length) + 1} / {data.length}
-
         </span>
       </div>
     </div>

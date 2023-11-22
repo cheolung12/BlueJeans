@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
@@ -38,7 +37,7 @@ export default function DetailExample({ data }) {
                     )}
                 </section>
             </section>
-            {/* {title} {money} {region} {contact} */}
+            {/* {title} {money} {region} {contact} {content} {workDay} {workTime} */}
         </>
     );
 }

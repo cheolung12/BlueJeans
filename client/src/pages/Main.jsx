@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+////banner1
+import books from '../data/bookList.json';
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
 import { FiBookOpen } from 'react-icons/fi';
@@ -9,10 +11,51 @@ import { MdChat } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 
 ///////////////
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-import AliceCarousel from 'react-alice-carousel';
+import { Pagination, Navigation } from 'swiper/modules';
 
-export default function Main() {
+export default function Main({ id, thumbnail, title }) {
+  const booksArray = Object.values(books);
+
+  const [swiperRef, setSwiperRef] = useState(null);
+  let appendNumber = 4;
+  let prependNumber = 1;
+
+  const prepend2 = () => {
+    swiperRef.prependSlide([
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+    ]);
+  };
+
+  const prepend = () => {
+    swiperRef.prependSlide(
+      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
+    );
+  };
+
+  const append = () => {
+    swiperRef.appendSlide(
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
+    );
+  };
+
+  const append2 = () => {
+    swiperRef.appendSlide([
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+    ]);
+  };
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    progressCircle.current.style.setProperty('--progress', 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
+
   return (
     <div>
       <div>
@@ -20,7 +63,7 @@ export default function Main() {
 
         <div className=' flex justify-center'>
           <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-24 w-3/4 mb-16 '>
-            <Link to='/recuritment' className=''>
+            <Link to='/recruitment' className=''>
               <p className='text-[#FE8080]'>
                 <IoMdBriefcase className='' />
                 일자리
@@ -67,9 +110,59 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <div className='w-2/3'>
-            <div className=''></div>
-          </div>
+
+          {/* books.thumbnail이랑 books.name 가져오기*/}
+
+          <Swiper
+            className='w-3/5 h-3/4 self-center'
+            onSwiper={setSwiperRef}
+            slidesPerView={3}
+            loop={true}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
+            spaceBetween={30}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+          >
+            {/* {booksArray.map((value) => {
+              return value.map((book) => console.log(book.title));
+            })} */}
+
+            {booksArray.map((value) =>
+              value.map(
+                (book) => (
+                  console.log(book),
+                  (
+                    <React.Fragment key={book.id}>
+                      <SwiperSlide className='h-72 w-40 bg-slate-300'>
+                        <div>
+                          <img
+                            src={book.thumbnail}
+                            alt={book.title || 'No Title'}
+                            className='h-full w-full text-blue-700'
+                          />
+                        </div>
+                        {/* <div className='text-white'>
+                          {book.title || 'No Title'}
+                        </div> */}
+                        <div className='text-white'>{book.title}</div>
+                      </SwiperSlide>
+                    </React.Fragment>
+                  )
+                )
+              )
+            )}
+            <svg ref={progressCircle}>
+              <circle cx='24' cy='24' r='20'></circle>
+            </svg>
+          </Swiper>
         </div>
 
         {/* 2 */}
@@ -98,10 +191,15 @@ export default function Main() {
           </div>
         </div>
         {/* 3 */}
-        <div className='h-[37.5rem] bg-[#F28080] flex'>
-          <div className='w-1/3'>1</div>
-          <div className='w-1/3'>2</div>
-          <div className='w-1/3'>3</div>
+        <div className='flex flex-col bg-[#F28080] h-[37.5rem] items-center'>
+          <p className='text-4xl font-semibold mt-9 items-start pl-16  text-white'>
+            추천 공고
+          </p>
+          <div className='flex items-center justify-evenly w-full h-full'>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
+            <div className='h-80 w-96 bg-slate-200 rounded-3xl shadow-lg'></div>
+          </div>
         </div>
       </div>
     </div>
