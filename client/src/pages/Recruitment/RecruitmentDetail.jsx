@@ -1,7 +1,6 @@
 import React from 'react';
 import DetailExample from '../../components/Recruitment/Detail/DetailExample';
 import { useLocation } from 'react-router-dom';
-import RightBar from '../../components/common/RightBar';
 
 export default function RecruitmentDetail({}) {
     const location = useLocation();
@@ -11,9 +10,7 @@ export default function RecruitmentDetail({}) {
     return (
         <>
             <article className="flex flex-row justify-center">
-                <section>왼쪽 바</section>
                 <DetailExample data={location} />
-                <RightBar />
             </article>
         </>
     );

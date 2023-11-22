@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // import SelectRecruit from '../../components/Recruitment/Main/SelectRecruit';
 import { Link } from 'react-router-dom';
-
-
 import ResButton from '../../components/common/ResButton';
 import JobCard from '../../components/Recruitment/Main/JobCard';
 import workC from '../../data/workC.json';
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import '../../App.css';
+import SideNavBar from '../../components/common/SideNavBar';
 
 export default function Recruitment() {
     // json 파일데이터(임시)
@@ -88,49 +87,54 @@ export default function Recruitment() {
     };
 
     return (
-        <div className="w-full flex justify-center">
-            <section className="max-w-4xl block">
-                {/* 데이터 요청 버튼 
+        <>
+            <div>
+                <SideNavBar />
+            </div>
+
+            <div className="w-full flex justify-center">
+                <section className="max-w-4xl block">
+                    {/* 데이터 요청 버튼 
                 <button onClick={handleClick}>일자리 불러오기</button> */}
 
-                {/* 인기순 & 최신순 셀렉트 */}
-                <nav className="flex justify-end">
-                    <Link className="m-2" to={`/recruitment/create`}>
-                        <ResButton text="공고 게시" />
-                    </Link>
-                    <select
-                        className="m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor"
-                        name=""
-                        id=""
-                        value={selectValue}
-                        onChange={handleChange}
-                    >
-                        <option value="latest">최신순</option>
-                        <option value="favorite">인기순</option>
-                        {/*<option value="region">거리순</option>*/}
-                    </select>
-                </nav>
-                {/* 메인 */}
+                    {/* 인기순 & 최신순 셀렉트 */}
+                    <nav className="flex justify-end">
+                        <Link className="m-2" to={`/recruitment/create`}>
+                            <ResButton text="공고 게시" />
+                        </Link>
+                        <select
+                            className="m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor"
+                            name=""
+                            id=""
+                            value={selectValue}
+                            onChange={handleChange}
+                        >
+                            <option value="latest">최신순</option>
+                            <option value="favorite">인기순</option>
+                            {/*<option value="region">거리순</option>*/}
+                        </select>
+                    </nav>
+                    {/* 메인 */}
 
-                <JobCard dataList={currentItems} />
+                    <JobCard dataList={currentItems} />
 
-                {/* 페이지 네이션 & 게시 버튼 */}
-                <nav>
-                    {/* 페이지네이션 */}
-                    <Pagination
-                        activePage={currentPage}
-                        itemsCountPerPage={itemsPerPage}
-                        totalItemsCount={works.length}
-                        pageRangeDisplayed={5} // 보여질 페이지 범위
-                        onChange={handlePageChange}
-                        prevPageText={'<'}
-                        nextPageText={'>'}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                    />
-                </nav>
-            </section>
-        </div>
+                    {/* 페이지 네이션 & 게시 버튼 */}
+                    <nav>
+                        {/* 페이지네이션 */}
+                        <Pagination
+                            activePage={currentPage}
+                            itemsCountPerPage={itemsPerPage}
+                            totalItemsCount={works.length}
+                            pageRangeDisplayed={5} // 보여질 페이지 범위
+                            onChange={handlePageChange}
+                            prevPageText={'<'}
+                            nextPageText={'>'}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                        />
+                    </nav>
+                </section>
+            </div>
+        </>
     );
-
 }
