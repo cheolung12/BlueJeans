@@ -154,10 +154,10 @@ export default function Signup() {
       <div className='w-full h-full flex justify-center items-center'>
         <form
           onSubmit={handleSubmit}
-          className='w-full h-full flex flex-col justify-center items-center'
+          className='w-full max-w-2xl h-full flex flex-col justify-center items-center'
         >
           <div className='w-3/5 flex flex-col justify-start'>
-            <div className='text-3xl font-bold mb-2 text-[#2e375d]'>
+            <div className='text-4xl font-bold mb-2 text-[#2e375d]'>
               회원가입
             </div>
             <div className='text-base font-light mb-10'>
@@ -308,10 +308,10 @@ export default function Signup() {
           <div className='flex justify-center w-3/5 mt-11'>
             <button
               type='submit'
-              className={`w-1/2 cursor-pointer hover:opacity-95 bg-[#2e375d] font-semibold text-white text-xl px-4 py-4 rounded-lg ${
+              className={`w-1/2 cursor-pointer bg-[#2e375d] font-semibold text-white text-xl px-4 py-4 rounded-lg ${
                 isFormValid
-                  ? 'opacity-none cursor-pointer'
-                  : 'opacity-70 cursor-default'
+                  ? 'opacity-none cursor-pointer hover:opacity-95'
+                  : 'opacity-70 cursor-auto'
               }`}
               disabled={!isFormValid}
             >
