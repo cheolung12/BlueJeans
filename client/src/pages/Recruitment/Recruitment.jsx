@@ -92,8 +92,17 @@ export default function Recruitment() {
                 <button onClick={handleClick}>일자리 불러오기</button> */}
 
                 {/* 인기순 & 최신순 셀렉트 */}
-                <nav>
-                    <select name="" id="" value={selectValue} onChange={handleChange}>
+                <nav className="flex justify-end">
+                    <Link className="m-2" to={`/recruitment/create`}>
+                        <ResButton text="공고 게시" />
+                    </Link>
+                    <select
+                        className="m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor"
+                        name=""
+                        id=""
+                        value={selectValue}
+                        onChange={handleChange}
+                    >
                         <option value="latest">최신순</option>
                         <option value="favorite">인기순</option>
                         {/*<option value="region">거리순</option>*/}
@@ -117,9 +126,6 @@ export default function Recruitment() {
                         itemClass="page-item"
                         linkClass="page-link"
                     />
-                    <Link to={`/recruitment/create`}>
-                        <ResButton text="공고 게시" />
-                    </Link>
                 </nav>
             </section>
         </div>

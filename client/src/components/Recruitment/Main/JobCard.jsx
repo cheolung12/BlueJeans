@@ -17,11 +17,14 @@ export default function JobCard({ dataList }) {
                             <div class="m-1 w-1/2">
                                 <img class=" w-full h-full border border-solid rounded-lg" src="" alt="근무 설명 이미지" />
                             </div>
-                            <div class="m-1 w-2/3">
-                                <div>{data.title}</div>
-                                <div>{data.region}</div>
+                            <div class="m-1 w-2/3 relative">
+                                <div className="absolute left-0 top-0 text-start font-normal text-2xl block">{data.title}</div>
+                                <div className="absolute top-1/2 block">
+                                    <p className="m-1">{data.region}</p>
+                                    <p className="m-1">{data.contact}</p>
+                                </div>
 
-                                <div className=" text-end font-semibold text-2xl">{data.money}</div>
+                                <div className="absolute bottom-0 right-0 text-end font-semibold text-2xl">{data.money}</div>
                             </div>
                         </Link>
                     </div>
