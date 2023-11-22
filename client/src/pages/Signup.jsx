@@ -12,6 +12,7 @@ export default function Signup() {
     pwCheck: '',
     address: '',
   });
+
   // null: 비활성화, false: 유효성 검사 실패, true: 성공
   const [formValid, setFormValid] = useState({
     userID: null,
@@ -19,10 +20,12 @@ export default function Signup() {
     password: null,
     address: null,
   });
+
+  // formValid의 모든 요소가 true일경우 true를 나타냄
   const isFormValid = Object.values(formValid).every((value) => value === true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);  // 주소 모달창 열고 닫기
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);  // 가입버튼 재클릭 방지를 위한 state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);  // 왼쪽 이미지화면 전환을 위한 state
   const imageUrls = [
     '/images/s1.jpeg',
     '/images/s2.jpeg',
@@ -30,22 +33,26 @@ export default function Signup() {
     '/images/s4.jpeg',
   ];
   const currentImageUrl = imageUrls[currentImageIndex];
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 회원가입 성공 시 login 화면으로 리다이렉트 하기 위해 선언
 
+  // 3초마다 이미지 변경
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
     }, 3000);
     return () => clearInterval(intervalId);
-  }, [currentImageIndex]);
+  },[currentImageIndex, imageUrls.length]);
 
+  
   const handleChange = (e) => {
+    // input값 state에 실시간 적용
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
+    // input별 유효성검사하기
     setFormValid((prevData) => {
       let updatedData = { ...prevData };
       if (name === 'userID') {
@@ -61,6 +68,7 @@ export default function Signup() {
     });
   };
 
+  // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (정의)
   function fadingEffect(elementId) {
     const button = document.getElementById(elementId);
     let opacity = 1;
@@ -76,6 +84,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 제출버튼 1초 이내 재클릭 방지
     if (!isFormSubmitting) {
       setIsFormSubmitting(true);
       setTimeout(() => {
@@ -83,6 +92,7 @@ export default function Signup() {
       }, 1000); 
     }
 
+    // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (적용)
     if (!formValid.userID) {
       fadingEffect('id-duplication');
       return;
@@ -92,12 +102,12 @@ export default function Signup() {
     } else if (!formValid.password) {
       fadingEffect('pwCheck');
       return;
-      return;
     } else if (!formValid.address) {
       fadingEffect('address');
       return;
     }
 
+    // 회원가입 요청 
     try {
       const res = await axios({
         method: 'POST',
@@ -117,12 +127,14 @@ export default function Signup() {
     }
   };
 
+  // input에 spacebar 입력 방지용
   const blockSpace = (e) => {
     if (e.key === ' ') {
       e.preventDefault();
     }
   };
 
+  // 아이디 or 닉네임 중복 확인
   const checkDuplication = async (type) => {
     const value = formData[type];
     try {
@@ -130,6 +142,7 @@ export default function Signup() {
         method: 'POST',
         url: `http://localhost:8080/api/user/check?type=${type}&value=${value}`,
       });
+      // form 유효성 검사
       if (!res.data) {
         setFormValid((prevData) => ({
           ...prevData,
@@ -146,7 +159,7 @@ export default function Signup() {
     }
   };
 
-  // Modal 스타일
+  // 주소 modal 스타일
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(0,0,0,0.5)',
@@ -161,11 +174,12 @@ export default function Signup() {
     },
   };
 
+  // 주소 modal 열고 닫기
   const modalToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // 주소 설정
+  // 주소창 닫을때 입력값으로 설정
   const completeHandler = (data) => {
     setFormData((prevData) => ({
       ...prevData,
