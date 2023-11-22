@@ -13,7 +13,7 @@ export default function Ellipsis({ inputText, isLoading }) {
           px-2 py-1`
         }
         >
-          <FontAwesomeIcon icon={faEllipsis} fade size='3x' />
+          <FontAwesomeIcon icon={faEllipsis} fade className='text-4xl' />
         </div>
       )}
     </>
