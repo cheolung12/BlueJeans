@@ -86,8 +86,8 @@ export default function Recruitment() {
     };
 
     return (
-        <>
-            <section>
+        <div className="w-full flex justify-center">
+            <section className="max-w-4xl block">
                 {/* 데이터 요청 버튼 
                 <button onClick={handleClick}>일자리 불러오기</button> */}
 
@@ -100,9 +100,9 @@ export default function Recruitment() {
                     </select>
                 </nav>
                 {/* 메인 */}
-                <section>
-                    <JobCard dataList={currentItems} />
-                </section>
+
+                <JobCard dataList={currentItems} />
+
                 {/* 페이지 네이션 & 게시 버튼 */}
                 <nav>
                     {/* 페이지네이션 */}
@@ -122,6 +122,6 @@ export default function Recruitment() {
                     </Link>
                 </nav>
             </section>
-        </>
+        </div>
     );
 }
