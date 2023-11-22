@@ -116,7 +116,7 @@ export default function Main({ id, thumbnail, title }) {
           <Swiper
             className='w-3/5 h-3/4 self-center'
             onSwiper={setSwiperRef}
-            slidesPerView={2}
+            slidesPerView={3}
             loop={true}
             centeredSlides={true}
             autoplay={{
@@ -163,40 +163,6 @@ export default function Main({ id, thumbnail, title }) {
               <circle cx='24' cy='24' r='20'></circle>
             </svg>
           </Swiper>
-
-          {/* 기본 스와이퍼에 map 넣어서 다시 스와이퍼 만들기 */}
-
-          {/* <Swiper
-            className='self-center'
-            onSwiper={setSwiperRef}
-            slidesPerView={4}
-            loop={true}
-            centeredSlides={true}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            onAutoplayTimeLeft={onAutoplayTimeLeft}
-            spaceBetween={30}
-            navigation={true}
-            modules={[Pagination, Navigation]}
-          >
-            {booksArray.map((book) => (
-              <SwiperSlide key={book.id} className='h-72'>
-                <div>
-                  <img
-                    src={book.thumbnail}
-                    alt={book.title}
-                    className='h-72 text-blue-700'
-                  />
-                </div>
-                <div className='text-white'>{book.title}</div>
-              </SwiperSlide>
-            ))}
-          </Swiper> */}
         </div>
 
         {/* 2 */}
