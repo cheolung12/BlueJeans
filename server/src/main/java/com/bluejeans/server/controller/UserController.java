@@ -34,6 +34,12 @@ public class UserController {
         }
     }
 
+    // 아이디or닉네임 중복확인
+    @PostMapping("/user/check")
+    public boolean checkDuplicate(@RequestParam String type, @RequestParam String value){
+        return userService.checkDuplicate(type, value);
+    }
+
     //회원정보 수정하기
     @PatchMapping("/user/{id}")
     public String patchUser(@PathVariable int id, @RequestBody UserDTO userDTO){
