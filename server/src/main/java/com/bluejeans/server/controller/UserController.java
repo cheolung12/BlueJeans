@@ -14,7 +14,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@RequestMapping("/user")
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -31,6 +32,12 @@ public class UserController {
             // 아이디 중복 예외가 발생하면 회원가입 화면으로 리다이렉트
             return "redirect:/signup";
         }
+    }
+
+    // 아이디or닉네임 중복확인
+    @PostMapping("/user/check")
+    public boolean checkDuplicate(@RequestParam String type, @RequestParam String value){
+        return userService.checkDuplicate(type, value);
     }
 
     //회원정보 수정하기
