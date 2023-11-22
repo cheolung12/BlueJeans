@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function ResButton({ text, width, height }) {
-  const style = { width, height };
+export default function ResButton({ text, width }) {
+  const style = { width };
 
   return (
     <div>
