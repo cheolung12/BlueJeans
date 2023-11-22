@@ -14,10 +14,10 @@
     @apply text-base text-gray-600 font-semibold;
   }
   .signup-input {
-    @apply w-full sm:h-12 h-9 p-2.5 text-base block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus:ring focus:ring-indigo-400;
+    @apply w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus:ring focus:ring-indigo-400;
   }
   .signup-input-duplicable {
-    @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 text-base border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring focus-within:ring-indigo-400;
+    @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring focus-within:ring-indigo-400;
   }
 }
 
