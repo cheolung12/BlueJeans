@@ -17,7 +17,9 @@ import 'swiper/css/navigation';
 
 import { Pagination, Navigation } from 'swiper/modules';
 
-export default function Main() {
+export default function Main({ id, thumbnail, title }) {
+  const booksArray = Object.values(books);
+
   const [swiperRef, setSwiperRef] = useState(null);
   let appendNumber = 4;
   let prependNumber = 1;
@@ -112,9 +114,9 @@ export default function Main() {
           {/* books.thumbnail이랑 books.name 가져오기*/}
 
           <Swiper
-            className='w-2/3 h-3/4 self-center'
+            className='w-3/5 h-3/4 self-center'
             onSwiper={setSwiperRef}
-            slidesPerView={3}
+            slidesPerView={2}
             loop={true}
             centeredSlides={true}
             autoplay={{
@@ -129,16 +131,72 @@ export default function Main() {
             navigation={true}
             modules={[Pagination, Navigation]}
           >
-            <SwiperSlide className='h-72 w-52 bg-slate-300'>{}</SwiperSlide>
-            <SwiperSlide className=' h-72 w-52 bg-red-300'>Slide 2</SwiperSlide>
-            <SwiperSlide className='h-72 w-52 bg-blue-200'>Slide 3</SwiperSlide>
-            <SwiperSlide className='h-72 w-52 bg-green-300'>
-              Slide 4
-            </SwiperSlide>
+            {/* {booksArray.map((value) => {
+              return value.map((book) => console.log(book.title));
+            })} */}
+
+            {booksArray.map((value) =>
+              value.map(
+                (book) => (
+                  console.log(book),
+                  (
+                    <React.Fragment key={book.id}>
+                      <SwiperSlide className='h-72 w-40 bg-slate-300'>
+                        <div>
+                          <img
+                            src={book.thumbnail}
+                            alt={book.title || 'No Title'}
+                            className='h-full w-full text-blue-700'
+                          />
+                        </div>
+                        <div className='text-white'>
+                          {book.title || 'No Title'}
+                        </div>
+                        <div className='text-white'>{book.title}</div>
+                      </SwiperSlide>
+                    </React.Fragment>
+                  )
+                )
+              )
+            )}
             <svg ref={progressCircle}>
               <circle cx='24' cy='24' r='20'></circle>
             </svg>
           </Swiper>
+
+          {/* 기본 스와이퍼에 map 넣어서 다시 스와이퍼 만들기 */}
+
+          {/* <Swiper
+            className='self-center'
+            onSwiper={setSwiperRef}
+            slidesPerView={4}
+            loop={true}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
+            spaceBetween={30}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+          >
+            {booksArray.map((book) => (
+              <SwiperSlide key={book.id} className='h-72'>
+                <div>
+                  <img
+                    src={book.thumbnail}
+                    alt={book.title}
+                    className='h-72 text-blue-700'
+                  />
+                </div>
+                <div className='text-white'>{book.title}</div>
+              </SwiperSlide>
+            ))}
+          </Swiper> */}
         </div>
 
         {/* 2 */}
@@ -168,9 +226,15 @@ export default function Main() {
         </div>
         {/* 3 */}
         <div className='h-[37.5rem] bg-[#F28080] flex'>
-          <div className='w-1/3'>1</div>
-          <div className='w-1/3'>2</div>
-          <div className='w-1/3'>3</div>
+          <div className='w-1/3'>
+            <div className=' bg-emerald-200 h-16 w-11'>1</div>
+          </div>
+          <div className='w-1/3'>
+            <div>2</div>
+          </div>
+          <div className='w-1/3'>
+            <div>3</div>
+          </div>
         </div>
       </div>
     </div>
