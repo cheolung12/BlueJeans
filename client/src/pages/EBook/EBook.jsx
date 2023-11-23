@@ -24,48 +24,51 @@ export default function EBook() {
 
   return (
     <div>
-      <div className='px-[11rem]'>
-        <Title />
-        <div className='flex items-center justify-between px-8'>
-          <Filter />
-          <SearchBooks book={books} />
+      <Title />
+      <div className='flex justify-center'>
+        <div className='w-[61rem]'>
+          <div className='flex items-center justify-between px-4'>
+            <Filter />
+            <SearchBooks book={books} />
+          </div>
+
+          <section>
+            {searchInput && (
+              <div className='font-semibold text-xl text-center py-3'>{`'${searchInput}'의 검색결과`}</div>
+            )}
+            <div className='py-6'>
+              <div className='flex flex-wrap justify-center'>
+                <>
+                  {filterBooks.map((book) => (
+                    <Link
+                      to={`/ebook/detail/${book.id}`}
+                      state={{ dataDetail: book }}
+                      className='p-2'
+                      key={book.id}
+                    >
+                      {searchInput ? (
+                        <BookCardSearch
+                          id={book.id}
+                          thumbnail={book.thumbnail}
+                          title={book.title}
+                          author={book.author}
+                        />
+                      ) : (
+                        <BookCard
+                          id={book.id}
+                          thumbnail={book.thumbnail}
+                          title={book.title}
+                          author={book.author}
+                        />
+                      )}
+                    </Link>
+                  ))}
+                </>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-      <section className='px-[11rem]'>
-        {searchInput && (
-          <div className='font-semibold text-xl text-center py-5'>{`'${searchInput}'의 검색결과`}</div>
-        )}
-        <div className='py-6'>
-          <div className='flex flex-wrap justify-center'>
-            <>
-              {filterBooks.map((book) => (
-                <Link
-                  to={`/ebook/detail/${book.id}`}
-                  state={{ dataDetail: book }}
-                  className='p-2'
-                  key={book.id}
-                >
-                  {searchInput ? (
-                    <BookCardSearch
-                      id={book.id}
-                      thumbnail={book.thumbnail}
-                      title={book.title}
-                      author={book.author}
-                    />
-                  ) : (
-                    <BookCard
-                      id={book.id}
-                      thumbnail={book.thumbnail}
-                      title={book.title}
-                      author={book.author}
-                    />
-                  )}
-                </Link>
-              ))}
-            </>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

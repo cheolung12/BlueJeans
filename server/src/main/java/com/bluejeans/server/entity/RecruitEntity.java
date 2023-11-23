@@ -21,8 +21,7 @@ public class RecruitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "recruitId", cascade = CascadeType.REMOVE)
-    private List<RecruitFileEntity> recruitFiles;
+
 
     @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
     private List<RecruitDibsEntity> recruitDibs;
@@ -31,20 +30,23 @@ public class RecruitEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String title;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = true, length = 1000)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int money;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = true, length = 45)
     private String region;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = true, length = 45)
     private String contact;
+
+    @Column(nullable = true)
+    private String img_path;
 
     @CreationTimestamp
     private Timestamp created_at;
@@ -52,11 +54,12 @@ public class RecruitEntity {
     @UpdateTimestamp
     private Timestamp updated_at;
 
-    public void updateFields(RecruitDTO recruitDTO) {
+    public void updateFields(RecruitDTO recruitDTO, String fileURL) {
         this.setTitle(recruitDTO.getTitle());
         this.setContent(recruitDTO.getContent());
         this.setMoney(recruitDTO.getMoney());
         this.setRegion(recruitDTO.getRegion());
         this.setContact(recruitDTO.getContact());
+        this.setImg_path(fileURL);
     }
 }

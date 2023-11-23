@@ -9,7 +9,12 @@ export default function BookCardDetail({ data }) {
     <div>
       <div>
         <div className='flex px-38 pb-11 justify-center'>
-          <section className='flex flex-col justify-center items-center bg-[#F7f7f7] rounded-2xl w-[20rem] h-[41rem]'>
+          <section
+            className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[41rem]'
+            style={{
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            }}
+          >
             <div className='relative overflow-hidden rounded-t-lg'>
               <div className='relative'>
                 {/* 배경이미지 */}
@@ -22,17 +27,10 @@ export default function BookCardDetail({ data }) {
                 {/* 그라데이션 */}
                 <div
                   className='absolute top-[14rem] left-0 w-full h-[10rem] z-1'
-                  // style={{
-                  //   background: 'linear-gradient(180deg, #f7f7f7, transparent)',
-                  // }}
-
-                  // linear-gradient(180deg,
-                  //   rgba(var(--bg-a-20-rgb), 0.00) 0%,
-                  //   rgba(var(--bg-a-20-rgb), 0.18) 20%,
-                  //   rgba(var(--bg-a-20-rgb), 0.42) 40%,
-                  //   rgba(var(--bg-a-20-rgb), 0.68) 60%,
-                  //   rgba(var(--bg-a-20-rgb), 0.88) 80%,
-                  //   rgb(var(--bg-a-20-rgb)) 100%)
+                  style={{
+                    background:
+                      'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.18) 20%, rgba(255, 255, 255, 0.42) 40%, rgba(255, 255, 255, 0.68) 60%, rgba(255, 255, 255, 0.88) 80%, rgb(255, 255, 255) 100%)',
+                  }}
                 ></div>
 
                 {/* 책 이미지 */}
@@ -67,7 +65,12 @@ export default function BookCardDetail({ data }) {
               </Link>
             </div>
           </section>
-          <section className='flex flex-col items-center w-[31rem] h-[41rem] rounded-[1rem] bg-[#F7f7f7] ml-2 pt-[2.3rem] ounded-[1rem] overflow-y-auto'>
+          <section
+            className='flex flex-col items-center w-[31rem] h-[41rem] rounded-[1rem] ml-2 pt-[2.3rem] overflow-y-auto'
+            style={{
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            }}
+          >
             <div className='w-full'>
               <div className='px-7 py-1 text-xl font-bold'>줄거리</div>
             </div>

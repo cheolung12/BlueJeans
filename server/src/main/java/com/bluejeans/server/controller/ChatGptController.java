@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "ChatBot API", description = "챗봇 관련 API 입니다.")
 @RequestMapping("/api/chat")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class ChatGptController {
 
     private final ChatGptService chatGptService;

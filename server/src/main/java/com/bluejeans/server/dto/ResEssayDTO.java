@@ -12,19 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EssayDTO {
+public class ResEssayDTO {
     private int id;
 
     private String title;
     private String content;
     private int user_id;
-    private MultipartFile multipartFile;
+    private String imp_path;
 
-    public static EssayDTO essayEntityToDTO(EssayEntity entity){
+    public static ResEssayDTO essayEntityToDTO(EssayEntity entity){
         if (entity == null) {
             return null;
         }
-        EssayDTO essay = new EssayDTO().builder()
+        ResEssayDTO essay = new ResEssayDTO().builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
@@ -34,7 +34,7 @@ public class EssayDTO {
         return essay;
     }
 
-    public static EssayEntity essayDTOToEntity(EssayDTO dto, UserEntity user){
+    public static EssayEntity essayDTOToEntity(ResEssayDTO dto, UserEntity user){
         if (dto == null) {
             return null;
         }
