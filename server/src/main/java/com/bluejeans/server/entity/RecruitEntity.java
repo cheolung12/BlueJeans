@@ -21,36 +21,42 @@ public class RecruitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
-    private List<RecruitDibsEntity> recruitDibs;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userId;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = true, length = 1000)
+    @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column(nullable = true)
+    @Column
     private int money;
 
-    @Column(nullable = true, length = 45)
+    @Column(length = 45)
     private String region;
 
-    @Column(nullable = true, length = 45)
+    @Column(length = 45)
     private String contact;
 
-    @Column(nullable = true)
+    @Column
     private String img_path;
+
+    @Column
+    private String workTime;
+
+    @Column
+    private boolean isClosing;
 
     @CreationTimestamp
     private Timestamp created_at;
 
     @UpdateTimestamp
     private Timestamp updated_at;
+
+    @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
+    private List<RecruitDibsEntity> recruitDibs;
 
     public void updateFields(RecruitDTO recruitDTO, String fileURL) {
         this.setTitle(recruitDTO.getTitle());
