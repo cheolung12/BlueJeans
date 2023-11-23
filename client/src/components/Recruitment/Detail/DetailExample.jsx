@@ -21,7 +21,7 @@ export default function DetailExample({ data }) {
             left: '0',
             margin: 'auto',
             width: '500px',
-            height: 'fit-content',
+            height: '300px',
             padding: '0',
             overflow: 'hidden',
         },
@@ -48,14 +48,16 @@ export default function DetailExample({ data }) {
                             {/* true => dataD.recruiting */}
                             {true ? (
                                 <div>
-                                    <button className="bg-chatColor p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
+                                    <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                         공고 지원하기
                                     </button>
-
+                                    {/* 지원 시 연락처 모달 생성 */}
                                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
-                                        <div>{dataD.contact}</div>
+                                        <div>연락처 - {dataD.contact}</div>
                                         <div className="flex justify-end pr-4">
-                                            <button onClick={modalToggle}>[ 닫기 ]</button>
+                                            <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
+                                                닫기
+                                            </button>
                                         </div>
                                     </Modal>
                                 </div>
