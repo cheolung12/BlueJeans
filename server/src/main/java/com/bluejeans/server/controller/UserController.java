@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -63,7 +62,7 @@ public class UserController {
     }
 
 
-    //겟방식 로그인?? //예외처리
+    //로그인 페이지 렌더링
     @GetMapping("/login")
     public String loginPage(@RequestParam(required = false) String error) {
         if (error != null) {
@@ -74,6 +73,7 @@ public class UserController {
         // 그 외의 경우에는 단순히 로그인 페이지를 반환
         return "login";
     }
+
 
 
     //회원가입 화면
