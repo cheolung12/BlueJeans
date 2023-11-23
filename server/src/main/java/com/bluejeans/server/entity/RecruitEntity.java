@@ -21,8 +21,6 @@ public class RecruitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-
     @OneToMany(mappedBy = "recruit", cascade = CascadeType.REMOVE)
     private List<RecruitDibsEntity> recruitDibs;
 
