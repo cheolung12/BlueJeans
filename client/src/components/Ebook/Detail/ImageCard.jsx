@@ -58,7 +58,12 @@ export default function ImageCard({ id, thumbnail, title, author }) {
           </div>
           {/* 찜하기 버튼 */}
           <LikeButton />
-          <Link to={`/ebook/detail/viewer/${id}`} key={id}>
+          {/* 바로 읽기 버튼 */}
+          <Link
+            to={`/ebook/detail/viewer/${id}`}
+            key={id}
+            state={{ id, title }}
+          >
             <ResButton text='바로 읽기' />
           </Link>
         </div>
