@@ -16,6 +16,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Pagination, Navigation } from 'swiper/modules';
+import Signup from '../components/main/Signup';
+import Login from '../components/main/Login';
 
 export default function Main({ id, thumbnail, title }) {
   const booksArray = Object.values(books);
@@ -59,7 +61,12 @@ export default function Main({ id, thumbnail, title }) {
   return (
     <div>
       <div>
-        <div className=' h-[650px] w-full'></div>
+        <div className=' h-[650px] w-full'>
+          <div className='flex justify-end'>
+            <Login></Login>
+            <Signup></Signup>
+          </div>
+        </div>
 
         <div className=' flex justify-center'>
           <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-36 w-3/4 mb-24 text-lg'>
