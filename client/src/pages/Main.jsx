@@ -22,43 +22,6 @@ import Login from '../components/main/Login';
 
 export default function Main({ id, thumbnail, title }) {
   const booksArray = Object.values(books);
-
-  const [swiperRef, setSwiperRef] = useState(null);
-  let appendNumber = 4;
-  let prependNumber = 1;
-
-  const prepend2 = () => {
-    swiperRef.prependSlide([
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-    ]);
-  };
-
-  const prepend = () => {
-    swiperRef.prependSlide(
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
-    );
-  };
-
-  const append = () => {
-    swiperRef.appendSlide(
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
-    );
-  };
-
-  const append2 = () => {
-    swiperRef.appendSlide([
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-    ]);
-  };
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty('--progress', 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
-
   return (
     <div>
       <div>
