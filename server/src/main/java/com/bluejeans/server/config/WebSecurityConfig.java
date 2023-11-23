@@ -51,16 +51,16 @@ public class WebSecurityConfig {
                         .usernameParameter("userID").passwordParameter("password")
                         .failureHandler(customAuthenticationFailureHandler)
 //                        .failureUrl("/login?error=true") //로그인 실패시 이동할 url. 에러정보 param으로 전달
-                        .defaultSuccessUrl("/home"))
+                        .defaultSuccessUrl("/api/home"))
                 .logout(customizer -> customizer.logoutUrl("/logout")
-                        .logoutSuccessUrl("/login").invalidateHttpSession(true)) //세션을 무효화
+                        .logoutSuccessUrl("/api/login").invalidateHttpSession(true)) //세션을 무효화
 
                 .sessionManagement( session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)// 세션이 필요할 때만 생성
-                        .invalidSessionUrl("/login?timeout") // 세션이 유효하지 않을 때 리다이렉트할 URL
+                        .invalidSessionUrl("/api/login?timeout") // 세션이 유효하지 않을 때 리다이렉트할 URL
                         .maximumSessions(1) // 동시에 여러 세션 허용하지 않음
                         .maxSessionsPreventsLogin(true) // 동시에 여러 세션 허용하지 않음
-                        .expiredUrl("/login?expired")) // 만료된 세션으로 간주되면 리다이렉트할 URL
+                        .expiredUrl("/api/login?expired")) // 만료된 세션으로 간주되면 리다이렉트할 URL
                 .build();
     }
 
