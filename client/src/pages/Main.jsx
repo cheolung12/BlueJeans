@@ -22,43 +22,6 @@ import Login from '../components/main/Login';
 
 export default function Main({ id, thumbnail, title }) {
   const booksArray = Object.values(books);
-
-  const [swiperRef, setSwiperRef] = useState(null);
-  let appendNumber = 4;
-  let prependNumber = 1;
-
-  const prepend2 = () => {
-    swiperRef.prependSlide([
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-    ]);
-  };
-
-  const prepend = () => {
-    swiperRef.prependSlide(
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
-    );
-  };
-
-  const append = () => {
-    swiperRef.appendSlide(
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
-    );
-  };
-
-  const append2 = () => {
-    swiperRef.appendSlide([
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-    ]);
-  };
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty('--progress', 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
-
   return (
     <div>
       <div>
@@ -111,10 +74,14 @@ export default function Main({ id, thumbnail, title }) {
           <div className=' w-1/3 relative'>
             <div className='absolute top-1/3 pl-32'>
               <p className='text-4xl pb-10 font-bold'>오늘의 추천도서</p>
-              <div className=' text-lg'>
-                <p className='pb-3'>1970년대의 감성부터 현대까지</p>
-                <p className='pb-3'>지금 봐도 세련된 문장으로 감동을 주는</p>
-                <p className='pb-3'>작품을 만나 보세요</p>
+              <div className='text-lg'>
+                <p>
+                  1970년대의 감성부터 현대까지
+                  <br />
+                  지금 봐도 세련된 문장으로 감동을 주는
+                  <br />
+                  작품을 만나 보세요
+                </p>
               </div>
             </div>
           </div>
@@ -157,30 +124,34 @@ export default function Main({ id, thumbnail, title }) {
         </div>
 
         {/* 2 */}
-        <div className='h-[37.5rem] bg-[#5495B1] flex  '>
-          <div className='w-2/3 self-center flex ml-28'>
-            <div>
-              <div className='rounded-full w-80 h-80 bg-green-200'></div>
-              <div className='text-lg text-center'>이름</div>
-              <div className='text-2xl text-center'>작품 이름</div>
+        <div className=' h-[37.5rem] p-3 bg-red-100'>
+          <div className='flex h-full'>
+            <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
+              <div>
+                <div className=' rounded-full bg-red-500 h-80 w-80'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
+              <div>
+                <div className='rounded-full  bg-orange-500 h-60 w-60'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
+              <div>
+                <div className='rounded-full  bg-orange-500 h-60 w-60'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
             </div>
 
-            <div className=' place-items-end self-end pl-5'>
-              <div className='rounded-full w-64 h-64  bg-red-50'></div>
-              <div className='text-lg text-center'>이름</div>
-              <div className='text-2xl text-center'>작품 이름</div>
+            <div className='flex justify-between w-30'>
+              <div className='self-center text-2xl font-bold place-items-end'>
+                이달의 문학왕
+              </div>
             </div>
-
-            <div className=' place-items-end self-end pl-5'>
-              <div className='rounded-full w-64 h-64 bottom-0 bg-red-50'></div>
-              <div className='text-lg text-center'>이름</div>
-              <div className='text-2xl text-center'>작품 이름</div>
-            </div>
-          </div>
-          <div className='flex w-1/4 justify-center items-center'>
-            <p className='text-4xl font-bold text-white'>이달의 문학왕</p>
           </div>
         </div>
+
         {/* 3 */}
         <div className='flex flex-col bg-[#F28080] h-[37.5rem] items-center'>
           <p className='text-4xl font-semibold mt-9 items-start pl-16  text-white'>
