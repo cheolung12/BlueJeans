@@ -43,11 +43,11 @@ public class RecruitEntity {
     @Column
     private String img_path;
 
-    @Column
+    @Column(length = 45)
     private String workTime;
 
-    @Column
-    private boolean isClosing;
+    @Column(nullable = false)
+    private boolean recruiting = true;
 
     @CreationTimestamp
     private Timestamp created_at;
