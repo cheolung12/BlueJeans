@@ -11,6 +11,7 @@ export default function EBookDetail() {
 
   // <Link>에서 bookcard 데이터 받아옴
   const location = useLocation();
+  // console.log(location.state);
 
   return (
     <div>

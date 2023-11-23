@@ -3,11 +3,19 @@ import { Link } from 'react-router-dom';
 import ResButton from '../../common/ResButton';
 import LikeButton from '../../common/LikeButton';
 
-export default function ImageCard({ id, thumbnail, title, author }) {
+export default function ImageCard({
+  id,
+  thumbnail,
+  title,
+  author,
+  publisher,
+  genre,
+  ISBN,
+}) {
   return (
     <div>
       <section
-        className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[41rem]'
+        className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[46rem]'
         style={{
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
@@ -23,7 +31,7 @@ export default function ImageCard({ id, thumbnail, title, author }) {
 
             {/* 그라데이션 */}
             <div
-              className='absolute top-[14rem] left-0 w-full h-[10rem] z-1'
+              className='absolute top-[12rem] left-0 w-full h-[10rem] z-1'
               style={{
                 background:
                   'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.18) 20%, rgba(255, 255, 255, 0.42) 40%, rgba(255, 255, 255, 0.68) 60%, rgba(255, 255, 255, 0.88) 80%, rgb(255, 255, 255) 100%)',
@@ -51,11 +59,17 @@ export default function ImageCard({ id, thumbnail, title, author }) {
           </div>
         </div>
 
-        <div className='flex flex-col items-center justify-evenly w-[18rem] h-[20rem]'>
-          <div className='text-center'>
+        <div className='flex flex-col items-center justify-evenly w-[18rem] h-[29rem]'>
+          <div className='text-center flex flex-col h-48 justify-evenly'>
             <h1 className='text-lg font-semibold'>{title}</h1>
-            <div className='mt-2'>{author}</div>
+            <div className='text-lg'>{author}</div>
+            <div>
+              <div className='text-sm mb-1'>{publisher}</div>
+              <div className='text-sm mb-1'>{genre}</div>
+              <div className='text-sm mb-1'>ISBN : {ISBN}</div>
+            </div>
           </div>
+
           {/* 찜하기 버튼 */}
           <LikeButton />
           {/* 바로 읽기 버튼 */}
