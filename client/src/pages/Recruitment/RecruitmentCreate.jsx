@@ -1,110 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function RecruitmentCreate() {
-    const [title, setTitle] = useState('');
-    const [money, setMoney] = useState();
-    const [region, setRegion] = useState('');
-    const [workDay, setWorkDay] = useState('');
-    const [workTime, setWorkTime] = useState('');
-    const [content, setContent] = useState('');
-    const [contact, setContact] = useState('');
+  const [recruitmentData, setRecruitmentData] = useState({
+    title: "",
+    money: "",
+    region: "",
+    content: "",
+    contact: "",
+  });
+  const [file, setFile] = useState(null);
 
-    const titleChange = (e) => setTitle(e.target.value);
-    const moneyChange = (e) => setMoney(e.target.value);
-    const regionChange = (e) => setRegion(e.target.value);
-    // const workDayChange = (e) => setWorkDay(e.target.value);
-    // const workTimeChange = (e) => setWorkTime(e.target.value);
-    const contentChange = (e) => setContent(e.target.value);
-    const contactChange = (e) => setContact(e.target.value);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRecruitmentData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-        // 폼 데이터 추가
-        let formData = new FormData();
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-        formData.append('title', title);
-        formData.append('money', money);
-        formData.append('region', region);
-        // formData.append('workDay', workDay);
-        // formData.append('workTime', workTime);
-        formData.append('content', content);
-        formData.append('contact', contact);
+    const formData = new FormData();
+    formData.append("recruitDTO", JSON.stringify(recruitmentData));
+    formData.append("file", file);
 
-        // formData.append('uploadFile', document.recruitForm.uploadFile.files[0]);
-
-        // 폼 데이터 전송
-        axios({
-            method: 'POST',
-            url: 'http://localhost:8080/api/jobs',
-            data: {
-                title,
-                content,
-                money,
-                // worktime,
-                region,
-                contact,
-                // img_path,
-            }
-        }).then((res) => {
-                console.log(res.data);
-                console.log('파일 전송 성공');
-            })
-            .catch(function (error) {
-                for (let data of formData.entries()) {
-                    console.log(data[0] + ': ' + data[1]);
-                }
-                console.log('파일 전송 실패');
-            });
-
-        // 콘솔 체크
-        for (let data of formData.entries()) {
-            console.log(data[0] + ': ' + data[1]);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/jobs",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-    };
+      );
 
-    return (
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div>
+      <div>공고 게시</div>
+      <form onSubmit={onSubmit} encType="multipart/form-data">
         <div>
-            <div>공고 게시</div>
-            <form name="recruitForm" onSubmit={onSubmit} encType="multipart/form">
-                <div>
-                    <label htmlFor="title">제목</label>
-                    <input value={title} onChange={titleChange} name="title" type="title" placeholder="제목을 입력하세요." required />
-                    <br />
-                    <label htmlFor="money">급여</label>
-                    <input value={money} onChange={moneyChange} name="money" type="text" placeholder="급여를 입력하세요" required />
-                    <br />
-                    <label htmlFor="region">근무 지역</label>
-                    <input value={region} onChange={regionChange} name="region" type="text" placeholder="근무 지역을 입력하세요" required />
-                    <br />
-                    <label htmlFor="contact">연락처</label>
-                    <input value={contact} onChange={contactChange} name="contact" type="text" placeholder="연락처를 입력하세요" required />
-                    <br />
-                    {/* <label htmlFor="workDay">근무 요일</label>
-                    <input value={workDay} onChange={workDayChange} name="workDay" type="text" placeholder="근무 요일을 입력하세요" required />
-                    <br />
-                    <label htmlFor="workTime">근무 시간</label>
-                    <input value={workTime} onChange={workTimeChange} name="workTime" type="text" placeholder="근무 시간을 입력하세요" required />
-                    <br /> */}
-                    {/* <label htmlFor="file">근무지 사진 첨부</label> */}
-                    {/* <input type="file" name="uploadFile" accept="*" /> */}
-                    <br />
-                    <label htmlFor="content">근무 설명</label>
-                    <textarea
-                        value={content}
-                        onChange={contentChange}
-                        name="content"
-                        type="text"
-                        placeholder="해당 근무에 대한 설명을 입력하세요"
-                        required
-                    />
-                </div>
-                <div>
-                    <button type="submit">공고 게시하기</button>
-                </div>
-            </form>
+          <label htmlFor="title">제목</label>
+          <input
+            value={recruitmentData.title}
+            onChange={handleInputChange}
+            name="title"
+            type="text"
+            placeholder="제목을 입력하세요."
+            required
+          />
+          <br />
+          <label htmlFor="money">급여</label>
+          <input
+            value={recruitmentData.money}
+            onChange={handleInputChange}
+            name="money"
+            type="text"
+            placeholder="급여를 입력하세요"
+            required
+          />
+          <br />
+          <label htmlFor="region">근무 지역</label>
+          <input
+            value={recruitmentData.region}
+            onChange={handleInputChange}
+            name="region"
+            type="text"
+            placeholder="근무 지역을 입력하세요"
+            required
+          />
+          <br />
+          <label htmlFor="contact">연락처</label>
+          <input
+            value={recruitmentData.contact}
+            onChange={handleInputChange}
+            name="contact"
+            type="text"
+            placeholder="연락처를 입력하세요"
+            required
+          />
+          <br />
+          <label htmlFor="file">근무지 사진 첨부</label>
+          <input
+            type="file"
+            name="file"
+            onChange={handleFileChange}
+            accept="*"
+          />
+          <br />
+          <label htmlFor="content">근무 설명</label>
+          <textarea
+            value={recruitmentData.content}
+            onChange={handleInputChange}
+            name="content"
+            type="text"
+            placeholder="해당 근무에 대한 설명을 입력하세요"
+            required
+          />
         </div>
-    );
+        <div>
+          <button type="submit">공고 게시하기</button>
+        </div>
+      </form>
+    </div>
+  );
 }

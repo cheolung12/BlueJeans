@@ -65,4 +65,13 @@ public class UserService {
     }
 
 
+    public boolean checkDuplicate(String type, String value) {
+
+        if(type.equals("userID")){
+            return userRepository.existsByUserID(value);
+        } else if(type.equals("nickname")){
+            return userRepository.existsByNickname(value);
+        }
+        return false;
+    }
 }

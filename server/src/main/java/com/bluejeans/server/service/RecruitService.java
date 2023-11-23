@@ -1,15 +1,15 @@
 package com.bluejeans.server.service;
 
-import com.bluejeans.server.dto.EssayDTO;
 import com.bluejeans.server.dto.RecruitDTO;
+import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.*;
 import com.bluejeans.server.repository.RecruitDibRepository;
 import com.bluejeans.server.repository.RecruitFileRepository;
 import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class RecruitService {
     @Autowired
     private UserRepository userRepository;
 
-
+/*
     // 엔티티 리스트를 DTO리스트로
     private List<RecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
         List<RecruitDTO> result = new ArrayList<>();
@@ -42,11 +42,13 @@ public class RecruitService {
         for (RecruitEntity recruit : recruitList) {
             RecruitFileEntity file = recruitFileRepository.findByRecruitId(recruit.getId()).orElse(null);
             int like = recruitDibRepository.countByRecruit_Id(recruit.getId());
-            result.add(RecruitDTO.toDTO(recruit, file, like));
+            result.add(ResRecruitDTO.toDTO(recruit, file, like));
         }
 
         return result;
     }
+
+
 
     public List<RecruitDTO> findAll() {
         List<RecruitEntity> recruitList = recruitRepository.findAll();
@@ -71,8 +73,9 @@ public class RecruitService {
 
         return entityListToDTOList(searchedList);
     }
-
-    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user) {
+*/
+    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user, String fileURL) {
+        System.out.println("서비스");
         // DTO -> 엔티티
         RecruitEntity added = RecruitDTO.toEntity(recruitDTO, user);
 
@@ -80,7 +83,7 @@ public class RecruitService {
             RecruitEntity saved = recruitRepository.save(added);
             RecruitFileEntity file = RecruitFileEntity.builder()
                     .recruitId(saved)
-                    .img_path(recruitDTO.getImg_path())
+                    .img_path(fileURL)
                     .build();
             recruitFileRepository.save(file);
             return true;
@@ -90,17 +93,18 @@ public class RecruitService {
             return false;
         }
     }
-
-    public RecruitDTO recruitDetail(int id) {
+/*
+    public ResRecruitDTO recruitDetail(int id) {
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
         RecruitFileEntity file = recruitFileRepository.findByRecruitId(id).orElse(null);
         int like = recruitDibRepository.countByRecruit_Id(id);
         if(recruit.isPresent()){
-            return RecruitDTO.toDTO(recruit.get(), file, like);
+            return ResRecruitDTO.toDTO(recruit.get(), file, like);
         } else {
             return null;
         }
     }
+/*
 
     public boolean editRecruit(int id, RecruitDTO recruitDTO) {
         // 해당 게시물 조회
@@ -114,7 +118,7 @@ public class RecruitService {
 
             if(file.isPresent()){
                 RecruitFileEntity fileEntity = file.get();
-                fileEntity.updateImgPath(recruitDTO.getImg_path());
+                fileEntity.updateImgPath(RecruitDTO.getImg_path());
                 recruitFileRepository.save(fileEntity);
             }
 
@@ -123,6 +127,8 @@ public class RecruitService {
             return false;
         }
     }
+
+*/
 
     public boolean deleteRecruit(int jobId) {
         // 해당 게시물 조회
@@ -165,11 +171,13 @@ public class RecruitService {
             }
         }
     }
-
+/*
     public List<RecruitDTO> myLikeRecruit(UserEntity user) {
         int userId = user.getId();
         List<RecruitEntity> likedRecruits = recruitRepository.findByRecruitDibsUserId(userId);
 
         return entityListToDTOList(likedRecruits);
     }
+
+ */
 }

@@ -27,7 +27,7 @@ export default function ChatContent({ chatMessages, name }) {
               <div
                 className='border rounded-full w-10 h-10'
                 style={{
-                  backgroundImage: `url(/Asong.jpg)`,
+                  backgroundImage: `url(/images/jinsu.jpeg)`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
