@@ -18,34 +18,20 @@ public class EssayDTO {
     private String title;
     private String content;
     private int user_id;
-    private MultipartFile multipartFile;
 
-    public static EssayDTO essayEntityToDTO(EssayEntity entity){
-        if (entity == null) {
-            return null;
-        }
-        EssayDTO essay = new EssayDTO().builder()
-                .id(entity.getId())
-                .title(entity.getTitle())
-                .content(entity.getContent())
-                .user_id(entity.getUser() != null ? entity.getUser().getId() : null)
-                .build();
 
-        return essay;
-    }
 
-    public static EssayEntity essayDTOToEntity(EssayDTO dto, UserEntity user){
+    public static EssayEntity toEntity(EssayDTO dto, UserEntity user, String fileURL){
         if (dto == null) {
             return null;
         }
-        EssayEntity essay = new EssayEntity().builder()
+        return new EssayEntity().builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .user(user)
+                .img_path(fileURL)
                 .build();
-
-        return essay;
     }
 
 
