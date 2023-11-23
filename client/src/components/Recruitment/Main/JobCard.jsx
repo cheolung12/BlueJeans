@@ -23,7 +23,6 @@ export default function JobCard({ dataList }) {
                                     <p className="m-1">{data.region}</p>
                                     <p className="m-1">{data.contact}</p>
                                 </div>
-
                                 <div className="absolute bottom-0 right-0 text-end font-semibold text-2xl">{data.money}</div>
                             </div>
                         </Link>
