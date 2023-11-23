@@ -10,9 +10,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -32,12 +40,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
-                .authorizeRequests()
+                .cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeRequests()
+//                    .requestMatchers("/login", "/signup","/user","/essays","essays/detail/{essay_id}", "/**").permitAll() //허가없이 접근가능한 경로
+//                    .anyRequest().authenticated()
+//                .and()
 
-                .requestMatchers("/login", "/signup","/user","/essays","essays/detail/{essay_id}", "/**", "/jobs/**","/api/jobs/**").permitAll() //허가없이 접근가능한 경로
-
-                .anyRequest().authenticated()
-                .and()
                 .formLogin(customizer-> customizer.loginPage("/login")
                         .usernameParameter("userID").passwordParameter("password")
                         .failureHandler(customAuthenticationFailureHandler)
@@ -45,7 +54,7 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/home"))
                 .logout(customizer -> customizer.logoutUrl("/logout")
                         .logoutSuccessUrl("/login").invalidateHttpSession(true)) //세션을 무효화
-                .csrf(AbstractHttpConfigurer::disable)
+
                 .sessionManagement( session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)// 세션이 필요할 때만 생성
                         .invalidSessionUrl("/login?timeout") // 세션이 유효하지 않을 때 리다이렉트할 URL
@@ -69,4 +78,26 @@ public class WebSecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.cors(withDefaults());
+//        http.csrf(CsrfConfigurer::disable);
+//        return http.build();
+//    }
+    //CORS 설정
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://bluejeans.site"));
+        config.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }
+
