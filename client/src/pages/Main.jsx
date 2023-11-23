@@ -16,7 +16,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 /////////////////////////////////////////////
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import Signup from '../components/main/Signup';
 import Login from '../components/main/Login';
 
@@ -123,7 +123,7 @@ export default function Main({ id, thumbnail, title }) {
 
           <Swiper
             className=' w-[55rem] h-[28rem] self-center'
-            onSwiper={setSwiperRef}
+            // onSwiper={setSwiperRef}
             slidesPerView={3}
             loop={true}
             centeredSlides={true}
@@ -134,60 +134,47 @@ export default function Main({ id, thumbnail, title }) {
             pagination={{
               clickable: true,
             }}
-            onAutoplayTimeLeft={onAutoplayTimeLeft}
             spaceBetween={30}
             navigation={true}
-            modules={[Pagination, Navigation]}
+            modules={[Autoplay, Pagination, Navigation]}
           >
             {booksArray.map((value) =>
-              value.map(
-                (book) => (
-                  console.log(book),
-                  (
-                    <React.Fragment key={book.id}>
-                      <SwiperSlide className=' h-full w-full'>
-                        <div>
-                          <img
-                            src={book.thumbnail}
-                            alt={book.title || 'No Title'}
-                            className='h-[25rem] w-full text-blue-700'
-                          />
-                        </div>
-                        {/* <div className='text-white'>
-                          {book.title || 'No Title'}
-                        </div> */}
-                        {/* <div className='text-white'>{book.title}</div> */}
-                      </SwiperSlide>
-                    </React.Fragment>
-                  )
-                )
-              )
+              value.map((book) => (
+                <React.Fragment key={book.id}>
+                  <SwiperSlide className=' h-full w-full'>
+                    <div>
+                      <img
+                        src={book.thumbnail}
+                        alt={book.title || 'No Title'}
+                        className='h-[25rem] w-full text-blue-700'
+                      />
+                    </div>
+                  </SwiperSlide>
+                </React.Fragment>
+              ))
             )}
-            <svg ref={progressCircle}>
-              <circle cx='24' cy='24' r='20'></circle>
-            </svg>
           </Swiper>
         </div>
 
         {/* 2 */}
-        <div className='h-[37.5rem] bg-[#5495B1] flex relative '>
+        <div className='h-[37.5rem] bg-[#5495B1] flex  '>
           <div className='w-2/3 self-center flex ml-28'>
             <div>
               <div className='rounded-full w-80 h-80 bg-green-200'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
+              <div className='text-lg text-center'>이름</div>
+              <div className='text-2xl text-center'>작품 이름</div>
             </div>
 
             <div className=' place-items-end self-end pl-5'>
               <div className='rounded-full w-64 h-64  bg-red-50'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
+              <div className='text-lg text-center'>이름</div>
+              <div className='text-2xl text-center'>작품 이름</div>
             </div>
 
             <div className=' place-items-end self-end pl-5'>
               <div className='rounded-full w-64 h-64 bottom-0 bg-red-50'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
+              <div className='text-lg text-center'>이름</div>
+              <div className='text-2xl text-center'>작품 이름</div>
             </div>
           </div>
           <div className='flex w-1/4 justify-center items-center'>
