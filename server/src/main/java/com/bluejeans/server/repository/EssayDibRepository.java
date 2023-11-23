@@ -12,4 +12,6 @@ import java.util.Optional;
 @Repository
 public interface EssayDibRepository extends JpaRepository<EssayDibsEntity, EssayDibsEntityKey> {
     Optional<EssayDibsEntity> findByEssayAndUser(EssayEntity essay, UserEntity userEntity);
+    long countByEssay(EssayEntity essay);
+
 }

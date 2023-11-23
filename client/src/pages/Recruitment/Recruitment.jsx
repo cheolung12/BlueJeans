@@ -88,11 +88,9 @@ export default function Recruitment() {
 
     return (
         <>
-            <div>
-                <SideNavBar />
-            </div>
+            <SideNavBar />
 
-            <div className="w-full flex justify-center">
+            <div className="w-full flex justify-center relative">
                 <section className="max-w-4xl block">
                     {/* 데이터 요청 버튼 
                 <button onClick={handleClick}>일자리 불러오기</button> */}

@@ -12,54 +12,25 @@ import { GoHome } from 'react-icons/go';
 
 ///////////////
 import 'swiper/css';
+/////////////////컴포넌트 import///////////////
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
-import { Pagination, Navigation } from 'swiper/modules';
+/////////////////////////////////////////////
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import Signup from '../components/main/Signup';
+import Login from '../components/main/Login';
 
 export default function Main({ id, thumbnail, title }) {
   const booksArray = Object.values(books);
-
-  const [swiperRef, setSwiperRef] = useState(null);
-  let appendNumber = 4;
-  let prependNumber = 1;
-
-  const prepend2 = () => {
-    swiperRef.prependSlide([
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
-    ]);
-  };
-
-  const prepend = () => {
-    swiperRef.prependSlide(
-      '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
-    );
-  };
-
-  const append = () => {
-    swiperRef.appendSlide(
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
-    );
-  };
-
-  const append2 = () => {
-    swiperRef.appendSlide([
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-      '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
-    ]);
-  };
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty('--progress', 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
-
   return (
     <div>
       <div>
-        <div className=' h-[650px] w-full'></div>
+        <div className=' h-[650px] w-full'>
+          <div className='flex justify-end'>
+            <Login></Login>
+            <Signup></Signup>
+          </div>
+        </div>
 
         <div className=' flex justify-center'>
           <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-36 w-3/4 mb-24 text-lg'>
@@ -103,10 +74,14 @@ export default function Main({ id, thumbnail, title }) {
           <div className=' w-1/3 relative'>
             <div className='absolute top-1/3 pl-32'>
               <p className='text-4xl pb-10 font-bold'>오늘의 추천도서</p>
-              <div className=' text-lg'>
-                <p className='pb-3'>1970년대의 감성부터 현대까지</p>
-                <p className='pb-3'>지금 봐도 세련된 문장으로 감동을 주는</p>
-                <p className='pb-3'>작품을 만나 보세요</p>
+              <div className='text-lg'>
+                <p>
+                  1970년대의 감성부터 현대까지
+                  <br />
+                  지금 봐도 세련된 문장으로 감동을 주는
+                  <br />
+                  작품을 만나 보세요
+                </p>
               </div>
             </div>
           </div>
@@ -115,7 +90,7 @@ export default function Main({ id, thumbnail, title }) {
 
           <Swiper
             className=' w-[55rem] h-[28rem] self-center'
-            onSwiper={setSwiperRef}
+            // onSwiper={setSwiperRef}
             slidesPerView={3}
             loop={true}
             centeredSlides={true}
@@ -126,66 +101,57 @@ export default function Main({ id, thumbnail, title }) {
             pagination={{
               clickable: true,
             }}
-            onAutoplayTimeLeft={onAutoplayTimeLeft}
             spaceBetween={30}
             navigation={true}
-            modules={[Pagination, Navigation]}
+            modules={[Autoplay, Pagination, Navigation]}
           >
             {booksArray.map((value) =>
-              value.map(
-                (book) => (
-                  console.log(book),
-                  (
-                    <React.Fragment key={book.id}>
-                      <SwiperSlide className=' h-full w-full'>
-                        <div>
-                          <img
-                            src={book.thumbnail}
-                            alt={book.title || 'No Title'}
-                            className='h-[25rem] w-full text-blue-700'
-                          />
-                        </div>
-                        {/* <div className='text-white'>
-                          {book.title || 'No Title'}
-                        </div> */}
-                        {/* <div className='text-white'>{book.title}</div> */}
-                      </SwiperSlide>
-                    </React.Fragment>
-                  )
-                )
-              )
+              value.map((book) => (
+                <React.Fragment key={book.id}>
+                  <SwiperSlide className=' h-full w-full'>
+                    <div>
+                      <img
+                        src={book.thumbnail}
+                        alt={book.title || 'No Title'}
+                        className='h-[25rem] w-full text-blue-700'
+                      />
+                    </div>
+                  </SwiperSlide>
+                </React.Fragment>
+              ))
             )}
-            <svg ref={progressCircle}>
-              <circle cx='24' cy='24' r='20'></circle>
-            </svg>
           </Swiper>
         </div>
 
         {/* 2 */}
-        <div className='h-[37.5rem] bg-[#5495B1] flex relative '>
-          <div className='w-2/3 self-center flex ml-28'>
-            <div>
-              <div className='rounded-full w-80 h-80 bg-green-200'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
+        <div className=' h-[37.5rem] p-3 bg-red-100'>
+          <div className='flex h-full'>
+            <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
+              <div>
+                <div className=' rounded-full bg-red-500 h-80 w-80'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
+              <div>
+                <div className='rounded-full  bg-orange-500 h-60 w-60'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
+              <div>
+                <div className='rounded-full  bg-orange-500 h-60 w-60'></div>
+                <p className=' text-center'>sds</p>
+                <p className=' text-center'>sds</p>
+              </div>
             </div>
 
-            <div className=' place-items-end self-end pl-5'>
-              <div className='rounded-full w-64 h-64  bg-red-50'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
+            <div className='flex justify-between w-30'>
+              <div className='self-center text-2xl font-bold place-items-end'>
+                이달의 문학왕
+              </div>
             </div>
-
-            <div className=' place-items-end self-end pl-5'>
-              <div className='rounded-full w-64 h-64 bottom-0 bg-red-50'></div>
-              <div className='text-lg text-center'>이름or닉네임</div>
-              <div className='text-2xl text-center'>책이름</div>
-            </div>
-          </div>
-          <div className='flex w-1/4 justify-center items-center'>
-            <p className='text-4xl font-bold text-white'>이달의 문학왕</p>
           </div>
         </div>
+
         {/* 3 */}
         <div className='flex flex-col bg-[#F28080] h-[37.5rem] items-center'>
           <p className='text-4xl font-semibold mt-9 items-start pl-16  text-white'>

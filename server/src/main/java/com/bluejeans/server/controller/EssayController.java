@@ -1,7 +1,10 @@
 package com.bluejeans.server.controller;
 
+import com.bluejeans.server.dto.DibResultDTO;
 import com.bluejeans.server.dto.EssayDTO;
+import com.bluejeans.server.dto.ResEssayDTO;
 import com.bluejeans.server.dto.UserDTO;
+import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.EssayService;
@@ -10,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/essays")
 public class EssayController {
 
     @Autowired
@@ -21,60 +27,53 @@ public class EssayController {
 
 
     //에세이 전체 조회
-    @GetMapping("/essays")
-    public List<EssayDTO> findAll(){
-        List<EssayDTO> result = essayService.findAll();
-        System.out.println(result.get(0).getTitle());
-        return result;
+    @GetMapping
+    public List<ResEssayDTO> findAll(){
+        return essayService.findAll();
+
     }
 
     //에세이 글쓰기
-    @PostMapping("/essays")
-    public EssayEntity addEssay(@RequestBody EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user){
+    @PostMapping
+    public EssayEntity addEssay(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
         //로그인이 안되어있을경우 오류처리?
         //로그인해야 이용가능하도록 구현해야함.
-        EssayEntity result = essayService.addEssay(essayDTO, user);
+        EssayEntity result = essayService.addEssay(essayDTO, user, multipartFile);
         return result;
     }
 
     //에세이 상세조회
-    @GetMapping("/essays/detail/{essay_id}")
-    public EssayDTO essayDetail(@PathVariable int essay_id){
-        EssayDTO result = essayService.essayDetail(essay_id);
+    @GetMapping("/detail/{essay_id}")
+    public ResEssayDTO essayDetail(@PathVariable int essay_id){
+        ResEssayDTO result = essayService.essayDetail(essay_id);
         //결과가 없을경우 null로 들어옴
         return result;
     }
 
     //에세이 수정
-    @PatchMapping("/essays/detail/{essay_id}")
-    public boolean essayEdit(@PathVariable int essay_id, @RequestBody EssayDTO essayDTO){
+    @PatchMapping("/detail/{essay_id}")
+    public boolean essayEdit(@PathVariable int essay_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) throws IOException {
         //로그인한 유저의 id와 에세이의 user_id가 일치할경우 수정가능하도록(불일치할 경우 null반환)
         //하려했으나 프론트에서 검사해야함.
-        essayService.edit(essay_id,essayDTO.getTitle(), essayDTO.getContent());
-        return true;
+        return essayService.edit(essay_id,multipartFile, essayDTO);
     }
 
     //에세이 삭제
-    @DeleteMapping("/essays/detail/{essay_id}")
+    @DeleteMapping("/detail/{essay_id}")
     public boolean essayDelete(@PathVariable int essay_id){
         essayService.essayDelete(essay_id);
         return true;
     }
 
-    //좋아요 누르기
-//    @GetMapping("/essays/detail/{essay_id}/favorite")
-//    public boolean essayDib(@PathVariable int essay_id, @AuthenticationPrincipal UserDTO userdto){
-//        essayService.dib(essay_id,userdto);
-//        return true;
-//    }
 
 
     ///////////////에세이 좋아요
-    @GetMapping("/essays/detail/{essay_id}/favorite")
-    public boolean essayDib(@PathVariable int essay_id, @AuthenticationPrincipal UserEntity userEntity){
-        System.out.println(userEntity);
-        essayService.dib(essay_id,userEntity);
-        return true;
+    @GetMapping("/detail/{essay_id}/favorite")
+    public DibResultDTO essayDib(@PathVariable int essay_id, @AuthenticationPrincipal UserEntity userEntity){
+        
+        DibResult dibResult= essayService.dib(essay_id,userEntity);
+        long counts = essayService.countDibs(essay_id);
+        return new DibResultDTO(counts, dibResult);
     }
 
 
