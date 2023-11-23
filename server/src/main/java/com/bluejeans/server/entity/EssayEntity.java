@@ -2,10 +2,7 @@ package com.bluejeans.server.entity;
 
 import com.bluejeans.server.dto.EssayDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +10,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,6 +39,11 @@ public class EssayEntity {
     @JoinColumn(name = "user_id") // 조인 컬럼 및 필수 설정
     private UserEntity user;
 
-
+    public void updateFields(EssayDTO essayDTO, String fileURL) {
+        this.setTitle(essayDTO.getTitle());
+        this.setContent(essayDTO.getContent());
+        this.setImg_path(fileURL);
+        this.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+    }
 
 }

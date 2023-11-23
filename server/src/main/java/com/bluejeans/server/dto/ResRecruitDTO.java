@@ -1,7 +1,6 @@
 package com.bluejeans.server.dto;
 
 import com.bluejeans.server.entity.RecruitEntity;
-//import com.bluejeans.server.entity.RecruitFileEntity;
 import com.bluejeans.server.entity.UserEntity;
 import lombok.*;
 

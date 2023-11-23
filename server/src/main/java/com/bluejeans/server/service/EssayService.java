@@ -1,21 +1,29 @@
 package com.bluejeans.server.service;
 
 import com.bluejeans.server.dto.EssayDTO;
-import com.bluejeans.server.dto.UserDTO;
+import com.bluejeans.server.dto.ResEssayDTO;
+import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.EssayDibsEntity;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.repository.EssayDibRepository;
 import com.bluejeans.server.repository.EssayRepository;
-import com.bluejeans.server.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.bluejeans.server.entity.DibResult.DIB_ADDED;
+import static com.bluejeans.server.entity.DibResult.DIB_REMOVED;
+import static com.bluejeans.server.entity.DibResult.ESSAY_NOT_FOUND;
+import static com.bluejeans.server.service.EssayService.DibResult.DIB_ADDED;
+import static com.bluejeans.server.service.EssayService.DibResult.DIB_REMOVED;
 
 @Service
 @Slf4j
@@ -26,38 +34,52 @@ public class EssayService {
     @Autowired
     EssayDibRepository essayDibRepository;
 
+    @Autowired
+    S3Uploader s3Uploader;
+
 
     //모든 에세이 리스트 반환
-    public List<EssayDTO> findAll() {
+    public List<ResEssayDTO> findAll() {
         List<EssayEntity> essayList = essayRepository.findAll();
-        List<EssayDTO> list = new ArrayList<>();
+        List<ResEssayDTO> list = new ArrayList<>();
         log.info("전체찾기 서비스");
 
         for( EssayEntity essay : essayList){
-            list.add(EssayDTO.essayEntityToDTO(essay));
+            list.add(ResEssayDTO.toDTO(essay));
         }
         return list;
     }
 
-    public EssayEntity addEssay(EssayDTO essayDTO, UserEntity user) {
-        EssayEntity newEssay = EssayDTO.essayDTOToEntity(essayDTO, user);
+    public EssayEntity addEssay(EssayDTO essayDTO, UserEntity user, MultipartFile multipartFile) throws IOException {
+        String fileURL = s3Uploader.upload(multipartFile, "essay");
+        EssayEntity newEssay = EssayDTO.toEntity(essayDTO, user, fileURL);
         return essayRepository.save(newEssay);
     }
 
-    public EssayDTO essayDetail(int essayId) {
+    public ResEssayDTO essayDetail(int essayId) {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
 
         if (result.isPresent()) {
-            EssayDTO essay = EssayDTO.essayEntityToDTO(result.get());
+            ResEssayDTO essay = ResEssayDTO.toDTO(result.get());
             return essay;
         } else {
             return null;
         }
     }
 
-    public void edit(int essayId,String title, String content) {
-
-        essayRepository.patch(essayId,title,content);
+    public boolean edit(int essayId, MultipartFile multipartFile, EssayDTO essayDTO) throws IOException {
+        //해당 게시물 조회
+        Optional<EssayEntity> essay = essayRepository.findById(essayId);
+        String fileURL = s3Uploader.upload(multipartFile, "essays");
+        //수정
+        if(essay.isPresent()){
+            EssayEntity existingEntity = essay.get();
+            existingEntity.updateFields(essayDTO,fileURL);
+            essayRepository.save(existingEntity);
+            return  true;
+        }else {
+            return false;
+        }
 
     }
 
@@ -67,22 +89,35 @@ public class EssayService {
     }
 
 
-    public void dib(int essayId, UserEntity userEntity) {
+    @Transactional
+    public DibResult dib(int essayId, UserEntity userEntity) {
         EssayEntity essay = essayRepository.findById(essayId).orElse(null);
+        if (essay == null) {
+            return ESSAY_NOT_FOUND;
+        }
         Optional<EssayDibsEntity> existingDib = essayDibRepository.findByEssayAndUser(essay, userEntity);
         if (existingDib.isPresent()) {
             // 이미 존재하면 삭제
             essayDibRepository.delete(existingDib.get());
+            return DIB_REMOVED;
         } else {
             // 존재하지 않으면 추가
-//            EssayEntity essay = essayRepository.findById(essayId).orElse(null);
-            if (essay != null) {
-                EssayDibsEntity dib = new EssayDibsEntity(essay, userEntity);
-                essayDibRepository.save(dib);
-            }
+            EssayDibsEntity dib = new EssayDibsEntity(essay, userEntity);
+            essayDibRepository.save(dib);
+            return DIB_ADDED;
         }
-
-//        EssayDibsEntity dib = new EssayDibsEntity(essay,userEntity);
-//        essayDibRepository.save(dib);
     }
+
+    public long countDibs(int essayId) {
+        EssayEntity essay = essayRepository.findById(essayId).orElse(null);
+        if(essay!= null){
+            return essayDibRepository.countByEssay(essay);
+        }else {
+            return 0;
+        }
+    }
+
+
+
+
 }
