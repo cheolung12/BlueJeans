@@ -4,7 +4,7 @@ import axios from "axios";
 export default function RecruitmentCreate() {
   const [recruitmentData, setRecruitmentData] = useState({
     title: "",
-    money: "",
+    money: 0,
     region: "",
     content: "",
     contact: "",
