@@ -12,9 +12,10 @@ import { GoHome } from 'react-icons/go';
 
 ///////////////
 import 'swiper/css';
+/////////////////컴포넌트 import///////////////
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
+/////////////////////////////////////////////
 import { Pagination, Navigation } from 'swiper/modules';
 import Signup from '../components/main/Signup';
 import Login from '../components/main/Login';
