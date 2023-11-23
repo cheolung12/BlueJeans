@@ -5,20 +5,30 @@ export default function BookCardSearch({ id, thumbnail, title, author }) {
     <div>
       <div
         key={id}
-        className=' flex flex-col items-center justify-around w-[11rem] h-[22rem] rounded-[0.5rem] bg-gray-200'
+        className=' flex flex-col items-center justify-around w-[11rem] h-[21rem]'
       >
         <div>
-          <img src={thumbnail} alt='book' className=' w-[7rem] h-40' />
+          <img
+            src={thumbnail}
+            alt='book'
+            className=' w-[10rem] h-[13rem]'
+            style={{
+              WebkitBoxShadow:
+                '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+              MozBoxShadow:
+                '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+              MsBoxShadow:
+                '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+              OBoxShadow:
+                '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+              boxShadow:
+                '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+            }}
+          />
         </div>
-        <div className='flex flex-col text-center w-[10rem] h-[8rem] justify-between text-black'>
-          <div className='h-[4rem] font-semibold text-xl'>{title}</div>
-          <div>{author}</div>
-          {/* <div className='flex flex-col'>
-            <div className='flex justify-center mt-5'>
-              <FaHeart />
-            </div>
-            <p>10</p>
-          </div> */}
+        <div className='flex flex-col text-center w-[10rem] h-[6rem] text-black'>
+          <div className='font-semibold text-md'>{title}</div>
+          <div className='text-sm mt-2 text-neutral-500'>{author}</div>
         </div>
       </div>
     </div>
