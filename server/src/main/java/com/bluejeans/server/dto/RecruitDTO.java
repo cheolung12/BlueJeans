@@ -1,7 +1,7 @@
 package com.bluejeans.server.dto;
 
 import com.bluejeans.server.entity.RecruitEntity;
-import com.bluejeans.server.entity.RecruitFileEntity;
+//import com.bluejeans.server.entity.RecruitFileEntity;
 import com.bluejeans.server.entity.UserEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public class RecruitDTO {
     private String region;
     private String contact;
     private Timestamp createdAt;
-    private MultipartFile img_path;
+//    private MultipartFile img_path;
     private int like;
 
     // ResRecruitDTO로 이동
@@ -48,7 +48,7 @@ public class RecruitDTO {
 
    */
 
-    public static RecruitEntity toEntity(RecruitDTO dto, UserEntity user){
+    public static RecruitEntity toEntity(RecruitDTO dto, UserEntity user, String fileURL){
         if (dto == null) {
             return null;
         }
@@ -59,6 +59,7 @@ public class RecruitDTO {
                 .money(dto.getMoney())
                 .region(dto.getRegion())
                 .contact(dto.getContact())
+                .img_path(fileURL)
                 .build();
     }
 

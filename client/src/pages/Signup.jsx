@@ -12,6 +12,7 @@ export default function Signup() {
     pwCheck: '',
     address: '',
   });
+
   // null: 비활성화, false: 유효성 검사 실패, true: 성공
   const [formValid, setFormValid] = useState({
     userID: null,
@@ -19,35 +20,45 @@ export default function Signup() {
     password: null,
     address: null,
   });
-  const isFormValid = Object.values(formValid).every((value) => value === true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const imageUrls = ['/images/s1.jpeg', '/images/s2.jpeg', '/images/s3.jpeg', '/images/s4.jpeg'];
-  const currentImageUrl = imageUrls[currentImageIndex];
-  const navigate = useNavigate();
 
+  // formValid의 모든 요소가 true일경우 true를 나타냄
+  const isFormValid = Object.values(formValid).every((value) => value === true);
+  const [isOpen, setIsOpen] = useState(false); // 주소 모달창 열고 닫기
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false); // 가입버튼 재클릭 방지를 위한 state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // 왼쪽 이미지화면 전환을 위한 state
+  const imageUrls = [
+    '/images/s1.jpeg',
+    '/images/s2.jpeg',
+    '/images/s3.jpeg',
+    '/images/s4.jpeg',
+  ];
+  const currentImageUrl = imageUrls[currentImageIndex];
+  const navigate = useNavigate(); // 회원가입 성공 시 리다이렉트용
+
+  // 3초마다 이미지 변경
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
     }, 3000);
     return () => clearInterval(intervalId);
-  }, [currentImageIndex]);
+  }, [currentImageIndex, imageUrls.length]);
 
   const handleChange = (e) => {
+    // input값 state에 실시간 적용
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    
+
+    // input별 유효성검사하기
     setFormValid((prevData) => {
       let updatedData = { ...prevData };
-      if(name === 'userID') {
+      if (name === 'userID') {
         updatedData.userID = null;
-      } else if(name === 'nickname') {
+      } else if (name === 'nickname') {
         updatedData.nickname = null;
-      }
-      else if (name === 'password') {
+      } else if (name === 'password') {
         updatedData.password = value === formData.pwCheck;
       } else if (name === 'pwCheck') {
         updatedData.password = formData.password === value;
@@ -56,9 +67,46 @@ export default function Signup() {
     });
   };
 
+  // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (정의)
+  function fadingEffect(elementId) {
+    const button = document.getElementById(elementId);
+    let opacity = 1;
+    const fadingInterval = setInterval(() => {
+      button.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
+      opacity -= 0.05;
+      if (opacity <= 0) {
+        clearInterval(fadingInterval);
+      }
+    }, 100);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 제출버튼 1초 이내 재클릭 방지
+    if (!isFormSubmitting) {
+      setIsFormSubmitting(true);
+      setTimeout(() => {
+        setIsFormSubmitting(false);
+      }, 1000);
+    }
+
+    // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (적용)
+    if (!formValid.userID) {
+      fadingEffect('id-duplication');
+      return;
+    } else if (!formValid.nickname) {
+      fadingEffect('nickname-duplication');
+      return;
+    } else if (!formValid.password) {
+      fadingEffect('pwCheck');
+      return;
+    } else if (!formValid.address) {
+      fadingEffect('address');
+      return;
+    }
+
+    // 회원가입 요청
     try {
       const res = await axios({
         method: 'POST',
@@ -68,9 +116,33 @@ export default function Signup() {
         },
         data: formData,
       });
-      console.log(res.data);
       if (res.data === 'redirect:/login') {
-        navigate('/login');
+        // 입력 정보로 바로 로그인할건지 선택
+        const directLogin = window.confirm(
+          '회원가입이 성공했습니다. 바로 로그인 하시겠습니까?'
+        );
+        if (directLogin) {
+          // 폼 데이터로 변환
+          const loginData = new FormData();
+          loginData.append('userID', formData.userID);
+          loginData.append('password', formData.password);
+          // 로그인 요청
+          try {
+            await axios({
+              method: 'POST',
+              url: 'http://localhost:8080/api/login',
+              data: loginData,
+            });
+            if(res.data === 'login'){
+              navigate('/');
+            } else {
+              alert('로그인 실패');
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        } 
+        navigate('/');
       }
     } catch (error) {
       console.log(JSON.stringify(formData));
@@ -78,12 +150,14 @@ export default function Signup() {
     }
   };
 
+  // input에 spacebar 입력 방지용
   const blockSpace = (e) => {
     if (e.key === ' ') {
       e.preventDefault();
     }
   };
 
+  // 아이디 or 닉네임 중복 확인
   const checkDuplication = async (type) => {
     const value = formData[type];
     try {
@@ -91,6 +165,7 @@ export default function Signup() {
         method: 'POST',
         url: `http://localhost:8080/api/user/check?type=${type}&value=${value}`,
       });
+      // form 유효성 검사
       if (!res.data) {
         setFormValid((prevData) => ({
           ...prevData,
@@ -107,7 +182,7 @@ export default function Signup() {
     }
   };
 
-  // Modal 스타일
+  // 주소 modal 스타일
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(0,0,0,0.5)',
@@ -122,11 +197,12 @@ export default function Signup() {
     },
   };
 
+  // 주소 modal 열고 닫기
   const modalToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // 주소 설정
+  // 주소창 닫을때 입력값으로 설정
   const completeHandler = (data) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -138,7 +214,6 @@ export default function Signup() {
     }));
     setIsOpen(false);
   };
-
 
   return (
     <div className='w-screen h-screen flex'>
@@ -157,10 +232,10 @@ export default function Signup() {
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center'
         >
           <div className='w-3/5 flex flex-col justify-start'>
-            <div className='text-4xl font-bold mb-2 text-[#2e375d]'>
+            <div className='sm:text-4xl text-3xl font-bold mb-2 text-[#2e375d]'>
               회원가입
             </div>
-            <div className='text-base font-light mb-10'>
+            <div className='sm:text-base text-sm font-light sm:mb-8 mb-6'>
               블루진스에 오신걸 환영합니다~!
             </div>
           </div>
@@ -191,12 +266,14 @@ export default function Signup() {
                 onChange={handleChange}
                 autoComplete='off'
                 onKeyDown={blockSpace}
+                placeholder='아이디를 입력해주세요.'
                 className='w-full h-full bg-inherit outline-none border-none focus:outline-none rounded-lg'
               />
               <button
+                id='id-duplication'
                 type='button'
                 onClick={() => checkDuplication('userID')}
-                className='w-24 h-8 border text-sm bg-white rounded-md '
+                className='sm:w-24 w-20 sm:h-8 h-6 border sm:text-sm text-xs bg-white rounded-md'
               >
                 중복 확인
               </button>
@@ -228,12 +305,14 @@ export default function Signup() {
                 value={formData.nickname}
                 onChange={handleChange}
                 autoComplete='off'
+                placeholder='닉네임을 입력해주세요.'
                 className='w-full h-full bg-inherit outline-none border-none focus:outline-none rounded-lg'
               />
               <button
+                id='nickname-duplication'
                 type='button'
                 onClick={() => checkDuplication('nickname')}
-                className='w-24 h-8 border text-sm bg-white rounded-md'
+                className='sm:w-24 w-20 sm:h-8 h-6 border sm:text-sm text-xs bg-white rounded-md'
               >
                 중복 확인
               </button>
@@ -253,6 +332,7 @@ export default function Signup() {
               name='password'
               value={formData.password}
               onChange={handleChange}
+              placeholder='비밀번호를 입력해주세요.'
               className='signup-input'
             />
           </div>
@@ -275,6 +355,7 @@ export default function Signup() {
               name='pwCheck'
               value={formData.pwCheck}
               onChange={handleChange}
+              placeholder='비밀번호를 한번 더 입력해주세요.'
               className='signup-input'
             />
           </div>
@@ -295,6 +376,7 @@ export default function Signup() {
               autoComplete='off'
               onClick={modalToggle}
               readOnly
+              placeholder='클릭하면 주소검색창이 나타납니다.'
               className='signup-input'
             />
             <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
@@ -305,15 +387,15 @@ export default function Signup() {
             </Modal>
           </div>
 
-          <div className='flex justify-center w-3/5 mt-11'>
+          <div className='flex justify-center w-3/5 sm:mt-8 mt-6'>
             <button
               type='submit'
-              className={`w-1/2 cursor-pointer bg-[#2e375d] font-semibold text-white text-xl px-4 py-4 rounded-lg ${
+              className={`sm:w-1/2 w-3/4 cursor-pointer bg-[#2e375d] font-semibold text-white text-xl  sm:py-4 py-3 rounded-lg ${
                 isFormValid
                   ? 'opacity-none cursor-pointer hover:opacity-95'
-                  : 'opacity-70 cursor-auto'
+                  : 'opacity-70 cursor-not-allowed'
               }`}
-              disabled={!isFormValid}
+              disabled={isFormSubmitting}
             >
               가입 하기
             </button>

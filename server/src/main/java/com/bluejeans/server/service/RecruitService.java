@@ -4,13 +4,15 @@ import com.bluejeans.server.dto.RecruitDTO;
 import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.*;
 import com.bluejeans.server.repository.RecruitDibRepository;
-import com.bluejeans.server.repository.RecruitFileRepository;
+//import com.bluejeans.server.repository.RecruitFileRepository;
 import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,7 @@ public class RecruitService {
     private RecruitRepository recruitRepository;
 
     @Autowired
-    private RecruitFileRepository recruitFileRepository;
+    private S3Uploader s3Uploader;
 
     @Autowired
     private RecruitDibRepository recruitDibRepository;
@@ -30,19 +32,18 @@ public class RecruitService {
     @Autowired
     private UserRepository userRepository;
 
-/*
+
     // 엔티티 리스트를 DTO리스트로
-    private List<RecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
-        List<RecruitDTO> result = new ArrayList<>();
+    private List<ResRecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
+        List<ResRecruitDTO> result = new ArrayList<>();
 
         if (recruitList.isEmpty()) {
             return result;
         }
         // 엔티티 -> DTO
         for (RecruitEntity recruit : recruitList) {
-            RecruitFileEntity file = recruitFileRepository.findByRecruitId(recruit.getId()).orElse(null);
             int like = recruitDibRepository.countByRecruit_Id(recruit.getId());
-            result.add(ResRecruitDTO.toDTO(recruit, file, like));
+            result.add(ResRecruitDTO.toDTO(recruit, like));
         }
 
         return result;
@@ -50,42 +51,44 @@ public class RecruitService {
 
 
 
-    public List<RecruitDTO> findAll() {
+    // 전체 조회
+    public List<ResRecruitDTO> findAll() {
         List<RecruitEntity> recruitList = recruitRepository.findAll();
 
         return entityListToDTOList(recruitList);
     }
 
-    public List<RecruitDTO> findByRegion(String region) {
+    //집근처 조회
+    public List<ResRecruitDTO> findByRegion(String region) {
         List<RecruitEntity> filteredList = recruitRepository.findByRegion(region);
 
         return entityListToDTOList(filteredList);
     }
 
-    public List<RecruitDTO> filteringRecruit(String order) {
+    //최신순, 인기순 필터링
+    public List<ResRecruitDTO> filteringRecruit(String order) {
         List<RecruitEntity> filteredList =  recruitRepository.filteringRecruit(order);
 
         return entityListToDTOList(filteredList);
     }
 
-    public List<RecruitDTO> searchByKeyword(String keyword) {
+    // 검색어 조회
+    public List<ResRecruitDTO> searchByKeyword(String keyword) {
         List<RecruitEntity> searchedList = recruitRepository.searchByKeyword(keyword);
 
         return entityListToDTOList(searchedList);
     }
-*/
-    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user, String fileURL) {
-        System.out.println("서비스");
-        // DTO -> 엔티티
-        RecruitEntity added = RecruitDTO.toEntity(recruitDTO, user);
 
+
+    //공고 등록
+    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user, MultipartFile multipartFile) throws IOException {
+        System.out.println("등록시작");
+        String fileURL = s3Uploader.upload(multipartFile, "jobs");
+        // DTO -> 엔티티
+        RecruitEntity added = RecruitDTO.toEntity(recruitDTO, user, fileURL);
+        System.out.println(added);
         try {
             RecruitEntity saved = recruitRepository.save(added);
-            RecruitFileEntity file = RecruitFileEntity.builder()
-                    .recruitId(saved)
-                    .img_path(fileURL)
-                    .build();
-            recruitFileRepository.save(file);
             return true;
         } catch (Exception e) {
             // 추후 AOP를 통해 에러로그
@@ -93,34 +96,27 @@ public class RecruitService {
             return false;
         }
     }
-/*
+
     public ResRecruitDTO recruitDetail(int id) {
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
-        RecruitFileEntity file = recruitFileRepository.findByRecruitId(id).orElse(null);
         int like = recruitDibRepository.countByRecruit_Id(id);
         if(recruit.isPresent()){
-            return ResRecruitDTO.toDTO(recruit.get(), file, like);
+            return ResRecruitDTO.toDTO(recruit.get(), like);
         } else {
             return null;
         }
     }
-/*
 
-    public boolean editRecruit(int id, RecruitDTO recruitDTO) {
+
+    public boolean editRecruit(int id, RecruitDTO recruitDTO, MultipartFile multipartFile) throws IOException {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
-        Optional<RecruitFileEntity>  file = recruitFileRepository.findByRecruitId(id);
+        String fileURL = s3Uploader.upload(multipartFile, "jobs");
         // 수정
         if(recruit.isPresent()) {
             RecruitEntity existingEntity = recruit.get();
-            existingEntity.updateFields(recruitDTO);
+            existingEntity.updateFields(recruitDTO, fileURL);
             recruitRepository.save(existingEntity);
-
-            if(file.isPresent()){
-                RecruitFileEntity fileEntity = file.get();
-                fileEntity.updateImgPath(RecruitDTO.getImg_path());
-                recruitFileRepository.save(fileEntity);
-            }
 
             return true;
         }else {
@@ -128,7 +124,7 @@ public class RecruitService {
         }
     }
 
-*/
+
 
     public boolean deleteRecruit(int jobId) {
         // 해당 게시물 조회
@@ -171,13 +167,13 @@ public class RecruitService {
             }
         }
     }
-/*
-    public List<RecruitDTO> myLikeRecruit(UserEntity user) {
+
+    public List<ResRecruitDTO> myLikeRecruit(UserEntity user) {
         int userId = user.getId();
         List<RecruitEntity> likedRecruits = recruitRepository.findByRecruitDibsUserId(userId);
 
         return entityListToDTOList(likedRecruits);
     }
 
- */
+
 }
