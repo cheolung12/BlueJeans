@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
       { path: 'chat', element: <Chat /> },
       { path: 'essay', element: <Essay /> },
-      { path: 'essay/detail', element: <EssayDetail /> },
+      { path: 'essay/detail/:EssayId', element: <EssayDetail /> },
       { path: 'essay/create', element: <EssayCreate /> },
       { path: 'findhome', element: <FindHome /> },
     ],
