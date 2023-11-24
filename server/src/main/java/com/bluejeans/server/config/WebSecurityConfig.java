@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -61,6 +62,7 @@ public class WebSecurityConfig {
                         .maximumSessions(1) // 동시에 여러 세션 허용하지 않음
                         .maxSessionsPreventsLogin(true) // 동시에 여러 세션 허용하지 않음
                         .expiredUrl("/api/login?expired")) // 만료된 세션으로 간주되면 리다이렉트할 URL
+                .addFilterBefore(new SessionFilter(), ConcurrentSessionFilter.class)
                 .build();
     }
 
@@ -99,5 +101,6 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 }
 
