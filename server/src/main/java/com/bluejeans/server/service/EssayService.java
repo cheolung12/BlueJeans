@@ -49,7 +49,12 @@ public class EssayService {
     }
 
     public EssayEntity addEssay(EssayDTO essayDTO, UserEntity user, MultipartFile multipartFile) throws IOException {
-        String fileURL = s3Uploader.upload(multipartFile, "essay");
+        String fileURL;
+        if(multipartFile!=null){
+            fileURL = s3Uploader.upload(multipartFile, "essay");
+        }else{
+            fileURL = null;
+        }
         EssayEntity newEssay = EssayDTO.toEntity(essayDTO, user, fileURL);
         return essayRepository.save(newEssay);
     }

@@ -35,7 +35,7 @@ public class EssayController {
 
     //에세이 글쓰기
     @PostMapping
-    public EssayEntity addEssay(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
+    public EssayEntity addEssay(@RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
         //로그인이 안되어있을경우 오류처리?
         //로그인해야 이용가능하도록 구현해야함.
         EssayEntity result = essayService.addEssay(essayDTO, user, multipartFile);
