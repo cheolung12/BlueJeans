@@ -42,7 +42,15 @@ export default function EssayDetail() {
                 <button>작성</button>
               </form>
             </div>
-            <div className='bg-slate-200'>댓글목록</div>
+            <div className='bg-slate-50 mt-3'>
+              <div className='bg-slate-200 h-80'>
+                <ul>
+                  <li>댓글</li>
+                  <li>댓글</li>
+                  <li>댓글</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
       </div>
