@@ -124,7 +124,7 @@ export default function Main({ id, thumbnail, title }) {
         </div>
 
         {/* 2 */}
-        <div className=' h-[37.5rem] p-3 bg-red-100'>
+        <div className=' h-[37.5rem] p-3 bg-[#5495B1]'>
           <div className='flex h-full'>
             <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
               <div>
