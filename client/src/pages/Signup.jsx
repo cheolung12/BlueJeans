@@ -54,10 +54,10 @@ export default function Signup() {
 
   // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (정의)
   function fadingEffect(elementId) {
-    const button = document.getElementById(elementId);
+    const element = document.getElementById(elementId);
     let opacity = 1;
     const fadingInterval = setInterval(() => {
-      button.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
+      element.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
       opacity -= 0.05;
       if (opacity <= 0) {
         clearInterval(fadingInterval);
@@ -113,21 +113,25 @@ export default function Signup() {
           loginData.append('password', formData.password);
           // 로그인 요청
           try {
-            await axios({
+            const res = await axios({
               method: 'POST',
-              url: 'http://localhost:8080/api/login',
+              url: 'http://localhost:8080/login',
               data: loginData,
             });
-            if(res.data === 'login'){
+            if(res){
+              console.log(res);
               navigate('/');
             } else {
-              alert('로그인 실패');
+              navigate('/login');
             }
           } catch (error) {
+            alert('로그인 실패');
             console.error(error);
           }
-        } 
-        navigate('/login');
+        }  else {
+          navigate('/login');
+        }
+        
       }
     } catch (error) {
       console.log(JSON.stringify(formData));
