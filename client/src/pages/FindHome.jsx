@@ -53,11 +53,11 @@ export default function FindHome() {
       <div className='flex justify-center h-[650px]'>
         <AddressButton
           setUserAddress={setUserAddress}
-          className='m-3'
+          className='h-20 w-20'
         ></AddressButton>
         <div class='flex flex-col space-y-4'>
           <Info></Info>
-          <Map className='mb-0' userAddress={userAddress}></Map>
+          <Map className='mb-0 p-6' userAddress={userAddress}></Map>
         </div>
       </div>
     </div>

@@ -8,8 +8,9 @@ export default function AddressButton({ setUserAddress }) {
 
   return (
     <>
-      <button onClick={handleClick}>
-        <RiHomeHeartFill className=' w-10 h-10' />
+      <button onClick={handleClick} className=' w-30 text-[#4d70e3]'>
+        <RiHomeHeartFill className=' w-36 h-20 drop-shadow-md' />
+        <p className=' text-lg text-black font-bold'>집찾기</p>
       </button>
     </>
   );

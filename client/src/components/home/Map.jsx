@@ -228,7 +228,7 @@ function Map({ userAddress }) {
     <div
       ref={mapContainerRef}
       id='TMapApp'
-      className='w-[850px] h-[550px]'
+      className='w-[53.125rem] h-[34.375rem] pt-7 drop-shadow-md'
     ></div>
   );
 }
