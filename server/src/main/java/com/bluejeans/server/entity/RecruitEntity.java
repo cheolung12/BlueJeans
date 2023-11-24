@@ -25,10 +25,10 @@ public class RecruitEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String title;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = true, length = 1000)
     private String content;
 
     @Column
@@ -43,11 +43,11 @@ public class RecruitEntity {
     @Column
     private String img_path;
 
-    @Column(length = 45)
-    private String workTime;
+//    @Column(length = 45)
+//    private String workTime;
 
-    @Column(nullable = false)
-    private boolean recruiting = true;
+//    @Column
+//    private boolean recruiting = true;
 
     @CreationTimestamp
     private Timestamp created_at;

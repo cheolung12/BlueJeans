@@ -27,13 +27,18 @@ export default function RecruitmentCreate() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("recruitDTO", JSON.stringify(recruitmentData));
     formData.append("file", file);
+    formData.append("title", recruitmentData.title);
+    formData.append("money", recruitmentData.money);
+    formData.append("region", recruitmentData.region);
+    formData.append("contact", recruitmentData.contact);
+    formData.append("content", recruitmentData.content);
 
     try {
       const response = await axios.post(
         "http://localhost:8080/api/jobs",
         formData,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",
