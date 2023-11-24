@@ -30,8 +30,8 @@ export default function RecruitmentDetail({}) {
                     <nav className="flex justify-end">
                         {editA ? (
                             <div className="flex flex-row  space-x-2">
-                                <button onClick={editRecruit()}>수정</button>
-                                <button onClick={deleteRecruit()}>삭제</button>
+                                <button onClick={editRecruit}>수정</button>
+                                <button onClick={deleteRecruit}>삭제</button>
                                 <Link to={`/recruitment`}>
                                     <ResButton text="목록" />
                                 </Link>
