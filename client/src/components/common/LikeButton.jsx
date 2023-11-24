@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
-export default function LikeButton() {
+export default function LikeButton({ like, notlike }) {
   // 하트 색상 변경
   const [isLiked, setIsLiked] = useState(false);
   // 찜하기 수 카운트
@@ -36,7 +36,7 @@ export default function LikeButton() {
 
       <span className='pt-1 text-sm'>
         {/* 찜했을 때 찜해제로 변경 */}
-        {!isLiked ? <span>찜하기</span> : <span>찜해제</span>}
+        {!isLiked ? <span>{like}</span> : <span>{notlike}</span>}
       </span>
       <span className='pt-1'>{count}</span>
     </div>

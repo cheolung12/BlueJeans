@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function EssayCard({ id, title, thumbnail }) {
   return (
     <div>
-      <Link to={`/essay/detail/`} key={id}>
+      <Link to={`/essay/detail/${id}`} key={id}>
         <div
           className='w-[15rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
           style={{
