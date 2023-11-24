@@ -55,7 +55,7 @@ export default function RecruitmentCreate() {
             setPlaceholder(fileName); //useState로 그 값을 placeholder에 넣기!
         } else {
             console.log('파일 없음');
-        }
+                  }
         setFile(e.target.files[0]);
     };
 
@@ -70,15 +70,23 @@ export default function RecruitmentCreate() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('recruitDTO', JSON.stringify(recruitmentData));
-        formData.append('file', file);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", recruitmentData.title);
+    formData.append("money", recruitmentData.money);
+    formData.append("region", recruitmentData.region);
+    formData.append("contact", recruitmentData.contact);
+    formData.append("content", recruitmentData.content);
 
-        try {
-            const response = await axios.post('http://localhost:8080/api/jobs', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/jobs",
+        formData,
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
             });
 
             console.log(response.data);

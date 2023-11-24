@@ -1,15 +1,16 @@
-import React from "react";
-import { FcHome } from "react-icons/fc";
+import React from 'react';
+import { RiHomeHeartFill } from 'react-icons/ri';
 
 export default function AddressButton({ setUserAddress }) {
   const handleClick = () => {
-    setUserAddress("서울특별시 마포구 숭문길 24");
+    setUserAddress(' 서울특별시 마포구 염리동 숭문길 47');
   };
 
   return (
     <>
-      <button onClick={handleClick}>
-        <FcHome />
+      <button onClick={handleClick} className=' w-30 text-[#4d70e3]'>
+        <RiHomeHeartFill className=' w-36 h-20 drop-shadow-md' />
+        <p className=' text-lg text-black font-bold'>집찾기</p>
       </button>
     </>
   );

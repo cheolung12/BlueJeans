@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
+import ImageSlider from '../components/common/ImageSlider';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -25,23 +26,7 @@ export default function Signup() {
   const isFormValid = Object.values(formValid).every((value) => value === true);
   const [isOpen, setIsOpen] = useState(false); // 주소 모달창 열고 닫기
   const [isFormSubmitting, setIsFormSubmitting] = useState(false); // 가입버튼 재클릭 방지를 위한 state
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // 왼쪽 이미지화면 전환을 위한 state
-  const imageUrls = [
-    '/images/s1.jpeg',
-    '/images/s2.jpeg',
-    '/images/s3.jpeg',
-    '/images/s4.jpeg',
-  ];
-  const currentImageUrl = imageUrls[currentImageIndex];
   const navigate = useNavigate(); // 회원가입 성공 시 리다이렉트용
-
-  // 3초마다 이미지 변경
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-    }, 3000);
-    return () => clearInterval(intervalId);
-  }, [currentImageIndex, imageUrls.length]);
 
   const handleChange = (e) => {
     // input값 state에 실시간 적용
@@ -69,10 +54,10 @@ export default function Signup() {
 
   // 유효성 검사 실패시 사용자에게 테두리 스타일로 알려주기 (정의)
   function fadingEffect(elementId) {
-    const button = document.getElementById(elementId);
+    const element = document.getElementById(elementId);
     let opacity = 1;
     const fadingInterval = setInterval(() => {
-      button.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
+      element.style.outline = `2px solid rgba(235, 56, 56, ${opacity})`;
       opacity -= 0.05;
       if (opacity <= 0) {
         clearInterval(fadingInterval);
@@ -128,21 +113,25 @@ export default function Signup() {
           loginData.append('password', formData.password);
           // 로그인 요청
           try {
-            await axios({
+            const res = await axios({
               method: 'POST',
-              url: 'http://localhost:8080/api/login',
+              url: 'http://localhost:8080/login',
               data: loginData,
             });
-            if(res.data === 'login'){
+            if(res){
+              console.log(res);
               navigate('/');
             } else {
-              alert('로그인 실패');
+              navigate('/login');
             }
           } catch (error) {
+            alert('로그인 실패');
             console.error(error);
           }
-        } 
-        navigate('/');
+        }  else {
+          navigate('/login');
+        }
+        
       }
     } catch (error) {
       console.log(JSON.stringify(formData));
@@ -217,15 +206,7 @@ export default function Signup() {
 
   return (
     <div className='w-screen h-screen flex'>
-      <div
-        className='w-[1000px] h-full lg:block hidden'
-        style={{
-          backgroundImage: `url(${currentImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transition: 'background-image 1s ease-in-out',
-        }}
-      ></div>
+    <ImageSlider />
       <div className='w-full h-full flex justify-center items-center'>
         <form
           onSubmit={handleSubmit}
@@ -260,7 +241,7 @@ export default function Signup() {
             <div className='signup-input-duplicable'>
               <input
                 type='text'
-                id='아이디'
+                id='userID'
                 name='userID'
                 value={formData.userID}
                 onChange={handleChange}

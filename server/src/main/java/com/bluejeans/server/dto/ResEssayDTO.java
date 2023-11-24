@@ -18,7 +18,8 @@ public class ResEssayDTO {
     private String title;
     private String content;
     private int user_id;
-    private String imp_path;
+    private String img_path;
+    private int like;
 
     public static ResEssayDTO toDTO(EssayEntity entity){
         if (entity == null) {
@@ -29,7 +30,7 @@ public class ResEssayDTO {
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .user_id(entity.getUser() != null ? entity.getUser().getId() : null)
-                .imp_path(entity.getImg_path())
+                .img_path(entity.getImg_path())
                 .build();
     }
 

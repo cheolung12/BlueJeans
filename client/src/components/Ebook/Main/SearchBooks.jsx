@@ -1,7 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 export default function SearchBooks({ book }) {
+// get요청
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `http://localhost:8080/api/ebook/search?keyword=${searchInput}`,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  fetchData();
+}, []);
+
+
   // 단일 페이지 내에서 이동
   const navigate = useNavigate();
 
@@ -25,7 +43,7 @@ export default function SearchBooks({ book }) {
     console.log(filterBooks);
 
     // 검색어 페이지로 이동
-    navigate(`/ebook/keyword/${searchInput}`);
+    // navigate(`/ebook/keyword/${searchInput}`);
   };
 
   return (
