@@ -91,7 +91,7 @@ export default function Login() {
           className="w-full max-w-2xl h-full flex flex-col justify-center items-center"
         >
           <div className="w-3/5 flex flex-col justify-start">
-            <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#2e375d]">
+            <div className="sm:text-4xl text-3xl font-bold mb-2 text-signatureColor">
               로그인
             </div>
             <div className="sm:text-base text-sm font-light sm:mb-8 mb-6">
@@ -145,7 +145,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isFormSubmitting}
-              className={`w-full cursor-pointer bg-[#2e375d] font-semibold text-white text-xl sm:py-4 py-2 rounded-lg hover:opacity-90`}
+              className={`w-full cursor-pointer bg-signatureColor font-semibold text-white text-xl sm:py-4 py-2 rounded-lg hover:opacity-90`}
             >
               로그인
             </button>

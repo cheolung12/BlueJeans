@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         'chatColor': '#4d70e3',
+        'signatureColor': '#2e375d',
       }
     },
   },
