@@ -196,8 +196,8 @@ function Map({ userAddress }) {
 
           const polyline_ = new window.Tmapv2.Polyline({
             path: lineCoordinates,
-            strokeColor: '0000FF', // 파란색
-            strokeWeight: 7,
+            strokeColor: '0000FF',
+            strokeWeight: 3,
             map: mapInstanceRef.current,
           });
 
@@ -228,7 +228,7 @@ function Map({ userAddress }) {
     <div
       ref={mapContainerRef}
       id='TMapApp'
-      className='w-[800px] h-[600px]'
+      className='w-[850px] h-[550px]'
     ></div>
   );
 }
