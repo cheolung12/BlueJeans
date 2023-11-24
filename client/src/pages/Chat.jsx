@@ -3,6 +3,7 @@ import axios from "axios";
 import ChatBox from "../components/chat/ChatBox";
 import ChatInput from "../components/chat/ChatInput";
 import ChatButton from "../components/chat/ChatButton";
+import SideNavBar from '../components/common/SideNavBar';
 
 const ChatApp = () => {
   const [inputText, setInputText] = useState("");
@@ -68,7 +69,9 @@ const ChatApp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center fade-in h-screen">
+    <div className='w-screen h-screen flex justify-center items-center'>
+      <SideNavBar />
+    <div className="flex w-full justify-center items-center fade-in h-screen">
       {/* content wrapper */}
       <div className="w-3/5 h-4/5 shadow-xl flex flex-col justify-between">
         <div className="h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md">
@@ -94,6 +97,7 @@ const ChatApp = () => {
           />
         </div>
       </div>
+    </div>
     </div>
   );
 };
