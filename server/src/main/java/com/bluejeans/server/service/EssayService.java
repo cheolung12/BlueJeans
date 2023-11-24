@@ -22,8 +22,6 @@ import java.util.Optional;
 import static com.bluejeans.server.entity.DibResult.DIB_ADDED;
 import static com.bluejeans.server.entity.DibResult.DIB_REMOVED;
 import static com.bluejeans.server.entity.DibResult.ESSAY_NOT_FOUND;
-import static com.bluejeans.server.service.EssayService.DibResult.DIB_ADDED;
-import static com.bluejeans.server.service.EssayService.DibResult.DIB_REMOVED;
 
 @Service
 @Slf4j
