@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNavBar from '../../components/common/SideNavBar';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import LikeButton from '../../components/common/LikeButton';
 
 export default function EssayDetail() {

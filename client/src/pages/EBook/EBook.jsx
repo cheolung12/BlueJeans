@@ -18,20 +18,20 @@ export default function EBook() {
   const { searchInput } = useParams();
 
   // get 요청
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios({
-  //         method: 'GET',
-  //         url: ``,
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: `http://localhost:8080/api/ebook`,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // 검색어가 있는 경우 필터링된 목록 보여주기
   // 검색어가 없다면 모든 책 리스트 보여주기
@@ -41,6 +41,33 @@ export default function EBook() {
           book.title.includes(searchInput) || book.author.includes(searchInput)
       )
     : books;
+
+  const handleFilter = async (type) => {
+    let res;
+    if (type === 'all') {
+      try {
+        res = await axios({
+          method: 'GET',
+          url: `http://localhost:8080/api/ebook`,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      try {
+        res = await axios({
+          method: 'GET',
+          url: `http://localhost:8080/api/ebook/order?orderby=${type}`,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    if (res) {
+      console.log(res);
+      // setBookList(받은데이터)
+    }
+  };
 
   return (
     <div>
@@ -52,7 +79,7 @@ export default function EBook() {
         <div className='w-[61rem]'>
           {/* 카테고리, 검색창 */}
           <div className='flex items-center justify-between px-4'>
-            <Filter />
+            <Filter handleFilter={handleFilter} />
             <SearchBooks book={books} />
           </div>
 
