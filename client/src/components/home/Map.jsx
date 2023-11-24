@@ -1,17 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-//현위체 마커가이쏘
-//버튼의
-
 function Map({ userAddress }) {
   const mapContainerRef = useRef();
   const mapInstanceRef = useRef(null);
+  const markersRef = useRef([]);
+  let resultdrawArr = [];
+
   const [endMarkerPosition, setEndMarkerPosition] = useState(null);
-
-  //start랑 end 각 포인트들을 배열에 담아서 for 문 담에서 각각의 값을 연결해주는 코드 만들긩
-  const [positions, setPositions] = useState([]);
-
-  //경더위도 순서로 넣어줘야함
+  const [currentMarkerPosition, setCurrentMarkerPosition] = useState(null);
 
   const imgUrlS =
     'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
@@ -19,9 +15,39 @@ function Map({ userAddress }) {
   const imgUrlE =
     'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
 
-  // Tmap 초기화
+  useEffect(() => {
+    const handleGeoLocation = async () => {
+      try {
+        const position = await getCurrentPosition();
+        const nowPosition = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+
+        if (!mapInstanceRef.current) {
+          initTmap(nowPosition);
+        }
+      } catch (error) {
+        console.error('에러:', error);
+      }
+    };
+
+    const getCurrentPosition = () => {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+    };
+
+    handleGeoLocation();
+  }, []);
+
+  useEffect(() => {
+    if (userAddress) {
+      reAddress(userAddress);
+    }
+  }, [userAddress]);
+
   const initTmap = (nowPosition) => {
-    console.log('TMAP');
     const map = new window.Tmapv2.Map(
       mapContainerRef.current.id,
       {
@@ -33,74 +59,22 @@ function Map({ userAddress }) {
       },
       []
     );
-    console.log(window.Tmapv2);
-    // 시작 현위치  마커
-    const startMarker = new window.Tmapv2.Marker({
+
+    const currentMarker = new window.Tmapv2.Marker({
       position: new window.Tmapv2.LatLng(
         nowPosition.latitude,
         nowPosition.longitude
       ),
-
-      // icon: new window.Tmapv2.Img("<img src= '../home/homeImg/red.png'></img>"),
       icon: imgUrlS,
       iconSize: new window.Tmapv2.Size(30, 40),
       map: map,
     });
 
-    // 도착점 즉 집
-    if (endMarkerPosition) {
-      console.log('df');
-      // userAddress가 있을 때만 마커 생성
-      //else안해도됨?
-
-      const endMarker = new window.Tmapv2.Marker({
-        position: new window.Tmapv2.LatLng(
-          endMarkerPosition.latitude,
-          endMarkerPosition.longitude
-        ),
-
-        //마커를 찍는게 적용이 안됨.... 흠
-        icon: imgUrlE,
-        iconSize: new window.Tmapv2.Size(56, 78),
-        map: map,
-      });
-    }
-
-    // mapInstanceRef에 지도 인스턴스 저장
     mapInstanceRef.current = map;
-    console.log('endMarkerPosition:', endMarkerPosition);
+    markersRef.current.push(currentMarker);
+    setCurrentMarkerPosition(nowPosition);
   };
 
-  //////////////////////////////////////////////////처음 실행되는 지도
-
-  useEffect(() => {
-    const handleGeoLocation = (position) => {
-      console.log('핸들');
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      const nowPosition = { latitude, longitude };
-
-      console.log('내 위치:', nowPosition);
-
-      // Tmap 초기화
-      if (!mapInstanceRef.current) {
-        initTmap(nowPosition);
-      }
-    };
-
-    /////////////////////////////////////////////////
-    if (!document.getElementById('tmapScript')) {
-      console.log('tmapscript');
-      navigator.geolocation.getCurrentPosition(handleGeoLocation);
-    }
-
-    // userAddress 값이 있을 때 reAddress 함수 호출
-    if (userAddress) {
-      reAddress(userAddress);
-    }
-  }, [userAddress]);
-
-  //////readdress FUNCTION////
   const reAddress = async (endpoint) => {
     try {
       const apiUrl = `https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&callback=result&coordType=WGS84GEO&fullAddr=${endpoint}&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
@@ -124,20 +98,55 @@ function Map({ userAddress }) {
           startLatitude = resultCoordinate.newLat;
         }
 
-        console.log('경도 (Longitude): ' + startLongitude);
-        console.log('위도 (Latitude): ' + startLatitude);
-
-        // endMarker 위치 업데이트
         setEndMarkerPosition({
           latitude: startLatitude,
           longitude: startLongitude,
         });
 
-        // endMarkerPosition이 업데이트된
         if (mapInstanceRef.current) {
-          new window.Tmapv2.Marker({
-            position: new window.Tmapv2.LatLng(startLatitude, startLongitude),
+          markersRef.current.forEach((marker) => marker.setMap(null));
+
+          const currentMarker = new window.Tmapv2.Marker({
+            position: new window.Tmapv2.LatLng(
+              currentMarkerPosition.latitude,
+              currentMarkerPosition.longitude
+            ),
+            icon: imgUrlS,
+            iconSize: new window.Tmapv2.Size(30, 40),
             map: mapInstanceRef.current,
+          });
+
+          markersRef.current.push(currentMarker);
+
+          const endMarker = new window.Tmapv2.Marker({
+            position: new window.Tmapv2.LatLng(startLatitude, startLongitude),
+            icon: imgUrlE,
+            iconSize: new window.Tmapv2.Size(30, 40),
+            map: mapInstanceRef.current,
+          });
+
+          markersRef.current.push(endMarker);
+
+          const lineCoordinates = [
+            {
+              latitude: currentMarkerPosition.latitude,
+              longitude: currentMarkerPosition.longitude,
+            },
+            { latitude: startLatitude, longitude: startLongitude },
+          ];
+
+          drawPedestrianRoute(
+            currentMarkerPosition.latitude,
+            currentMarkerPosition.longitude,
+            startLatitude,
+            startLongitude
+          );
+
+          drawLine(lineCoordinates);
+
+          centerMap(currentMarkerPosition, {
+            latitude: startLatitude,
+            longitude: startLongitude,
           });
         }
       } else {
@@ -148,11 +157,78 @@ function Map({ userAddress }) {
     }
   };
 
+  const drawLine = (arrPoints) => {
+    if (mapInstanceRef.current && arrPoints.length >= 2) {
+      const lineCoordinates = arrPoints.map(
+        (point) => new window.Tmapv2.LatLng(point.latitude, point.longitude)
+      );
+
+      const polyline_ = new window.Tmapv2.Polyline({
+        path: lineCoordinates,
+        strokeColor: 'FF0000',
+        strokeWeight: 7,
+        map: mapInstanceRef.current,
+      });
+    }
+  };
+
+  const drawPedestrianRoute = async (startLat, startLng, endLat, endLng) => {
+    const apiEndpoint = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result&startX=${startLng}&startY=${startLat}&endX=${endLng}&endY=${endLat}&reqCoordType=WGS84GEO&resCoordType=EPSG3857&startName=출발지&endName=도착지&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
+
+    try {
+      const response = await fetch(apiEndpoint);
+      const data = await response.json();
+
+      if (data.features && data.features.length > 0) {
+        const geometry = data.features[0].geometry;
+
+        if (geometry.type === 'LineString') {
+          const lineCoordinates = geometry.coordinates.map(
+            (coord) => new window.Tmapv2.LatLng(coord[1], coord[0])
+          );
+
+          if (resultdrawArr.length > 0) {
+            for (let i in resultdrawArr) {
+              resultdrawArr[i].setMap(null);
+            }
+            resultdrawArr = [];
+          }
+
+          const polyline_ = new window.Tmapv2.Polyline({
+            path: lineCoordinates,
+            strokeColor: '0000FF', // 파란색
+            strokeWeight: 7,
+            map: mapInstanceRef.current,
+          });
+
+          resultdrawArr.push(polyline_);
+        }
+      }
+    } catch (error) {
+      console.error('에러:', error);
+    }
+  };
+
+  const centerMap = (position1, position2) => {
+    if (mapInstanceRef.current && position1 && position2) {
+      const bounds = new window.Tmapv2.LatLngBounds();
+      bounds.extend(
+        new window.Tmapv2.LatLng(position1.latitude, position1.longitude)
+      );
+      bounds.extend(
+        new window.Tmapv2.LatLng(position2.latitude, position2.longitude)
+      );
+
+      const center = bounds.getCenter();
+      mapInstanceRef.current.setCenter(center);
+    }
+  };
+
   return (
     <div
       ref={mapContainerRef}
       id='TMapApp'
-      style={{ height: '500px', width: '600px' }}
+      className='w-[800px] h-[600px]'
     ></div>
   );
 }
