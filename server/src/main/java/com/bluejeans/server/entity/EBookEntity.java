@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,15 +37,21 @@ public class EBookEntity {
     @Column(length=20)
     private String ISBN = "9791192300825";
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column
     private String thumbnail;
+
+    @CreationTimestamp
+    private Timestamp created_at;
 
     @UpdateTimestamp
     private Timestamp updated_at;
 
     @OneToOne(mappedBy = "eBookEntity", cascade = CascadeType.ALL)
     private EBookContentEntity eBookContentEntity;
+
+    @OneToMany(mappedBy = "ebook", cascade = CascadeType.ALL)
+    private List<EBookDibsEntity> ebookDibs;
 }
