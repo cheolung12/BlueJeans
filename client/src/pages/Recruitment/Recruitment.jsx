@@ -20,36 +20,65 @@ export default function Recruitment() {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // 옵션별 정렬
     const [selectValue, setSelectValue] = useState('latest');
+    const [reqStr, setReqStr] = useState('');
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setSelectValue(e.target.value);
+
+        // 전역으로 선언
+        let res, query;
+        if (e.target.value !== 'region') {
+            query = `filter?order=${e.target.value}`;
+        } else {
+            query = 'searchRegion?region=지역명';
+        }
+        try {
+            res = await axios({
+                method: 'GET',
+                url: `http://localhost:8080/api/jobs/${query}`,
+            });
+        } catch (error) {
+            console.log('axios 오류: ', error);
+        }
+        if (res) {
+            console.log(res);
+            // setJobList(받은데이터)
+        }
     };
 
-    useEffect(() => {
-        // const [sortSelect, setSortSelect] = useState('');
-        // setSortSelect(selectValue)
+    // const handleChange = (e) => {
+    //     setSelectValue(e.target.value);
 
-        // if (selectValue === 'latest') {
-        //     console.log(sortSelect);
-        // } else if (selectValue === 'favorite') {
-        //     console.log(sortSelect);
-        // } else if (selectValue === 'region') {
-        //     console.log(sortSelect);
-        // }
-        console.log(selectValue);
-        const fetchData = async () => {
-            try {
-                const response = await axios({
-                    method: 'GET',
-                    url: `http://localhost:8080/api/jobs/filter?order=${selectValue}`,
-                });
-                console.log(response);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    }, [selectValue]);
+    //     switch (selectValue) {
+    //         case 'latest':
+    //             setReqStr('filter?order=latest');
+    //             break;
+    //         case 'favorite':
+    //             setReqStr('filter?order=favorite');
+    //             break;
+    //         case 'region':
+    //             setReqStr('searchRegion?region=지역명');
+    //             break;
+    //         default:
+    //             console.log('변경 사항ㄴ');
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     console.log(reqStr);
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axios({
+    //                 method: 'GET',
+    //                 url: `http://localhost:8080/api/jobs/${reqStr}`,
+    //             });
+    //             console.log(response);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, [reqStr]);
     /////////////////////////////////////////////////////////////////////////////////////////
 
     // 현재 페이지의 데이터 계산
@@ -109,7 +138,7 @@ export default function Recruitment() {
                         >
                             <option value="latest">최신순</option>
                             <option value="favorite">인기순</option>
-                            {/*<option value="region">거리순</option>*/}
+                            <option value="region">거리순</option>
                         </select>
                     </nav>
                     {/* 메인 */}
