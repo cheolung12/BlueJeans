@@ -1,0 +1,32 @@
+{
+  "mainL": [
+    {
+      "id": "1",
+      "userid": "1yk",
+      "title": "고구마",
+      "like": 15,
+      "pro": "https://i.pinimg.com/474x/19/a7/56/19a75691033a694612e358419c5bc8bd.jpg"
+    },
+    {
+      "id": "2",
+      "userid": "2yk",
+      "title": "커피",
+      "like": 10,
+      "pro": "https://i.pinimg.com/474x/64/e0/5d/64e05d0c1cfcfa8df963dde3d2dfa6bc.jpg"
+    },
+    {
+      "id": "3",
+      "userid": "3yk",
+      "title": "맥북",
+      "like": 9,
+      "pro": "https://i.pinimg.com/474x/0c/14/34/0c1434f1cadc07fe3cdb97ebec7156ee.jpg"
+    },
+    {
+      "id": "4",
+      "userid": "4yk",
+      "title": "케이크",
+      "like": 10,
+      "pro": "https://i.pinimg.com/474x/19/a7/56/19a75691033a694612e358419c5bc8bd.jpg"
+    }
+  ]
+}
