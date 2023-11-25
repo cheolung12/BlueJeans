@@ -13,6 +13,10 @@ import { FaPenNib } from 'react-icons/fa6';
 import { MdChat } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 import { FaRegThumbsUp } from 'react-icons/fa';
+import { MdOutlineFiberNew } from 'react-icons/md';
+import { FaLocationDot } from 'react-icons/fa6';
+import { FaPhone } from 'react-icons/fa6';
+import { BiCommentDetail } from 'react-icons/bi';
 
 ///////////////
 import 'swiper/css';
@@ -127,6 +131,7 @@ export default function Main({
               value.map((book) => (
                 <React.Fragment key={book.id}>
                   <SwiperSlide key={book.id} className=' h-full w-full'>
+                    {/* <Link to={`/ebook/detail/${encodeURIComponent(book.id)}`}> */}
                     <div>
                       <img
                         src={book.thumbnail}
@@ -134,6 +139,7 @@ export default function Main({
                         className='h-[25rem] w-full text-blue-700'
                       />
                     </div>
+                    {/* </Link> */}
                   </SwiperSlide>
                 </React.Fragment>
               ))
@@ -157,7 +163,7 @@ export default function Main({
                       className='rounded-full h-full w-full'
                     />
                   </div>
-                  <p className='text-2xl'>{item.title}</p>
+                  <p className=' text-base'>{item.title}</p>
                   <p className='text-xl'>{item.userid}</p>
                   <div className='flex justify-center'>
                     <FaRegThumbsUp className='self-center' />
@@ -167,7 +173,7 @@ export default function Main({
               ))}
             </div>
             <div className='flex justify-between w-30'>
-              <div className='self-center text-4xl font-bold place-items-end'>
+              <div className='self-center text-4xl text-white font-bold place-items-end'>
                 이달의 문학왕
               </div>
             </div>
@@ -175,22 +181,35 @@ export default function Main({
         </div>
 
         {/* 3 */}
-        <div className='flex flex-col bg-[#F28080] h-[33rem]'>
-          <p className='text-4xl font-semibold  p-9   items-start  text-white'>
-            추천 공고
+        <div className='flex flex-col bg-[#F28080] h-[30rem]'>
+          <p className='text-3xl font-semibold  p-9  items-start text-white'>
+            채용공고보다 더 부드러운 문장이 뭐가있을 까
           </p>
           <div className='flex items-center justify-evenly w-full h-full'>
             {mJob.mainJ.slice(0, 3).map((item2) => (
-              <div key={item2.no} className='flex'>
-                <div className='h-64 w-96 bg-slate-200 rounded-3xl shadow-lg'>
-                  <div className='p-10 text-2xl'>
-                    <div className='flex justify-between'>
-                      <div>{item2.job}</div>
+              <div key={item2.id}>
+                <div className=' bg-[#f49e9e] rounded-2xl shadow-xl h-64 w-96 flex'>
+                  <MdOutlineFiberNew className='w-1/4 h-10' />
+                  <div className=' self-center pt-5 text-lg  w-2/3 flex-col '>
+                    <div className='flex justify-between mb-4'>
+                      <div className='flex'>
+                        <IoMdBriefcase className='self-center m-1' />
+                        {item2.job}
+                      </div>
                       <div>{item2.money}</div>
                     </div>
-                    <div className='pt-4'>{item2.address}</div>
-                    <div className='pt-4'>{item2.contact}</div>
-                    <div className='pt-4'>{item2.detail}</div>
+                    <div className='mb-4 flex'>
+                      <FaLocationDot className='self-center m-1' />
+                      {item2.address}
+                    </div>
+                    <div className='mb-4 flex'>
+                      <FaPhone className='self-center m-1' />
+                      {item2.contact}
+                    </div>
+                    <div className='mb-4 flex'>
+                      <BiCommentDetail className='self-center m-1' />
+                      {item2.detail}
+                    </div>
                   </div>
                 </div>
               </div>

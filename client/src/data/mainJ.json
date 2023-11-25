@@ -2,27 +2,27 @@
   "mainJ": [
     {
       "no": "1",
-      "job": "고구마",
-      "money": "1111",
+      "job": "화장실 청소",
+      "money": "10000",
       "address": "송파구",
-      "contact": "010",
-      "detail": "yk"
+      "contact": "01012341234",
+      "detail": "asdfalskdfj;laksjdf;l"
     },
     {
       "no": "2",
-      "job": "감자",
-      "money": "1111",
+      "job": "베이비 시터",
+      "money": "10000",
       "address": "송파구",
-      "contact": "010",
-      "detail": "yk"
+      "contact": "01012341234",
+      "detail": "dlfjafsfskfalksflksdjfl"
     },
     {
       "no": "3",
-      "job": "옥수수",
-      "money": "1111",
+      "job": "주차관리",
+      "money": "10000",
       "address": "송파구",
-      "contact": "010",
-      "detail": "yk"
+      "contact": "01012341234",
+      "detail": "fjdkfjslkdjflskjflkjl"
     },
     {
       "no": "4",
