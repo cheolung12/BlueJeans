@@ -143,25 +143,26 @@ export default function Main({
         {/* 2 */}
         <div className='h-[37.5rem] p-3 bg-[#5495B1]'>
           <div className='flex h-full'>
-            <div className='flex w-[65rem] items-end pb-5 justify-evenly self-center'>
+            <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
               {literature.mainL.slice(0, 3).map((item, index) => (
-                <div key={item.id}>
+                <div key={index} className='text-center'>
                   <div
-                    className={`rounded-full bg-color h-${
+                    className={`rounded-full  h-${index === 0 ? 80 : 60} w-${
                       index === 0 ? 80 : 60
-                    } w-${index === 0 ? 80 : 60}`}
+                    }`}
                   >
                     <img
                       src={item.pro}
+                      alt={item.userid || 'User Profile'}
                       className='rounded-full h-full w-full'
                     />
                   </div>
-                  <p className='text-center text-2xl'>{item.title}</p>
-                  <p className='text-center text-xl'>{item.userid}</p>
-                  <p className='flex justify-center'>
+                  <p className='text-2xl'>{item.title}</p>
+                  <p className='text-xl'>{item.userid}</p>
+                  <div className='flex justify-center'>
                     <FaRegThumbsUp className='self-center' />
-                    {item.like}
-                  </p>
+                    <p>{item.like}</p>
+                  </div>
                 </div>
               ))}
             </div>
