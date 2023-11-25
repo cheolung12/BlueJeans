@@ -1,0 +1,36 @@
+{
+  "mainJ": [
+    {
+      "id": "1",
+      "job": "고구마",
+      "money": "1111",
+      "address": "송파구",
+      "contact": "010",
+      "detail": "yk"
+    },
+    {
+      "id": "2",
+      "job": "감자",
+      "money": "1111",
+      "address": "송파구",
+      "contact": "010",
+      "detail": "yk"
+    },
+    {
+      "id": "3",
+      "job": "옥수수",
+      "money": "1111",
+      "address": "송파구",
+      "contact": "010",
+      "detail": "yk"
+    },
+    {
+      "id": "4",
+      "job": "치킨",
+      "money": "1111",
+      "address": "송파구",
+      "contact": "010",
+      "detail": "yk"
+    }
+  ]
+}
