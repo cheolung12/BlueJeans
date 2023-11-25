@@ -126,7 +126,7 @@ export default function Main({
             {booksArray.map((value) =>
               value.map((book) => (
                 <React.Fragment key={book.id}>
-                  <SwiperSlide className=' h-full w-full'>
+                  <SwiperSlide key={book.id} className=' h-full w-full'>
                     <div>
                       <img
                         src={book.thumbnail}
@@ -145,10 +145,10 @@ export default function Main({
           <div className='flex h-full'>
             <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
               {literature.mainL.slice(0, 3).map((item, index) => (
-                <div key={index} className='text-center'>
+                <div key={item.id} className='text-center'>
                   <div
-                    className={`rounded-full  h-${index === 0 ? 80 : 60} w-${
-                      index === 0 ? 80 : 60
+                    className={`rounded-full ${
+                      index === 0 ? 'h-80 w-80' : 'h-60 w-60'
                     }`}
                   >
                     <img
@@ -166,7 +166,6 @@ export default function Main({
                 </div>
               ))}
             </div>
-
             <div className='flex justify-between w-30'>
               <div className='self-center text-4xl font-bold place-items-end'>
                 이달의 문학왕
@@ -181,17 +180,17 @@ export default function Main({
             추천 공고
           </p>
           <div className='flex items-center justify-evenly w-full h-full'>
-            {mJob.mainJ.slice(0, 3).map((item) => (
-              <div key={item.id} className='flex'>
+            {mJob.mainJ.slice(0, 3).map((item2) => (
+              <div key={item2.no} className='flex'>
                 <div className='h-64 w-96 bg-slate-200 rounded-3xl shadow-lg'>
                   <div className='p-10 text-2xl'>
                     <div className='flex justify-between'>
-                      <div>{item.job}</div>
-                      <div>{item.money}</div>
+                      <div>{item2.job}</div>
+                      <div>{item2.money}</div>
                     </div>
-                    <div className='pt-4'>{item.address}</div>
-                    <div className='pt-4'>{item.contact}</div>
-                    <div className='pt-4'>{item.detail}</div>
+                    <div className='pt-4'>{item2.address}</div>
+                    <div className='pt-4'>{item2.contact}</div>
+                    <div className='pt-4'>{item2.detail}</div>
                   </div>
                 </div>
               </div>
