@@ -58,7 +58,8 @@ export default function Login() {
       try {
         const res = await axios({
           method: "POST",
-          url: "http://localhost:8080/login",
+          url: "http://localhost:8080",
+          // url: "https://www.bluejeansu.site/login",
           data: loginData,
           withCredentials: true,
         });

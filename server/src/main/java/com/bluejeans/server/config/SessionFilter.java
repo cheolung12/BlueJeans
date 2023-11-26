@@ -21,6 +21,9 @@ public class SessionFilter extends UsernamePasswordAuthenticationFilter {
         String sessionId = request.getSession().getId();
         Cookie cookie = new Cookie("JSESSIONID", sessionId);
         cookie.setPath("/");  // 루트 경로로 설정하여 전체 애플리케이션에서 접근 가능하게 함
+        cookie.setSecure(true);
+//        cookie.setDomain("https://www.bluejeansu.site");
+        cookie.setDomain("http://localhost:3000");
         response.addCookie(cookie);
     }
 }
