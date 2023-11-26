@@ -38,7 +38,7 @@ public class ResRecruitDTO {
                 .money(rcEntity.getMoney())
                 .region(rcEntity.getRegion())
                 .contact(rcEntity.getContact())
-                .workDay(rcEntity.getWorkTime())
+                .workDay(rcEntity.getWorkDay())
                 .workTime(rcEntity.getWorkTime())
                 .createdAt(rcEntity.getCreated_at())
                 .img_path(rcEntity.getImg_path())
