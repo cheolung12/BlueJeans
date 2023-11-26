@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
-import bookContents from '../../data/bookContents.json';
+import React, { useState, useEffect } from 'react';
+// import bookContents from '../../data/bookContents.json';
 // import bookList from '../../data/bookList.json';
 import BookViewer from '../../components/Ebook/Viewer/BookViewer';
 import BookTitle from '../../components/Ebook/Viewer/BookTitle';
 import ExitButton from '../../components/Ebook/Viewer/ExitButton';
 import axios from 'axios';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function EBookViewer() {
   const { bookId } = useParams();
+  const [bookData, setBookData] = useState([]);
 
   // get요청
   useEffect(() => {
@@ -19,12 +20,13 @@ export default function EBookViewer() {
           url: `http://localhost:8080/api/ebook/detail/viewer/${bookId}`,
         });
         console.log(response);
+        setBookData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [bookId]);
 
   return (
     <div>
@@ -32,7 +34,7 @@ export default function EBookViewer() {
         <ExitButton />
       </div>
       <BookTitle />
-      <BookViewer data={bookContents.bookContents} />
+      <BookViewer data={bookData} />
     </div>
   );
 }

@@ -1,28 +1,45 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
-function Filter({handleFilter}) {
+function Filter({ handleFilter }) {
+  const [select, setSelect] = useState('all');
+
+  const handleClick = (type) => {
+    setSelect(type);
+    handleFilter(type);
+  };
 
   return (
-    <div>
+    <div className='mb-4'>
       <ul className='flex'>
         <li
-          onClick={() => handleFilter('all')}
-          className='flex justify-center p-1 cursor-pointer'
+          onClick={() => handleClick('all')}
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2  ${
+            select === 'all'
+              ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
+              : 'font-semibold '
+          }`}
         >
-          <span>전체보기</span>
+          <span className='leading-9'>전체보기</span>
         </li>
         <li
-          onClick={() => handleFilter('favorite')}
-          className='flex justify-center p-1 cursor-pointer'
+          onClick={() => handleClick('favorite')}
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2 ${
+            select === 'favorite'
+              ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
+              : 'font-semibold '
+          }`}
         >
-          <span>인기순</span>
+          <span className='leading-9'>인기순</span>
         </li>
         <li
-          onClick={() => handleFilter('latest')}
-          className='flex justify-center p-1 cursor-pointer'
+          onClick={() => handleClick('latest')}
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2 ${
+            select === 'latest'
+              ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
+              : 'font-semibold '
+          }`}
         >
-          <span>최신순</span>
+          <span className='leading-9'>최신순</span>
         </li>
       </ul>
     </div>

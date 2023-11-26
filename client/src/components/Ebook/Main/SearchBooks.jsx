@@ -1,60 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
 
-export default function SearchBooks({ book }) {
-// get요청
-useEffect(() => {
-  const fetchData = async () => {
+export default function SearchBooks({ handleSearch }) {
+  // 검색어 입력
+  const [searchInput, setSearchInput] = useState('');
+  // 검색 기준과 일치하는 책 목록 저장
+  // const [bookLists, setBookLists] = useState([]);
+
+  // get요청
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (searchInput.trim() === '') {
+  //       // 검색어가 비어있으면 데이터를 가져오지 않음
+  //       setSearchResults([]);
+  //       return;
+  //     }
+  //     try {
+  //       const response = await axios({
+  //         method: 'GET',
+  //         url: `http://localhost:8080/api/ebook/search?keyword=${searchInput}`,
+  //       });
+  //       setSearchResults(response.data);
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [searchInput]);
+
+  // 단일 페이지 내에서 이동
+  // const navigate = useNavigate();
+
+  // 폼 제출
+  const searchSubmit = async (e) => {
+    e.preventDefault();
+    // setSearchInput('');
+
     try {
       const response = await axios({
         method: 'GET',
         url: `http://localhost:8080/api/ebook/search?keyword=${searchInput}`,
       });
-      console.log(response);
+      handleSearch(searchInput, response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
-  fetchData();
-}, []);
-
-
-  // 단일 페이지 내에서 이동
-  const navigate = useNavigate();
-
-  // 검색어 입력
-  const [searchInput, setSearchInput] = useState('');
-  // 검색 기준과 일치하는 책 목록 저장
-  const [bookLists, setBookLists] = useState([]);
-
-  const searchSubmit = (e) => {
-    e.preventDefault();
 
     // 제목, 작가 검색
-    const filterBooks = book.filter(
-      (book) =>
-        book.title.includes(searchInput) || book.author.includes(searchInput)
-    );
+    // const filterBooks = book.filter(
+    //   (book) =>
+    //     book.title.includes(searchInput) || book.author.includes(searchInput)
+    // );
 
-    // 필터링 된 책 목록
-    setBookLists(filterBooks);
-    setSearchInput('');
-    console.log(filterBooks);
+    // // 필터링 된 책 목록
+    // setSearchResults(filterBooks);
+    // setSearchInput('');
+    // console.log(filterBooks);
 
     // 검색어 페이지로 이동
     // navigate(`/ebook/keyword/${searchInput}`);
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={searchSubmit} className='flex items-center'>
         <input
           type='text'
-          placeholder='제목, 작가를 입력하세요'
+          placeholder='제목을 입력하세요'
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className='border rounded-full w-[13rem] h-[2.2rem] border-gray-300 outline-none pl-3 text-sm'
+          className='rounded-full w-[13rem] h-[2.2rem] border-gray-300 outline-none pl-3 text-sm focus:border-[#818CF8] border-2 '
         />
         <button
           disabled={searchInput.length === 0}
@@ -78,6 +95,6 @@ useEffect(() => {
           </svg>
         </button>
       </form>
-    </>
+    </div>
   );
 }
