@@ -302,10 +302,10 @@ export default function RecruitmentCreate() {
                                 근무 요일
                             </label>
                             <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
-                                <option value="hourM">시급</option>
-                                <option value="dayM">일급</option>
-                                <option value="weekM">주급</option>
-                                <option value="monM">월급</option>
+                                <option value="hourM">00:00</option>
+                                <option value="dayM">00:30</option>
+                                <option value="weekM">01:00</option>
+                                <option value="monM">01:30</option>
                             </select>
                         </div>
                         <div className="w-full h-full flex flex-col justify-center">
