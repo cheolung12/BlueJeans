@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-modal';
 
 export default function RecruitmentCreate() {
     const [recruitmentData, setRecruitmentData] = useState({
@@ -10,7 +12,7 @@ export default function RecruitmentCreate() {
         content: '',
         contact: '',
         workDay: '',
-        wordTime: '',
+        workTime: '',
     });
 
     //유효성검사
@@ -22,7 +24,7 @@ export default function RecruitmentCreate() {
         content: null,
         contact: null,
         workDay: null,
-        wordTime: null,
+        workTime: null,
     });
 
     // const isFormValid = Object.values(formValid).every((value) => value === true);
@@ -55,7 +57,7 @@ export default function RecruitmentCreate() {
             setPlaceholder(fileName); //useState로 그 값을 placeholder에 넣기!
         } else {
             console.log('파일 없음');
-                  }
+        }
         setFile(e.target.files[0]);
     };
 
@@ -70,29 +72,68 @@ export default function RecruitmentCreate() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", recruitmentData.title);
-    formData.append("money", recruitmentData.money);
-    formData.append("region", recruitmentData.region);
-    formData.append("contact", recruitmentData.contact);
-    formData.append("content", recruitmentData.content);
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('title', recruitmentData.title);
+        formData.append('moneyStandard', recruitmentData.moneyStandard);
+        formData.append('money', recruitmentData.money);
+        formData.append('region', recruitmentData.region);
+        formData.append('contact', recruitmentData.contact);
+        formData.append('content', recruitmentData.content);
+        formData.append('workDay', recruitmentData.workDay);
+        formData.append('workTime', recruitmentData.workTime);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/jobs",
-        formData,
-        { withCredentials: true },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-            });
+        try {
+            const response = await axios.post(
+                'http://localhost:8080/api/jobs',
+                formData,
+                { withCredentials: true },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
             console.log(response.data);
         } catch (error) {
             console.error(error);
         }
+    };
+
+    // 지역 선택 모달
+    const [isOpen, setIsOpen] = useState(false);
+
+    // 주소 modal 스타일
+    const customStyles = {
+        overlay: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+        },
+        content: {
+            left: '0',
+            margin: 'auto',
+            width: '500px',
+            height: 'fit-content',
+            padding: '0',
+            overflow: 'hidden',
+        },
+    };
+
+    const modalToggle = () => {
+        setIsOpen(!isOpen);
+    };
+
+    // 주소창 닫을때 입력값으로 설정
+    const completeHandler = (data) => {
+        setRecruitmentData((prevData) => ({
+            ...prevData,
+            region: data.roadAddress,
+        }));
+        // setFormValid((prevData) => ({
+        //     ...prevData,
+        //     address: true,
+        // }));
+        setIsOpen(false);
     };
 
     return (
@@ -191,15 +232,59 @@ export default function RecruitmentCreate() {
                         근무 지역
                     </label>
                     <input
-                        value={recruitmentData.region}
-                        className="m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                        onChange={handleInputChange}
-                        name="region"
                         type="text"
-                        placeholder="예) 서울특별시 중구"
+                        id="region"
+                        name="region"
+                        value={recruitmentData.region}
+                        onChange={handleInputChange}
+                        autoComplete="off"
+                        onClick={modalToggle}
+                        readOnly
+                        placeholder="클릭하면 주소검색창이 나타납니다."
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         required
                     />
+                    <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
+                        <DaumPostcode onComplete={completeHandler} height="100%" />
+                        <div className="flex justify-end pr-4">
+                            <button onClick={modalToggle}>[ 닫기 ]</button>
+                        </div>
+                    </Modal>
                 </div>
+
+                <div className="w-full h-full flex flex-col justify-center">
+                    <div className="w-full h-full flex flex-row justify-center">
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workDay" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 요일
+                            </label>
+                            <input
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                value={recruitmentData.workDay}
+                                onChange={handleInputChange}
+                                name="workDay"
+                                type="text"
+                                placeholder="예) 월요일~금요일, 주말"
+                                required
+                            />
+                        </div>
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workTime" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 시간
+                            </label>
+                            <input
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                value={recruitmentData.workTime}
+                                onChange={handleInputChange}
+                                name="workTime"
+                                type="text"
+                                placeholder="예) 15:00 ~ 20:00"
+                                required
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <div className="w-full h-full flex flex-col justify-center">
                     <label htmlFor="contact" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
                         연락처
