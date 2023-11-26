@@ -8,19 +8,32 @@ import Footer from './components/common/Footer';
 
 function App() {
   const location = useLocation();
-  const noSideNavbarPath = ['/', '/login', '/signup'];
-  const noTopNavbarPath = ['/login', '/signup'];
+  
+  // 맨 위 Navbar가 필요없는 페이지 경로
+  const noTopNavbarPath = [];
+  // 사이드 Navbar가 필요없는 페이지 경로
+  const noSideNavbarPath = ['/'];
+  // footer가 필요없는 경로
   const noFooterPath = [];
+  // 레이아웃 필요없는 전체화면 페이지
+  const fullScreenPagePath = ['/login', '/signup'];
+
   return (
     <>
-      {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
-      <Wrapper>
-        <div className='flex justify-between sm:flex-row flex-col items-center w-full px-12 mb-20'>
-          {!noSideNavbarPath.includes(location.pathname) && <SideNavBar />}
-          <Outlet />
-        </div>
-        <Footer />
-      </Wrapper>
+      {!fullScreenPagePath.includes(location.pathname) ? (
+        <>
+          {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
+          <Wrapper>
+            <div className='flex justify-between sm:flex-row flex-col items-center w-full px-12 mb-20'>
+              {!noSideNavbarPath.includes(location.pathname) && <SideNavBar />}
+              <Outlet />
+            </div>
+            {!noFooterPath.includes(location.pathname) && <Footer />}
+          </Wrapper>
+        </>
+      ) : (
+        <Outlet />
+      )}
     </>
   );
 }
