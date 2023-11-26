@@ -30,6 +30,8 @@ public class WebSecurityConfig {
 
     @Autowired
     AuthenticationFailureHandler customAuthenticationFailureHandler;
+    @Autowired
+    LoginSuccessSession loginSuccessSession;
 
     private final UserDetailService userDetailService;
 
@@ -51,6 +53,7 @@ public class WebSecurityConfig {
                 .formLogin(customizer-> customizer.loginPage("/login")
                         .usernameParameter("userID").passwordParameter("password")
                         .failureHandler(customAuthenticationFailureHandler)
+//                        .successHandler(loginSuccessSession)
 //                        .failureUrl("/login?error=true") //로그인 실패시 이동할 url. 에러정보 param으로 전달
                         .defaultSuccessUrl("/api/home"))
                 .logout(customizer -> customizer.logoutUrl("/logout")
