@@ -5,6 +5,7 @@ import { faWonSign, faMapLocationDot, faCalendarDays, faClock } from '@fortaweso
 import '@fortawesome/fontawesome-free/js/all.js';
 import ResButton from '../../common/ResButton';
 import Modal from 'react-modal';
+import RecruitLikeButton from './RecruitLikeButton';
 
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
@@ -44,10 +45,13 @@ export default function DetailExample({ data }) {
                         <div className="text-justify flex">
                             <p className="text-2xl font-bold ">제목-{dataD.title}</p>
                         </div>
+                        {/* 찜하기 버튼 */}
+                        <RecruitLikeButton like="좋아요" notlike="해제" /> {/*  allLike={dataD.like}  */}
                         <div className="flex">
                             {/* true => dataD.recruiting */}
                             {true ? (
                                 <div>
+                                    {/* 공고 지원 버튼 */}
                                     <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                         공고 지원하기
                                     </button>
