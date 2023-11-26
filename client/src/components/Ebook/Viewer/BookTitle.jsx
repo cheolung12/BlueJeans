@@ -7,8 +7,10 @@ export default function BookTitle() {
   // const { bookId } = useParams();
 
   return (
-    <div className='flex justify-center mt-20'>
-      <h1 className='text-3xl font-semibold'>{location.state.title}</h1>
+    <div className='flex justify-center mt-14'>
+      <h1 className='text-3xl font-semibold max-[800px]:text-xl'>
+        {location.state.title}
+      </h1>
     </div>
   );
 }
