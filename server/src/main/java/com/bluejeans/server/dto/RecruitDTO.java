@@ -16,13 +16,15 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class RecruitDTO {
     private int id;
-
     private String title;
     private UserEntity userId;
     private String content;
+    private String moneyStandard;
     private int money;
     private String region;
     private String contact;
+    private String workDay;
+    private String workTime;
     private Timestamp createdAt;
     private int like;
 
@@ -35,9 +37,12 @@ public class RecruitDTO {
                 .userId(user)
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                .moneyStandard(dto.getMoneyStandard())
                 .money(dto.getMoney())
                 .region(dto.getRegion())
                 .contact(dto.getContact())
+                .workDay(dto.getWorkDay())
+                .workTime(dto.getWorkTime())
                 .img_path(fileURL)
                 .build();
     }

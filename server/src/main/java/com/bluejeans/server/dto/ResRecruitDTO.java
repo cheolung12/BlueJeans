@@ -13,15 +13,18 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class ResRecruitDTO {
     private int id;
-
     private String title;
     private UserEntity userId;
     private String content;
+    private String moneyStandard;
     private int money;
     private String region;
     private String contact;
+    private String workDay;
+    private String workTime;
     private Timestamp createdAt;
     private String img_path;
+    private boolean recruiting;
     private int like;
 
     public static ResRecruitDTO toDTO(RecruitEntity rcEntity, int like){
@@ -31,11 +34,15 @@ public class ResRecruitDTO {
                 .userId(rcEntity.getUserId())
                 .title(rcEntity.getTitle())
                 .content(rcEntity.getContent())
+                .moneyStandard(rcEntity.getMoneyStandard())
                 .money(rcEntity.getMoney())
                 .region(rcEntity.getRegion())
                 .contact(rcEntity.getContact())
+                .workDay(rcEntity.getWorkTime())
+                .workTime(rcEntity.getWorkTime())
                 .createdAt(rcEntity.getCreated_at())
                 .img_path(rcEntity.getImg_path())
+                .recruiting(rcEntity.isRecruiting())
                 .like(like)
                 .build();
     }

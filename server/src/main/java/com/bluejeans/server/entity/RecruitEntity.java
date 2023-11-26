@@ -32,6 +32,12 @@ public class RecruitEntity {
     private String content;
 
     @Column
+    private boolean recruiting = true;
+
+    @Column
+    private String moneyStandard;
+
+    @Column                                 
     private int money;
 
     @Column(length = 45)
@@ -43,11 +49,11 @@ public class RecruitEntity {
     @Column
     private String img_path;
 
-//    @Column(length = 45)
-//    private String workTime;
+    @Column(length = 45)
+    private String workDay;
 
-//    @Column
-//    private boolean recruiting = true;
+    @Column(length = 45)
+    private String workTime;
 
     @CreationTimestamp
     private Timestamp created_at;
@@ -61,9 +67,12 @@ public class RecruitEntity {
     public void updateFields(RecruitDTO recruitDTO, String fileURL) {
         this.setTitle(recruitDTO.getTitle());
         this.setContent(recruitDTO.getContent());
+        this.setMoneyStandard(recruitDTO.getMoneyStandard());
         this.setMoney(recruitDTO.getMoney());
         this.setRegion(recruitDTO.getRegion());
         this.setContact(recruitDTO.getContact());
+        this.setWorkDay(recruitDTO.getWorkDay());
+        this.setWorkTime(recruitDTO.getWorkTime());
         this.setImg_path(fileURL);
     }
 }

@@ -1,13 +1,16 @@
 package com.bluejeans.server.controller;
 
+import com.bluejeans.server.dto.DibResultDTO;
 import com.bluejeans.server.dto.RecruitDTO;
 import com.bluejeans.server.dto.ResRecruitDTO;
+import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.RecruitService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,75 +19,86 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
+@Tag(name="일자리 API", description="노인 일자리 관련 공고 API 입니다.")
 public class RecruitController {
     @Autowired
     private RecruitService recruitService;
 
 
-    // 일자리 등록
+    // 일자리 등록 (오류)
     @PostMapping(consumes = "multipart/form-data")
+    @Operation(summary="공고 게시물 등록")
     public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
 
         return recruitService.registerRecruit(recruitDTO,user, multipartFile);
     }
 
-    // 모든 공고 불러오기
     @GetMapping
+    @Operation(summary="모든 공고 불러오기")
     public List<ResRecruitDTO> findAll() {
         return recruitService.findAll();
     }
 
-    //집 근처
     @GetMapping("/searchRegion")
+    @Operation(summary="지역별 공고 검색")
+    @Parameter(name = "region", description = "xx시 xx구")
     public List<ResRecruitDTO> findByRegion(@RequestParam String region) {
         return recruitService.findByRegion(region);
     }
 
-    // 최신순, 인기순 필터링
     @GetMapping("/filter")
+    @Operation(summary="최신순, 인기순 필터링")
+    @Parameter(name = "order", description = "favorite or latest")
     public List<ResRecruitDTO> filteringRecruit(@RequestParam String order) {
         return recruitService.filteringRecruit(order);
     }
 
-    // 검색어 조회
     @GetMapping("/searchKeyword")
+    @Operation(summary="검색어로 공고 조회")
+    @Parameter(name = "keyword", description = "사용자 입력 검색어")
     public List<ResRecruitDTO> searchByKeyword(@RequestParam String keyword) {
         return recruitService.searchByKeyword(keyword);
     }
 
-
-
-    // 일자리 상세
     @GetMapping("/{job_id}")
+    @Operation(summary="공고 게시물 상세 조회")
     public ResRecruitDTO recruitDetail(@PathVariable int job_id){
         return recruitService.recruitDetail(job_id);
     }
 
-    // 일자리 수정
+    // 일자리 수정 (오류)
     @PatchMapping("/{job_id}")
+    @Operation(summary="공고 게시물 수정")
     public boolean editRecruit(@PathVariable int job_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO) throws IOException {
         return recruitService.editRecruit(job_id, recruitDTO, multipartFile);
     }
 
-    // 일자리 삭제
     @DeleteMapping("/{job_id}")
+    @Operation(summary="공고 게시물 삭제")
     public boolean deleteRecruit(@PathVariable int job_id){
         return recruitService.deleteRecruit(job_id);
     }
 
-    // 좋아요 누름 or 취소
     @PostMapping("/like/{job_id}")
-    public boolean likeClick(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user){
-        return recruitService.likeClick(job_id, user);
+    @Operation(summary="공고 찜하기")
+    public DibResultDTO recruitDib(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user){
+        DibResult dibResult = recruitService.dib(job_id, user);
+        long counts = recruitService.countDibs(job_id);
+
+        return new DibResultDTO(counts, dibResult);
     }
 
-    // 내가 좋아요한 공고
     @GetMapping("/like")
+    @Operation(summary="내가 찜한 공고 보기")
     public List<ResRecruitDTO> myLikeRecruit(@AuthenticationPrincipal UserEntity user) {
         return recruitService.myLikeRecruit(user);
     }
 
-
+    @PostMapping("/recruiting/{job_id}")
+    @Operation(summary = "마감 여부 변경")
+    public boolean toggleRecruiting(@PathVariable int job_id) {
+        return recruitService.updateRecruiting(job_id);
+    }
 }
 
 
