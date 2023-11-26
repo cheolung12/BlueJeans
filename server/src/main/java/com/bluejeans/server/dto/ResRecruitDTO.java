@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class ResRecruitDTO {
     private int id;
     private String title;
-    private UserEntity userId;
+    private String nickname;
     private String content;
     private String moneyStandard;
     private int money;
@@ -31,7 +31,7 @@ public class ResRecruitDTO {
 
         return ResRecruitDTO.builder()
                 .id(rcEntity.getId())
-                .userId(rcEntity.getUserId())
+                .nickname(rcEntity.getUserId().getNickname())
                 .title(rcEntity.getTitle())
                 .content(rcEntity.getContent())
                 .moneyStandard(rcEntity.getMoneyStandard())

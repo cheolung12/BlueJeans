@@ -30,6 +30,8 @@ public class WebSecurityConfig {
 
     @Autowired
     AuthenticationFailureHandler customAuthenticationFailureHandler;
+    @Autowired
+    LoginSuccessSession loginSuccessSession;
 
     private final UserDetailService userDetailService;
 
@@ -51,6 +53,7 @@ public class WebSecurityConfig {
                 .formLogin(customizer-> customizer.loginPage("/login")
                         .usernameParameter("userID").passwordParameter("password")
                         .failureHandler(customAuthenticationFailureHandler)
+//                        .successHandler(loginSuccessSession)
 //                        .failureUrl("/login?error=true") //로그인 실패시 이동할 url. 에러정보 param으로 전달
                         .defaultSuccessUrl("/api/home"))
                 .logout(customizer -> customizer.logoutUrl("/logout")
@@ -81,20 +84,15 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.cors(withDefaults());
-//        http.csrf(CsrfConfigurer::disable);
-//        return http.build();
-//    }
+
     //CORS 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://bluejeans.site"));
-        config.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://www.bluejeansu.site"));
+        config.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT", "PATCH"));
         config.setAllowedHeaders(Arrays.asList("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

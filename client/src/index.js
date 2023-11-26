@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       { path: 'recruitment/detail', element: <RecruitmentDetail /> },
       { path: 'recruitment/create', element: <RecruitmentCreate /> },
       { path: 'ebook', element: <EBook /> },
-      { path: 'ebook/keyword/:searchInput', element: <EBook /> },
+      { path: 'ebook/search', element: <EBook /> },
       { path: 'ebook/detail/:bookId', element: <EbookDetail /> },
       { path: 'ebook/detail/viewer/:bookId', element: <EbookViewer /> },
       { path: 'chat', element: <Chat /> },
