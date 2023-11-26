@@ -2,24 +2,24 @@
   "mainL": [
     {
       "id": "1",
-      "userid": "1yk",
-      "title": "고구마",
+      "userid": "이영경",
+      "title": "가장 넓은 길은 언제나 내 마음속에",
       "like": 15,
       "pro": "https://i.pinimg.com/474x/19/a7/56/19a75691033a694612e358419c5bc8bd.jpg"
     },
     {
       "id": "2",
-      "userid": "2yk",
-      "title": "커피",
+      "userid": "이태민",
+      "title": "큰 바다, 넓은 하늘을 우리는 가졌노라",
       "like": 10,
       "pro": "https://i.pinimg.com/474x/64/e0/5d/64e05d0c1cfcfa8df963dde3d2dfa6bc.jpg"
     },
     {
       "id": "3",
-      "userid": "3yk",
-      "title": "맥북",
+      "userid": "강영현",
+      "title": "그대만큼 사랑스러운 사람을 본 일이 없다",
       "like": 9,
-      "pro": "https://i.pinimg.com/474x/0c/14/34/0c1434f1cadc07fe3cdb97ebec7156ee.jpg"
+      "pro": "https://i.pinimg.com/564x/52/1d/8c/521d8cdcdd61a496dcf1be9e6777c878.jpg"
     },
     {
       "id": "4",
