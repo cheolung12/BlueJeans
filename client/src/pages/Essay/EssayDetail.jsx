@@ -1,55 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SideNavBar from '../../components/common/SideNavBar';
 import { useParams } from 'react-router-dom';
 import LikeButton from '../../components/common/LikeButton';
+import AddComment from '../../components/Essay/Detail/AddComment';
+import CommentList from '../../components/Essay/Detail/CommentList';
 
 export default function EssayDetail() {
   const { EssayId } = useParams();
+
+  //댓글 담고 있는 데이터
+  const [commentList, setCommentList] = useState([]);
+
+  //새로운 댓글 업데이트
+  const handleAdd = (comment) => setCommentList([comment, ...commentList]);
+
+  //댓글 삭제
+  const handleDelete = (deleted) =>
+    setCommentList(commentList.filter((c) => c.id !== deleted.id));
 
   return (
     <div>
       <SideNavBar />
       <div className='text-center text-3xl'>백일장</div>
 
-      <div className='w-full bg-slate-300'>
+      <div className='w-full'>
         {/* 백일장 상세 {EssayId} */}
-        <section className='bg-slate-200 flex justify-center h-full'>
-          <div className='w-[40rem] bg-slate-300 flex flex-col p-3'>
+        <section className='flex justify-center h-full'>
+          <div className='w-[40rem] h-screen flex flex-col p-3'>
             <div className='flex flex-col h-20 justify-evenly'>
-              <div className='w-full bg-slate-400 text-3xl font-bold'>
-                제목{' '}
-              </div>
-              <div className='w-full bg-slate-400 text-lg font-semibold'>
-                이름
-              </div>
+              <div className='w-full text-3xl font-bold mb-2'>제목 </div>
+              <div className='w-full text-lg font-semibold'>이름</div>
             </div>
-            <div className='w-full h-96 bg-slate-100'>사진</div>
+            <div className='w-full h-full mt-3'>
+              <div className='w-full h-1/2'>
+                <img src='ddd.jpg' alt='백일장 썸네일' />
+              </div>
+              <div className='w-full h-1/2 mt-3'>글~~~~~</div>
+            </div>
           </div>
         </section>
+
+        {/* 좋아요 버튼 */}
         <div className='my-4'>
-          <LikeButton like='좋아요' notlike='좋아요' />
+          <LikeButton like='좋아요' notlike='해제' />
         </div>
 
-        <section className='bg-slate-200 flex justify-center h-full'>
-          <div className='w-[40rem] bg-slate-300 flex flex-col p-3'>
+        <section className='flex justify-center h-full'>
+          <div className='w-[40rem] flex flex-col p-3'>
             <div className='w-full'>
-              <form className='flex justify-around items-center'>
-                <div>댓글</div>
-                <input
-                  className='w-5/6 h-11 px-2'
-                  placeholder='댓글을 입력해주세요'
-                />
-                <button>작성</button>
-              </form>
+              {/* 댓글 입력창 */}
+              <AddComment onAdd={handleAdd} />
             </div>
-            <div className='bg-slate-50 mt-3'>
-              <div className='bg-slate-200 h-80'>
-                <ul>
-                  <li>댓글</li>
-                  <li>댓글</li>
-                  <li>댓글</li>
-                </ul>
-              </div>
+            <div className='mt-3 h-80'>
+              {commentList.map((item) => (
+                // 댓글 리스트
+                <CommentList
+                  key={item.id}
+                  comment={item}
+                  onDelete={handleDelete}
+                />
+              ))}
             </div>
           </div>
         </section>

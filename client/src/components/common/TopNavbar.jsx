@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 export default function TopNavbar() {
   const handleLogout = async () => {
     const res = await axios({
+
       method: 'GET',
       url: `${process.env.REACT_APP_SERVER}/logout`,
       withCredentials: true,
     });
     if (res.data === 'redirect:/login') {
+      console.log("login");
       localStorage.clear();
+
       window.location.reload();
     } else {
       console.log('로그아웃 실패!');
