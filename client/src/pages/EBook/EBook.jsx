@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
 import Title from '../../components/Ebook/Main/Title';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import bookList from '../../data/bookList.json';
 import BookCard from '../../components/Ebook/Main/BookCard';
 import BookCardSearch from '../../components/Ebook/Main/BookCardSearch';
-import SideNavBar from '../../components/common/SideNavBar';
 import axios from 'axios';
 
 // 임시데이터
@@ -25,6 +24,7 @@ export default function EBook() {
       try {
         const response = await axios({
           method: 'GET',
+          // url: "https://www.bluejeansu.site/ebook",
           url: `http://localhost:8080/api/ebook`,
         });
         setBooks(response.data);
@@ -52,6 +52,7 @@ export default function EBook() {
       try {
         res = await axios({
           method: 'GET',
+          // url: `https://www.bluejeansu.site/ebook`,
           url: `http://localhost:8080/api/ebook`,
         });
       } catch (error) {
@@ -61,6 +62,7 @@ export default function EBook() {
       try {
         res = await axios({
           method: 'GET',
+          // url: `https://www.bluejeansu.site/ebook/order?orderby=${type}`,
           url: `http://localhost:8080/api/ebook/order?orderby=${type}`,
         });
       } catch (error) {
@@ -80,64 +82,66 @@ export default function EBook() {
   };
 
   return (
-    <div>
-      {/* 네브바 */}
-      <SideNavBar />
-      {/* e-book 제목 */}
-      <Title />
-      <div className='flex justify-center'>
-        <div className='w-[61rem]'>
-          {/* 카테고리, 검색창 */}
-          <div className='flex flex-col sm:flex-row items-center justify-between px-4'>
-            <Filter handleFilter={handleFilter} />
-            <SearchBooks book={books} handleSearch={handleSearch} />
-          </div>
+    <div className='flex w-full justify-end'>
+      <div className='flex flex-col items-center w-[800px]'>
+        <div className='w-full'>
+          {/* e-book 제목 */}
+          <Title />
+        </div>
+        <div className='flex justify-center w-5/6'>
+          <div className='w-[61rem]'>
+            {/* 카테고리, 검색창 */}
+            <div className='flex flex-col sm:flex-row items-center justify-between px-4'>
+              <Filter handleFilter={handleFilter} />
+              <SearchBooks book={books} handleSearch={handleSearch} />
+            </div>
 
-          <section className='h-screen'>
-            {/* {searchInput && (
+            <section>
+              {/* {searchInput && (
               <div className='font-semibold text-xl text-center py-3'>{`'${searchInput}'의 검색결과`}</div>
             )} */}
-            <div className='py-3'>
-              <div className='flex flex-wrap justify-center'>
-                {filterBooks.length === 0 ? (
-                  <>
-                    <div className='font-semibold text-xl text-center py-3'>
-                      검색결과가 없습니다.
-                    </div>
-                  </>
-                ) : (
-                  filterBooks.map((book) => (
-                    // 북카드 클릭시 e-book 상세 페이지로 이동
-                    <Link
-                      to={`/ebook/detail/${book.id}`}
-                      // state로 책 데이터 전달 => useLocation으로 받음
-                      state={{ dataDetail: book }}
-                      className='p-2'
-                      key={book.id}
-                    >
-                      {searchInput ? (
-                        <>
-                          <BookCardSearch
+              <div className='py-3'>
+                <div className='flex flex-wrap justify-center'>
+                  {filterBooks.length === 0 ? (
+                    <>
+                      <div className='font-semibold text-xl text-center py-3'>
+                        검색결과가 없습니다.
+                      </div>
+                    </>
+                  ) : (
+                    filterBooks.map((book) => (
+                      // 북카드 클릭시 e-book 상세 페이지로 이동
+                      <Link
+                        to={`/ebook/detail/${book.id}`}
+                        // state로 책 데이터 전달 => useLocation으로 받음
+                        state={{ dataDetail: book }}
+                        className='p-2'
+                        key={book.id}
+                      >
+                        {searchInput ? (
+                          <>
+                            <BookCardSearch
+                              id={book.id}
+                              thumbnail={book.thumbnail}
+                              title={book.title}
+                              author={book.author}
+                            />
+                          </>
+                        ) : (
+                          <BookCard
                             id={book.id}
                             thumbnail={book.thumbnail}
                             title={book.title}
                             author={book.author}
                           />
-                        </>
-                      ) : (
-                        <BookCard
-                          id={book.id}
-                          thumbnail={book.thumbnail}
-                          title={book.title}
-                          author={book.author}
-                        />
-                      )}
-                    </Link>
-                  ))
-                )}
+                        )}
+                      </Link>
+                    ))
+                  )}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </div>

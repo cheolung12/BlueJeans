@@ -14,6 +14,7 @@ export default function EBookDetail() {
       try {
         const response = await axios({
           method: 'GET',
+          // url: `https://www.bluejeansu.site/ebook/detail/${bookId}`,
           url: `http://localhost:8080/api/ebook/detail/${bookId}`,
         });
         console.log(response);
@@ -24,8 +25,6 @@ export default function EBookDetail() {
     fetchData();
   }, []);
 
-
-
   // map 대신 find 사용
   // const findBook = books.find((book) => book.id === bookId);
 
@@ -34,13 +33,14 @@ export default function EBookDetail() {
   // console.log(location.state);
 
   return (
-    <div>
-      <SideNavBar />
-      <Title />
+    <div className='flex w-full justify-end'>
       <div>
+        <Title />
         <div>
-          {/* 데이터 props로 넘겨줌 */}
-          <BookCardDetail data={location.state.dataDetail} />
+          <div>
+            {/* 데이터 props로 넘겨줌 */}
+            <BookCardDetail data={location.state.dataDetail} />
+          </div>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ export default function EBookViewer() {
       try {
         const response = await axios({
           method: 'GET',
+          // url: `https://www.bluejeansu.site/ebook/detail/viewer/${bookId}`,
           url: `http://localhost:8080/api/ebook/detail/viewer/${bookId}`,
         });
         console.log(response);
