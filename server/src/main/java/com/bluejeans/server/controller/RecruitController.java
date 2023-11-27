@@ -6,6 +6,7 @@ import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.RecruitService;
+import com.bluejeans.server.service.S3Uploader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,12 +25,23 @@ public class RecruitController {
     @Autowired
     private RecruitService recruitService;
 
+    @Autowired
+    S3Uploader s3Uploader;
+
 
     // 일자리 등록 (오류)
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary="공고 게시물 등록")
-    public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
-        return recruitService.registerRecruit(recruitDTO,user, multipartFile);
+    public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) {
+        String fileURL = null;
+        try {
+            fileURL = s3Uploader.upload(multipartFile, "jobs");
+        } catch (IOException e) {
+//                throw new RuntimeException(e);
+            fileURL = null;
+        }
+
+        return recruitService.registerRecruit(recruitDTO,user, fileURL);
     }
 
     @GetMapping
@@ -68,8 +80,15 @@ public class RecruitController {
     // 일자리 수정 (오류)
     @PatchMapping("/{job_id}")
     @Operation(summary="공고 게시물 수정")
-    public boolean editRecruit(@PathVariable int job_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO) throws IOException {
-        return recruitService.editRecruit(job_id, recruitDTO, multipartFile);
+    public boolean editRecruit(@PathVariable int job_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO)  {
+        String fileURL = null;
+        try {
+            fileURL = s3Uploader.upload(multipartFile, "jobs");
+        } catch (IOException e) {
+//                throw new RuntimeException(e);
+            fileURL = null;
+        }
+        return recruitService.editRecruit(job_id, recruitDTO, fileURL);
     }
 
     @DeleteMapping("/{job_id}")

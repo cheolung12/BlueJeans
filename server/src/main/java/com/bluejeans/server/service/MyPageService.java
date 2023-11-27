@@ -80,15 +80,12 @@ public class MyPageService {
                 .build();
     }
 
-    public boolean editUserInfo (MultipartFile multipartFile, UserEntity user, EditUserInfoDTO editDTO) throws IOException {
-        if(user == null){
-            return false;
-        }
-        String fileURL = s3Uploader.upload(multipartFile, "user");
+    public boolean editUserInfo (String fileURL, UserEntity user, EditUserInfoDTO editDTO)  {
 
         user.updateFields(editDTO, fileURL);
         userRepository.save(user);
         return true;
+
     }
 
     public ResMainDTO getMainPost() {

@@ -52,13 +52,7 @@ public class EssayService {
         return list;
     }
 
-    public EssayEntity addEssay(EssayDTO essayDTO, UserEntity user, MultipartFile multipartFile) throws IOException {
-        String fileURL;
-        if(multipartFile!=null){
-            fileURL = s3Uploader.upload(multipartFile, "essay");
-        }else{
-            fileURL = null;
-        }
+    public EssayEntity addEssay(EssayDTO essayDTO, UserEntity user, String fileURL)  {
         EssayEntity newEssay = EssayDTO.toEntity(essayDTO, user, fileURL);
         return essayRepository.save(newEssay);
     }
@@ -75,10 +69,10 @@ public class EssayService {
         }
     }
 
-    public boolean edit(int essayId, MultipartFile multipartFile, EssayDTO essayDTO) throws IOException {
+
+    public boolean edit(int essayId, String fileURL, EssayDTO essayDTO) {
         //해당 게시물 조회
         Optional<EssayEntity> essay = essayRepository.findById(essayId);
-        String fileURL = s3Uploader.upload(multipartFile, "essays");
         //수정
         if(essay.isPresent()){
             EssayEntity existingEntity = essay.get();

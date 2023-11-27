@@ -5,6 +5,7 @@ import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.EssayService;
+import com.bluejeans.server.service.S3Uploader;
 import com.bluejeans.server.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.catalina.User;
@@ -24,6 +25,9 @@ public class EssayController {
     @Autowired
     EssayService essayService;
 
+    @Autowired
+    S3Uploader s3Uploader;
+
 
     //에세이 전체 조회
     @GetMapping
@@ -34,12 +38,14 @@ public class EssayController {
 
     //에세이 글쓰기
     @PostMapping(consumes = "multipart/form-data")
-    public EssayEntity addEssay(@RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
-        //로그인이 안되어있을경우 오류처리?
-        //로그인해야 이용가능하도록 구현해야함.
-        System.out.println(essayDTO.getContent());
-        System.out.println(essayDTO.getId());
-        EssayEntity result = essayService.addEssay(essayDTO, user, multipartFile);
+    public EssayEntity addEssay(@RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) {
+        String fileURL = null;
+        try {
+            fileURL = s3Uploader.upload(multipartFile, "essay");
+        } catch (IOException e) {
+            fileURL = null;
+        }
+        EssayEntity result = essayService.addEssay(essayDTO, user, fileURL);
         return result;
     }
 
@@ -53,10 +59,16 @@ public class EssayController {
 
     //에세이 수정
     @PatchMapping("/detail/{essay_id}")
-    public boolean essayEdit(@PathVariable int essay_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) throws IOException {
+    public boolean essayEdit(@PathVariable int essay_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) {
         //로그인한 유저의 id와 에세이의 user_id가 일치할경우 수정가능하도록(불일치할 경우 null반환)
         //하려했으나 프론트에서 검사해야함.
-        return essayService.edit(essay_id,multipartFile, essayDTO);
+        String fileURL = null;
+        try {
+            fileURL = s3Uploader.upload(multipartFile, "essay");
+        } catch (IOException e) {
+            fileURL = null;
+        }
+        return essayService.edit(essay_id,fileURL, essayDTO);
     }
 
     //에세이 삭제
