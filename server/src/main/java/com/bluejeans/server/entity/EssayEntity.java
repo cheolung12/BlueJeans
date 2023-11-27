@@ -46,8 +46,11 @@ public class EssayEntity {
     public void updateFields(EssayDTO essayDTO, String fileURL) {
         this.setTitle(essayDTO.getTitle());
         this.setContent(essayDTO.getContent());
-        this.setImg_path(fileURL);
         this.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+        if(fileURL != null){
+            this.setImg_path(fileURL);
+        }
+
     }
 
 }
