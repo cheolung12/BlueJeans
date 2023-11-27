@@ -86,18 +86,6 @@ public class RecruitController {
 
         return new DibResultDTO(counts, dibResult);
     }
-
-    @GetMapping("/like")
-    @Operation(summary="내가 찜한 공고 보기")
-    public List<ResRecruitDTO> myLikeRecruit(@AuthenticationPrincipal UserEntity user) {
-        return recruitService.myLikeRecruit(user);
-    }
-
-    @PostMapping("/recruiting/{job_id}")
-    @Operation(summary = "마감 여부 변경")
-    public boolean toggleRecruiting(@PathVariable int job_id) {
-        return recruitService.updateRecruiting(job_id);
-    }
 }
 
 

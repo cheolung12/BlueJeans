@@ -8,10 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EssayRepository extends JpaRepository<EssayEntity, Integer> {
     @Modifying(clearAutomatically = true)
     @Transactional //뭐지?
     @Query(nativeQuery = true, value ="UPDATE essay SET title= :title, content=:content WHERE id=:essayId")
     void patch(@Param("essayId") int essayId, @Param("title") String title, @Param("content") String content);
+
+    // 내가 찜한 에세이 목록
+    List<EssayEntity> findByEssayDibsUserId(int userId);
 }

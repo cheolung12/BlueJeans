@@ -1,6 +1,7 @@
 package com.bluejeans.server.entity;
 
 
+import com.bluejeans.server.dto.EditUserInfoDTO;
 import com.bluejeans.server.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -86,6 +87,11 @@ public class UserEntity implements UserDetails {
         return true; // true: 사용가
     }
 
+
+    public void updateFields(EditUserInfoDTO userDTO){
+        this.setNickname(userDTO.getNickname());
+        this.setAddress(userDTO.getAddress());
+    }
 
 
 }

@@ -67,13 +67,4 @@ public class EBookController {
         long counts = eBookService.countDibs(book_id);
         return new DibResultDTO(counts, dibResult);
     }
-
-    @GetMapping("/mybook")
-    @Operation(summary="내가 좋아요한 책 목록")
-    @Parameter(name="user_id", description="로그인한 사용자의 id")
-    public List<ResEBookDTO> myLikeEBook(@AuthenticationPrincipal UserEntity userEntity) {
-
-        return eBookService.myLikeEBook(userEntity);
-    }
-
 }

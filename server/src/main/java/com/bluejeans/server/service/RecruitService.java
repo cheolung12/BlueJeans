@@ -33,8 +33,6 @@ public class RecruitService {
     @Autowired
     private RecruitDibRepository recruitDibRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     // 엔티티 리스트를 DTO리스트로
     private List<ResRecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
@@ -166,13 +164,6 @@ public class RecruitService {
         }else {
             return 0;
         }
-    }
-
-    public List<ResRecruitDTO> myLikeRecruit(UserEntity user) {
-        int userId = user.getId();
-        List<RecruitEntity> likedRecruits = recruitRepository.findByRecruitDibsUserId(userId);
-
-        return entityListToDTOList(likedRecruits);
     }
 
     public boolean updateRecruiting(int jobId) {
