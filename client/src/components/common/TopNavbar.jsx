@@ -32,7 +32,7 @@ export default function TopNavbar() {
             className='h-8'
             alt='Flowbite Logo'
           />
-          <span className='self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap dark:text-white'>
+          <span className='self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap'>
             BlueJeans
           </span>
         </Link>
