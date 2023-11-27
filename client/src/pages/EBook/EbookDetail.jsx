@@ -13,8 +13,6 @@ export default function EBookDetail() {
     const fetchData = async () => {
       try {
         const response = await axios({
-http://localhost:8080/api/ebook/detail/${bookId}`,
-
           method: "GET",
           url: `${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`,
 
