@@ -36,41 +36,45 @@ export default function DibsButton({ like, notlike, id }) {
   // };
 
   //찜하기 보내기
-  const likeCountHandler = () => {
+  const likeCountHandler = async () => {
     const updatedLikeAdd = !isLikeAdd;
 
-    if (!isLikeAdd) {
-      setLikeCount(likeCount + 1);
+    try {
+      if (!isLikeAdd) {
+        setLikeCount(likeCount + 1);
 
-      axios.post(
-        `http://localhost:8080/api/ebook/like/${id}`,
-        {
-          bookId: id,
-          isLikeAdd: updatedLikeAdd,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
+        await axios.post(
+          `http://localhost:8080/api/ebook/like/${id}`,
+          {
+            bookId: id,
+            isLikeAdd: updatedLikeAdd,
           },
-        }
-      );
-    } else {
-      setLikeCount(likeCount - 1);
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+      } else {
+        setLikeCount(likeCount - 1);
 
-      axios.post(
-        `http://localhost:8080/api/ebook/like/${id}`,
-        {
-          bookId: id,
-          isLikeAdd: updatedLikeAdd,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
+        await axios.post(
+          `http://localhost:8080/api/ebook/like/${id}`,
+          {
+            bookId: id,
+            isLikeAdd: updatedLikeAdd,
           },
-        }
-      );
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+      }
+    } catch (error) {
+      console.error('좋아요 업데이트 실패:', error);
     }
   };
 
