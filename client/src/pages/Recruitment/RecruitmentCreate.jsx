@@ -7,7 +7,7 @@ export default function RecruitmentCreate() {
     const [recruitmentData, setRecruitmentData] = useState({
         title: '',
         // moneyStandard: '시급',
-        money: 0,
+        money: 9620,
         region: '',
         content: '',
         contact: '',
@@ -45,19 +45,25 @@ export default function RecruitmentCreate() {
         e.preventDefault();
 
         const recruitData = new FormData();
-        // recruitData.append('file', file);
+        // if (recruitmentData.money == 0) {
+        //     recruitData.append('money', '협의');
+        // } else {
+        //     recruitData.append('money', recruitmentData.money);
+        // }
         recruitData.append('title', recruitmentData.title);
+        // const dayJoin = clickedDays.join(',');
+        // setWorkDay(dayJoin);
+        const workDay = clickedDays.join(',');
+        recruitData.append('workDay', workDay);
+        const workTime = workTime1 + ' ~ ' + workTime2;
+        recruitData.append('workTime', workTime);
+        // recruitData.append('workTime', recruitmentData.workTime);
         recruitData.append('moneyStandard', moneyStandard);
         recruitData.append('money', recruitmentData.money);
         recruitData.append('region', recruitmentData.region);
         recruitData.append('contact', recruitmentData.contact);
         recruitData.append('content', recruitmentData.content);
-        // const dayJoin = clickedDays.join(',');
-
-        // setWorkDay(dayJoin);
-        recruitData.append('workDay', workDay);
-        recruitData.append('workTime', workTime1 + ' ~ ' + workTime2);
-        // recruitData.append('workTime', recruitmentData.workTime);
+        // recruitData.append('file', file);
 
         try {
             const response = await axios.post(
@@ -117,8 +123,8 @@ export default function RecruitmentCreate() {
     };
 
     //근무 요일 토글//////////////////////////////////////////////////////////////////////////////
-    const [workDay, setWorkDay] = useState('');
-    const [clickedDays, setClickedDays] = useState([]);
+    // const [workDay, setWorkDay] = useState('');
+    const [clickedDays, setClickedDays] = useState(['월', '화', '수', '목', '금']);
 
     // 클릭 이벤트 핸들러 함수
     const handleClick = (day) => {
@@ -142,12 +148,12 @@ export default function RecruitmentCreate() {
     const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
     const handleDay = () => {
-        const dayJoin = clickedDays.join(',');
-        setWorkDay(dayJoin);
+        // const dayJoin = clickedDays.join(',');
+        // setWorkDay(dayJoin);
         // setWorkDay(clickedDays);
     };
 
-    console.log(workDay);
+    // console.log(workDay);
 
     //급여 기준 토글/////////////////////////////////////////////////////////////////////////////
 
@@ -171,8 +177,8 @@ export default function RecruitmentCreate() {
     }, []);
 
     // 근무 시간 변수
-    const [workTime1, setWorkTime1] = useState('');
-    const [workTime2, setWorkTime2] = useState('');
+    const [workTime1, setWorkTime1] = useState('10:00');
+    const [workTime2, setWorkTime2] = useState('12:00');
     // 셀렉트 처리
     const handleTimeChange1 = (event) => {
         setWorkTime1(event.target.value);
@@ -232,8 +238,6 @@ export default function RecruitmentCreate() {
                         <div onClick={handleDay}>선택 완료</div>
                         <div>선택된 요일 - {workDay}</div>
                         */}
-                        <div onClick={handleDay}>선택 완료</div>
-                        <div>선택된 요일 - {workDay}</div>
                     </div>
                 </div>
 
@@ -473,7 +477,7 @@ export default function RecruitmentCreate() {
                     <div className="w-full h-full flex flex-row">
                         <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">근무지 사진 첨부</label>
                         <label
-                            className="mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg cursor-pointer"
+                            className="mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg cursor-pointer hover:opacity-90 "
                             htmlFor="inputImg"
                         >
                             파일 업로드
@@ -507,7 +511,7 @@ export default function RecruitmentCreate() {
                 <div>
                     <button
                         type="submit"
-                        className="my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg "
+                        className="my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg hover:opacity-90 "
                     >
                         공고 게시하기
                     </button>
