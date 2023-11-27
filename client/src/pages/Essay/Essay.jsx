@@ -32,8 +32,6 @@ export default function Essay() {
 
   return (
     <div className='w-full'>
-      <SideNavBar />
-
       <section className='flex flex-col'>
         {/* 인기순 & 최신순 셀렉트 */}
         <div className='flex justify-center'>

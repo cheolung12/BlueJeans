@@ -32,5 +32,9 @@ public interface RecruitRepository extends JpaRepository<RecruitEntity, Integer>
     // 내가 찜한 게시물
     List<RecruitEntity> findByRecruitDibsUserId(int userId);
 
+    // 최근 3개 게시물
+    @Query(value = "SELECT * FROM recruit ORDER BY created_at DESC LIMIT 3", nativeQuery = true)
+    List<RecruitEntity> findLatestPosts();
+
 
 }

@@ -53,27 +53,27 @@ const Calligraphy = () => {
         <div className='flex p-5'>
           <div className='h-5 w-20 mt-20'>
             {isVisible[5] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m6} className='m-3' alt='m6' />
               </div>
             )}
             {isVisible[6] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m7} className='m-3' alt='m7' />
               </div>
             )}
             {isVisible[7] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m8} className='m-3' alt='m8' />
               </div>
             )}
             {isVisible[8] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m9} className='m-3' alt='m9' />
               </div>
             )}
             {isVisible[9] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m10} className='m-3' alt='m10' />
               </div>
             )}
@@ -81,27 +81,27 @@ const Calligraphy = () => {
           {/* 반반 */}
           <div className='h-5 w-20'>
             {isVisible[0] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m1} className='m-3' alt='m1' />
               </div>
             )}
             {isVisible[1] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m2} className='m-3' alt='m2' />
               </div>
             )}
             {isVisible[2] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m3} className='m-3' alt='m3' />
               </div>
             )}
             {isVisible[3] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m4} className='m-3' alt='m4' />
               </div>
             )}
             {isVisible[4] && (
-              <div className='image-container opacity-20'>
+              <div className='image-container opacity-40'>
                 <img src={m5} className='m-3' alt='m5' />
               </div>
             )}
