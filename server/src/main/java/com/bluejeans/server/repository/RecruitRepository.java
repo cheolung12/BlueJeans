@@ -15,19 +15,29 @@ public interface RecruitRepository extends JpaRepository<RecruitEntity, Integer>
     @Query(value="SELECT * FROM recruit WHERE region LIKE %:region%", nativeQuery = true)
     List<RecruitEntity> findByRegion(@Param("region")String region);
 
+    // 좋아요, 최신순 정렬
     @Query(value = "SELECT r.* " +
             "FROM recruit r " +
             "LEFT JOIN (SELECT rc_id, COUNT(*) AS like_count FROM recruit_dibs GROUP BY rc_id) rd " +
             "ON r.id = rd.rc_id " +
             "ORDER BY CASE " +
-            "    WHEN :order = 'latest' THEN r.created_at " +
-            "    WHEN :order = 'favorite' THEN like_count " +
+            "    WHEN :type = 'latest' THEN r.created_at " +
+            "    WHEN :type = 'likes' THEN like_count " +
             "END DESC", nativeQuery = true)
-    List<RecruitEntity> filteringRecruit(@Param("order") String order);
+    List<RecruitEntity> orderByType(@Param("type") String order);
 
-    // 키워드로 조회
-    @Query(value = "SELECT * FROM recruit WHERE title LIKE %:keyword%", nativeQuery = true)
-    List<RecruitEntity> searchByKeyword(String keyword);
+    // 키워드로 조회하고 최신순 정렬
+    @Query(value = "SELECT * FROM recruit WHERE title LIKE %:keyword% ORDER BY created_at DESC", nativeQuery = true)
+    List<RecruitEntity> searchByKeywordAndOrderByLatest(@Param("keyword") String keyword);
+
+    // 키워드로 조회하고 좋아요순 정렬
+    @Query(value = "SELECT r.* " +
+            "FROM recruit r " +
+            "LEFT JOIN (SELECT rc_id, COUNT(*) AS like_count FROM recruit_dibs GROUP BY rc_id) rd " +
+            "ON r.id = rd.rc_id " +
+            "WHERE title LIKE %:keyword% " +
+            "ORDER BY like_count DESC", nativeQuery = true)
+    List<RecruitEntity> searchByKeywordAndOrderByLikes(@Param("keyword") String keyword);
 
     // 내가 찜한 게시물
     List<RecruitEntity> findByRecruitDibsUserId(int userId);
@@ -35,6 +45,4 @@ public interface RecruitRepository extends JpaRepository<RecruitEntity, Integer>
     // 최근 3개 게시물
     @Query(value = "SELECT * FROM recruit ORDER BY created_at DESC LIMIT 3", nativeQuery = true)
     List<RecruitEntity> findLatestPosts();
-
-
 }

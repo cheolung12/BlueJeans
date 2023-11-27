@@ -28,8 +28,6 @@ public class RecruitController {
     @Autowired
     S3Uploader s3Uploader;
 
-
-    // 일자리 등록 (오류)
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary="공고 게시물 등록")
     public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) {
@@ -37,20 +35,18 @@ public class RecruitController {
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");
         } catch (IOException e) {
-//                throw new RuntimeException(e);
+            // throw new RuntimeException(e);
             fileURL = null;
         }
 
         return recruitService.registerRecruit(recruitDTO,user, fileURL);
     }
 
-    @GetMapping
-    @Operation(summary="모든 공고 불러오기")
-    public List<ResRecruitDTO> findAll() {
-        return recruitService.findAll();
-    }
 
     @GetMapping
+    @Operation(summary="공고 게시물 검색 및 필터링", description = "게시물을 검색어로 조회하고 기준에 맞춰 필터링")
+    @Parameter(name="search", description = "사용자에게 입력 받은 검색 키워드입니다. 제목을 기준으로 검색합니다.")
+    @Parameter(name="sort", description="정렬 기준으로 'latest', 'likes'가 있습니다.")
     public List<ResRecruitDTO> getJobs(
             @RequestParam(name = "search", required = false) String searchKeyword,
             @RequestParam(name = "sort", required = false) String sortType) {
@@ -59,43 +55,22 @@ public class RecruitController {
             // 검색 키워드가 있는 경우
             if ("latest".equals(sortType) || sortType == null) {
                 // 키워드로 검색하고 최신순으로 정렬
-                return null;
+                return recruitService.searchByKeywordAndOrderByLatest(searchKeyword);
             } else if ("likes".equals(sortType)) {
                 // 키워드로 검색하고 좋아요순으로 정렬
-                return null;
+                return recruitService.searchByKeywordAndOrderByLikes(searchKeyword);
             }
         } else {
             // 검색 키워드가 없는 경우
             if ("latest".equals(sortType) || sortType == null) {
                 // 모든 게시물을 최신순으로 정렬
-                return  recruitService.filteringRecruit("latest");
+                return  recruitService.orderByType("latest");
             } else if ("likes".equals(sortType)) {
                 // 모든 게시물을 좋아요순으로 정렬
-                return  recruitService.filteringRecruit("favorite");
+                return  recruitService.orderByType("likes");
             }
         }
         return recruitService.findAll();
-    }
-
-    @GetMapping("/searchRegion")
-    @Operation(summary="지역별 공고 검색")
-    @Parameter(name = "region", description = "xx시 xx구")
-    public List<ResRecruitDTO> findByRegion(@RequestParam String region) {
-        return recruitService.findByRegion(region);
-    }
-
-    @GetMapping("/filter")
-    @Operation(summary="최신순, 인기순 필터링")
-    @Parameter(name = "order", description = "favorite or latest")
-    public List<ResRecruitDTO> filteringRecruit(@RequestParam String order) {
-        return recruitService.filteringRecruit(order);
-    }
-
-    @GetMapping("/searchKeyword")
-    @Operation(summary="검색어로 공고 조회")
-    @Parameter(name = "keyword", description = "사용자 입력 검색어")
-    public List<ResRecruitDTO> searchByKeyword(@RequestParam String keyword) {
-        return recruitService.searchByKeyword(keyword);
     }
 
     @GetMapping("/{job_id}")

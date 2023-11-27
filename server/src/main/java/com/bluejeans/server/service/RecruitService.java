@@ -51,7 +51,6 @@ public class RecruitService {
     }
 
 
-
     // 전체 조회
     public List<ResRecruitDTO> findAll() {
         List<RecruitEntity> recruitList = recruitRepository.findAll();
@@ -59,25 +58,26 @@ public class RecruitService {
         return entityListToDTOList(recruitList);
     }
 
-    //집근처 조회
-    public List<ResRecruitDTO> findByRegion(String region) {
-        List<RecruitEntity> filteredList = recruitRepository.findByRegion(region);
-
-        return entityListToDTOList(filteredList);
-    }
 
     //최신순, 인기순 필터링
-    public List<ResRecruitDTO> filteringRecruit(String order) {
-        List<RecruitEntity> filteredList =  recruitRepository.filteringRecruit(order);
+    public List<ResRecruitDTO> orderByType(String type) {
+        List<RecruitEntity> filteredList =  recruitRepository.orderByType(type);
 
         return entityListToDTOList(filteredList);
     }
 
-    // 검색어 조회
-    public List<ResRecruitDTO> searchByKeyword(String keyword) {
-        List<RecruitEntity> searchedList = recruitRepository.searchByKeyword(keyword);
+    // 검색하고 최신순 정렬
+    public List<ResRecruitDTO> searchByKeywordAndOrderByLatest(String searchKeyword) {
+        List<RecruitEntity> recruitEntities = recruitRepository.searchByKeywordAndOrderByLatest(searchKeyword);
 
-        return entityListToDTOList(searchedList);
+        return entityListToDTOList(recruitEntities);
+    }
+
+    // 검색하고 좋아요순 정렬
+    public List<ResRecruitDTO> searchByKeywordAndOrderByLikes(String searchKeyword) {
+        List<RecruitEntity> recruitEntities = recruitRepository.searchByKeywordAndOrderByLikes(searchKeyword);
+
+        return entityListToDTOList(recruitEntities);
     }
 
 
@@ -97,6 +97,7 @@ public class RecruitService {
         }
     }
 
+    // 공고 상세
     public ResRecruitDTO recruitDetail(int id) {
         RecruitEntity recruit = recruitRepository.findById(id).orElse(null);
         int like = recruitDibRepository.countByRecruit(recruit);
@@ -107,7 +108,7 @@ public class RecruitService {
         }
     }
 
-
+    // 공고 수정
     public boolean editRecruit(int id, RecruitDTO recruitDTO, String fileURL)  {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
@@ -123,8 +124,7 @@ public class RecruitService {
         }
     }
 
-
-
+    // 공고 삭제
     public boolean deleteRecruit(int jobId) {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(jobId);
@@ -137,6 +137,7 @@ public class RecruitService {
             return false;
         }
     }
+
 
     @Transactional
     public DibResult dib(int jobId, UserEntity userEntity) {
@@ -164,6 +165,7 @@ public class RecruitService {
         }
     }
 
+    // 마감 여부 변경
     public boolean updateRecruiting(int jobId) {
         RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         if (recruit != null) {
