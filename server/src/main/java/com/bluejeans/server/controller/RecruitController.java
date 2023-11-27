@@ -29,7 +29,6 @@ public class RecruitController {
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary="공고 게시물 등록")
     public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
-
         return recruitService.registerRecruit(recruitDTO,user, multipartFile);
     }
 
