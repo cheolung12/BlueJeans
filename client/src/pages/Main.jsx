@@ -27,8 +27,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 /////////////////////////////////////////////
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
-import Signup from '../components/main/Signup';
-import Login from '../components/main/Login';
 import Calligraphy from '../components/main/Calligraphy';
 
 window.addEventListener('scroll', () => {
@@ -55,10 +53,7 @@ export default function Main({
     <div>
       <div>
         <div className=' h-[650px] w-full'>
-          <div className='flex justify-end'>
-            <Login></Login>
-            <Signup></Signup>
-          </div>
+          <div className='flex justify-end'></div>
         </div>
         <div className='flex justify-center'>
           <div className='rounded-[30px] shadow-md items-center flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
@@ -174,37 +169,67 @@ export default function Main({
             )}
           </Swiper>
         </div>
+        {/* 2 */}
+
         <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
-          <div className='flex w-2/3 items-end pb-5  justify-evenly'>
-            {literature.mainL.slice(0, 3).map((item, index) => (
-              <div key={item.id} className='text-center'>
-                <div
-                  className={`rounded-full ${
-                    index === 0 ? 'h-80 w-80' : 'h-60 w-60'
-                  }`}
-                >
-                  <img
-                    src={item.pro}
-                    alt={item.userid || 'User Profile'}
-                    className='rounded-full h-full w-full'
-                  />
+          <div className='flex w-full items-end pl-4 justify-evenly'>
+            {/* 백일장 1*/}
+            <div className=' h-80 w-56 rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+              <div className='content-center w-full'>
+                <div className=' text-2xl text-center p-3'>작품제목</div>
+                <div className='w-full flex justify-center'>
+                  <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
                 </div>
-                <p className='text-base'>{item.title}</p>
-                <p className='text-xl'>{item.userid}</p>
+                <div className=' text-center text-2xl  p-3'>이름</div>
                 <div className='flex justify-center'>
                   <FaRegThumbsUp className='self-center' />
-                  <p>{item.like}</p>
+                  <div>22</div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* 백일장 2 */}
+
+            <div className='w-56'>
+              <div className=' text-center text-3xl text-white pb-5'>
+                이번주 문학 왕
+              </div>
+              <div className=' h-[27rem] w-56  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+                <div className='content-center w-full'>
+                  <div className='text-2xl text-center p-3'>가장 넓은 길</div>
+                  <div className='w-full flex justify-center'>
+                    <div className='h-32 w-32 rounded-full bg-red-50'></div>
+                  </div>
+                  <div className='text-center text-2xl p-3'>이영경</div>
+                  <div className='flex justify-center'>
+                    <FaRegThumbsUp className='self-center' />
+                    <div>22</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 백일장 3 */}
+            <div className='h-72 w-56  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+              <div className='content-center w-full'>
+                <div className=' text-2xl text-center p-3'>작품제목</div>
+                <div className='w-full flex justify-center'>
+                  <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
+                </div>
+                <div className=' text-center text-2xl  p-3'>이름</div>
+                <div className='flex justify-center'>
+                  <FaRegThumbsUp className='self-center' />
+                  <div>22</div>
+                </div>
+              </div>
+            </div>
           </div>
-
           {/* 2-2  900부터*/}
-
-          <div className='h-full'>
+          <div className='h-full  pr-4 '>
             <Calligraphy className='w-[50rem] h-[30rem]' />
           </div>
         </div>
+
         {/* 3 */}
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white'>

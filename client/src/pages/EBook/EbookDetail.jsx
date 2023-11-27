@@ -15,6 +15,7 @@ export default function EBookDetail() {
         const response = await axios({
           method: "GET",
           url: `${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`,
+
         });
         console.log(response);
       } catch (error) {
@@ -32,13 +33,14 @@ export default function EBookDetail() {
   // console.log(location.state);
 
   return (
-    <div>
-      <SideNavBar />
-      <Title />
+    <div className='flex w-full justify-end'>
       <div>
+        <Title />
         <div>
-          {/* 데이터 props로 넘겨줌 */}
-          <BookCardDetail data={location.state.dataDetail} />
+          <div>
+            {/* 데이터 props로 넘겨줌 */}
+            <BookCardDetail data={location.state.dataDetail} />
+          </div>
         </div>
       </div>
     </div>

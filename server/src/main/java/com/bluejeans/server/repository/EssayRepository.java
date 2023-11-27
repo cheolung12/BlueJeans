@@ -19,4 +19,13 @@ public interface EssayRepository extends JpaRepository<EssayEntity, Integer> {
 
     // 내가 찜한 에세이 목록
     List<EssayEntity> findByEssayDibsUserId(int userId);
+
+    // 좋아요순 3개
+    @Query(value = "SELECT e.* " +
+            "FROM essay e " +
+            "LEFT JOIN (SELECT essay_id, COUNT(*) AS like_count FROM essay_dibs GROUP BY essay_id) ed " +
+            "ON e.id = ed.essay_id " +
+            "ORDER BY like_count DESC " +
+            "LIMIT 3", nativeQuery = true)
+    List<EssayEntity> findFavoritePosts();
 }

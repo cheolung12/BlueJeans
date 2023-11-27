@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,19 +63,15 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public MyPageDTO getUserInfo(UserEntity user) {
+    public ResMyPageDTO getUserInfo(UserEntity user) {
         int userId = user.getId();
-
-        List<RecruitEntity> likedRecruits = recruitRepository.findByRecruitDibsUserId(userId);
-        List<EBookEntity> likedBooks = ebookRepository.findByEbookDibsUserId(userId);
-        List<EssayEntity> likedEssays = essayRepository.findByEssayDibsUserId(userId);
 
         // 엔티티 리스트를 DTO 리스트로
         List<ResRecruitDTO> RecruitLists = convertRecruitEntitiesToDTOList(recruitRepository.findByRecruitDibsUserId(userId));
         List<ResEBookDTO> EBookLists = convertEBookEntitiesToDTOList(ebookRepository.findByEbookDibsUserId(userId));
         List<ResEssayDTO> EssayLists = convertEssayEntitiesToDTOList(essayRepository.findByEssayDibsUserId(userId));
 
-        return MyPageDTO.builder()
+        return ResMyPageDTO.builder()
                 .nickname(user.getNickname())
                 .address(user.getAddress())
                 .MyEssayList(EssayLists)
@@ -93,4 +90,19 @@ public class MyPageService {
         userRepository.save(user);
         return true;
     }
+
+    public ResMainDTO getMainPost() {
+
+        List<ResRecruitDTO> RecruitLists = convertRecruitEntitiesToDTOList(recruitRepository.findLatestPosts());
+        List<ResEBookDTO> EBookLists = convertEBookEntitiesToDTOList(ebookRepository.findRandomEBooks());
+        List<ResEssayDTO> EssayLists = convertEssayEntitiesToDTOList(essayRepository.findFavoritePosts());
+
+        return ResMainDTO.builder()
+                .EssayList(EssayLists)
+                .EBookList(EBookLists)
+                .RecruitList(RecruitLists)
+                .build();
+    }
+
+
 }
