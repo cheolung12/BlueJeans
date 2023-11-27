@@ -1,6 +1,5 @@
 package com.bluejeans.server.dto;
 
-import com.bluejeans.server.entity.UserEntity;
 import lombok.*;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyPageDTO {
+public class ResMyPageDTO {
 
     private String nickname;
     private String address;
