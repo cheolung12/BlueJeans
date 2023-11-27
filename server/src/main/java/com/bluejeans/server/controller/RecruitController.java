@@ -38,6 +38,33 @@ public class RecruitController {
         return recruitService.findAll();
     }
 
+    @GetMapping
+    public List<ResRecruitDTO> getJobs(
+            @RequestParam(name = "search", required = false) String searchKeyword,
+            @RequestParam(name = "sort", required = false) String sortType) {
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            // 검색 키워드가 있는 경우
+            if ("latest".equals(sortType) || sortType == null) {
+                // 키워드로 검색하고 최신순으로 정렬
+                return null;
+            } else if ("likes".equals(sortType)) {
+                // 키워드로 검색하고 좋아요순으로 정렬
+                return null;
+            }
+        } else {
+            // 검색 키워드가 없는 경우
+            if ("latest".equals(sortType) || sortType == null) {
+                // 모든 게시물을 최신순으로 정렬
+                return  recruitService.filteringRecruit("latest");
+            } else if ("likes".equals(sortType)) {
+                // 모든 게시물을 좋아요순으로 정렬
+                return  recruitService.filteringRecruit("favorite");
+            }
+        }
+        return recruitService.findAll();
+    }
+
     @GetMapping("/searchRegion")
     @Operation(summary="지역별 공고 검색")
     @Parameter(name = "region", description = "xx시 xx구")
