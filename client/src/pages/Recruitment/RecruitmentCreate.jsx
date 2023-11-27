@@ -59,8 +59,8 @@ export default function RecruitmentCreate() {
 
         // try {
         //     const response = await axios.post(
-        //         'http://localhost:8080/api/jobs',
-        //         recruitData,
+        //         `${process.env.REACT_APP_SERVER}/jobs`,
+        //         formData,
         //         { withCredentials: true },
         //         {
         //             headers: {
@@ -68,12 +68,11 @@ export default function RecruitmentCreate() {
         //             },
         //         }
         //     );
-
         //     console.log(response.data);
         // } catch (error) {
         //     console.error(error);
         // }
-        console.log(JSON.stringify(recruitData));
+        // console.log(JSON.stringify(recruitData));
 
         for (var key of recruitData.keys()) {
             console.log(key);

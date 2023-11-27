@@ -9,14 +9,13 @@ export default function LikeButton({ like, notlike, id }) {
   // 찜하기 수 카운트
   const [count, setCount] = useState(0);
 
- 
   //찜하기 버튼
   //누적 카운트 x
   const onClick = async () => {
     try {
       const response = await axios({
         method: 'POST',
-        url: `http://localhost:8080/api/ebook/like/${id}`,
+        url: `${process.env.REACT_APP_SERVER}/ebook/like/${id}`,
       });
       console.log(response);
     } catch (error) {
@@ -26,7 +25,6 @@ export default function LikeButton({ like, notlike, id }) {
     setCount((prevCount) => (prevCount === 0 ? 1 : 0));
     setIsLiked((prevIsLiked) => !prevIsLiked);
   };
-
 
   return (
     <div

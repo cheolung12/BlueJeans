@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 export default function TopNavbar() {
   const handleLogout = async () => {
     const res = await axios({
+
       method: 'GET',
-      url: 'http://localhost:8080/api/logout',
+      url: `${process.env.REACT_APP_SERVER}/logout`,
       withCredentials: true,
     });
     if (res.data === 'redirect:/login') {
-      sessionStorage.clear();
+      console.log("login");
+      localStorage.clear();
+
       window.location.reload();
     } else {
       console.log('로그아웃 실패!');
@@ -29,12 +32,12 @@ export default function TopNavbar() {
             className='h-8'
             alt='Flowbite Logo'
           />
-          <span className='self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap dark:text-white'>
+          <span className='self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap'>
             BlueJeans
           </span>
         </Link>
         <div className='flex items-center space-x-6 rtl:space-x-reverse'>
-          {!sessionStorage.getItem('isLogin') ? (
+          {!localStorage.getItem('isLogin') ? (
             <Link
               to='/signup'
               className='sm:text-xl text-md font-semibold  text-black hover:underline'
@@ -49,7 +52,7 @@ export default function TopNavbar() {
               마이페이지
             </Link>
           )}
-          {!sessionStorage.getItem('isLogin') ? (
+          {!localStorage.getItem('isLogin') ? (
             <Link
               to='/login'
               className='sm:text-xl text-md font-semibold  text-black hover:underline'

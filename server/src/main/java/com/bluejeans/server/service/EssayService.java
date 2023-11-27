@@ -43,7 +43,8 @@ public class EssayService {
         log.info("전체찾기 서비스");
 
         for( EssayEntity essay : essayList){
-            list.add(ResEssayDTO.toDTO(essay));
+            long like = essayDibRepository.countByEssay(essay);
+            list.add(ResEssayDTO.toDTO(essay, like));
         }
         return list;
     }
@@ -63,7 +64,8 @@ public class EssayService {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
 
         if (result.isPresent()) {
-            ResEssayDTO essay = ResEssayDTO.toDTO(result.get());
+            long like = essayDibRepository.countByEssay(result.get());
+            ResEssayDTO essay = ResEssayDTO.toDTO(result.get(), like);
             return essay;
         } else {
             return null;

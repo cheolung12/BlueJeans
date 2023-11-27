@@ -27,4 +27,9 @@ public interface EBookRepository extends JpaRepository<EBookEntity, Integer> {
 
     // 내가 찜한 책 목록
     List<EBookEntity> findByEbookDibsUserId(int userId);
+
+    // 랜덤 10개
+    @Query(value = "SELECT * FROM ebook ORDER BY RAND() LIMIT 10", nativeQuery = true)
+    List<EBookEntity> findRandomEBooks();
+
 }

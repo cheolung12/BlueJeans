@@ -19,9 +19,9 @@ public class ResEssayDTO {
     private String content;
     private int user_id;
     private String img_path;
-    private int like;
+    private long like;
 
-    public static ResEssayDTO toDTO(EssayEntity entity){
+    public static ResEssayDTO toDTO(EssayEntity entity, long like){
         if (entity == null) {
             return null;
         }
@@ -31,6 +31,7 @@ public class ResEssayDTO {
                 .content(entity.getContent())
                 .user_id(entity.getUser() != null ? entity.getUser().getId() : null)
                 .img_path(entity.getImg_path())
+                .like(like)
                 .build();
     }
 

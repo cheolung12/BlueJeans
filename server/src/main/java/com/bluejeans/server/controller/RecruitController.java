@@ -29,7 +29,6 @@ public class RecruitController {
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary="공고 게시물 등록")
     public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
-
         return recruitService.registerRecruit(recruitDTO,user, multipartFile);
     }
 
@@ -86,18 +85,6 @@ public class RecruitController {
         long counts = recruitService.countDibs(job_id);
 
         return new DibResultDTO(counts, dibResult);
-    }
-
-    @GetMapping("/like")
-    @Operation(summary="내가 찜한 공고 보기")
-    public List<ResRecruitDTO> myLikeRecruit(@AuthenticationPrincipal UserEntity user) {
-        return recruitService.myLikeRecruit(user);
-    }
-
-    @PostMapping("/recruiting/{job_id}")
-    @Operation(summary = "마감 여부 변경")
-    public boolean toggleRecruiting(@PathVariable int job_id) {
-        return recruitService.updateRecruiting(job_id);
     }
 }
 
