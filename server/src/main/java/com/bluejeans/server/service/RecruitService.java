@@ -82,10 +82,9 @@ public class RecruitService {
 
 
     //공고 등록
-    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user, MultipartFile multipartFile) throws IOException {
+    public boolean registerRecruit(RecruitDTO recruitDTO, UserEntity user, String fileURL)  {
         System.out.println("등록시작");
-        String fileURL = s3Uploader.upload(multipartFile, "jobs");
-        // DTO -> 엔티티
+
         RecruitEntity added = RecruitDTO.toEntity(recruitDTO, user, fileURL);
         System.out.println(added);
         try {
@@ -109,10 +108,9 @@ public class RecruitService {
     }
 
 
-    public boolean editRecruit(int id, RecruitDTO recruitDTO, MultipartFile multipartFile) throws IOException {
+    public boolean editRecruit(int id, RecruitDTO recruitDTO, String fileURL)  {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
-        String fileURL = s3Uploader.upload(multipartFile, "jobs");
         // 수정
         if(recruit.isPresent()) {
             RecruitEntity existingEntity = recruit.get();

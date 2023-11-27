@@ -73,6 +73,9 @@ public class RecruitEntity {
         this.setContact(recruitDTO.getContact());
         this.setWorkDay(recruitDTO.getWorkDay());
         this.setWorkTime(recruitDTO.getWorkTime());
-        this.setImg_path(fileURL);
+        if(fileURL != null){
+            this.setImg_path(fileURL);
+        }
+
     }
 }
