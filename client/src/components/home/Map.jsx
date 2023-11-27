@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Sktelecom from './Skeleton';
 
 function Map({ userAddress }) {
   const mapContainerRef = useRef();
@@ -8,7 +9,7 @@ function Map({ userAddress }) {
 
   const [endMarkerPosition, setEndMarkerPosition] = useState(null);
   const [currentMarkerPosition, setCurrentMarkerPosition] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   const imgUrlS =
     'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
 
@@ -29,6 +30,8 @@ function Map({ userAddress }) {
         }
       } catch (error) {
         console.error('에러:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -43,6 +46,7 @@ function Map({ userAddress }) {
 
   useEffect(() => {
     if (userAddress) {
+      setLoading(true);
       reAddress(userAddress);
     }
   }, [userAddress]);
@@ -225,11 +229,18 @@ function Map({ userAddress }) {
   };
 
   return (
-    <div
-      ref={mapContainerRef}
-      id='TMapApp'
-      className='w-[53.125rem] h-[34.375rem] pt-7 drop-shadow-md'
-    ></div>
+    <div className='relative'>
+      {loading && (
+        <div className=' text-red'>
+          <Sktelecom />
+        </div>
+      )}
+      <div
+        ref={mapContainerRef}
+        id='TMapApp'
+        className='w-[53.125rem] h-[34.375rem] pt-7 drop-shadow-md'
+      ></div>
+    </div>
   );
 }
 
