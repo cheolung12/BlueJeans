@@ -69,11 +69,9 @@ const ChatApp = () => {
   };
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
-      <SideNavBar />
-    <div className="flex w-full justify-center items-center fade-in h-screen">
+    <div  className="w-full flex sm:justify-end justify-center items-center sm:mr-10 mr-0">
       {/* content wrapper */}
-      <div className="w-3/5 h-4/5 shadow-xl flex flex-col justify-between">
+      <div className="lg:w-4/5 sm:w-2/3 w-full 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between">
         <div className="h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md">
           <ChatBox
             inputText={inputText}
@@ -97,7 +95,6 @@ const ChatApp = () => {
           />
         </div>
       </div>
-    </div>
     </div>
   );
 };

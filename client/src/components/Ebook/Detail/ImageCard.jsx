@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ResButton from '../../common/ResButton';
-import LikeButton from '../../common/LikeButton';
+import DibsButton from '../../Ebook/Detail/DibsButton';
 
 export default function ImageCard({
   id,
@@ -61,8 +61,8 @@ export default function ImageCard({
 
         <div className='flex flex-col items-center justify-evenly w-[18rem] h-[29rem]'>
           <div className='text-center flex flex-col h-48 justify-evenly'>
-            <h1 className='text-lg font-semibold'>{title}</h1>
-            <div className='text-lg'>{author}</div>
+            <h1 className='text-xl font-semibold'>{title}</h1>
+            <div className='text-md'>{author}</div>
             <div>
               <div className='text-sm mb-1'>{publisher}</div>
               <div className='text-sm mb-1'>{genre}</div>
@@ -71,7 +71,7 @@ export default function ImageCard({
           </div>
 
           {/* 찜하기 버튼 */}
-          <LikeButton like='찜하기' notlike='찜해제' />
+          <DibsButton like='찜하기' notlike='찜해제' />
           {/* 바로 읽기 버튼 */}
           <Link
             to={`/ebook/detail/viewer/${id}`}

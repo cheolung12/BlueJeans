@@ -7,40 +7,40 @@ import { MdChat } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 
 export default function SideNavBar() {
-    return (
-        <div className="flex">
-            <div className="flex flex-col space-y-8 p-14 border rounded-lg shadow-lg">
-                <Link to="/recruitment" className="m-3">
-                    <p className="h-16 w-16 flex justify-center text-[#FE8080]">
-                        <IoMdBriefcase className="h-full w-full" />
-                    </p>
-                    <p className="text-lg text-center font-semibold">일자리</p>
-                </Link>
-                <Link to="/ebook" className="m-3">
-                    <p className="h-16 w-16 flex justify-center text-[#FED001]">
-                        <FiBookOpen className="h-full w-full" />
-                    </p>
-                    <p className="text-lg text-center font-semibold">e-Book</p>
-                </Link>
-                <Link to="/essay" className="m-3">
-                    <p className="h-16 w-16 flex justify-center text-[#5495B1]">
-                        <FaPenNib className="h-full w-full" />
-                    </p>
-                    <p className="text-lg text-center font-semibold">백일장</p>
-                </Link>
-                <Link to="/chat" className="m-3">
-                    <p className="h-16 w-16 flex justify-center text-[#6694D5]">
-                        <MdChat className="h-full w-full" />
-                    </p>
-                    <p className="text-lg text-center font-semibold">챗봇</p>
-                </Link>
-                <Link to="/findhome" className="m-3">
-                    <p className="h-16 w-16 flex justify-center text-[#8D62E9]">
-                        <GoHome className="h-full w-full" />
-                    </p>
-                    <p className="text-lg text-center font-semibold">집찾기</p>
-                </Link>
-            </div>
-        </div>
-    );
+  return (
+    <div className="sm:fixed block z-1 bg-white">
+    <div className='flex sm:flex-col flex-row sm:space-y-10 space-y-0 sm:space-x-0 space-x-1 sm:py-10 py-8 sm:px-10 px-2 border rounded-lg shadow-lg sm:mb-0 mb-12'>
+      <Link to='/recruitment' className='sideNav-link'>
+        <p>
+          <IoMdBriefcase className='sideNav-icon text-[#FE8080]' />
+        </p>
+        <p className='sideNav-text'>일자리</p>
+      </Link>
+      <Link to='/ebook' className='sideNav-link'>
+        <p>
+          <FiBookOpen className='sideNav-icon text-[#FED001]' />
+        </p>
+        <p className='sideNav-text'>e-book</p>
+      </Link>
+      <Link to='/essay' className='sideNav-link'>
+        <p>
+          <FaPenNib className='sideNav-icon text-[#5495B1]' />
+        </p>
+        <p className='sideNav-text'>백일장</p>
+      </Link>
+      <Link to='/chat' className='sideNav-link'>
+        <p>
+          <MdChat className='sideNav-icon text-[#6694D5]' />
+        </p>
+        <p className='sideNav-text'>챗봇</p>
+      </Link>
+      <Link to='findhome' className='sideNav-link'>
+        <p>
+          <GoHome className='sideNav-icon text-[#8D62E9]' />
+        </p>
+        <p className='sideNav-text'>집찾기</p>
+      </Link>
+    </div>
+    </div>
+  );
 }

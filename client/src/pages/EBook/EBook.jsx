@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
 import Title from '../../components/Ebook/Main/Title';
-import { useParams, Link } from 'react-router-dom';
-import bookList from '../../data/bookList.json';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+// import bookList from '../../data/bookList.json';
 import BookCard from '../../components/Ebook/Main/BookCard';
 import BookCardSearch from '../../components/Ebook/Main/BookCardSearch';
 import SideNavBar from '../../components/common/SideNavBar';
 import axios from 'axios';
 
 // 임시데이터
-const books = bookList.books;
+// const books = bookList.books;
 
 export default function EBook() {
+  const [books, setBooks] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   // 1. 책 목록 전체 보여주기
   // 2. 검색한 책 목록만 보여주기 => useParams
-  const { searchInput } = useParams();
+  const navigate = useNavigate();
 
-  // get 요청
+  // get 요청 (전체 책 목록)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +27,8 @@ export default function EBook() {
           method: 'GET',
           url: `http://localhost:8080/api/ebook`,
         });
-        console.log(response);
+        setBooks(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -42,6 +45,7 @@ export default function EBook() {
       )
     : books;
 
+  // 카테고리 (인기순, 최신순, 전체보기)
   const handleFilter = async (type) => {
     let res;
     if (type === 'all') {
@@ -65,8 +69,14 @@ export default function EBook() {
     }
     if (res) {
       console.log(res);
-      // setBookList(받은데이터)
+      setBooks(res.data);
     }
+  };
+
+  // 검색
+  const handleSearch = (searchInput, results) => {
+    setBooks(results);
+    navigate(`/ebook/search?keyword=${searchInput}`);
   };
 
   return (
@@ -78,19 +88,25 @@ export default function EBook() {
       <div className='flex justify-center'>
         <div className='w-[61rem]'>
           {/* 카테고리, 검색창 */}
-          <div className='flex items-center justify-between px-4'>
+          <div className='flex flex-col sm:flex-row items-center justify-between px-4'>
             <Filter handleFilter={handleFilter} />
-            <SearchBooks book={books} />
+            <SearchBooks book={books} handleSearch={handleSearch} />
           </div>
 
-          <section>
-            {searchInput && (
+          <section className='h-screen'>
+            {/* {searchInput && (
               <div className='font-semibold text-xl text-center py-3'>{`'${searchInput}'의 검색결과`}</div>
-            )}
-            <div className='py-6'>
+            )} */}
+            <div className='py-3'>
               <div className='flex flex-wrap justify-center'>
-                <>
-                  {filterBooks.map((book) => (
+                {filterBooks.length === 0 ? (
+                  <>
+                    <div className='font-semibold text-xl text-center py-3'>
+                      검색결과가 없습니다.
+                    </div>
+                  </>
+                ) : (
+                  filterBooks.map((book) => (
                     // 북카드 클릭시 e-book 상세 페이지로 이동
                     <Link
                       to={`/ebook/detail/${book.id}`}
@@ -100,12 +116,14 @@ export default function EBook() {
                       key={book.id}
                     >
                       {searchInput ? (
-                        <BookCardSearch
-                          id={book.id}
-                          thumbnail={book.thumbnail}
-                          title={book.title}
-                          author={book.author}
-                        />
+                        <>
+                          <BookCardSearch
+                            id={book.id}
+                            thumbnail={book.thumbnail}
+                            title={book.title}
+                            author={book.author}
+                          />
+                        </>
                       ) : (
                         <BookCard
                           id={book.id}
@@ -115,8 +133,8 @@ export default function EBook() {
                         />
                       )}
                     </Link>
-                  ))}
-                </>
+                  ))
+                )}
               </div>
             </div>
           </section>

@@ -4,11 +4,11 @@ import ContentCard from './ContentCard';
 export default function BookCardDetail({ data }) {
   const { thumbnail, title, author, id, description, publisher, genre, ISBN } =
     data;
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <div>
-        <div className='flex px-38 pb-11 justify-center'>
+        <div className='flex px-38 pb-11 justify-center max-[800px]:flex-col items-center'>
           <ImageCard
             id={id}
             thumbnail={thumbnail}

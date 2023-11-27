@@ -53,6 +53,7 @@ export default function Main({
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <div>
+
       <div>
         <div className=' h-[650px] w-full'>
           <div className='flex justify-end'>
@@ -176,6 +177,103 @@ export default function Main({
         </div>
         <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
           <div className='flex w-2/3 items-end pb-5  justify-evenly'>
+      <div className=' flex justify-center'>
+        <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-36 w-3/4 mb-24 text-lg'>
+          <Link to='/recruitment' className='justify-center'>
+            <p className=' font-bold h-16 w-16 text-center'>
+              <IoMdBriefcase className=' h-full w-full text-[#FE8080]' />
+              일자리
+            </p>
+          </Link>
+
+          <Link to='/ebook' className=''>
+            <p className='font-bold h-16 w-16 text-center'>
+              <FiBookOpen className='text-[#FED001]  h-full w-full' />
+              e-book
+            </p>
+          </Link>
+
+          <Link to='/essay' className=''>
+            <p className=' font-bold h-16 w-16 text-center'>
+              <FaPenNib className=' text-[#5495B1] h-full w-full' />
+              백일장
+            </p>
+          </Link>
+          <Link to='/chat' className=''>
+            <p className=' font-bold h-16 w-16 text-center'>
+              <MdChat className=' text-[#6694D5] h-full w-full' />
+              챗봇
+            </p>
+          </Link>
+          <Link to='/findhome' className=''>
+            <p className=' font-bold h-16 w-16 text-center'>
+              <GoHome className='text-[#8D62E9] h-full w-full' />
+              집찾기
+            </p>
+          </Link>
+        </div>
+      </div>
+
+      {/* 1 */}
+      <div className='h-[37.5rem] bg-[#F2D001] flex content-center'>
+        <div className=' w-1/3 relative'>
+          <div className='absolute top-1/3 pl-32'>
+            <p className='text-4xl pb-10 font-bold'>오늘의 추천도서</p>
+            <div className='text-lg'>
+              <p>
+                1970년대의 감성부터 현대까지
+                <br />
+                지금 봐도 세련된 문장으로 감동을 주는
+                <br />
+                작품을 만나 보세요
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* books.thumbnail이랑 books.name 가져오기*/}
+
+        <Swiper
+          className=' w-[55rem] h-[28rem] self-center'
+          // onSwiper={setSwiperRef}
+          slidesPerView={3}
+          loop={true}
+          centeredSlides={true}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          spaceBetween={30}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+        >
+          {booksArray.map((value) =>
+            value.map((book) => (
+              <React.Fragment key={book.id}>
+                <SwiperSlide key={book.id} className=' h-full w-full'>
+                  {/* <Link to={`/ebook/detail/${encodeURIComponent(book.id)}`}> */}
+                  <div>
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title || 'No Title'}
+                      className='h-[25rem] w-full text-blue-700'
+                    />
+                  </div>
+                  {/* </Link> */}
+                </SwiperSlide>
+              </React.Fragment>
+            ))
+          )}
+        </Swiper>
+      </div>
+      {/* 2 */}
+      <div className='h-[37.5rem] p-3 bg-[#5495B1]'>
+        <div className='flex h-full'>
+          <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
+
             {literature.mainL.slice(0, 3).map((item, index) => (
               <div key={item.id} className='text-center'>
                 <div
@@ -197,6 +295,7 @@ export default function Main({
                 </div>
               </div>
             ))}
+
           </div>
 
           {/* 2-2  900부터*/}
@@ -240,17 +339,10 @@ export default function Main({
                         <BiCommentDetail className='self-center mr-2' />
                         <span>{item2.detail}</span>
                       </div>
-                    </div>
-                  </div>
-                  <div className='flex justify-end'>
-                    <div>{item2.money}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
       </div>
+
+      
     </div>
   );
 }

@@ -1,5 +1,6 @@
 package com.bluejeans.server.service;
 
+import com.bluejeans.server.dto.DibResultDTO;
 import com.bluejeans.server.dto.RecruitDTO;
 import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.*;
@@ -9,6 +10,7 @@ import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.bluejeans.server.entity.DibResult.*;
 
 @Service
 public class RecruitService {
@@ -32,7 +36,6 @@ public class RecruitService {
     @Autowired
     private UserRepository userRepository;
 
-
     // 엔티티 리스트를 DTO리스트로
     private List<ResRecruitDTO> entityListToDTOList(List<RecruitEntity> recruitList) {
         List<ResRecruitDTO> result = new ArrayList<>();
@@ -42,7 +45,7 @@ public class RecruitService {
         }
         // 엔티티 -> DTO
         for (RecruitEntity recruit : recruitList) {
-            int like = recruitDibRepository.countByRecruit_Id(recruit.getId());
+            int like = recruitDibRepository.countByRecruit(recruit);
             result.add(ResRecruitDTO.toDTO(recruit, like));
         }
 
@@ -98,10 +101,10 @@ public class RecruitService {
     }
 
     public ResRecruitDTO recruitDetail(int id) {
-        Optional<RecruitEntity> recruit = recruitRepository.findById(id);
-        int like = recruitDibRepository.countByRecruit_Id(id);
-        if(recruit.isPresent()){
-            return ResRecruitDTO.toDTO(recruit.get(), like);
+        RecruitEntity recruit = recruitRepository.findById(id).orElse(null);
+        int like = recruitDibRepository.countByRecruit(recruit);
+        if(recruit != null){
+            return ResRecruitDTO.toDTO(recruit, like);
         } else {
             return null;
         }
@@ -139,32 +142,29 @@ public class RecruitService {
         }
     }
 
-    public boolean likeClick(int jobId, UserEntity userEntity) {
-        int userId = userEntity.getId();
-        // 좋아요 여부를 확인하기 위한 키를 생성
-        RecruitDibsEntityKey key = new RecruitDibsEntityKey(jobId, userId);
-        Optional<RecruitDibsEntity> existingDibs = recruitDibRepository.findById(key);
-
-        // 상태에따라 추가 혹은 삭제
-        if (existingDibs.isPresent()) {
-            recruitDibRepository.deleteById(key);
-            return false;
+    @Transactional
+    public DibResult dib(int jobId, UserEntity userEntity) {
+        RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
+        if (recruit == null) {
+            return RECRUIT_NOT_FOUND;
+        }
+        Optional<RecruitDibsEntity> existingDib = recruitDibRepository.findByRecruitAndUser(recruit, userEntity);
+        if (existingDib.isPresent()) {
+            recruitDibRepository.delete(existingDib.get());
+            return DIB_REMOVED;
         } else {
-            // 좋아요가 안되어 있으면 추가
-            RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
-            UserEntity user = userRepository.findById(userId).orElse(null);
+            RecruitDibsEntity dib = new RecruitDibsEntity(recruit, userEntity);
+            recruitDibRepository.save(dib);
+            return DIB_ADDED;
+        }
+    }
 
-            if (recruit != null && user != null) {
-                RecruitDibsEntity newDibs = RecruitDibsEntity.builder()
-                        .recruit(recruit)
-                        .user(user)
-                        .build();
-
-                recruitDibRepository.save(newDibs);
-                return true; // 좋아요 추가
-            } else {
-                return false; // 공고나 유저를 찾을 수 없음
-            }
+    public long countDibs(int bookId) {
+        RecruitEntity recruit = recruitRepository.findById(bookId).orElse(null);
+        if(recruit != null){
+            return recruitDibRepository.countByRecruit(recruit);
+        }else {
+            return 0;
         }
     }
 
@@ -175,5 +175,14 @@ public class RecruitService {
         return entityListToDTOList(likedRecruits);
     }
 
-
+    public boolean updateRecruiting(int jobId) {
+        RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
+        if (recruit != null) {
+            recruit.setRecruiting(!recruit.isRecruiting());
+            recruitRepository.save(recruit);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

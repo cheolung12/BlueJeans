@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWonSign, faMapLocationDot, faCalendarDays, faClock } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarDays, faClock } from '@fortawesome/free-regular-svg-icons';
+import { FaWonSign } from 'react-icons/fa6';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 import '@fortawesome/fontawesome-free/js/all.js';
 import ResButton from '../../common/ResButton';
 import Modal from 'react-modal';
+import RecruitLikeButton from './RecruitLikeButton';
 
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
@@ -44,10 +47,13 @@ export default function DetailExample({ data }) {
                         <div className="text-justify flex">
                             <p className="text-2xl font-bold ">제목-{dataD.title}</p>
                         </div>
+                        {/* 찜하기 버튼 */}
+                        <RecruitLikeButton like="좋아요" notlike="해제" /> {/*  allLike={dataD.like}  */}
                         <div className="flex">
                             {/* true => dataD.recruiting */}
                             {true ? (
                                 <div>
+                                    {/* 공고 지원 버튼 */}
                                     <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                         공고 지원하기
                                     </button>
@@ -70,8 +76,14 @@ export default function DetailExample({ data }) {
                     <hr />
                     <div className="m-2 flex flex-col space-y-4">
                         <div className="text-xl font-semibold">정보</div>
-                        <div className="text-lg">급여 - {dataD.money}</div>
-                        <div className="text-lg">지역 - {dataD.region}</div>
+                        <div className="text-lg flex items-center">
+                            <FaWonSign className="mr-2" />
+                            급여 - {dataD.money}
+                        </div>
+                        <div className="text-lg flex items-center">
+                            <FaMapMarkerAlt className="mr-2" />
+                            지역 - {dataD.region}
+                        </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
                             근무 요일 - dataD.workDay

@@ -4,7 +4,7 @@ export default function ContentCard({ description }) {
   return (
     <div>
       <section
-        className='flex flex-col items-center w-[31rem] h-[46rem] rounded-[1rem] ml-2 pt-[2.3rem] overflow-y-auto'
+        className='flex flex-col items-center w-[31rem] h-[46rem] rounded-[1rem] ml-2 pt-[2.3rem] overflow-y-auto max-[800px]:w-[20rem] max-[800px]:ml-0'
         style={{
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}

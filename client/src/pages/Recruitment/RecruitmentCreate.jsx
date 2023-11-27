@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-modal';
 
 export default function RecruitmentCreate() {
     const [recruitmentData, setRecruitmentData] = useState({
@@ -10,7 +12,7 @@ export default function RecruitmentCreate() {
         content: '',
         contact: '',
         workDay: '',
-        wordTime: '',
+        workTime: '',
     });
 
     //유효성검사
@@ -22,7 +24,7 @@ export default function RecruitmentCreate() {
         content: null,
         contact: null,
         workDay: null,
-        wordTime: null,
+        workTime: null,
     });
 
     // const isFormValid = Object.values(formValid).every((value) => value === true);
@@ -55,7 +57,7 @@ export default function RecruitmentCreate() {
             setPlaceholder(fileName); //useState로 그 값을 placeholder에 넣기!
         } else {
             console.log('파일 없음');
-                  }
+        }
         setFile(e.target.files[0]);
     };
 
@@ -70,24 +72,28 @@ export default function RecruitmentCreate() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", recruitmentData.title);
-    formData.append("money", recruitmentData.money);
-    formData.append("region", recruitmentData.region);
-    formData.append("contact", recruitmentData.contact);
-    formData.append("content", recruitmentData.content);
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('title', recruitmentData.title);
+        formData.append('moneyStandard', recruitmentData.moneyStandard);
+        formData.append('money', recruitmentData.money);
+        formData.append('region', recruitmentData.region);
+        formData.append('contact', recruitmentData.contact);
+        formData.append('content', recruitmentData.content);
+        formData.append('workDay', recruitmentData.workDay);
+        formData.append('workTime', recruitmentData.workTime);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/jobs",
-        formData,
-        { withCredentials: true },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-            });
+        try {
+            const response = await axios.post(
+                'http://localhost:8080/api/jobs',
+                formData,
+                { withCredentials: true },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
             console.log(response.data);
         } catch (error) {
@@ -95,19 +101,56 @@ export default function RecruitmentCreate() {
         }
     };
 
+    // 지역 선택 모달
+    const [isOpen, setIsOpen] = useState(false);
+
+    // 주소 modal 스타일
+    const customStyles = {
+        overlay: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+        },
+        content: {
+            left: '0',
+            margin: 'auto',
+            width: '500px',
+            height: 'fit-content',
+            padding: '0',
+            overflow: 'hidden',
+        },
+    };
+
+    const modalToggle = () => {
+        setIsOpen(!isOpen);
+    };
+
+    // 주소창 닫을때 입력값으로 설정
+    const completeHandler = (data) => {
+        setRecruitmentData((prevData) => ({
+            ...prevData,
+            region: data.roadAddress,
+        }));
+        // setFormValid((prevData) => ({
+        //     ...prevData,
+        //     address: true,
+        // }));
+        setIsOpen(false);
+    };
+
     return (
         <div className="w-full h-full flex flex-col justify-center items-center">
-            <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#000000]">공고 게시</div>
             <form
                 onSubmit={onSubmit}
-                className="w-full max-w-2xl h-full flex flex-col justify-center items-center border"
+                className="my-10 sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
                 encType="multipart/form-data"
             >
+                <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#000000]">공고 게시</div>
+
                 <div className="w-full h-full flex flex-col justify-center">
                     <label htmlFor="title" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
                         제목
                     </label>
                     <input
+                        id="title"
                         value={recruitmentData.title}
                         onChange={handleInputChange}
                         name="title"
@@ -120,10 +163,15 @@ export default function RecruitmentCreate() {
                 <div className="w-full h-full flex flex-col justify-center">
                     <div className="w-full h-full flex flex-row justify-center">
                         <div className="w-full h-full flex flex-col justify-center">
-                            <label htmlFor="moneyStandard" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                급여 기준
-                            </label>
+                            <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">급여 기준</label>
                             <div className="my-3">
+                                {/*                                
+                                <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
+                                    <option value="hourM">시급</option>
+                                    <option value="dayM">일급</option>
+                                    <option value="weekM">주급</option>
+                                    <option value="monM">월급</option>
+                                </select>*/}
                                 <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">
                                     시급
                                     <input
@@ -175,6 +223,7 @@ export default function RecruitmentCreate() {
                                 급여 (단위 : 원)
                             </label>
                             <input
+                                id="money"
                                 className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                                 value={recruitmentData.money}
                                 onChange={handleInputChange}
@@ -191,20 +240,94 @@ export default function RecruitmentCreate() {
                         근무 지역
                     </label>
                     <input
-                        value={recruitmentData.region}
-                        className="m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                        onChange={handleInputChange}
-                        name="region"
                         type="text"
-                        placeholder="예) 서울특별시 중구"
+                        id="region"
+                        name="region"
+                        value={recruitmentData.region}
+                        onChange={handleInputChange}
+                        autoComplete="off"
+                        onClick={modalToggle}
+                        readOnly
+                        placeholder="클릭하면 주소검색창이 나타납니다."
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         required
                     />
+                    <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
+                        <DaumPostcode onComplete={completeHandler} height="100%" />
+                        <div className="flex justify-end pr-4">
+                            <button onClick={modalToggle}>[ 닫기 ]</button>
+                        </div>
+                    </Modal>
                 </div>
+
+                <div className="w-full h-full flex flex-col justify-center">
+                    <div className="w-full h-full flex flex-row justify-center">
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workDay" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 요일
+                            </label>
+                            <input
+                                id="workDay"
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                value={recruitmentData.workDay}
+                                onChange={handleInputChange}
+                                name="workDay"
+                                type="text"
+                                placeholder="예) 월요일~금요일, 주말"
+                                required
+                            />
+                        </div>
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workTime" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 시간
+                            </label>
+                            <input
+                                id="workTime"
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                value={recruitmentData.workTime}
+                                onChange={handleInputChange}
+                                name="workTime"
+                                type="text"
+                                placeholder="예) 15:00 ~ 20:00"
+                                required
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full h-full flex flex-col justify-center">
+                    <div className="w-full h-full flex flex-row justify-center">
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workDay" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 요일
+                            </label>
+                            <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
+                                <option value="hourM">00:00</option>
+                                <option value="dayM">00:30</option>
+                                <option value="weekM">01:00</option>
+                                <option value="monM">01:30</option>
+                            </select>
+                        </div>
+                        <div className="w-full h-full flex flex-col justify-center">
+                            <label htmlFor="workTime" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 시간
+                            </label>
+                            <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
+                                <option value="hourM">시급</option>
+                                <option value="dayM">일급</option>
+                                <option value="weekM">주급</option>
+                                <option value="monM">월급</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="w-full h-full flex flex-col justify-center">
                     <label htmlFor="contact" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
                         연락처
                     </label>
                     <input
+                        id="contact"
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         value={recruitmentData.contact}
                         onChange={handleInputChange}
@@ -216,12 +339,10 @@ export default function RecruitmentCreate() {
                 </div>
                 <div className="w-full h-full flex flex-col justify-center">
                     <div className="w-full h-full flex flex-row">
-                        <label htmlFor="file" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                            근무지 사진 첨부
-                        </label>
+                        <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">근무지 사진 첨부</label>
                         <label
                             className="mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg cursor-pointer"
-                            for="inputImg"
+                            htmlFor="inputImg"
                         >
                             파일 업로드
                         </label>
@@ -238,6 +359,7 @@ export default function RecruitmentCreate() {
                         근무 설명
                     </label>
                     <textarea
+                        id="content"
                         rows="7"
                         className="m-2 w-100 p-2 sm:text-base text-xs resize-none border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         value={recruitmentData.content}
