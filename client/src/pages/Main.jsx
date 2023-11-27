@@ -13,13 +13,14 @@ import { FaPenNib } from 'react-icons/fa6';
 import { MdChat } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 import { FaRegThumbsUp } from 'react-icons/fa';
-import { MdOutlineFiberNew } from 'react-icons/md';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
 import { BiCommentDetail } from 'react-icons/bi';
 
 ///////////////
 import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+import { useMediaQuery } from 'react-responsive';
 
 /////////////////컴포넌트 import///////////////
 import 'swiper/css/pagination';
@@ -28,6 +29,11 @@ import 'swiper/css/navigation';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import Signup from '../components/main/Signup';
 import Login from '../components/main/Login';
+import Calligraphy from '../components/main/Calligraphy';
+
+window.addEventListener('scroll', () => {
+  console.log(window.scrollX, window.scrollY);
+});
 
 export default function Main({
   id,
@@ -44,6 +50,7 @@ export default function Main({
   const booksArray = Object.values(books);
   const literature = mainL;
   const mJob = mainJ;
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <div>
       <div>
@@ -53,66 +60,75 @@ export default function Main({
             <Signup></Signup>
           </div>
         </div>
-
-        <div className=' flex justify-center'>
-          <div className=' rounded-[30px] shadow-md items-center flex justify-around bg-white h-36 w-3/4 mb-24 text-lg'>
-            <Link to='/recruitment' className='justify-center'>
-              <p className=' font-bold h-16 w-16 text-center'>
-                <IoMdBriefcase className=' h-full w-full text-[#FE8080]' />
-                일자리
-              </p>
+        <div className='flex justify-center'>
+          <div className='rounded-[30px] shadow-md items-center flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
+            <Link
+              to='/recruitment'
+              className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
+            >
+              <div className='flex flex-col items-center'>
+                <IoMdBriefcase className='h-8 md:h-12 w-8 md:w-12 text-[#FE8080]' />
+                <p className='font-bold mt-1'>일자리</p>
+              </div>
             </Link>
 
-            <Link to='/ebook' className=''>
-              <p className='font-bold h-16 w-16 text-center'>
-                <FiBookOpen className='text-[#FED001]  h-full w-full' />
-                e-book
-              </p>
+            <Link
+              to='/ebook'
+              className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
+            >
+              <div className='flex flex-col items-center'>
+                <FiBookOpen className='h-8 md:h-12 w-8 md:w-12 text-[#FED001]' />
+                <p className='font-bold mt-1'>e-book</p>
+              </div>
             </Link>
 
-            <Link to='/essay' className=''>
-              <p className=' font-bold h-16 w-16 text-center'>
-                <FaPenNib className=' text-[#5495B1] h-full w-full' />
-                백일장
-              </p>
+            <Link
+              to='/essay'
+              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
+            >
+              <div className='flex flex-col items-center'>
+                <FaPenNib className='h-8 md:h-12 w-8 md:w-12 text-[#5495B1]' />
+                <p className='font-bold mt-1'>백일장</p>
+              </div>
             </Link>
-            <Link to='/chat' className=''>
-              <p className=' font-bold h-16 w-16 text-center'>
-                <MdChat className=' text-[#6694D5] h-full w-full' />
-                챗봇
-              </p>
+
+            <Link
+              to='/chat'
+              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
+            >
+              <div className='flex flex-col items-center'>
+                <MdChat className='h-8 md:h-12 w-8 md:w-12 text-[#6694D5]' />
+                <p className='font-bold mt-1'>챗봇</p>
+              </div>
             </Link>
-            <Link to='/findhome' className=''>
-              <p className=' font-bold h-16 w-16 text-center'>
-                <GoHome className='text-[#8D62E9] h-full w-full' />
-                집찾기
-              </p>
+
+            <Link
+              to='/findhome'
+              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
+            >
+              <div className='flex flex-col items-center'>
+                <GoHome className='h-8 md:h-12 w-8 md:w-12 text-[#8D62E9]' />
+                <p className='font-bold mt-1'>집찾기</p>
+              </div>
             </Link>
           </div>
         </div>
-
         {/* 1 */}
-        <div className='h-[37.5rem] bg-[#F2D001] flex content-center'>
-          <div className=' w-1/3 relative'>
-            <div className='absolute top-1/3 pl-32'>
-              <p className='text-4xl pb-10 font-bold'>오늘의 추천도서</p>
-              <div className='text-lg'>
-                <p>
-                  1970년대의 감성부터 현대까지
-                  <br />
+        <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
+          <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
+            <div className='text-center mt-3'>
+              <div className='text-4xl pb-10 font-bold'>오늘의 추천도서</div>
+              <div className='whitespace-pre-line'>
+                <div className='text-lg'>1970년대의 감성부터 현대까지</div>
+                <div className='text-lg'>
                   지금 봐도 세련된 문장으로 감동을 주는
-                  <br />
-                  작품을 만나 보세요
-                </p>
+                </div>
+                <div className='text-lg'>작품을 만나 보세요</div>
               </div>
             </div>
           </div>
-
-          {/* books.thumbnail이랑 books.name 가져오기*/}
-
           <Swiper
-            className=' w-[55rem] h-[28rem] self-center'
-            // onSwiper={setSwiperRef}
+            className=' md:w-[55rem] w-96 h-[28rem]'
             slidesPerView={3}
             loop={true}
             centeredSlides={true}
@@ -123,6 +139,20 @@ export default function Main({
             pagination={{
               clickable: true,
             }}
+            breakpoints={{
+              '@0.25': {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              '@0.70': {
+                slidesPerView: 2,
+                spaceBetween: 40,
+              },
+              '@1.50': {
+                slidesPerView: 3,
+                spaceBetween: 50,
+              },
+            }}
             spaceBetween={30}
             navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
@@ -130,8 +160,7 @@ export default function Main({
             {booksArray.map((value) =>
               value.map((book) => (
                 <React.Fragment key={book.id}>
-                  <SwiperSlide key={book.id} className=' h-full w-full'>
-                    {/* <Link to={`/ebook/detail/${encodeURIComponent(book.id)}`}> */}
+                  <SwiperSlide key={book.id} className='h-full w-full'>
                     <div>
                       <img
                         src={book.thumbnail}
@@ -139,7 +168,6 @@ export default function Main({
                         className='h-[25rem] w-full text-blue-700'
                       />
                     </div>
-                    {/* </Link> */}
                   </SwiperSlide>
                 </React.Fragment>
               ))
@@ -147,75 +175,229 @@ export default function Main({
           </Swiper>
         </div>
         {/* 2 */}
-        <div className='h-[37.5rem] p-3 bg-[#5495B1]'>
-          <div className='flex h-full'>
-            <div className='flex w-[65rem] items-end pb-5 justify-evenly'>
-              {literature.mainL.slice(0, 3).map((item, index) => (
-                <div key={item.id} className='text-center'>
-                  <div
-                    className={`rounded-full ${
-                      index === 0 ? 'h-80 w-80' : 'h-60 w-60'
-                    }`}
-                  >
-                    <img
-                      src={item.pro}
-                      alt={item.userid || 'User Profile'}
-                      className='rounded-full h-full w-full'
-                    />
-                  </div>
-                  <p className=' text-base'>{item.title}</p>
-                  <p className='text-xl'>{item.userid}</p>
-                  <div className='flex justify-center'>
+        {/* <div className='flex flex-col sm:flex-row items-end h-[50rem] bg-[#5495B1] sm:h-[50rem]'>
+          <div className='flex-grow sm:w-2/3 pb-5 sm:pl-14'>
+            <div className='flex justify-center'>
+              <div className='w-full max-w-[20rem] mx-auto'>
+                <img
+                  src='https://i.pinimg.com/474x/19/a7/56/19a75691033a694612e358419c5bc8bd.jpg'
+                  alt=''
+                  className='h-64 w-64 rounded-full mx-auto mb-4 sm:mb-0'
+                />
+                <div className='flex-col justify-center text-center'>
+                  <p className='text-base'>가장 넓은 길은 언제나 내 마음속에</p>
+                  <p className='text-xl'>이영경</p>
+                  <div className='flex justify-center items-center'>
                     <FaRegThumbsUp className='self-center' />
-                    <p>{item.like}</p>
+                    <p className='ml-1'>22</p>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-            <div className='flex justify-between w-30'>
-              <div className='self-center text-4xl text-white font-bold place-items-end'>
-                이달의 문학왕
+
+            <div className='flex flex-col sm:flex-row justify-between mt-4'>
+              <div className='w-full max-w-[20rem] mx-auto mb-4 sm:mb-0'>
+                <img
+                  src='https://i.pinimg.com/474x/64/e0/5d/64e05d0c1cfcfa8df963dde3d2dfa6bc.jpg'
+                  alt=''
+                  className='h-64 w-64 rounded-full mx-auto mb-4 sm:mb-0'
+                />
+                <div className='flex-col justify-center text-center'>
+                  <p className='text-base'>
+                    큰 바다, 넓은 하늘을 우리는 가졌노라
+                  </p>
+                  <p className='text-xl'>전유민</p>
+                  <div className='flex justify-center items-center'>
+                    <FaRegThumbsUp className='self-center' />
+                    <p className='ml-1'>15</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className='w-full max-w-[20rem] mx-auto'>
+                <img
+                  src='https://i.pinimg.com/474x/64/e0/5d/64e05d0c1cfcfa8df963dde3d2dfa6bc.jpg'
+                  alt=''
+                  className='h-64 w-64 rounded-full mx-auto mb-4 sm:mb-0'
+                />
+                <div className='flex-col justify-center text-center'>
+                  <p className='text-base'>
+                    그대만큼 사랑스러운 사람을 본 일이 없다
+                  </p>
+                  <p className='text-xl'>김민재</p>
+                  <div className='flex justify-center items-center'>
+                    <FaRegThumbsUp className='self-center' />
+                    <p className='ml-1'>10</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
+          <div className='text-3xl font-bold hidden sm:block'>
+            이번주 문학왕
+          </div>
+        </div> */}
+        <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
+          <div className='flex w-2/3 items-end pb-5  justify-evenly'>
+            {literature.mainL.slice(0, 3).map((item, index) => (
+              <div key={item.id} className='text-center'>
+                <div
+                  className={`rounded-full ${
+                    index === 0 ? 'h-80 w-80' : 'h-60 w-60'
+                  }`}
+                >
+                  <img
+                    src={item.pro}
+                    alt={item.userid || 'User Profile'}
+                    className='rounded-full h-full w-full'
+                  />
+                </div>
+                <p className='text-base'>{item.title}</p>
+                <p className='text-xl'>{item.userid}</p>
+                <div className='flex justify-center'>
+                  <FaRegThumbsUp className='self-center' />
+                  <p>{item.like}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 2-2  900부터*/}
+
+          <div className='h-full'>
+            <Calligraphy className='w-[50rem] h-[30rem]' />
+          </div>
+        </div>
         {/* 3 */}
-        <div className='flex flex-col bg-[#F28080] h-[30rem]'>
-          <p className='text-3xl font-semibold  p-9  items-start text-white'>
-            채용공고보다 더 부드러운 문장이 뭐가있을 까
+        <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
+          <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white'>
+            채용 공고
           </p>
-          <div className='flex items-center justify-evenly w-full h-full'>
+          <div className='flex flex-col md:flex-row items-center justify-evenly w-full h-full'>
             {mJob.mainJ.slice(0, 3).map((item2) => (
-              <div key={item2.id}>
-                <div className=' bg-[#f49e9e] rounded-2xl shadow-xl h-64 w-96 flex'>
-                  <MdOutlineFiberNew className='w-1/4 h-10' />
-                  <div className=' self-center pt-5 text-lg  w-2/3 flex-col '>
-                    <div className='flex justify-between mb-4'>
-                      <div className='flex'>
-                        <IoMdBriefcase className='self-center m-1' />
-                        {item2.job}
+              <div
+                key={item2.id}
+                className='mb-6 md:mb-0 w-full md:w-1/2 lg:w-1/3'
+              >
+                <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl md:h-[16rem] lg:h-[18rem] ml-[10px] mr-[10px]  flex-col'>
+                  <div className='text-xl flex flex-col justify-between'>
+                    {/*  */}
+
+                    <span class='animate-bounce pb-3 text-red-500 font-semibold '>
+                      NEW
+                    </span>
+                    <div className=' self-center'>
+                      <div className='mb-4 flex items-center'>
+                        <IoMdBriefcase className='self-center mr-2' />
+                        <span>{item2.job}</span>
                       </div>
-                      <div>{item2.money}</div>
+                      <div className='mb-4 flex items-center'>
+                        <FaLocationDot className='self-center mr-2' />
+                        <span>{item2.address}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaPhone className='self-center mr-2' />
+                        <span>{item2.contact}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <BiCommentDetail className='self-center mr-2' />
+                        <span>{item2.detail}</span>
+                      </div>
                     </div>
-                    <div className='mb-4 flex'>
-                      <FaLocationDot className='self-center m-1' />
-                      {item2.address}
-                    </div>
-                    <div className='mb-4 flex'>
-                      <FaPhone className='self-center m-1' />
-                      {item2.contact}
-                    </div>
-                    <div className='mb-4 flex'>
-                      <BiCommentDetail className='self-center m-1' />
-                      {item2.detail}
-                    </div>
+                  </div>
+                  <div className='flex justify-end'>
+                    <div>{item2.money}</div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
+          <p className='text-4xl font-semibold p-6 md:p-9 items-start text-'>
+            채용 공고
+          </p>
+          {isMobile ? (
+            <Swiper
+              spaceBetween={15} // Adjust this value
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Pagination]}
+              className='mySwiper'
+            >
+              {mJob.mainJ.slice(0, 3).map((item2) => (
+                <SwiperSlide>
+                  <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl ml-[10px] mr-[10px] md:h-[18rem] lg:h-[18rem] flex-col'>
+                    <div className='text-lg flex flex-col justify-between'>
+                      <span className='animate-bounce pb-3 text-red-500 font-semibold'>
+                        NEW
+                      </span>
+                      <div className='self-center'>
+                        <div className='mb-4 flex items-center'>
+                          <IoMdBriefcase className='self-center mr-2' />
+                          <span>{item2.job}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaLocationDot className='self-center mr-2' />
+                          <span>{item2.address}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaPhone className='self-center mr-2' />
+                          <span>{item2.contact}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <BiCommentDetail className='self-center mr-2' />
+                          <span>{item2.detail}</span>
+                        </div>
+                        <div className='flex justify-end'>
+                          <div>{item2.money}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className='flex flex-row items-center justify-evenly w-full h-full'>
+              {mJob.mainJ.slice(0, 3).map((item2) => (
+                <div key={item2.id} className='mb-6 w-full md:w-1/3'>
+                  <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl md:h-[18rem] lg:h-[18rem] ml-[10px] mr-[10px]  flex-col'>
+                    <div className='text-lg flex flex-col justify-between'>
+                      <span className='animate-bounce pb-3 text-red-500 font-semibold '>
+                        NEW
+                      </span>
+                      <div className='self-center'>
+                        <div className='mb-4 flex items-center'>
+                          <IoMdBriefcase className='self-center mr-2' />
+                          <span>{item2.job}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaLocationDot className='self-center mr-2' />
+                          <span>{item2.address}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaPhone className='self-center mr-2' />
+                          <span>{item2.contact}</span>
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <BiCommentDetail className='self-center mr-2' />
+                          <span>{item2.detail}</span>
+                        </div>
+                        <div className='flex justify-end'>
+                          <div>{item2.money}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div> */}
       </div>
     </div>
   );
