@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,6 +39,9 @@ public class EssayEntity {
     @ManyToOne
     @JoinColumn(name = "user_id") // 조인 컬럼 및 필수 설정
     private UserEntity user;
+
+    @OneToMany(mappedBy = "essay", cascade = CascadeType.REMOVE)
+    private List<EssayDibsEntity> essayDibs;
 
     public void updateFields(EssayDTO essayDTO, String fileURL) {
         this.setTitle(essayDTO.getTitle());
