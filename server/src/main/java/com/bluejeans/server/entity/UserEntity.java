@@ -51,6 +51,9 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Usertype userType ;
 
+    @Column
+    private String img_path;
+
 
     @Override //권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -88,9 +91,10 @@ public class UserEntity implements UserDetails {
     }
 
 
-    public void updateFields(EditUserInfoDTO userDTO){
+    public void updateFields(EditUserInfoDTO userDTO, String fileURL){
         this.setNickname(userDTO.getNickname());
         this.setAddress(userDTO.getAddress());
+        this.setImg_path(fileURL);
     }
 
 
