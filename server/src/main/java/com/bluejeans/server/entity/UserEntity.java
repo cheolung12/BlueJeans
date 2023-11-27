@@ -92,9 +92,15 @@ public class UserEntity implements UserDetails {
 
 
     public void updateFields(EditUserInfoDTO userDTO, String fileURL){
-        this.setNickname(userDTO.getNickname());
-        this.setAddress(userDTO.getAddress());
-        this.setImg_path(fileURL);
+
+            this.setNickname(userDTO.getNickname());
+            this.setAddress(userDTO.getAddress());
+            if(fileURL != null){
+                this.setImg_path(fileURL);
+            }
+
+
+
     }
 
 
