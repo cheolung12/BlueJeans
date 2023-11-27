@@ -102,17 +102,4 @@ public class EBookService {
             return 0;
         }
     }
-
-    public List<ResEBookDTO> myLikeEBook(UserEntity user) {
-        int userId = user.getId();
-        List<EBookEntity> likedBooks = ebookRepository.findByEbookDibsUserId(userId);
-        List<ResEBookDTO> list = new ArrayList<>();
-
-        for(EBookEntity ebook : likedBooks) {
-            long like = ebookDibRepository.countByEbook(ebook);
-            list.add(ResEBookDTO.toDTO(ebook, like));
-        }
-
-        return list;
-    }
 }

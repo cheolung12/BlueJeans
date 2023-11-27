@@ -58,17 +58,16 @@ export default function Login() {
       try {
         const res = await axios({
           method: 'POST',
-          url: 'http://localhost:8080/login',
-          // url: "https://www.bluejeansu.site/login",
+          url: `${process.env.REACT_APP_DOMAIN}/login`,
           data: loginData,
           withCredentials: true,
         });
 
         if (res) {
-          sessionStorage.setItem('isLogin', true);
-          sessionStorage.setItem('userID', res.data.userID);
-          sessionStorage.setItem('nickname', res.data.nickname);
-          sessionStorage.setItem('address', res.data.address);
+          localStorage.setItem('isLogin', true);
+          localStorage.setItem('userID', res.data.userID);
+          localStorage.setItem('nickname', res.data.nickname);
+          localStorage.setItem('address', res.data.address);
           // res.responseURL
           navigate('/');
         } else {
