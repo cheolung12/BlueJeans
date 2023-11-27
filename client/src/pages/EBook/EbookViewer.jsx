@@ -16,8 +16,10 @@ export default function EBookViewer() {
     const fetchData = async () => {
       try {
         const response = await axios({
+
           method: "GET",
           url: `${process.env.REACT_APP_SERVER}ebook/detail/viewer/${bookId}`,
+
         });
         console.log(response);
         setBookData(response.data);
