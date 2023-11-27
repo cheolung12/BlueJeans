@@ -1,11 +1,11 @@
 package com.bluejeans.server.service;
 
+import com.bluejeans.server.dto.CommentDTO;
 import com.bluejeans.server.dto.EssayDTO;
+import com.bluejeans.server.dto.ResCommentDTO;
 import com.bluejeans.server.dto.ResEssayDTO;
-import com.bluejeans.server.entity.DibResult;
-import com.bluejeans.server.entity.EssayDibsEntity;
-import com.bluejeans.server.entity.EssayEntity;
-import com.bluejeans.server.entity.UserEntity;
+import com.bluejeans.server.entity.*;
+import com.bluejeans.server.repository.EssayCommentsRepository;
 import com.bluejeans.server.repository.EssayDibRepository;
 import com.bluejeans.server.repository.EssayRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +31,9 @@ public class EssayService {
 
     @Autowired
     EssayDibRepository essayDibRepository;
+
+    @Autowired
+    EssayCommentsRepository essayCommentsRepository;
 
     @Autowired
     S3Uploader s3Uploader;
@@ -123,6 +126,44 @@ public class EssayService {
     }
 
 
+    public List<ResCommentDTO> essayComments(int essayId) {
+        List<EssayCommentsEntity> comments = essayCommentsRepository.findByEssayId(essayId);
+        List<ResCommentDTO> resCommentDTOS = new ArrayList<>();
+        for(EssayCommentsEntity comment : comments){
+            resCommentDTOS.add(ResCommentDTO.toDTO(comment));
+        }
+        return resCommentDTOS;
+    }
 
+    public boolean addComment(int essayId, CommentDTO commentDTO, UserEntity user) {
+        EssayEntity essay = essayRepository.findById(essayId).orElse(null);
+        if(essay!=null) {
+            EssayCommentsEntity entity = new EssayCommentsEntity().builder()
+                    .comment(commentDTO.getComment())
+                    .essay(essay)
+                    .user(user)
+                    .build();
 
+            essayCommentsRepository.save(entity);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public boolean deleteComment(int commentId, UserEntity user) {
+        EssayCommentsEntity comment = essayCommentsRepository.findById(commentId).orElse(null);
+        if(comment != null){
+            if(comment.getUser().getId() != user.getId()){
+                System.out.println(comment.getUser().getId());
+                System.out.println(user.getId());
+                System.out.println("본인이 쓴 댓글이 아닙니다.");
+                return false;
+            }
+            essayCommentsRepository.delete(comment);
+            return true;
+        }
+        return false;
+    }
 }

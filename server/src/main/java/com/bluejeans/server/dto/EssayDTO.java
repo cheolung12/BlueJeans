@@ -2,13 +2,11 @@ package com.bluejeans.server.dto;
 
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

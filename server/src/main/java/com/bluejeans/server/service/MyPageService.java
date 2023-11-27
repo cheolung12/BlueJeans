@@ -8,6 +8,11 @@ import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +40,9 @@ public class MyPageService {
 
     @Autowired
     private EssayDibRepository essayDibRepository;
+
+    @Autowired
+    S3Uploader s3Uploader;
 
 
     public List<ResRecruitDTO> convertRecruitEntitiesToDTOList(List<RecruitEntity> recruitList) {
@@ -72,11 +80,13 @@ public class MyPageService {
                 .build();
     }
 
-    public boolean editUserInfo (UserEntity user, EditUserInfoDTO editDTO) {
+    public boolean editUserInfo (MultipartFile multipartFile, UserEntity user, EditUserInfoDTO editDTO) throws IOException {
         if(user == null){
             return false;
         }
-        user.updateFields(editDTO);
+        String fileURL = s3Uploader.upload(multipartFile, "user");
+
+        user.updateFields(editDTO, fileURL);
         userRepository.save(user);
         return true;
     }

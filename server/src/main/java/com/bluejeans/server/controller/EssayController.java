@@ -1,14 +1,13 @@
 package com.bluejeans.server.controller;
 
-import com.bluejeans.server.dto.DibResultDTO;
-import com.bluejeans.server.dto.EssayDTO;
-import com.bluejeans.server.dto.ResEssayDTO;
-import com.bluejeans.server.dto.UserDTO;
+import com.bluejeans.server.dto.*;
 import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.EssayService;
 import com.bluejeans.server.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,10 +33,12 @@ public class EssayController {
     }
 
     //에세이 글쓰기
-    @PostMapping
+    @PostMapping(consumes = "multipart/form-data")
     public EssayEntity addEssay(@RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO, @AuthenticationPrincipal UserEntity user) throws IOException {
         //로그인이 안되어있을경우 오류처리?
         //로그인해야 이용가능하도록 구현해야함.
+        System.out.println(essayDTO.getContent());
+        System.out.println(essayDTO.getId());
         EssayEntity result = essayService.addEssay(essayDTO, user, multipartFile);
         return result;
     }
@@ -74,6 +75,27 @@ public class EssayController {
         DibResult dibResult= essayService.dib(essay_id,userEntity);
         long counts = essayService.countDibs(essay_id);
         return new DibResultDTO(counts, dibResult);
+    }
+
+
+    //댓글 조회
+    @GetMapping("/detail/{essay_id}/comments")
+    @Operation(summary = "댓글 조회")
+    public List<ResCommentDTO> essayComments(@PathVariable int essay_id){
+        return essayService.essayComments(essay_id);
+    }
+
+    //댓글 작성
+    @PostMapping("/comment/{essay_id}")
+    public boolean addComment(@PathVariable int essay_id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal UserEntity user){
+        return essayService.addComment(essay_id,commentDTO, user);
+    }
+
+    //댓글 삭제
+    @DeleteMapping("/comment/{comment_id}")
+    public boolean deleteComment( @PathVariable int comment_id, @AuthenticationPrincipal UserEntity user){
+        return essayService.deleteComment(comment_id, user);
+
     }
 
 
