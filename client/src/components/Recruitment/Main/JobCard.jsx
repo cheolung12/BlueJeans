@@ -21,7 +21,6 @@ export default function JobCard({ dataList }) {
                                 <div className="absolute left-0 top-0 text-start font-normal text-2xl block">{data.title}</div>
                                 <div className="absolute top-1/2 block">
                                     <p className="m-1">{data.region}</p>
-                                    <p className="m-1">{data.contact}</p>
                                 </div>
                                 <div className="absolute bottom-0 right-0 text-end font-semibold text-2xl">{data.money}</div>
                             </div>

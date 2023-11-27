@@ -12,6 +12,16 @@ import RecruitLikeButton from './RecruitLikeButton';
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
 
+    const workdDayfrom = data.state.dataDetail.workDay;
+
+    // const workDay = workdDayfrom
+    //     .split(',')
+    //     .sort((a, b) => {
+    //         const sortWeek = ['일', '월', '화', '수', '목', '금', '토']; //sort용 배열
+    //         return sortWeek.indexOf(a) - sortWeek.indexOf(b);
+    //     })
+    //     .join(',');
+
     const sampleimg = '/images/s1.jpeg';
 
     const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +33,8 @@ export default function DetailExample({ data }) {
         content: {
             left: '0',
             margin: 'auto',
-            width: '500px',
-            height: '300px',
+            width: '250px',
+            height: '150px',
             padding: '0',
             overflow: 'hidden',
         },
@@ -38,7 +48,7 @@ export default function DetailExample({ data }) {
         <>
             <section className="flex flex-col justify-center">
                 <div className="w-[750px]">
-                    <div>=={dataD.id}번 일자리==</div>
+                    {/* <div>=={dataD.id}번 일자리==</div>*/}
                     <div className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center">
                         <img className="w-full h-auto " src={sampleimg} alt="직업 소개 이미지" />
                     </div>
@@ -54,14 +64,14 @@ export default function DetailExample({ data }) {
                             {true ? (
                                 <div>
                                     {/* 공고 지원 버튼 */}
-                                    <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
+                                    <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                         공고 지원하기
                                     </button>
                                     {/* 지원 시 연락처 모달 생성 */}
                                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                                         <div>연락처 - {dataD.contact}</div>
                                         <div className="flex justify-end pr-4">
-                                            <button className="bg-gray-400 p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
+                                            <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                                 닫기
                                             </button>
                                         </div>
@@ -86,11 +96,11 @@ export default function DetailExample({ data }) {
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                            근무 요일 - dataD.workDay
+                            근무 요일 - dataD.workDay {/* {dataD.workDay} */}
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
-                            근무 시간 - dataD.workTime
+                            근무 시간 - dataD.workTime {/* {dataD.workTime} */}
                         </div>
                     </div>
                     <hr />
