@@ -99,7 +99,8 @@ public class EssayController {
 
     //댓글 작성
     @PostMapping("/comment/{essay_id}")
-    public boolean addComment(@PathVariable int essay_id, @RequestBody String comment, @AuthenticationPrincipal UserEntity user){
+    public boolean addComment(@PathVariable int essay_id, @RequestBody CommentDTO comment, @AuthenticationPrincipal UserEntity user){
+        System.out.println(comment.getComment());
         return essayService.addComment(essay_id,comment, user);
     }
 

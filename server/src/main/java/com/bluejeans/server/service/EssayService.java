@@ -128,11 +128,11 @@ public class EssayService {
         return resCommentDTOS;
     }
 
-    public boolean addComment(int essayId, String comment, UserEntity user) {
+    public boolean addComment(int essayId, CommentDTO comment, UserEntity user) {
         EssayEntity essay = essayRepository.findById(essayId).orElse(null);
         if(essay!=null) {
             EssayCommentsEntity entity = new EssayCommentsEntity().builder()
-                    .comment(comment)
+                    .comment(comment.getComment())
                     .essay(essay)
                     .user(user)
                     .build();
