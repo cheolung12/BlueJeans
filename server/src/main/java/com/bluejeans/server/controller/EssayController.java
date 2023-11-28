@@ -59,7 +59,7 @@ public class EssayController {
 
     //에세이 수정
     @PatchMapping("/detail/{essay_id}")
-    public boolean essayEdit(@PathVariable int essay_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) {
+    public boolean essayEdit(@PathVariable int essay_id, @RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) {
         //로그인한 유저의 id와 에세이의 user_id가 일치할경우 수정가능하도록(불일치할 경우 null반환)
         //하려했으나 프론트에서 검사해야함.
         String fileURL = null;
