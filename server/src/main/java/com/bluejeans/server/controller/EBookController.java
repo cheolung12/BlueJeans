@@ -24,12 +24,6 @@ public class EBookController {
     @Autowired
     private EBookService eBookService;
 
-//    @GetMapping
-//    @Operation(summary = "ebook 전체 조회")
-//    public List<ResEBookDTO> findAll() {
-//        return eBookService.findAll();
-//    }
-
     @GetMapping
     @Operation(summary="이북 게시물 검색 및 필터링", description = "게시물을 검색어로 조회하고 기준에 맞춰 필터링")
     @Parameter(name="search", description = "사용자에게 입력 받은 검색 키워드입니다. 책 제목을 기준으로 검색합니다.")
