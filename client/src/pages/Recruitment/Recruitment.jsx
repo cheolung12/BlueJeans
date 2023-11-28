@@ -8,13 +8,12 @@ import workC from '../../data/workC.json';
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import '../../App.css';
-import SideNavBar from '../../components/common/SideNavBar';
 
 export default function Recruitment() {
     // json 파일데이터(임시)
-    const works = workC.works;
+    // const works = workC.works;
     // 통신시 데이터(정식)
-    // const [works, setWorks] = useState([]);
+    const [works, setWorks] = useState([]);
 
     // 기본 데이터 조회 ==========================================================
     useEffect(() => {
@@ -25,7 +24,7 @@ export default function Recruitment() {
                     url: `${process.env.REACT_APP_SERVER}/jobs`,
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
-                // setWorks(response.data);
+                setWorks(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -63,7 +62,7 @@ export default function Recruitment() {
         }
         if (res) {
             console.log(res);
-            // setWorks(res.data);
+            setWorks(res.data);
         }
     };
 
@@ -94,7 +93,7 @@ export default function Recruitment() {
                 url: `${process.env.REACT_APP_SERVER}/jobs/searchKeyword?keyword=${searchInput}`,
             });
             console.log(response); // 받은 데이터를 상태에 업데이트
-            // setWorks(response.data);
+            setWorks(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

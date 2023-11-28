@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import ResButton from '../../common/ResButton';
 import Modal from 'react-modal';
 import RecruitLikeButton from './RecruitLikeButton';
+import { useEffect } from 'react';
 
 export default function DetailExample({ data }) {
     const dataD = data.state.dataDetail;
@@ -44,6 +45,53 @@ export default function DetailExample({ data }) {
         setIsOpen(!isOpen);
     };
 
+    const [isRe, setIsRe] = useState(dataD.recruiting);
+    const [isRecruiting, setIsRecruiting] = useState('');
+
+    useEffect(() => {
+        if (isRe == true) {
+            setIsRecruiting('모집');
+        } else if (isRe == false) {
+            setIsRecruiting('마감');
+        }
+    }, [isRe]);
+
+    // if (isRe == true) {
+    //     setIsRecruiting('모집');
+    // } else if (isRe == false) {
+    //     setIsRecruiting('마감');
+    // }
+    const Rclose = () => {
+        if (isRe == true) {
+            setIsRe(false);
+        } else if (isRe == false) {
+            setIsRe(true);
+        }
+    };
+
+    console.log(dataD);
+    console.log(isRe);
+    console.log('마감여부 :', isRecruiting);
+
+    // 공고 게시일 ===========================================================
+    const dateString = dataD.createdAt;
+
+    // 주어진 문자열에서 날짜 부분만 추출
+    const extractedDate = dateString.split('T')[0];
+
+    // 추출된 날짜를 Date 객체로 변환
+    const givenDate = new Date(extractedDate);
+
+    // 현재 날짜
+    const currentDate = new Date();
+
+    // 일수 차이 계산 (밀리초 단위로 차이 계산 후 일 수로 변환)
+    const timeDifference = currentDate.getTime() - givenDate.getTime();
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+    const differenceInDays = Math.floor(daysDifference);
+    console.log('일수 차이 변수에 담기: ' + differenceInDays + '일');
+
     return (
         <>
             <section className="flex flex-col justify-center">
@@ -53,10 +101,14 @@ export default function DetailExample({ data }) {
                         <img className="w-full h-auto " src={sampleimg} alt="직업 소개 이미지" />
                     </div>
                     <div className="m-2">글쓴이 프로필</div>
-                    <div className="m-2  flex justify-between">
+                    <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
-                            <p className="text-2xl font-bold ">제목-{dataD.title}</p>
+                            <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold cursor-pointer">
+                                {isRecruiting}
+                            </p>
+                            <p className="text-2xl font-bold">{dataD.title}</p>
                         </div>
+                        <div onClick={Rclose}>마감버튼ㅋㅋ</div>
                         {/* 찜하기 버튼 */}
                         <RecruitLikeButton like="좋아요" notlike="해제" /> {/*  allLike={dataD.like}  */}
                         <div className="flex">
@@ -82,13 +134,13 @@ export default function DetailExample({ data }) {
                             )}
                         </div>
                     </div>
-                    <div className="m-2 text-gray-600">공고게시일 ex.7일전 or 년월일 - dataD.createdAt가공</div>
+                    <div className="m-2 text-gray-600">{differenceInDays}일 전 작성</div>
                     <hr />
                     <div className="m-2 flex flex-col space-y-4">
                         <div className="text-xl font-semibold">정보</div>
                         <div className="text-lg flex items-center">
                             <FaWonSign className="mr-2" />
-                            급여 - {dataD.money}
+                            급여 - {dataD.money}원
                         </div>
                         <div className="text-lg flex items-center">
                             <FaMapMarkerAlt className="mr-2" />
@@ -96,17 +148,20 @@ export default function DetailExample({ data }) {
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                            근무 요일 - dataD.workDay {/* {dataD.workDay} */}
+                            근무 요일 - {dataD.workDay} {/* {dataD.workDay} */}
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
-                            근무 시간 - dataD.workTime {/* {dataD.workTime} */}
+                            근무 시간 - {dataD.workTime} {/* {dataD.workTime} */}
                         </div>
                     </div>
                     <hr />
                     <div className="m-2 flex flex-col space-y-4">
                         <div className="text-xl font-semibold">직무 상세 설명</div>
-                        <div className="text-lg">내용설명-content</div>
+                        <div className="text-lg">
+                            {/*내용설명-*/}
+                            {dataD.content}
+                        </div>
                     </div>
                 </div>
             </section>
