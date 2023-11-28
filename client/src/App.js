@@ -18,6 +18,7 @@ function App() {
     // 레이아웃 필요없는 전체화면 페이지
     const fullScreenPagePath = ['/', '/login', '/signup', '/ebook/detail/viewer/:bookId'];
 
+    // location.pathname.startsWith('/ebook/detail/viewer');
     return (
         <>
             {!fullScreenPagePath.includes(location.pathname) ? (
