@@ -20,6 +20,7 @@ public class ResEssayDetailDTO {
     private String title;
     private String content;
     private String user_id;
+    private String nickname;
     private String user_img;
     private String img_path;
     private long like;
@@ -38,6 +39,7 @@ public class ResEssayDetailDTO {
                 .user_id(entity.getUser() != null ? entity.getUser().getUserID() : null)
                 .user_img(entity.getUser().getImg_path())
                 .img_path(entity.getImg_path())
+                .nickname(entity.getUser().getNickname())
                 .like(like)
                 .created_at(entity.getCreated_at())
                 .updated_at(entity.getUpdated_at())
