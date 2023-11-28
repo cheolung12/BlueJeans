@@ -1,7 +1,14 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function EssayCreate() {
+  const navigate = useNavigate();
+  const [essayData, setEssayData] = useState({
+    title: '',
+    content: '',
+  });
+
   // 인풋 이미지 태그 커스텀
   const imgRef = useRef(null);
   const [file, setFile] = useState(null);
@@ -19,6 +26,43 @@ export default function EssayCreate() {
     setFile(e.target.files[0]);
   };
 
+  // 제목, 내용 입력
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEssayData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // 폼 제출
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', essayData.title);
+    formData.append('content', essayData.content);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER}/essays`,
+        formData,
+        { withCredentials: true },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      console.log(response.data);
+      navigate(`/essay/detail/${response.data.id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className='w-full h-full flex flex-col justify-center items-center'>
@@ -26,7 +70,7 @@ export default function EssayCreate() {
           백일장 작성
         </div>
         <form
-          onSubmit={''}
+          onSubmit={onSubmit}
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center border'
           encType='multipart/form-data'
         >
@@ -38,8 +82,8 @@ export default function EssayCreate() {
               제목
             </label>
             <input
-              value={''}
-              onChange={''}
+              value={essayData.title}
+              onChange={handleInputChange}
               name='title'
               type='text'
               placeholder='제목을 입력하세요.'
@@ -88,8 +132,8 @@ export default function EssayCreate() {
             <textarea
               rows='7'
               className='m-2 w-100 p-2 sm:text-base text-xs resize-none border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400'
-              value={''}
-              onChange={''}
+              value={essayData.content}
+              onChange={handleInputChange}
               name='content'
               type='text'
               placeholder='당신의 글 솜씨를 보여주세요!'

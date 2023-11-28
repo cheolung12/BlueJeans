@@ -6,7 +6,7 @@ export default function EssayCard({ id, title, thumbnail }) {
     <div>
       <Link to={`/essay/detail/${id}`} key={id}>
         <div
-          className='w-[15rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
+          className='w-[18rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
           style={{
             boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
           }}

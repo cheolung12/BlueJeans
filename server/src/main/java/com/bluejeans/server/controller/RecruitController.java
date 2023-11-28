@@ -32,7 +32,7 @@ public class RecruitController {
     // 일자리 등록 (오류)
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary="공고 게시물 등록")
-    public boolean registerRecruit(@RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) {
+    public boolean registerRecruit(@RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user) {
         String fileURL = null;
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");
@@ -44,11 +44,11 @@ public class RecruitController {
         return recruitService.registerRecruit(recruitDTO,user, fileURL);
     }
 
-    @GetMapping
-    @Operation(summary="모든 공고 불러오기")
-    public List<ResRecruitDTO> findAll() {
-        return recruitService.findAll();
-    }
+//    @GetMapping
+//    @Operation(summary="모든 공고 불러오기")
+//    public List<ResRecruitDTO> findAll() {
+//        return recruitService.findAll();
+//    }
 
     @GetMapping
     public List<ResRecruitDTO> getJobs(
@@ -107,7 +107,7 @@ public class RecruitController {
     // 일자리 수정 (오류)
     @PatchMapping("/{job_id}")
     @Operation(summary="공고 게시물 수정")
-    public boolean editRecruit(@PathVariable int job_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO)  {
+    public boolean editRecruit(@PathVariable int job_id, @RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO)  {
         String fileURL = null;
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");

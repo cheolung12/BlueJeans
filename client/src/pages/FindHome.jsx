@@ -14,15 +14,17 @@ export default function FindHome() {
 
   return (
     <div>
-      <div className='flex justify-end h-[650px]'>
-        <div class='flex flex-col space-y-4'>
-          <Info></Info>
-          <Map className='mb-0 p-6' userAddress={userAddress}></Map>
+      <div className=''>
+        <div className='flex justify-end h-[650px]'>
+          <div class='flex flex-col space-y-4'>
+            <Info></Info>
+            <Map className='mb-0 p-6' userAddress={userAddress}></Map>
+          </div>
+          <AddressButton
+            setUserAddress={setUserAddress}
+            className='h-20 w-20'
+          ></AddressButton>
         </div>
-        <AddressButton
-          setUserAddress={setUserAddress}
-          className='h-20 w-20'
-        ></AddressButton>
       </div>
     </div>
   );

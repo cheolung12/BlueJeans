@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
-    private String writer_id;
-    private String essay_id;
+//    private String writer_id;
+//    private String essay_id;
     private String comment;
 
 }

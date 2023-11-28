@@ -4,8 +4,8 @@ export default function CommentList({ comment, onDelete }) {
   const handleDelete = () => onDelete(comment);
 
   return (
-    <div>
-      <div className='flex items-center mb-7 w-full justify-between'>
+    <div className='w-full'>
+      <div className='flex items-center mb-7 mx-2 justify-between'>
         <div className='flex justify-between'>
           <div>
             <img
