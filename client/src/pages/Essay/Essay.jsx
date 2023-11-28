@@ -1,59 +1,72 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import essay from '../../data/essay.json';
 import EssayCard from '../../components/Essay/Main/EssayCard';
 import ResButton from '../../components/common/ResButton';
 import Pagination from 'react-js-pagination';
 import { useState } from 'react';
-import SideNavBar from '../../components/common/SideNavBar';
+import axios from 'axios';
+import Filter from '../../components/Ebook/Main/Filter';
 
 // 백일장 임시데이터
 const essays = essay.essays;
 
 export default function Essay() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // 페이지당 아이템 수
+  const [essay, setEssay] = useState([]);
 
-  // 현재 페이지의 데이터 계산
-  //   const indexOfLastItem = currentPage * itemsPerPage;
-  //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  //   const currentItems = essays.slice(indexOfFirstItem, indexOfLastItem); // 백엔드 통신시 work => response.data변수
+  // get 요청
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/essays`,
+        });
+        console.log(response); // 받은 데이터를 상태에 업데이트
+        setEssay(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchdata();
+  }, []);
 
-  // 페이지 변경 처리
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    scrollToTop(); // 페이지 변경 후 페이지 상단으로 스크롤
-  };
+  console.log(essay);
 
-  // 페이지 상단으로 스크롤하는 함수
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 옵션별 정렬
+  const [selectValue, setSelectValue] = useState('latest');
+
+  const handleChange = async (e) => {
+    const type = e.target.value;
+    setSelectValue(type);
   };
 
   return (
-    <div className='w-full'>
-      <section className='flex flex-col'>
+    <div className='w-full flex justify-end'>
+      <section className='flex flex-col items-end'>
         {/* 인기순 & 최신순 셀렉트 */}
-        <div className='flex justify-center'>
-          <nav className='flex justify-end w-[48rem]'>
+        <div className='flex w-full'>
+          <nav className='flex w-full justify-between items-center'>
+            <Filter />
+
             <Link className='m-2' to={`/essay/create`}>
               <ResButton text='글 작성' />
             </Link>
-            <select
+            {/* <select
               className='m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor'
               name=''
               id=''
-              // value={selectValue}
-              // onChange={handleChange}
+              value={selectValue}
+              onChange={handleChange}
             >
               <option value='latest'>최신순</option>
               <option value='favorite'>인기순</option>
-            </select>
+            </select> */}
           </nav>
         </div>
 
-        <div className='flex justify-center'>
-          <div className='flex flex-wrap justify-center w-[48rem]'>
+        <div className='flex justify-end w-full '>
+          <div className='flex flex-wrap justify-center w-[58rem]'>
             {essays.map((essayItem) => (
               <EssayCard
                 key={essayItem.id}
@@ -64,21 +77,6 @@ export default function Essay() {
               />
             ))}
           </div>
-          {/* 페이지 네이션 & 게시 버튼 */}
-          <nav>
-            {/* 페이지네이션 */}
-            {/* <Pagination
-              activePage={currentPage}
-              itemsCountPerPage={itemsPerPage}
-              totalItemsCount={essays.length}
-              pageRangeDisplayed={5} // 보여질 페이지 범위
-              onChange={handlePageChange}
-              prevPageText={'<'}
-              nextPageText={'>'}
-              itemClass='page-item'
-              linkClass='page-link'
-            /> */}
-          </nav>
         </div>
       </section>
     </div>
