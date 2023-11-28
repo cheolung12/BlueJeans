@@ -10,6 +10,8 @@ function Map({ userAddress }) {
   const [endMarkerPosition, setEndMarkerPosition] = useState(null);
   const [currentMarkerPosition, setCurrentMarkerPosition] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mapVisible, setMapVisible] = useState(false);
+  const [showSktelecom, setShowSkelecom] = useState(false);
   const imgUrlS =
     'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
 
@@ -27,6 +29,7 @@ function Map({ userAddress }) {
 
         if (!mapInstanceRef.current) {
           initTmap(nowPosition);
+          setMapVisible(true);
         }
       } catch (error) {
         console.error('에러:', error);
@@ -152,12 +155,18 @@ function Map({ userAddress }) {
             latitude: startLatitude,
             longitude: startLongitude,
           });
+          setMapVisible(true);
+          setShowSkelecom(false);
         }
       } else {
         console.log('주소에 대한 좌표 정보가 없습니다.');
+        setMapVisible(false);
+        setShowSkelecom(false);
       }
     } catch (error) {
       console.error('에러:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -206,6 +215,8 @@ function Map({ userAddress }) {
           });
 
           resultdrawArr.push(polyline_);
+
+          setMapVisible(true);
         }
       }
     } catch (error) {
