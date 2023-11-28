@@ -49,17 +49,17 @@ public class EssayController {
         return result;
     }
 
-    //에세이 상세조회
+    //에세이 상세조회 +댓글
     @GetMapping("/detail/{essay_id}")
-    public ResEssayDTO essayDetail(@PathVariable int essay_id){
-        ResEssayDTO result = essayService.essayDetail(essay_id);
+    public ResEssayDetailDTO essayDetail(@PathVariable int essay_id){
+        ResEssayDetailDTO result = essayService.essayDetail(essay_id);
         //결과가 없을경우 null로 들어옴
         return result;
     }
 
     //에세이 수정
     @PatchMapping("/detail/{essay_id}")
-    public boolean essayEdit(@PathVariable int essay_id, @RequestParam("file") MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) {
+    public boolean essayEdit(@PathVariable int essay_id, @RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute EssayDTO essayDTO) {
         //로그인한 유저의 id와 에세이의 user_id가 일치할경우 수정가능하도록(불일치할 경우 null반환)
         //하려했으나 프론트에서 검사해야함.
         String fileURL = null;
@@ -99,8 +99,8 @@ public class EssayController {
 
     //댓글 작성
     @PostMapping("/comment/{essay_id}")
-    public boolean addComment(@PathVariable int essay_id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal UserEntity user){
-        return essayService.addComment(essay_id,commentDTO, user);
+    public boolean addComment(@PathVariable int essay_id, @RequestBody String comment, @AuthenticationPrincipal UserEntity user){
+        return essayService.addComment(essay_id,comment, user);
     }
 
     //댓글 삭제

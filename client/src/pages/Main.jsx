@@ -30,7 +30,7 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import Calligraphy from '../components/main/Calligraphy';
 
 window.addEventListener('scroll', () => {
-  console.log(window.scrollX, window.scrollY);
+  // console.log(window.scrollX, window.scrollY);
 });
 
 export default function Main({

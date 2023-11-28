@@ -8,7 +8,7 @@ import { GoHome } from 'react-icons/go';
 
 export default function SideNavBar() {
   return (
-    <div className='sm:fixed block z-1 bg-white 2xl:top-52 xl:top-44 lg:top-36 top-24 '>
+    <div className='sm:fixed block z-10 bg-white 2xl:top-52 xl:top-44 lg:top-36 top-24 '>
       <div className='flex sm:flex-col flex-row sm:space-y-10 space-y-0 sm:space-x-0 space-x-1 sm:py-10 py-8 sm:px-10 px-2 border rounded-lg shadow-lg sm:mb-0 mb-12'>
         <Link to='/recruitment' className='sideNav-link'>
           <p>

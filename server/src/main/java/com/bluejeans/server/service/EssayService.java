@@ -1,9 +1,6 @@
 package com.bluejeans.server.service;
 
-import com.bluejeans.server.dto.CommentDTO;
-import com.bluejeans.server.dto.EssayDTO;
-import com.bluejeans.server.dto.ResCommentDTO;
-import com.bluejeans.server.dto.ResEssayDTO;
+import com.bluejeans.server.dto.*;
 import com.bluejeans.server.entity.*;
 import com.bluejeans.server.repository.EssayCommentsRepository;
 import com.bluejeans.server.repository.EssayDibRepository;
@@ -57,12 +54,13 @@ public class EssayService {
         return essayRepository.save(newEssay);
     }
 
-    public ResEssayDTO essayDetail(int essayId) {
+    public ResEssayDetailDTO essayDetail(int essayId) {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
+        List<EssayCommentsEntity> essaycomments = essayCommentsRepository.findByEssayId(essayId);
 
         if (result.isPresent()) {
             long like = essayDibRepository.countByEssay(result.get());
-            ResEssayDTO essay = ResEssayDTO.toDTO(result.get(), like);
+            ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO(result.get(), like, essaycomments);
             return essay;
         } else {
             return null;
@@ -129,11 +127,11 @@ public class EssayService {
         return resCommentDTOS;
     }
 
-    public boolean addComment(int essayId, CommentDTO commentDTO, UserEntity user) {
+    public boolean addComment(int essayId, String comment, UserEntity user) {
         EssayEntity essay = essayRepository.findById(essayId).orElse(null);
         if(essay!=null) {
             EssayCommentsEntity entity = new EssayCommentsEntity().builder()
-                    .comment(commentDTO.getComment())
+                    .comment(comment)
                     .essay(essay)
                     .user(user)
                     .build();

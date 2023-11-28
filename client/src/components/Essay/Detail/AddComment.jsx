@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 // import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function AddComment({ onAdd }) {
+  const { EssayId } = useParams();
+  const navigate = useNavigate();
+  // console.log(EssayId);
+
   //댓글 입력
   const [comment, setComment] = useState('');
 
@@ -10,7 +16,7 @@ export default function AddComment({ onAdd }) {
   };
 
   //댓글 입력 폼 제출
-  const commentSubmit = (e) => {
+  const commentSubmit = async (e) => {
     e.preventDefault();
 
     //빈 텍스트는 입력 x
@@ -18,17 +24,38 @@ export default function AddComment({ onAdd }) {
       return;
     }
 
-    onAdd({ id: 1, comment, writer: '유민' });
+    onAdd({
+      id: EssayId,
+      comment,
+      writer: window.localStorage.getItem('userID'),
+    });
     setComment('');
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
+
+        { withCredentials: true },
+        comment
+      );
+
+      console.log(response.data);
+      navigate(`/essay/detail/${EssayId}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <form className='flex justify-around items-center' onSubmit={commentSubmit}>
+    <form
+      className='flex justify-between items-center'
+      onSubmit={commentSubmit}
+    >
       <div className='flex justify-center items-center font-semibold text-lg w-16 h-11'>
         <div>댓글</div>
       </div>
       <input
-        className='w-[75%] h-11 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#818CF8] border-2'
+        className='w-[82%] h-11 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#818CF8] border-2'
         type='text'
         placeholder='댓글을 입력해주세요'
         value={comment}
