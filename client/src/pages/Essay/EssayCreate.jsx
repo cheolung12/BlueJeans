@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function EssayCreate() {
+  const navigate = useNavigate();
   const [essayData, setEssayData] = useState({
     title: '',
     content: '',
@@ -55,6 +57,7 @@ export default function EssayCreate() {
       );
 
       console.log(response.data);
+      navigate(`/essay/detail/${response.data.id}`);
     } catch (error) {
       console.error(error);
     }

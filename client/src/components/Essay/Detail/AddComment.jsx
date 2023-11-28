@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 // import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function AddComment({ onAdd }) {
+  const { EssayId } = useParams();
+  const navigate = useNavigate();
+  // console.log(EssayId);
+
   //댓글 입력
   const [comment, setComment] = useState('');
 
@@ -10,7 +16,7 @@ export default function AddComment({ onAdd }) {
   };
 
   //댓글 입력 폼 제출
-  const commentSubmit = (e) => {
+  const commentSubmit = async (e) => {
     e.preventDefault();
 
     //빈 텍스트는 입력 x
@@ -18,8 +24,26 @@ export default function AddComment({ onAdd }) {
       return;
     }
 
-    onAdd({ id: 1, comment, writer: '유민' });
+    onAdd({
+      id: EssayId,
+      comment,
+      writer: window.localStorage.getItem('userID'),
+    });
     setComment('');
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
+
+        { withCredentials: true },
+        comment
+      );
+
+      console.log(response.data);
+      navigate(`/essay/detail/${EssayId}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
