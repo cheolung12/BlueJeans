@@ -2,8 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 
 export default function RecruitmentCreate() {
+    const navigate = useNavigate();
+
     const [recruitmentData, setRecruitmentData] = useState({
         title: '',
         // moneyStandard: '시급',
@@ -63,23 +66,25 @@ export default function RecruitmentCreate() {
         recruitData.append('region', recruitmentData.region);
         recruitData.append('contact', recruitmentData.contact);
         recruitData.append('content', recruitmentData.content);
-        // recruitData.append('file', file);
+        recruitData.append('file', file);
 
         try {
-            const response = await axios.post(
-                `${process.env.REACT_APP_SERVER}/jobs`,
-                recruitData,
-                { withCredentials: true },
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
-            console.log(response.data);
-        } catch (error) {
+            const response = await axios({
+                method: 'POST',
+                url: `${process.env.REACT_APP_SERVER}/jobs`,
+                data: recruitData,
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             // console.log(JSON.stringify(recruitData));
+            console.log(response.data);
+            alert('공고 게시가 완료되었습니다.');
+            navigate('/recruitment');
+        } catch (error) {
             console.error(error);
+            alert('공고 게시에 실패했습니다.');
         }
 
         for (var [key, value] of recruitData.entries()) {
