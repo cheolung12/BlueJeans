@@ -41,18 +41,9 @@ export default function Essay() {
 
   console.log(essay);
 
-  // 옵션별 정렬
-  // const [selectValue, setSelectValue] = useState('latest');
-
-  // const handleChange = async (e) => {
-  //   const type = e.target.value;
-  //   setSelectValue(type);
-  // };
-
   return (
     <div className='w-full flex justify-end'>
       <section className='flex flex-col items-end'>
-        {/* 인기순 & 최신순 셀렉트 */}
         <div className='flex w-full'>
           <nav className='flex w-full justify-between items-center'>
             <Filter />

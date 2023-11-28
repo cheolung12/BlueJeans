@@ -8,7 +8,6 @@ import axios from 'axios';
 export default function EssayDetail() {
   const { EssayId } = useParams();
 
-  //댓글 담고 있는 데이터
   const [essayContent, setEssayContent] = useState({
     title: '',
     content: '',
@@ -18,6 +17,8 @@ export default function EssayDetail() {
     created_at: '',
     updated_at: '',
   });
+
+  // 댓글 담고 있는 데이터
   const [commentList, setCommentList] = useState([]);
 
   // get 요청
@@ -30,29 +31,13 @@ export default function EssayDetail() {
         });
         console.log(response.data); // 받은 데이터를 상태에 업데이트
         setEssayContent(response.data);
-        // console.log(essayContent);
+        setCommentList(response.data.comments); //댓글 추가
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchdata();
   }, []);
-
-  const handleAdd = async () => {
-    try {
-      const response = await axios({
-        method: 'GET',
-        url: `${process.env.REACT_APP_SERVER}/essay/detail${EssayId}`,
-      });
-      // setCommentList(response.data);
-      console.log(response.data);
-
-      // 로컬에서 새 댓글 추가
-      // setCommentList((prevComments) => [newComment, ...prevComments]);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
   // //새로운 댓글 업데이트
   // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
@@ -130,7 +115,8 @@ export default function EssayDetail() {
               <div className='w-full flex flex-col'>
                 <div className='w-full'>
                   {/* 댓글 입력창 */}
-                  <AddComment onAdd={handleAdd} />
+                  {/* <AddComment onAdd={handleAdd} /> */}
+                  <AddComment />
                 </div>
                 <div className='mt-8 h-80'>
                   {commentList.map((item) => (
