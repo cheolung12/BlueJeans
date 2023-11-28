@@ -14,6 +14,7 @@ export default function Recruitment() {
     // const works = workC.works;
     // 통신시 데이터(정식)
     const [works, setWorks] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
 
     // 기본 데이터 조회 ==========================================================
     useEffect(() => {
@@ -41,27 +42,34 @@ export default function Recruitment() {
     // 옵션별 정렬 ===============================================================
     const [selectValue, setSelectValue] = useState('latest');
 
+    // select 변경
     const handleChange = async (e) => {
         const type = e.target.value;
         setSelectValue(type);
 
-        // 전역으로 선언
-        let res, query;
-        if (type !== 'region') {
-            query = `filter?order=${type}`;
-        } else {
-            query = 'searchRegion?region=지역명';
+        let endPoint;
+        // searchKeyword가 있는 경우
+        if (searchInput.length !== 0) {
+            endPoint = `?search=${searchInput}`;
+            // + 정렬이 있는 경우
+            if (type) {
+                endPoint = `?search=${searchInput}&sort=${type}`;
+            }
         }
-        try {
-            res = await axios({
-                method: 'GET',
-                url: `${process.env.REACT_APP_SERVER}/jobs/${query}`,
-            });
-        } catch (error) {
-            console.log('axios 오류: ', error);
+        // searchKeyword가 없는 경우
+        else {
+            if (type) {
+                // + 정렬이 있는 경우
+                endPoint = `?sort=${type}`;
+            }
         }
+        console.log(`요청 url: ${process.env.REACT_APP_SERVER}/jobs${endPoint}`);
+        const res = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_SERVER}/jobs${endPoint}`,
+        });
+        console.log('조회', res.data);
         if (res) {
-            console.log(res);
             setWorks(res.data);
         }
     };
@@ -83,19 +91,17 @@ export default function Recruitment() {
     };
 
     // 검색어 입력 =======================================================================
-    const [searchInput, setSearchInput] = useState('');
 
     const searchSubmit = async () => {
-        console.log('검색어:', searchInput);
-        try {
-            const response = await axios({
-                method: 'GET',
-                url: `${process.env.REACT_APP_SERVER}/jobs/searchKeyword?keyword=${searchInput}`,
-            });
-            console.log(response); // 받은 데이터를 상태에 업데이트
-            setWorks(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
+        const res = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_SERVER}/jobs?search=${searchInput}&sort=${selectValue}`,
+        });
+        console.log('조회', res.data);
+        if (res.length === 0) {
+            // 검색 결과가 없습니다.
+        } else {
+            setWorks(res.data);
         }
     };
 
@@ -112,15 +118,14 @@ export default function Recruitment() {
                                 <ResButton text="공고 게시" />
                             </Link>
                             <select
-                                className="m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor"
+                                className="m-2 px-4 py-2 border-2 rounded-md focus:border-signatureColor"
                                 name=""
                                 id=""
                                 value={selectValue}
                                 onChange={handleChange}
                             >
                                 <option value="latest">최신순</option>
-                                <option value="favorite">인기순</option>
-                                <option value="region">거리순</option>
+                                <option value="likes">인기순</option>
                             </select>
                         </nav>
                         {/* 일자리 검색창 */}
