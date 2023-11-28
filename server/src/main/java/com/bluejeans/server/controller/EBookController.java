@@ -3,6 +3,7 @@ package com.bluejeans.server.controller;
 import com.bluejeans.server.dto.DibResultDTO;
 import com.bluejeans.server.dto.ResEBookContentDTO;
 import com.bluejeans.server.dto.ResEBookDTO;
+import com.bluejeans.server.dto.ResRecruitDTO;
 import com.bluejeans.server.entity.DibResult;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.service.EBookService;
@@ -23,9 +24,39 @@ public class EBookController {
     @Autowired
     private EBookService eBookService;
 
+//    @GetMapping
+//    @Operation(summary = "ebook 전체 조회")
+//    public List<ResEBookDTO> findAll() {
+//        return eBookService.findAll();
+//    }
+
     @GetMapping
-    @Operation(summary = "ebook 전체 조회")
-    public List<ResEBookDTO> findAll() {
+    @Operation(summary="이북 게시물 검색 및 필터링", description = "게시물을 검색어로 조회하고 기준에 맞춰 필터링")
+    @Parameter(name="search", description = "사용자에게 입력 받은 검색 키워드입니다. 책 제목을 기준으로 검색합니다.")
+    @Parameter(name="sort", description="정렬 기준으로 'latest', 'likes'가 있습니다.")
+    public List<ResEBookDTO> getJobs(
+            @RequestParam(name = "search", required = false) String searchKeyword,
+            @RequestParam(name = "sort", required = false) String sortType) {
+
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            // 검색 키워드가 있는 경우
+            if ("latest".equals(sortType) || sortType == null) {
+                // 키워드로 검색하고 최신순으로 정렬
+                return eBookService.searchByKeywordAndOrderByLatest(searchKeyword);
+            } else if ("likes".equals(sortType)) {
+                // 키워드로 검색하고 좋아요순으로 정렬
+                return eBookService.searchByKeywordAndOrderByLikes(searchKeyword);
+            }
+        } else {
+            // 검색 키워드가 없는 경우
+            if ("latest".equals(sortType) || sortType == null) {
+                // 모든 게시물을 최신순으로 정렬
+                return  eBookService.orderByType("latest");
+            } else if ("likes".equals(sortType)) {
+                // 모든 게시물을 좋아요순으로 정렬
+                return  eBookService.orderByType("likes");
+            }
+        }
         return eBookService.findAll();
     }
 
@@ -43,25 +74,8 @@ public class EBookController {
         return eBookService.getContent(book_id);
     }
 
-    @GetMapping("/search")
-    @Operation(summary = "키워드로 책 제목 검색")
-    @Parameter(name="keyword", description = "사용자가 입력한 검색어")
-    public List<ResEBookDTO> searchByKeyword(@RequestParam String keyword) {
-
-        return eBookService.searchByKeyword(keyword);
-    }
-
-    @GetMapping("/order")
-    @Operation(summary = "인기순 또는 최신순 정렬")
-    @Parameter(name="orderby", description="favorite or latest")
-    public List<ResEBookDTO> orderByKeyword(@RequestParam String orderby){
-
-        return eBookService.orderByKeyword(orderby);
-    }
-
     @PostMapping("/like/{book_id}")
     @Operation(summary = "좋아요 추가/취소")
-    @Parameter(name="userEntity", description = "좋아요 여부를 확인하기 위한 user엔티티")
     public DibResultDTO ebookDib(@PathVariable int book_id, @AuthenticationPrincipal UserEntity userEntity) {
         DibResult dibResult= eBookService.dib(book_id,userEntity);
         long counts = eBookService.countDibs(book_id);
