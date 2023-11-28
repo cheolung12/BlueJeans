@@ -56,6 +56,7 @@ public class EssayService {
 
     public ResEssayDetailDTO essayDetail(int essayId) {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
+        //댓글조회
         List<EssayCommentsEntity> essaycomments = essayCommentsRepository.findByEssayId(essayId);
 
         if (result.isPresent()) {
