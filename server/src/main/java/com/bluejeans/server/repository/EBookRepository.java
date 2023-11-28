@@ -33,7 +33,7 @@ public interface EBookRepository extends JpaRepository<EBookEntity, Integer> {
     // 키워드로 조회하고 좋아요순 정렬
     @Query(value = "SELECT e.* " +
             "FROM ebook e " +
-            "LEFT JOIN (SELECT ebook_id, COUNT(*) AS like_count FROM ebook_dibs GROUP BY eboook_id) ed " +
+            "LEFT JOIN (SELECT ebook_id, COUNT(*) AS like_count FROM ebook_dibs GROUP BY ebook_id) ed " +
             "ON e.id = ed.ebook_id " +
             "WHERE title LIKE %:keyword% " +
             "ORDER BY like_count DESC", nativeQuery = true)

@@ -14,6 +14,7 @@ import axios from 'axios';
 export default function EBook() {
   const [books, setBooks] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const [bookLength, setBookLength] = useState(0);
   // 1. 책 목록 전체 보여주기
   // 2. 검색한 책 목록만 보여주기 => useParams
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function EBook() {
         });
         setBooks(response.data);
         console.log(response.data);
+        setBookLength(response.data.length);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,46 +40,59 @@ export default function EBook() {
 
   // 검색어가 있는 경우 필터링된 목록 보여주기
   // 검색어가 없다면 모든 책 리스트 보여주기
-  const filterBooks = searchInput
-    ? books.filter(
-        (book) =>
-          book.title.includes(searchInput) || book.author.includes(searchInput)
-      )
-    : books;
+  // const filterBooks = searchInput
+  //   ? books.filter(
+  //       (book) =>
+  //         book.title.includes(searchInput) || book.author.includes(searchInput)
+  //     )
+  //   : books;
 
   // 카테고리 (인기순, 최신순, 전체보기)
   const handleFilter = async (type) => {
-    let res;
-    if (type === 'all') {
-      try {
-        res = await axios({
-          method: 'GET',
-          url: `${process.env.REACT_APP_SERVER}/ebook`,
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    let endPoint;
+
+    // searchInput이 있고, 검색란에 값이 입력만 되어 있을 경우
+    if (searchInput && bookLength === books.length) {
+      if (type === 'all') {
+        endPoint = '';
+      } else {
+        endPoint = `?sort=${type}`;
       }
-    } else {
-      try {
-        res = await axios({
-          method: 'GET',
-          url: `${process.env.REACT_APP_SERVER}/ebook/order?orderby=${type}`,
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    } else if (searchInput && bookLength > books.length) {
+      // 검색이 된 상태에서 필터를 할 경우
+      if (type === 'all') {
+        endPoint = `?search=${searchInput}`;
+      } else {
+        endPoint = `?search=${searchInput}&sort=${type}`;
       }
     }
-    if (res) {
-      console.log(res);
+    // searchInput이 비어있을 경우
+    else if (!searchInput.length) {
+      if (type === 'all') {
+        endPoint = ``;
+      } else {
+        endPoint = `?&sort=${type}`;
+      }
+    }
+    console.log('엔드포인트', endPoint);
+
+    const res = await axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_SERVER}/ebook${endPoint}`,
+    });
+
+    if (res.data.length !== 0) {
       setBooks(res.data);
+    } else {
+      // 검색 결과가 없습니다.
     }
   };
 
   // 검색
-  const handleSearch = (searchInput, results) => {
-    setBooks(results);
-    navigate(`/ebook/search?keyword=${searchInput}`);
-  };
+  // const handleSearch = (searchInput, results) => {
+  //   setBooks(results);
+  //   navigate(`/ebook/search?keyword=${searchInput}
+  // };
 
   return (
     <div className='flex w-[93%] justify-end max-[375px]:w-full'>
@@ -90,7 +105,12 @@ export default function EBook() {
             {/* 카테고리, 검색창 */}
             <div className='flex flex-col sm:flex-row items-center justify-between px-4'>
               <Filter handleFilter={handleFilter} />
-              <SearchBooks book={books} handleSearch={handleSearch} />
+              <SearchBooks
+                book={books}
+                setBooks={setBooks}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+              />
             </div>
 
             <section>
@@ -99,14 +119,14 @@ export default function EBook() {
             )} */}
               <div className='py-3'>
                 <div className='flex flex-wrap justify-between w-full sm:w-[900px] max-[375px]:justify-center'>
-                  {filterBooks.length === 0 ? (
+                  {books.length === 0 ? (
                     <>
                       <div className='font-semibold text-xl text-center py-3'>
                         검색결과가 없습니다.
                       </div>
                     </>
                   ) : (
-                    filterBooks.map((book) => (
+                    books.map((book) => (
                       // 북카드 클릭시 e-book 상세 페이지로 이동
                       <Link
                         to={`/ebook/detail/${book.id}`}
