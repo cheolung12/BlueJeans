@@ -1,7 +1,22 @@
 import React from 'react';
+import axios from 'axios';
 
-export default function CommentList({ comment, onDelete }) {
-  const handleDelete = () => onDelete(comment);
+export default function CommentList({ comment }) {
+  console.log(comment);
+  //댓글 삭제
+  const handleDelete = async () => {
+    // setCommentList(commentList.filter((c) => c.id !== deleted.id));
+    try {
+      const res = await axios({
+        method: 'DELETE',
+        url: `${process.env.REACT_APP_SERVER}/essays/comment/${comment.id}`,
+      });
+      console.log(res.data);
+      window.location.reload();
+    } catch (error) {
+      console.error('삭제에러:', error);
+    }
+  };
 
   return (
     <div className='w-full'>
@@ -9,19 +24,19 @@ export default function CommentList({ comment, onDelete }) {
         <div className='flex justify-between'>
           <div>
             <img
-              src='https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg'
+              src={`${comment.user.img_path}`}
               alt='프로필 사진'
               className='w-14 h-14 rounded-3xl'
             />
           </div>
           <div className='flex flex-col justify-between ml-2'>
-            <div className='font-bold text-xl'>{comment.user_id}</div>
+            <div className='font-bold text-xl'>{comment.user.nickname}</div>
             <div className='text-md'>{comment.comment}</div>
           </div>
         </div>
 
         <div>
-          {comment.user_id === window.localStorage.getItem('userID') ? (
+          {comment.user.userID === window.localStorage.getItem('userID') ? (
             // userid 대신에 닉네임
             <button onClick={handleDelete} className='font-semibold'>
               삭제

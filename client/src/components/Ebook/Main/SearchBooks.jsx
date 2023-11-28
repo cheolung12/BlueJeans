@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function SearchBooks({ handleSearch }) {
+export default function SearchBooks({
+  books,
+  setBooks,
+  searchInput,
+  setSearchInput,
+}) {
+  const navigate = useNavigate();
   // 검색어 입력
-  const [searchInput, setSearchInput] = useState('');
   // 검색 기준과 일치하는 책 목록 저장
   // const [bookLists, setBookLists] = useState([]);
 
   // get요청
-  // useEffect(() => {
+  // useEffect(() =>
   //   const fetchData = async () => {
   //     if (searchInput.trim() === '') {
   //       // 검색어가 비어있으면 데이터를 가져오지 않음
@@ -40,11 +46,13 @@ export default function SearchBooks({ handleSearch }) {
     try {
       const response = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/ebook/search?keyword=${searchInput}`,
+        url: `${process.env.REACT_APP_SERVER}/ebook?search=${searchInput}`,
         // url: `https://www.bluejeansu.site/ebook/search?keyword=${searchInput}`,
       });
-      handleSearch(searchInput, response.data);
-      console.log(response.data);
+      setBooks(response.data);
+
+      console.log('검색 결과', response.data);
+      navigate(`/ebook/search?keyword=${searchInput}`);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
