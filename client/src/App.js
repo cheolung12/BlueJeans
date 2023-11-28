@@ -7,40 +7,35 @@ import Wrapper from './components/common/Wrapper';
 import Footer from './components/common/Footer';
 
 function App() {
-  const location = useLocation();
+    const location = useLocation();
 
-  // 맨 위 Navbar가 필요없는 페이지 경로
-  const noTopNavbarPath = [];
-  // 사이드 Navbar가 필요없는 페이지 경로
-  const noSideNavbarPath = ['/', '/recruitment/create'];
-  // footer가 필요없는 경로
-  const noFooterPath = [];
-  // 레이아웃 필요없는 전체화면 페이지
-  const fullScreenPagePath = [
-    '/',
-    '/login',
-    '/signup',
-    '/ebook/detail/viewer/:bookId',
-  ];
+    // 맨 위 Navbar가 필요없는 페이지 경로
+    const noTopNavbarPath = [];
+    // 사이드 Navbar가 필요없는 페이지 경로
+    const noSideNavbarPath = ['/', '/recruitment/create'];
+    // footer가 필요없는 경로
+    const noFooterPath = [];
+    // 레이아웃 필요없는 전체화면 페이지
+    const fullScreenPagePath = ['/', '/login', '/signup', '/ebook/detail/viewer/:bookId'];
 
-  return (
-    <>
-      {!fullScreenPagePath.includes(location.pathname) ? (
+    return (
         <>
-          {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
-          <Wrapper>
-            <div className='flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12 mb-20'>
-              {!noSideNavbarPath.includes(location.pathname) && <SideNavBar />}
-              <Outlet />
-            </div>
-            {!noFooterPath.includes(location.pathname) && <Footer />}
-          </Wrapper>
+            {!fullScreenPagePath.includes(location.pathname) ? (
+                <>
+                    {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
+                    <Wrapper>
+                        <div className="flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12 mb-20">
+                            {!noSideNavbarPath.includes(location.pathname) && <SideNavBar />}
+                            <Outlet />
+                        </div>
+                        {!noFooterPath.includes(location.pathname) && <Footer />}
+                    </Wrapper>
+                </>
+            ) : (
+                <Outlet />
+            )}
         </>
-      ) : (
-        <Outlet />
-      )}
-    </>
-  );
+    );
 }
 
 export default App;
