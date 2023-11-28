@@ -32,13 +32,12 @@ export default function AddComment({ onAdd }) {
     setComment('');
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
-
-        { withCredentials: true },
-        comment
-      );
-
+      const response = await axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
+        data: comment,
+        withCredentials: true,
+      });
       console.log(response.data);
       navigate(`/essay/detail/${EssayId}`);
     } catch (error) {

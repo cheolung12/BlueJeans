@@ -9,19 +9,46 @@ export default function EssayDetail() {
   const { EssayId } = useParams();
 
   //댓글 담고 있는 데이터
+  const [essayContent, setEssayContent] = useState({
+    title: '',
+    content: '',
+    user_id: '',
+    img_path: '',
+    like: 0,
+    created_at: '',
+    updated_at: '',
+  });
   const [commentList, setCommentList] = useState([]);
 
-  const handleAdd = async (newComment) => {
+  // get 요청
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
+        });
+        console.log(response.data); // 받은 데이터를 상태에 업데이트
+        setEssayContent(response.data);
+        // console.log(essayContent);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  const handleAdd = async () => {
     try {
       const response = await axios({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/essay/detail${EssayId}`,
       });
-      setCommentList(response.data);
+      // setCommentList(response.data);
       console.log(response.data);
 
       // 로컬에서 새 댓글 추가
-      setCommentList((prevComments) => [newComment, ...prevComments]);
+      // setCommentList((prevComments) => [newComment, ...prevComments]);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -49,8 +76,7 @@ export default function EssayDetail() {
                 <div
                   className='w-full h-full mt-3 relative overflow-hidden bg-no-repeat'
                   style={{
-                    backgroundImage:
-                      'url("https://munjang.or.kr/main/img/sub/sample_img6.jpg")',
+                    backgroundImage: `url(${essayContent.img_path})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: '16rem',
@@ -63,7 +89,7 @@ export default function EssayDetail() {
                   >
                     <div className='flex flex-col h-full justify-center items-center'>
                       <div className='w-full text-3xl font-bold mb-5 text-white'>
-                        백일장제목입니다
+                        {essayContent.title}
                       </div>
                       <div>
                         <img
@@ -73,7 +99,7 @@ export default function EssayDetail() {
                         />
                       </div>
                       <div className='w-full text-lg font-semibold text-center text-white'>
-                        이름
+                        {essayContent.user_id}
                       </div>
                     </div>
                   </div>
@@ -89,7 +115,7 @@ export default function EssayDetail() {
                   //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
                   // }}
                 >
-                  글~!~!~~~~~~~~~~~~~~
+                  {essayContent.content}
                 </div>
               </div>
             </section>

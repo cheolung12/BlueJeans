@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import essay from '../../data/essay.json';
+// import essay from '../../data/essay.json';
 import EssayCard from '../../components/Essay/Main/EssayCard';
 import ResButton from '../../components/common/ResButton';
 import Pagination from 'react-js-pagination';
@@ -9,10 +9,18 @@ import axios from 'axios';
 import Filter from '../../components/Ebook/Main/Filter';
 
 // 백일장 임시데이터
-const essays = essay.essays;
+// const essays = essay.essays;
 
 export default function Essay() {
-  const [essay, setEssay] = useState([]);
+  const [essay, setEssay] = useState([
+    { title: '' },
+    { content: '' },
+    { user_id: '' },
+    { img_path: '' },
+    { like: 0 },
+    { created_at: '' },
+    { updated_at: '' },
+  ]);
 
   // get 요청
   useEffect(() => {
@@ -34,12 +42,12 @@ export default function Essay() {
   console.log(essay);
 
   // 옵션별 정렬
-  const [selectValue, setSelectValue] = useState('latest');
+  // const [selectValue, setSelectValue] = useState('latest');
 
-  const handleChange = async (e) => {
-    const type = e.target.value;
-    setSelectValue(type);
-  };
+  // const handleChange = async (e) => {
+  //   const type = e.target.value;
+  //   setSelectValue(type);
+  // };
 
   return (
     <div className='w-full flex justify-end'>
@@ -67,13 +75,13 @@ export default function Essay() {
 
         <div className='flex justify-end w-full '>
           <div className='flex flex-wrap justify-center w-[58rem]'>
-            {essays.map((essayItem) => (
+            {essay.map((e) => (
               <EssayCard
-                key={essayItem.id}
-                id={essayItem.id}
-                title={essayItem.title}
-                content={essayItem.content}
-                thumbnail={essayItem.thumbnail}
+                key={e.id}
+                id={e.id}
+                title={e.title}
+                content={e.content}
+                thumbnail={e.img_path}
               />
             ))}
           </div>
