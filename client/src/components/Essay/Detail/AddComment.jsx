@@ -23,12 +23,15 @@ export default function AddComment({ onAdd }) {
   };
 
   return (
-    <form className='flex justify-around items-center' onSubmit={commentSubmit}>
+    <form
+      className='flex justify-between items-center'
+      onSubmit={commentSubmit}
+    >
       <div className='flex justify-center items-center font-semibold text-lg w-16 h-11'>
         <div>댓글</div>
       </div>
       <input
-        className='w-[75%] h-11 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#818CF8] border-2'
+        className='w-[82%] h-11 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#818CF8] border-2'
         type='text'
         placeholder='댓글을 입력해주세요'
         value={comment}

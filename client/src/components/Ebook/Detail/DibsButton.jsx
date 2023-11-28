@@ -15,77 +15,77 @@ export default function DibsButton({ like, notlike, id }) {
   const [likeCount, setLikeCount] = useState(0);
 
   //찜하기 버튼
-  // const likeCountHandler = async () => {
-  //   try {
-  //     const response = await axios({
-  //       method: 'POST',
-  //       url: `http://localhost:8080/api/ebook/like/${id}`,
-  //       data: {
-  //         bookId: id,
-  //         isLikeAdd: !isLikeAdd,
-  //       },
-  //       withCredentials: true,
-  //     });
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
+  const onClick = async () => {
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_SERVER}/ebook/like/${id}`,
+        data: {
+          // bookId: id,
+          // isLikeAdd: !isLikeAdd,
+        },
+        withCredentials: true,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
-  //   likeCount((prevCount) => (prevCount === 0 ? 1 : 0));
-  //   setLikeCount((prevIsLiked) => !prevIsLiked);
-  // };
+    likeCount((prevCount) => (prevCount === 0 ? 1 : 0));
+    setLikeCount((prevIsLiked) => !prevIsLiked);
+  };
 
   //찜하기 보내기
-  const likeCountHandler = async () => {
-    const updatedLikeAdd = !isLikeAdd;
+  // const likeCountHandler = async () => {
+  //   const updatedLikeAdd = !isLikeAdd;
 
-    try {
-      if (!isLikeAdd) {
-        setLikeCount(likeCount + 1);
+  //   try {
+  //     if (!isLikeAdd) {
+  //       setLikeCount(likeCount + 1);
 
-        await axios.post(
-          `http://localhost:8080/api/ebook/like/${id}`,
-          // url: `https://www.bluejeansu.site/ebook/like/${id}`,
+  //       await axios.post(
+  //         `http://localhost:8080/api/ebook/like/${id}`,
+  //         // url: `https://www.bluejeansu.site/ebook/like/${id}`,
 
-          {
-            bookId: id,
-            isLikeAdd: updatedLikeAdd,
-          },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      } else {
-        setLikeCount(likeCount - 1);
+  //         {
+  //           bookId: id,
+  //           isLikeAdd: updatedLikeAdd,
+  //         },
+  //         {
+  //           withCredentials: true,
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //         }
+  //       );
+  //     } else {
+  //       setLikeCount(likeCount - 1);
 
-        await axios.post(
-          `http://localhost:8080/api/ebook/like/${id}`,
-          // url: `https://www.bluejeansu.site/ebook/like/${id}`,
+  //       await axios.post(
+  //         `http://localhost:8080/api/ebook/like/${id}`,
+  //         // url: `https://www.bluejeansu.site/ebook/like/${id}`,
 
-          {
-            bookId: id,
-            isLikeAdd: updatedLikeAdd,
-          },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      }
-    } catch (error) {
-      console.error('좋아요 업데이트 실패:', error);
-    }
-  };
+  //         {
+  //           bookId: id,
+  //           isLikeAdd: updatedLikeAdd,
+  //         },
+  //         {
+  //           withCredentials: true,
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //         }
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error('좋아요 업데이트 실패:', error);
+  //   }
+  // };
 
   return (
     <div
       className='flex flex-col items-center cursor-pointer'
-      onClick={likeCountHandler}
+      onClick={onClick}
     >
       {!isLikeAdd ? (
         // <svg

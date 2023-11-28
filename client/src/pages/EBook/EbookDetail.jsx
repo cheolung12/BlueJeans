@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import Title from "../../components/Ebook/Main/Title";
-import BookCardDetail from "../../components/Ebook/Detail/BookCardDetail";
-import SideNavBar from "../../components/common/SideNavBar";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import Title from '../../components/Ebook/Main/Title';
+import BookCardDetail from '../../components/Ebook/Detail/BookCardDetail';
+import SideNavBar from '../../components/common/SideNavBar';
+import axios from 'axios';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
@@ -13,13 +13,12 @@ export default function EBookDetail() {
     const fetchData = async () => {
       try {
         const response = await axios({
-          method: "GET",
+          method: 'GET',
           url: `${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`,
-
         });
         console.log(response);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();
@@ -33,9 +32,9 @@ export default function EBookDetail() {
   // console.log(location.state);
 
   return (
-    <div className='flex w-full justify-end'>
-      <div>
-        <Title />
+    <div className='flex w-[91%] min-w-200 justify-end'>
+      <div className='w-[80%] ]'>
+        {/* <Title /> */}
         <div>
           <div>
             {/* 데이터 props로 넘겨줌 */}
