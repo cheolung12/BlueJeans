@@ -31,7 +31,7 @@ public class S3Uploader {
 
     //multipartfile을 file로 전환후 s3에 업로드
     public String upload(MultipartFile multipartFile, String dirName) throws IOException{
-        if(multipartFile.getSize() <= 0) {
+        if(multipartFile.isEmpty()) {
             new IllegalArgumentException("업로드될 파일이 없습니다.");
         }
 
