@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AddComment from '../../components/Essay/Detail/AddComment';
 import CommentList from '../../components/Essay/Detail/CommentList';
 import AssayDibsButton from '../../components/Essay/Detail/AssayDibsButton';
+import axios from 'axios';
 
 export default function EssayDetail() {
   const { EssayId } = useParams();
@@ -10,8 +11,24 @@ export default function EssayDetail() {
   //댓글 담고 있는 데이터
   const [commentList, setCommentList] = useState([]);
 
-  //새로운 댓글 업데이트
-  const handleAdd = (comment) => setCommentList([comment, ...commentList]);
+  const handleAdd = async (newComment) => {
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${process.env.REACT_APP_SERVER}/essay/detail${EssayId}`,
+      });
+      setCommentList(response.data);
+      console.log(response.data);
+
+      // 로컬에서 새 댓글 추가
+      setCommentList((prevComments) => [newComment, ...prevComments]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // //새로운 댓글 업데이트
+  // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
 
   //댓글 삭제
   const handleDelete = (deleted) =>
