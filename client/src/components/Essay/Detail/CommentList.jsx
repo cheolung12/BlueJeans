@@ -15,15 +15,20 @@ export default function CommentList({ comment, onDelete }) {
             />
           </div>
           <div className='flex flex-col justify-between ml-2'>
-            <div className='font-bold text-xl'>{comment.writer}</div>
+            <div className='font-bold text-xl'>{comment.user_id}</div>
             <div className='text-md'>{comment.comment}</div>
           </div>
         </div>
 
         <div>
-          <button onClick={handleDelete} className='font-semibold'>
-            삭제
-          </button>
+          {comment.user_id === window.localStorage.getItem('userID') ? (
+            // userid 대신에 닉네임
+            <button onClick={handleDelete} className='font-semibold'>
+              삭제
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
