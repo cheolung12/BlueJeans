@@ -26,7 +26,7 @@ public class EssayCommentsEntity {
     @JoinColumn(name="writer_id")
     private UserEntity user;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="essay_id")
     private EssayEntity essay;
 
