@@ -42,19 +42,15 @@ export default function EssayDetail() {
   // //새로운 댓글 업데이트
   // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
 
-  //댓글 삭제
-  const handleDelete = (deleted) =>
-    setCommentList(commentList.filter((c) => c.id !== deleted.id));
-
   return (
     <div className='w-full flex justify-end'>
       <div className='w-[80%]'>
         <div className='flex flex-col w-[91%]'>
-          <div className='text-center text-3xl'>백일장</div>
-
           <div className='w-full'>
-            {/* 백일장 상세 {EssayId} */}
-
+            <div className='flex w-full justify-end'>
+              <div className='mr-5'>수정</div>
+              <div>삭제</div>
+            </div>
             {/* 백일장 사진, 제목, 이름 */}
             <section className='flex justify-center'>
               <div className='w-full flex flex-col'>
@@ -78,13 +74,13 @@ export default function EssayDetail() {
                       </div>
                       <div>
                         <img
-                          src='https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg'
+                          src={`${essayContent.user_img}`}
                           alt='프로필 사진'
                           className='w-14 h-14 rounded-full mb-2'
                         />
                       </div>
                       <div className='w-full text-lg font-semibold text-center text-white'>
-                        {essayContent.user_id}
+                        {essayContent.nickname}
                       </div>
                     </div>
                   </div>
@@ -124,7 +120,7 @@ export default function EssayDetail() {
                     <CommentList
                       key={item.id}
                       comment={item}
-                      onDelete={handleDelete}
+                      // onDelete={handleDelete}
                     />
                   ))}
                 </div>

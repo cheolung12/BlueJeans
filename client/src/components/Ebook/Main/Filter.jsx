@@ -22,9 +22,9 @@ function Filter({ handleFilter }) {
           <span className='leading-9'>전체보기</span>
         </li>
         <li
-          onClick={() => handleClick('favorite')}
+          onClick={() => handleClick('likes')}
           className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2 ${
-            select === 'favorite'
+            select === 'likes'
               ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
               : 'font-semibold '
           }`}
