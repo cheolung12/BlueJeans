@@ -7,6 +7,7 @@ import axios from 'axios';
 export default function RecruitmentDetail() {
     const navigate = useNavigate();
     const location = useLocation();
+    console.log(localStorage.getItem('nickname'));
     console.log(location.state.dataDetail);
 
     // 권한 여부
