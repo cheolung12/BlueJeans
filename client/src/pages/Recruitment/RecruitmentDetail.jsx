@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function RecruitmentDetail() {
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(localStorage.getItem('nickname'));
+    console.log(localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
     console.log(location.state.dataDetail);
 
     // 권한 여부
@@ -15,27 +15,18 @@ export default function RecruitmentDetail() {
     // 게시물 등록자 - data.userId.userID
     // 로그인된 유저 - ?
     const [editA, setEditA] = useState(true);
-    // if ('권한있으면') {
+    // if (localStorage.getItem('nickname') == location.state.dataDetail.nickname) {
     //     setEditA(true);
     // } else if ('권한없으면') {
     //     setEditA(false);
     // }
-
-    // 유저 정보 불러오기
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios({
-    //                 method: 'GET',
-    //                 url: `http://localhost:8080/api/`,
-    //             });
-    //             console.log(response);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        if (localStorage.getItem('nickname') == location.state.dataDetail.nickname) {
+            setEditA(true);
+        } else if ('권한없으면') {
+            setEditA(false);
+        }
+    }, []);
 
     // 마감 하기
     const [recruitingButton, setRecruitingButton] = useState('마감 하기');
