@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import Map from '../components/home/Map';
 import AddressButton from '../components/home/AddressButton';
 import Info from '../components/home/Info';
-import { IoMdBriefcase } from 'react-icons/io';
-import { FiBookOpen } from 'react-icons/fi';
-import { FaPenNib } from 'react-icons/fa6';
-import { MdChat } from 'react-icons/md';
-import { GoHome } from 'react-icons/go';
 
 import { Link } from 'react-router-dom';
 export default function FindHome() {
   const [userAddress, setUserAddress] = useState('');
 
   return (
-    <div>
+    <div className='w-full justify-end '>
       <div className=''>
         <div className='flex justify-end h-[650px]'>
           <div class='flex flex-col space-y-4'>
