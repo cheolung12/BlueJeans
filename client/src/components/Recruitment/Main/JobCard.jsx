@@ -15,7 +15,11 @@ export default function JobCard({ dataList }) {
                             key={data.id}
                         >
                             <div class="m-1 w-1/2">
-                                <img className=" w-full h-full border border-solid rounded-lg" src="" alt="근무 설명 이미지" />
+                                <img
+                                    className=" w-full h-full object-none border border-solid rounded-lg "
+                                    src={data.img_path}
+                                    alt="근무 설명 이미지"
+                                />
                             </div>
                             <div class="m-1 w-2/3 relative">
                                 <div className="absolute left-0 top-0 text-start font-normal text-2xl block">{data.title}</div>

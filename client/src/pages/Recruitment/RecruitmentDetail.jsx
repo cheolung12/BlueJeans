@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import DetailExample from '../../components/Recruitment/Detail/DetailExample';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ResButton from '../../components/common/ResButton';
 import axios from 'axios';
 
-export default function RecruitmentDetail({}) {
+export default function RecruitmentDetail() {
+    const navigate = useNavigate();
     const location = useLocation();
     console.log(location.state.dataDetail);
 
@@ -75,15 +76,32 @@ export default function RecruitmentDetail({}) {
     // 공고 삭제
     const deleteRecruit = async () => {
         console.log('공고 삭제');
+        if (window.confirm('공고를 삭제하시겠습니까?')) {
+            try {
+                const response = await axios({
+                    method: 'DELETE',
+                    url: `${process.env.REACT_APP_SERVER}/jobs/${location.state.dataDetail.id}`,
+                });
+                console.log(response);
+                navigate('/recruitment');
+                alert('공고 삭제가 완료되었습니다.');
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        } else {
+            // 취소 버튼을 눌렀을 때 실행되는 코드
+            // Optional: 원하는 작업을 수행하지 않을 때의 처리
+        }
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `${process.env.REACT_APP_SERVER}/location.state.dataDetail.id`,
+                url: `${process.env.REACT_APP_SERVER}/jobs/${location.state.dataDetail.id}`,
             });
             console.log(response);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+        console.log(location.state.dataDetail.id);
     };
 
     return (
@@ -100,12 +118,15 @@ export default function RecruitmentDetail({}) {
                                 >
                                     {recruitingButton}
                                 </button>
-                                <button
-                                    className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
-                                    onClick={editRecruit}
+                                <Link
+                                    to={`/recruitment/edit/${location.state.dataDetail.id}`}
+                                    state={{ dataDetail: location.state.dataDetail }}
+                                    key={location.state.dataDetail.id}
                                 >
-                                    수정
-                                </button>
+                                    <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                        수정
+                                    </div>
+                                </Link>
                                 <button
                                     className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={deleteRecruit}
