@@ -44,11 +44,11 @@ public class RecruitController {
         return recruitService.registerRecruit(recruitDTO,user, fileURL);
     }
 
-    @GetMapping
-    @Operation(summary="모든 공고 불러오기")
-    public List<ResRecruitDTO> findAll() {
-        return recruitService.findAll();
-    }
+//    @GetMapping
+//    @Operation(summary="모든 공고 불러오기")
+//    public List<ResRecruitDTO> findAll() {
+//        return recruitService.findAll();
+//    }
 
     @GetMapping
     public List<ResRecruitDTO> getJobs(
