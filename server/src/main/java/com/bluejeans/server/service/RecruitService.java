@@ -169,11 +169,12 @@ public class RecruitService {
     public boolean updateRecruiting(int jobId) {
         RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         if (recruit != null) {
+            boolean result = !recruit.isRecruiting();
             recruit.setRecruiting(!recruit.isRecruiting());
             recruitRepository.save(recruit);
-            return true;
+            return result;
         } else {
-            return false;
+            throw new RuntimeException("게시물이 존재하지 않습니다.");
         }
     }
 }

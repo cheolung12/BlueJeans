@@ -107,6 +107,14 @@ public class RecruitController {
 
         return new DibResultDTO(counts, dibResult);
     }
+
+    @PostMapping("/recruiting/{job_id}")
+    @Operation(summary="마감 여부 표시")
+    public String toggleRecruiting(@PathVariable int job_id) {
+        boolean result = recruitService.updateRecruiting(job_id);
+
+        return "변경된 상태: " + result;
+    }
 }
 
 
