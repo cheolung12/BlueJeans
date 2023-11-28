@@ -90,7 +90,18 @@ export default function DetailExample({ data }) {
     const daysDifference = timeDifference / (1000 * 3600 * 24);
 
     const differenceInDays = Math.floor(daysDifference);
-    console.log('일수 차이 변수에 담기: ' + differenceInDays + '일');
+    const differenceInHours = Math.floor(timeDifference / (1000 * 3600));
+
+    // if (differenceInDays < 1) {
+    //     differenceInHours = Math.floor(timeDifference / (1000 * 3600));
+    //     console.log('시간 차이: ' + differenceInHours + '시간');
+    // } else {
+    //     console.log('일수 차이 변수에 담기: ' + differenceInDays + '일');
+    // }
+
+    console.log(currentDate);
+    console.log('시간 차이: ' + differenceInHours + '시간');
+    console.log('일수 차이: ' + differenceInDays + '일 전');
 
     return (
         <>
@@ -98,7 +109,7 @@ export default function DetailExample({ data }) {
                 <div className="w-[750px]">
                     {/* <div>=={dataD.id}번 일자리==</div>*/}
                     <div className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center">
-                        <img className="w-full h-auto " src={sampleimg} alt="직업 소개 이미지" />
+                        <img className="w-full h-auto " src={dataD.img_path} alt="직업 소개 이미지" />
                     </div>
                     <div className="m-2">글쓴이 프로필</div>
                     <div className="m-2  flex justify-between items-center">
@@ -134,7 +145,9 @@ export default function DetailExample({ data }) {
                             )}
                         </div>
                     </div>
-                    <div className="m-2 text-gray-600">{differenceInDays}일 전 작성</div>
+                    <div className="m-2 text-gray-600">
+                        {differenceInDays == 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
+                    </div>
                     <hr />
                     <div className="m-2 flex flex-col space-y-4">
                         <div className="text-xl font-semibold">정보</div>
