@@ -28,6 +28,9 @@ import 'swiper/css/navigation';
 /////////////////////////////////////////////
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import Calligraphy from '../components/main/Calligraphy';
+import TopNavbar from '../components/common/TopNavbar';
+import Footer from '../components/common/Footer';
+import MainBar from '../components/main/MainBar';
 
 window.addEventListener('scroll', () => {
   // console.log(window.scrollX, window.scrollY);
@@ -50,64 +53,13 @@ export default function Main({
   const mJob = mainJ;
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
-    <div>
+    <>
+      <TopNavbar />
       <div>
-        <div className=' h-[650px] w-full'>
-          <div className='flex justify-end'></div>
+        <div className=' h-[700px] w-full'>
+          <MainBar className=' flex items-end	' />
         </div>
-        <div className='flex justify-center'>
-          <div className='rounded-[30px] shadow-md items-center flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
-            <Link
-              to='/recruitment'
-              className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
-            >
-              <div className='flex flex-col items-center'>
-                <IoMdBriefcase className='h-8 md:h-12 w-8 md:w-12 text-[#FE8080]' />
-                <p className='font-bold mt-1'>일자리</p>
-              </div>
-            </Link>
 
-            <Link
-              to='/ebook'
-              className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
-            >
-              <div className='flex flex-col items-center'>
-                <FiBookOpen className='h-8 md:h-12 w-8 md:w-12 text-[#FED001]' />
-                <p className='font-bold mt-1'>e-book</p>
-              </div>
-            </Link>
-
-            <Link
-              to='/essay'
-              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
-            >
-              <div className='flex flex-col items-center'>
-                <FaPenNib className='h-8 md:h-12 w-8 md:w-12 text-[#5495B1]' />
-                <p className='font-bold mt-1'>백일장</p>
-              </div>
-            </Link>
-
-            <Link
-              to='/chat'
-              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
-            >
-              <div className='flex flex-col items-center'>
-                <MdChat className='h-8 md:h-12 w-8 md:w-12 text-[#6694D5]' />
-                <p className='font-bold mt-1'>챗봇</p>
-              </div>
-            </Link>
-
-            <Link
-              to='/findhome'
-              className='w-full md:w-1/5 mb-2 md:mb-0 transition-transform hover:ease-linear transform hover:scale-105'
-            >
-              <div className='flex flex-col items-center'>
-                <GoHome className='h-8 md:h-12 w-8 md:w-12 text-[#8D62E9]' />
-                <p className='font-bold mt-1'>집찾기</p>
-              </div>
-            </Link>
-          </div>
-        </div>
         {/* 1 */}
         <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
@@ -123,7 +75,7 @@ export default function Main({
             </div>
           </div>
           <Swiper
-            className=' md:w-[55rem] w-96 h-[28rem]'
+            className=' md:w-[55rem] w-80 h-[28rem]'
             slidesPerView={3}
             loop={true}
             centeredSlides={true}
@@ -276,6 +228,8 @@ export default function Main({
           </div>
         </div>
       </div>
-    </div>
+
+      <Footer />
+    </>
   );
 }
