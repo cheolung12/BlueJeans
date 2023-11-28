@@ -49,10 +49,10 @@ public class EssayController {
         return result;
     }
 
-    //에세이 상세조회
+    //에세이 상세조회 +댓글
     @GetMapping("/detail/{essay_id}")
-    public ResEssayDTO essayDetail(@PathVariable int essay_id){
-        ResEssayDTO result = essayService.essayDetail(essay_id);
+    public ResEssayDetailDTO essayDetail(@PathVariable int essay_id){
+        ResEssayDetailDTO result = essayService.essayDetail(essay_id);
         //결과가 없을경우 null로 들어옴
         return result;
     }
@@ -99,8 +99,8 @@ public class EssayController {
 
     //댓글 작성
     @PostMapping("/comment/{essay_id}")
-    public boolean addComment(@PathVariable int essay_id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal UserEntity user){
-        return essayService.addComment(essay_id,commentDTO, user);
+    public boolean addComment(@PathVariable int essay_id, @RequestBody String comment, @AuthenticationPrincipal UserEntity user){
+        return essayService.addComment(essay_id,comment, user);
     }
 
     //댓글 삭제
