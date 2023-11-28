@@ -37,7 +37,7 @@ export default function AddComment() {
       const response = await axios({
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
-        data: comment,
+        data: { comment },
         withCredentials: true,
       });
       console.log(response.data);
