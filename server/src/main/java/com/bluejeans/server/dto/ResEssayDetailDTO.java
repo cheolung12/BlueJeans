@@ -19,7 +19,8 @@ public class ResEssayDetailDTO {
 
     private String title;
     private String content;
-    private int user_id;
+    private String user_id;
+    private String user_img;
     private String img_path;
     private long like;
     private Timestamp created_at;
@@ -34,7 +35,8 @@ public class ResEssayDetailDTO {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .user_id(entity.getUser() != null ? entity.getUser().getId() : null)
+                .user_id(entity.getUser() != null ? entity.getUser().getUserID() : null)
+                .user_img(entity.getUser().getImg_path())
                 .img_path(entity.getImg_path())
                 .like(like)
                 .created_at(entity.getCreated_at())
