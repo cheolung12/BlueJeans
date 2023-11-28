@@ -35,7 +35,7 @@ public class RecruitController {
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");
         } catch (IOException e) {
-            // throw new RuntimeException(e);
+//             throw new RuntimeException(e);
             fileURL = null;
         }
 

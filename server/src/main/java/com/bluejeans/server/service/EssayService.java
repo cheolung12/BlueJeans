@@ -56,6 +56,7 @@ public class EssayService {
 
     public ResEssayDetailDTO essayDetail(int essayId) {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
+        //댓글조회
         List<EssayCommentsEntity> essaycomments = essayCommentsRepository.findByEssayId(essayId);
 
         if (result.isPresent()) {
@@ -127,11 +128,11 @@ public class EssayService {
         return resCommentDTOS;
     }
 
-    public boolean addComment(int essayId, String comment, UserEntity user) {
+    public boolean addComment(int essayId, CommentDTO comment, UserEntity user) {
         EssayEntity essay = essayRepository.findById(essayId).orElse(null);
         if(essay!=null) {
             EssayCommentsEntity entity = new EssayCommentsEntity().builder()
-                    .comment(comment)
+                    .comment(comment.getComment())
                     .essay(essay)
                     .user(user)
                     .build();

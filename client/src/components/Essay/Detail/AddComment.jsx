@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function AddComment({ onAdd }) {
+// export default function AddComment({ onAdd }) {
+export default function AddComment() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
   // console.log(EssayId);
@@ -13,6 +14,7 @@ export default function AddComment({ onAdd }) {
 
   const handleAdd = (e) => {
     setComment(e.target.value);
+    console.log(comment);
   };
 
   //댓글 입력 폼 제출
@@ -24,22 +26,23 @@ export default function AddComment({ onAdd }) {
       return;
     }
 
-    onAdd({
-      id: EssayId,
-      comment,
-      writer: window.localStorage.getItem('userID'),
-    });
+    // onAdd({
+    //   id: EssayId,
+    //   comment,
+    //   writer: window.localStorage.getItem('userID'),
+    // });
     setComment('');
 
     try {
       const response = await axios({
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
-        data: comment,
+        data: { comment },
         withCredentials: true,
       });
       console.log(response.data);
-      navigate(`/essay/detail/${EssayId}`);
+      // navigate(`/essay/detail/${EssayId}`);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

@@ -12,11 +12,11 @@ function App() {
     // 맨 위 Navbar가 필요없는 페이지 경로
     const noTopNavbarPath = [];
     // 사이드 Navbar가 필요없는 페이지 경로
-    const noSideNavbarPath = ['/', '/recruitment/create', 'recruitment/edit/**'];
+    const noSideNavbarPath = ['/', '/recruitment/create'];
     // footer가 필요없는 경로
     const noFooterPath = [];
     // 레이아웃 필요없는 전체화면 페이지
-    const fullScreenPagePath = ['/login', '/signup', '/ebook/detail/viewer/:bookId'];
+    const fullScreenPagePath = ['/', '/login', '/signup', '/ebook/detail/viewer/:bookId'];
 
     return (
         <>

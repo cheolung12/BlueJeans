@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom';
 export default function TopNavbar() {
   const handleLogout = async () => {
     const res = await axios({
-
       method: 'GET',
       url: `${process.env.REACT_APP_SERVER}/logout`,
       withCredentials: true,
     });
     if (res.data === 'redirect:/login') {
-      console.log("login");
+      console.log('login');
       localStorage.clear();
 
       window.location.reload();
@@ -21,7 +20,7 @@ export default function TopNavbar() {
   };
 
   return (
-    <nav className='bg-white fixed w-full top-0 z-99'>
+    <nav className='bg-white  w-full z-50'>
       <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-4 px-4'>
         <Link
           to='/'

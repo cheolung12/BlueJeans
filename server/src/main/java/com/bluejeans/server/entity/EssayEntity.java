@@ -27,7 +27,7 @@ public class EssayEntity {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 1000)
     private String img_path;
 
     @CreationTimestamp
