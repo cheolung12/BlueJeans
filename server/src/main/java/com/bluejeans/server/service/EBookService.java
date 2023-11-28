@@ -66,8 +66,8 @@ public class EBookService {
         return list;
     }
 
-    public List<ResEBookDTO> orderByKeyword(String order) {
-        List<EBookEntity> orderedList =  ebookRepository.orderByKeyword(order);
+    public List<ResEBookDTO> orderByType(String type) {
+        List<EBookEntity> orderedList =  ebookRepository.orderByType(type);
         List<ResEBookDTO> list = new ArrayList<>();
         for(EBookEntity ebook : orderedList) {
             long like = ebookDibRepository.countByEbook(ebook);
@@ -101,5 +101,27 @@ public class EBookService {
         }else {
             return 0;
         }
+    }
+
+    public List<ResEBookDTO> searchByKeywordAndOrderByLatest(String searchKeyword) {
+        List<EBookEntity> eBookEntities = ebookRepository.searchByKeywordAndOrderByLatest(searchKeyword);
+        List<ResEBookDTO> list = new ArrayList<>();
+        for(EBookEntity ebook : eBookEntities) {
+            long like = ebookDibRepository.countByEbook(ebook);
+            list.add(ResEBookDTO.toDTO(ebook, like));
+        }
+
+        return list;
+    }
+
+    public List<ResEBookDTO> searchByKeywordAndOrderByLikes(String searchKeyword) {
+        List<EBookEntity> eBookEntities = ebookRepository.searchByKeywordAndOrderByLikes(searchKeyword);
+        List<ResEBookDTO> list = new ArrayList<>();
+        for(EBookEntity ebook : eBookEntities) {
+            long like = ebookDibRepository.countByEbook(ebook);
+            list.add(ResEBookDTO.toDTO(ebook, like));
+        }
+
+        return list;
     }
 }
