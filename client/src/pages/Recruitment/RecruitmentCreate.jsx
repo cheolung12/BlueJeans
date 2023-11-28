@@ -6,16 +6,16 @@ import Modal from 'react-modal';
 export default function RecruitmentCreate() {
     const [recruitmentData, setRecruitmentData] = useState({
         title: '',
-        moneyStandard: '시급',
-        money: 0,
+        // moneyStandard: '시급',
+        money: 9620,
         region: '',
         content: '',
         contact: '',
         // workDay: '',
-        workTime: '',
+        // workTime: '',
     });
 
-    // 인풋 이미지 태그 커스텀
+    // 인풋 이미지 태그 커스텀//////////////////////////////////////////////////////////////
     const imgRef = useRef(null);
     const [file, setFile] = useState(null);
     const [placeholder, setPlaceholder] = useState('첨부파일');
@@ -40,50 +40,54 @@ export default function RecruitmentCreate() {
         }));
     };
 
+    // form 제출 및 통신 ////////////////////////////////////////////////////////////////
     const onSubmit = async (e) => {
         e.preventDefault();
 
         const recruitData = new FormData();
-        // recruitData.append('file', file);
+        // if (recruitmentData.money == 0) {
+        //     recruitData.append('money', '협의');
+        // } else {
+        //     recruitData.append('money', recruitmentData.money);
+        // }
         recruitData.append('title', recruitmentData.title);
+        // const dayJoin = clickedDays.join(',');
+        // setWorkDay(dayJoin);
+        const workDay = clickedDays.join(',');
+        recruitData.append('workDay', workDay);
+        const workTime = workTime1 + ' ~ ' + workTime2;
+        recruitData.append('workTime', workTime);
+        // recruitData.append('workTime', recruitmentData.workTime);
         recruitData.append('moneyStandard', moneyStandard);
         recruitData.append('money', recruitmentData.money);
-        // recruitData.append('region', recruitmentData.region);
+        recruitData.append('region', recruitmentData.region);
         recruitData.append('contact', recruitmentData.contact);
         recruitData.append('content', recruitmentData.content);
-        // const dayJoin = clickedDays.join(',');
+        // recruitData.append('file', file);
 
-        // setWorkDay(dayJoin);
-        recruitData.append('workDay', workDay);
-        // recruitData.append('workTime', recruitmentData.workTime);
-
-        // try {
-        //     const response = await axios.post(
-        //         `${process.env.REACT_APP_SERVER}/jobs`,
-        //         formData,
-        //         { withCredentials: true },
-        //         {
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data',
-        //             },
-        //         }
-        //     );
-        //     console.log(response.data);
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        // console.log(JSON.stringify(recruitData));
-
-        for (var key of recruitData.keys()) {
-            console.log(key);
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_SERVER}/jobs`,
+                recruitData,
+                { withCredentials: true },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+            console.log(response.data);
+        } catch (error) {
+            // console.log(JSON.stringify(recruitData));
+            console.error(error);
         }
 
-        for (var value of recruitData.values()) {
-            console.log(value);
+        for (var [key, value] of recruitData.entries()) {
+            console.log(key, ':', value);
         }
     };
 
-    // 지역 선택 모달
+    // 지역 선택 /////////////////////////////////////////////////////////////////////
     const [isOpen, setIsOpen] = useState(false);
 
     // 주소 modal 스타일
@@ -119,9 +123,8 @@ export default function RecruitmentCreate() {
     };
 
     //근무 요일 토글//////////////////////////////////////////////////////////////////////////////
-    const [workDay, setWorkDay] = useState('');
-
-    const [clickedDays, setClickedDays] = useState([]);
+    // const [workDay, setWorkDay] = useState('');
+    const [clickedDays, setClickedDays] = useState(['월', '화', '수', '목', '금']);
 
     // 클릭 이벤트 핸들러 함수
     const handleClick = (day) => {
@@ -134,7 +137,7 @@ export default function RecruitmentCreate() {
         } else {
             // 클릭된 요일이 아닌 경우 배열에 추가
             const updatedDays = [...clickedDays, day].sort((a, b) => {
-                const sortWeek = ['일', '월', '화', '수', '목', '금', '토'];
+                const sortWeek = ['일', '월', '화', '수', '목', '금', '토']; //sort용 배열
                 return sortWeek.indexOf(a) - sortWeek.indexOf(b);
             });
             setClickedDays(updatedDays);
@@ -145,14 +148,14 @@ export default function RecruitmentCreate() {
     const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
     const handleDay = () => {
-        const dayJoin = clickedDays.join(',');
-        setWorkDay(dayJoin);
+        // const dayJoin = clickedDays.join(',');
+        // setWorkDay(dayJoin);
         // setWorkDay(clickedDays);
     };
 
-    console.log(workDay);
+    // console.log(workDay);
 
-    //근무 시간 토글/////////////////////////////////////////////////////////////////////////////
+    //급여 기준 토글/////////////////////////////////////////////////////////////////////////////
 
     const [moneyStandard, setMoneyStandard] = useState('시급');
     const monStanChange = (e) => {
@@ -161,6 +164,28 @@ export default function RecruitmentCreate() {
     };
 
     console.log(moneyStandard);
+
+    //근무 시간 select ////////////////////////////////////////////////////////////////////
+    // 00:00~23:30 시간 설정용 배열 생성
+    const hours = Array.from({ length: 24 }, (_, index) => index);
+    const minutes = ['00', '30'];
+    const time = hours.reduce((acc, hour) => {
+        minutes.forEach((minute) => {
+            acc.push(`${hour < 10 ? '0' + hour : hour}:${minute}`);
+        });
+        return acc;
+    }, []);
+
+    // 근무 시간 변수
+    const [workTime1, setWorkTime1] = useState('10:00');
+    const [workTime2, setWorkTime2] = useState('12:00');
+    // 셀렉트 처리
+    const handleTimeChange1 = (event) => {
+        setWorkTime1(event.target.value);
+    };
+    const handleTimeChange2 = (event) => {
+        setWorkTime2(event.target.value);
+    };
 
     return (
         <div className="w-full h-full flex flex-col justify-center items-center">
@@ -213,8 +238,6 @@ export default function RecruitmentCreate() {
                         <div onClick={handleDay}>선택 완료</div>
                         <div>선택된 요일 - {workDay}</div>
                         */}
-                        <div onClick={handleDay}>선택 완료</div>
-                        <div>선택된 요일 - {workDay}</div>
                     </div>
                 </div>
 
@@ -395,30 +418,43 @@ export default function RecruitmentCreate() {
                 <div className="w-full h-full flex flex-col justify-center">
                     <div className="w-full h-full flex flex-row justify-center">
                         <div className="w-full h-full flex flex-col justify-center">
-                            <label htmlFor="workDay" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                근무 요일
+                            <label htmlFor="workTime1" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 시간 (시작)
                             </label>
-                            <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
-                                <option value="hourM">00:00</option>
-                                <option value="dayM">00:30</option>
-                                <option value="weekM">01:00</option>
-                                <option value="monM">01:30</option>
+                            <select
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs 
+                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                id="workTime1"
+                                value={workTime1}
+                                onChange={handleTimeChange1}
+                            >
+                                {time.map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="w-full h-full flex flex-col justify-center">
-                            <label htmlFor="workTime" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                근무 시간
+                            <label htmlFor="workTime2" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
+                                근무 시간 (끝)
                             </label>
-                            <select className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400">
-                                <option value="hourM">시급</option>
-                                <option value="dayM">일급</option>
-                                <option value="weekM">주급</option>
-                                <option value="monM">월급</option>
+                            <select
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs 
+                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                id="workTime2"
+                                value={workTime2}
+                                onChange={handleTimeChange2}
+                            >
+                                {time.map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
                 </div>
-
                 {/* ========================근무 연락처 (-처리)======================== */}
                 <div className="w-full h-full flex flex-col justify-center">
                     <label htmlFor="contact" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
@@ -441,7 +477,7 @@ export default function RecruitmentCreate() {
                     <div className="w-full h-full flex flex-row">
                         <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">근무지 사진 첨부</label>
                         <label
-                            className="mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg cursor-pointer"
+                            className="mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg cursor-pointer hover:opacity-90 "
                             htmlFor="inputImg"
                         >
                             파일 업로드
@@ -475,7 +511,7 @@ export default function RecruitmentCreate() {
                 <div>
                     <button
                         type="submit"
-                        className="my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg "
+                        className="my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg hover:opacity-90 "
                     >
                         공고 게시하기
                     </button>
