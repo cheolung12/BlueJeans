@@ -15,9 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecruitDTO {
-    private int id;
     private String title;
-    private UserEntity userId;
     private String content;
     private String moneyStandard;
     private int money;
@@ -25,8 +23,6 @@ public class RecruitDTO {
     private String contact;
     private String workDay;
     private String workTime;
-    private Timestamp createdAt;
-    private int like;
 
 
     public static RecruitEntity toEntity(RecruitDTO dto, UserEntity user, String fileURL){
