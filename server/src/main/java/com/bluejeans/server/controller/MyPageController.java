@@ -50,7 +50,7 @@ public class MyPageController {
         return myPageService.editUserInfo(fileURL, user, editDTO);
     }
 
-    @GetMapping("api/main")
+    @GetMapping("/api/main")
     @Operation(summary="main 화면에서 게시물 정보 불러오기")
     public ResMainDTO getMainPost() {
 
