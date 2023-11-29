@@ -14,15 +14,15 @@ import axios from 'axios';
 export default function DetailExample({ data }) {
     // const dataD = data;
 
-    // const workdDayfrom = data.workDay;
+    const workdDayfrom = data.workDay;
 
-    // const workDay = workdDayfrom
-    //     .split(',')
-    //     .sort((a, b) => {
-    //         const sortWeek = ['일', '월', '화', '수', '목', '금', '토']; //sort용 배열
-    //         return sortWeek.indexOf(a) - sortWeek.indexOf(b);
-    //     })
-    //     .join(',');
+    const workDay = (workdDayfrom || '')
+        .split(',')
+        .sort((a, b) => {
+            const sortWeek = ['일', '월', '화', '수', '목', '금', '토']; //sort용 배열
+            return sortWeek.indexOf(a) - sortWeek.indexOf(b);
+        })
+        .join(', ');
 
     const sampleimg = '/images/s1.jpeg';
 
@@ -77,8 +77,8 @@ export default function DetailExample({ data }) {
     // 공고 게시일 ===========================================================
     const dateString = data.createdAt;
 
-    // 주어진 문자열에서 날짜 부분만 추출
-    const extractedDate = '1997-03-12'; //dateString.split('T')[0]; // 비동기 처리하기
+    // 주어진 문자열에서 날짜 부분만 추출 //'1997-03-12'; //
+    const extractedDate = (dateString || '').split('T')[0]; // 비동기 처리하기
 
     // 추출된 날짜를 Date 객체로 변환
     const givenDate = new Date(extractedDate);
@@ -105,6 +105,13 @@ export default function DetailExample({ data }) {
     console.log('일수 차이: ' + differenceInDays + '일 전');
 
     // console.log(dataD.recruiting);
+
+    // 전화번호 자르기
+    const phoneNumbers = data.contact;
+    const startNumbers = (phoneNumbers || '').slice(0, 3);
+    const middleNumbers = (phoneNumbers || '').slice(3, 7);
+    const endNumbers = (phoneNumbers || '').slice(7);
+    // {startNumbers}-{middleNumbers}-{endNumbers}
 
     return (
         <>
@@ -135,7 +142,7 @@ export default function DetailExample({ data }) {
                          */}
                         <div className="flex">
                             {/* true => dataD.recruiting */}
-                            {true ? (
+                            {data.recruiting ? (
                                 <div>
                                     {/* 공고 지원 버튼 */}
                                     <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
@@ -143,7 +150,9 @@ export default function DetailExample({ data }) {
                                     </button>
                                     {/* 지원 시 연락처 모달 생성 */}
                                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
-                                        <div>연락처 - {data.contact}</div>
+                                        <div>
+                                            연락처 : {startNumbers}-{middleNumbers}-{endNumbers}
+                                        </div>
                                         <div className="flex justify-end pr-4">
                                             <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                                 닫기
@@ -152,7 +161,7 @@ export default function DetailExample({ data }) {
                                     </Modal>
                                 </div>
                             ) : (
-                                <ResButton text={'마감'} />
+                                <div />
                             )}
                         </div>
                     </div>
@@ -172,7 +181,7 @@ export default function DetailExample({ data }) {
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                            근무 요일 - {data.workDay} {/* {dataD.workDay} */}
+                            근무 요일 - {workDay} {/* {dataD.workDay} */}
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
