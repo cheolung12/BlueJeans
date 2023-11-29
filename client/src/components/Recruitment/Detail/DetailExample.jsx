@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FaWonSign } from 'react-icons/fa6';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { GiRotaryPhone } from 'react-icons/gi';
 import '@fortawesome/fontawesome-free/js/all.js';
 import ResButton from '../../common/ResButton';
 import Modal from 'react-modal';
@@ -113,6 +114,8 @@ export default function DetailExample({ data }) {
     const endNumbers = (phoneNumbers || '').slice(7);
     // {startNumbers}-{middleNumbers}-{endNumbers}
 
+    console.log('좋아요수', data.like);
+
     return (
         <>
             <section className="flex flex-col justify-center">
@@ -140,15 +143,16 @@ export default function DetailExample({ data }) {
                                             <div onClick={Rclose}>마감버튼ㅋㅋ</div>*/}
                         {/*  allLike={dataD.like}  <RecruitLikeButton like="좋아요" notlike="해제" id={dataD.id} />                        <div onClick={onChangeDIB}>좋아요~</div>
                          */}
+                        <div>
+                            {/*
                         <div className="flex">
-                            {/* true => dataD.recruiting */}
                             {data.recruiting ? (
                                 <div>
-                                    {/* 공고 지원 버튼 */}
+                                    공고 지원 버튼
                                     <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                         공고 지원하기
                                     </button>
-                                    {/* 지원 시 연락처 모달 생성 */}
+                                    지원 시 연락처 모달 생성
                                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                                         <div>
                                             연락처 : {startNumbers}-{middleNumbers}-{endNumbers}
@@ -164,6 +168,9 @@ export default function DetailExample({ data }) {
                                 <div />
                             )}
                         </div>
+                        */}
+                        </div>
+                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" countlike={data.like} mylike={data} />
                     </div>
                     <div className="m-2 text-gray-600">
                         {differenceInDays == 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
@@ -186,6 +193,10 @@ export default function DetailExample({ data }) {
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
                             근무 시간 - {data.workTime} {/* {dataD.workTime} */}
+                        </div>
+                        <div className="text-lg flex items-center">
+                            <GiRotaryPhone className="mr-2" />
+                            연락처 - {startNumbers}-{middleNumbers}-{endNumbers}
                         </div>
                     </div>
                     <hr />
