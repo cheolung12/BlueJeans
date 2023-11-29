@@ -12,8 +12,8 @@ import { GoHome } from 'react-icons/go';
 const MainBar = () => {
   return (
     <div>
-      <div className='flex items-end justify-center h-[700px]'>
-        <div className='rounded-[30px] shadow-md items-center z-15 flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
+      <div className='flex items-end justify-center h-full'>
+        <div className='rounded-[30px] shadow-md items-center z-20 flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
           <Link
             to='/recruitment'
             className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
