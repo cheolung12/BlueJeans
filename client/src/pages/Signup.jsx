@@ -62,6 +62,7 @@ export default function Signup() {
       if (opacity <= 0) {
         clearInterval(fadingInterval);
       }
+      element.focus();
     }, 100);
   }
 
@@ -85,9 +86,20 @@ export default function Signup() {
       return;
     } else if (!formValid.password) {
       fadingEffect('pwCheck');
+      fadingEffect('password');
       return;
     } else if (!formValid.address) {
       fadingEffect('address');
+      return;
+    }
+
+    // 비밀번호 유효성검사 
+    // 숫자와 영문 조합, 최소 8자리 이상
+    const regex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,}$/;
+    if(!regex.test(formData.password)){
+      alert("비밀번호는 영문 + 숫자 조합으로 8자 이상이어야 합니다.")
+      fadingEffect('pwCheck');
+      fadingEffect('password');
       return;
     }
 
@@ -232,12 +244,12 @@ export default function Signup() {
                 아이디
               </label>
               {formValid.userID === true && (
-                <span className='text-xs text-green-400'>
-                  사용가능한 ID입니다
+                <span className='text-sm font-semibold text-green-400'>
+                  사용가능한 ID입니다 
                 </span>
               )}
               {formValid.userID === false && (
-                <span className='text-xs text-red-600'>
+                <span className='text-sm font-semibold text-red-600'>
                   다른ID를 입력해주세요
                 </span>
               )}
