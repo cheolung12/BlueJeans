@@ -21,7 +21,7 @@ export default function ChatInput({
   }, [transcript, listening, setInputText]);
 
   return (
-    <div className='border w-full h-full flex shadow-md rounded- px-2.5 sm:text-lg text-sm rounded-sm'>
+    <div className='border w-full h-full flex shadow-md rounded- px-2.5 py-2 sm:text-lg text-sm rounded-sm'>
       <textarea
         ref={inputRef}
         className='w-5/6 focus:outline-none py-2 resize-none'
@@ -56,10 +56,10 @@ export default function ChatInput({
             className='mb-2 text-chatColor lg:text-3xl text-2xl'
           />
         ) : (
-          <FontAwesomeIcon icon={faMicrophone} className='mb-2 lg:text-3xl text-2xl' />
+          <FontAwesomeIcon icon={faMicrophone} className='mb-2 lg:text-4xl text-2xl' />
         )}
         <div
-          className={`lg:text-sm font-semibold ${listening && 'text-chatColor'} sm:text-xs sm:block hidden`}
+          className={` w-full text-center lg:text-lg md:text-md sm:text-sm font-semibold ${listening && 'text-chatColor'} sm:block hidden`}
         >
           {listening ? '음성인식 중지' : '음성인식 시작'}
         </div>
