@@ -114,6 +114,13 @@ export default function Recruitment() {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        // 빨간줄이 뜨긴하는데 정상 작동하는 아이러니...
+        if (e.key === 'Enter') {
+            searchSubmit();
+        }
+    };
+
     // 집근처만 체크========================
     // const [nearbyOnly, setNearbyOnly] = useState(false);
 
@@ -172,7 +179,7 @@ export default function Recruitment() {
                                     </label>
                                 </div>
                             ) : (
-                                <div></div>
+                                <div />
                             )}
                         </nav>
                         {/* 일자리 검색창 */}
@@ -180,18 +187,19 @@ export default function Recruitment() {
                             <div className="flex mr-3">
                                 <input
                                     type="text"
-                                    placeholder="찾고 있는 직무를 입력하세요"
+                                    placeholder="찾고 있는 직무를 입력하세요..."
                                     value={searchInput}
                                     onChange={(e) => setSearchInput(e.target.value)}
-                                    className="border rounded-full w-[15rem] h-[2.2rem] border-gray-300 outline-none pl-3 text-sm"
+                                    className="border rounded-full w-[25.5rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base"
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <button
                                     onClick={searchSubmit}
                                     disabled={searchInput.length === 0}
-                                    className="ml-[-2.5rem] w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer"
+                                    className="ml-[-2.5rem] mt-1 w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer"
                                 >
                                     {/* 검색 아이콘 */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none">
                                         <path
                                             fillRule="evenodd"
                                             clipRule="evenodd"
