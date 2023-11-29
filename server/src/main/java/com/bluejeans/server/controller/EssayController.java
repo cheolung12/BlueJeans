@@ -81,7 +81,7 @@ public class EssayController {
 
 
     ///////////////에세이 좋아요
-    @GetMapping("/detail/{essay_id}/favorite")
+    @PostMapping("/detail/{essay_id}/likes")
     public DibResultDTO essayDib(@PathVariable int essay_id, @AuthenticationPrincipal UserEntity userEntity){
         
         DibResult dibResult= essayService.dib(essay_id,userEntity);

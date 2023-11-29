@@ -7,8 +7,10 @@ import { IoHeartOutline } from 'react-icons/io5';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiHeartThin } from 'react-icons/pi';
 import { IoMdHeart } from 'react-icons/io';
+import { useParams } from 'react-router-dom';
 
-export default function DibsButton({ like, notlike, id }) {
+export default function DibsButton({ like, notlike }) {
+  const { bookId } = useParams();
   // 하트 색상 변경
   const [isLikeAdd, setIsLikeAdd] = useState(false);
   // 찜하기 수 카운트
@@ -19,11 +21,7 @@ export default function DibsButton({ like, notlike, id }) {
     try {
       const response = await axios({
         method: 'POST',
-        url: `${process.env.REACT_APP_SERVER}/ebook/like/${id}`,
-        data: {
-          // bookId: id,
-          // isLikeAdd: !isLikeAdd,
-        },
+        url: `${process.env.REACT_APP_SERVER}/ebook/like/${bookId}`,
         withCredentials: true,
       });
       console.log(response);
@@ -31,7 +29,6 @@ export default function DibsButton({ like, notlike, id }) {
       console.error('Error fetching data:', error);
     }
 
-    likeCount((prevCount) => (prevCount === 0 ? 1 : 0));
     setLikeCount((prevIsLiked) => !prevIsLiked);
   };
 

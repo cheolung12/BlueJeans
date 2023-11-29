@@ -62,7 +62,7 @@ export default function BookViewer({ data }) {
             </defs>{' '}
           </svg>{' '}
         </button>
-        <div className='flex overflow-hidden w-[54rem] max-[750px]:justify-center max-[1200px]:justify-center '>
+        <div className='flex overflow-y-auto overflow-hidden h-[550px] w-[54rem] max-[750px]:justify-center max-[1200px]:justify-center '>
           <div className='flex max-[750px]:flex-col max-[1204px]:flex-col '>
             <div
               className={`flex transition max-[750px]:flex-col max-[1204px]:flex-col`}
