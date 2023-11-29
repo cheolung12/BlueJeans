@@ -20,7 +20,7 @@
     @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring focus-within:ring-indigo-400;
   }
   .sideNav-link {
-    @apply flex flex-col justify-center items-center w-16 h-16
+    @apply flex flex-col justify-center items-center w-16 h-16 hover:ease-linear transform hover:scale-105
   }
   .sideNav-icon {
     @apply sm:w-12 w-8 sm:h-12 h-8 mb-1
