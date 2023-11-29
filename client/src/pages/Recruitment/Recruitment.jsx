@@ -12,6 +12,10 @@ import '../../App.css';
 
 export default function Recruitment() {
     const [loading, setLoading] = useState(true);
+    const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin'));
+    // setIsLogin(localStorage.getItem('isLogin'));
+    console.log('로그인 했냐?', localStorage.getItem('isLogin'));
+    console.log(isLogin);
     // json 파일데이터(임시)
     // const works = workC.works;
     // 통신시 데이터(정식)
@@ -110,6 +114,20 @@ export default function Recruitment() {
         }
     };
 
+    // 집근처만 체크========================
+    // const [nearbyOnly, setNearbyOnly] = useState(false);
+
+    // const handleCheckboxChange = (event) => {
+    //     setNearbyOnly(event.target.checked);
+    //     // 여기서 nearbyOnly 값에 따라 근처만 보기 옵션을 활성화 또는 비활성화할 수 있습니다.
+    //     // 필요에 따라 다른 동작을 추가할 수 있습니다.
+    // };
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
     return (
         <>
             <div className="w-full flex justify-center">
@@ -118,10 +136,7 @@ export default function Recruitment() {
                 <button onClick={handleClick}>일자리 불러오기</button> */}
                     <div className="lg:w-[896px] w-[400px] flex lg:flex-row flex-col items-center justify-between px-4">
                         {/* 인기순 & 최신순 셀렉트 */}
-                        <nav className="flex justify-end items-center">
-                            <Link className="m-2" to={`/recruitment/create`}>
-                                <ResButton text="공고 게시" />
-                            </Link>
+                        <nav className="flex sm:justify-start justify-center items-center sm:flex-row flex-col">
                             <select
                                 className="m-2 px-4 py-2 border-2 rounded-md focus:border-signatureColor"
                                 name=""
@@ -132,6 +147,33 @@ export default function Recruitment() {
                                 <option value="latest">최신순</option>
                                 <option value="likes">인기순</option>
                             </select>
+                            {isLogin ? (
+                                <div className="form-control w-44 mx-2">
+                                    <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="autoSaver"
+                                            className="sr-only"
+                                            checked={isChecked}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <span
+                                            className={`slider mr-3 flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${
+                                                isChecked ? 'bg-green-600' : 'bg-gray-300'
+                                            }`}
+                                        >
+                                            <span
+                                                className={`dot h-[18px] w-[18px] rounded-full bg-white duration-200 ${
+                                                    isChecked ? 'translate-x-6' : ''
+                                                }`}
+                                            ></span>
+                                        </span>
+                                        <span className="label flex items-center text-sm font-medium text-black">집 근처만 보기</span>
+                                    </label>
+                                </div>
+                            ) : (
+                                <div></div>
+                            )}
                         </nav>
                         {/* 일자리 검색창 */}
                         <div className="flex">
@@ -174,6 +216,12 @@ export default function Recruitment() {
 
                     {/* 페이지 네이션 & 게시 버튼 */}
                     <nav>
+                        <div className="mr-3 mt-3 flex justify-end">
+                            <Link className="hover:opacity-95" to={`/recruitment/create`}>
+                                <ResButton text="공고 게시" width={'120px'} />
+                            </Link>
+                        </div>
+
                         {/* 페이지네이션 */}
                         <Pagination
                             activePage={currentPage}
