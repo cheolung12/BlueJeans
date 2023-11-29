@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ResButton from '../../components/common/ResButton';
 import JobCard from '../../components/Recruitment/Main/JobCard';
+import JobCardSkeleton from '../../components/Recruitment/Main/JobCardSkeleton';
 // import SearchRecruit from '../../components/Recruitment/Main/SearchRecruit';
 import workC from '../../data/workC.json';
 import axios from 'axios';
@@ -10,6 +11,7 @@ import Pagination from 'react-js-pagination';
 import '../../App.css';
 
 export default function Recruitment() {
+    const [loading, setLoading] = useState(true);
     // json 파일데이터(임시)
     // const works = workC.works;
     // 통신시 데이터(정식)
@@ -26,6 +28,7 @@ export default function Recruitment() {
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -71,6 +74,7 @@ export default function Recruitment() {
         console.log('조회', res.data);
         if (res) {
             setWorks(res.data);
+            setLoading(false);
         }
     };
 
@@ -102,6 +106,7 @@ export default function Recruitment() {
             // 검색 결과가 없습니다.
         } else {
             setWorks(res.data);
+            setLoading(false);
         }
     };
 
@@ -158,7 +163,14 @@ export default function Recruitment() {
                     </div>
 
                     {/* 메인 */}
-                    <JobCard dataList={currentItems} />
+                    <div>
+                        {loading ? (
+                            <JobCardSkeleton />
+                        ) : (
+                            // 데이터 로드가 완료되면 실제 컴포넌트에 props로 데이터 전달
+                            <JobCard dataList={currentItems} />
+                        )}
+                    </div>
 
                     {/* 페이지 네이션 & 게시 버튼 */}
                     <nav>

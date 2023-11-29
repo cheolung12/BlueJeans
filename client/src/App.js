@@ -21,7 +21,7 @@ function App() {
     const fullScreenDynamicUrl = location.pathname.startsWith('/ebook/detail/viewer') ;
     const noSideNavbarDynamicUrl = location.pathname.startsWith('/recruitment/edit');
     
-    
+  
     return (
         <>
             {!(fullScreenPagePath.includes(location.pathname) || fullScreenDynamicUrl) ? (
