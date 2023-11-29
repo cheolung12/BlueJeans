@@ -22,6 +22,8 @@ export default function EssayDetail() {
   // 댓글 담고 있는 데이터
   const [commentList, setCommentList] = useState([]);
 
+  // 게시물 엔터
+
   // get 요청
   useEffect(() => {
     const fetchdata = async () => {
@@ -43,8 +45,6 @@ export default function EssayDetail() {
   // //새로운 댓글 업데이트
   // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
   const handleDelete = async () => {
-    // await alert('게시글을 삭제하시겠습니까?');
-
     const confirm = window.confirm('게시물을 삭제하시겠습니까?');
     // console.log(isFemale)
     if (confirm) {
@@ -135,7 +135,7 @@ export default function EssayDetail() {
             <section>
               <div className='w-full h-96 mt-3 text-black'>
                 <div
-                  className='text-center pt-4 h-full border-2 border-gray'
+                  className='text-center pt-4 px-24 h-full border-2 border-gray whitespace-pre'
                   // style={{
                   //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
                   // }}
