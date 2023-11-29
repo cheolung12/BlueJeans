@@ -8,6 +8,7 @@ import com.bluejeans.server.repository.RecruitDibRepository;
 //import com.bluejeans.server.repository.RecruitFileRepository;
 import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.bluejeans.server.entity.DibResult.*;
 
 @Service
+@Slf4j
 public class RecruitService {
 
     @Autowired
@@ -109,30 +112,38 @@ public class RecruitService {
     }
 
     // 공고 수정
-    public boolean editRecruit(int id, RecruitDTO recruitDTO, String fileURL)  {
+    public boolean editRecruit(int id, RecruitDTO recruitDTO, String fileURL, UserEntity user)  {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(id);
+
         // 수정
         if(recruit.isPresent()) {
             RecruitEntity existingEntity = recruit.get();
-            existingEntity.updateFields(recruitDTO, fileURL);
-            recruitRepository.save(existingEntity);
-
-            return true;
-        }else {
+            if (Objects.equals(existingEntity.getUserId().getUserID(), user.getUserID())) {
+                existingEntity.updateFields(recruitDTO, fileURL);
+                recruitRepository.save(existingEntity);
+                return true;
+            }
+            log.info("현재 로그인된 사용자와 게시물 작성자가 같지 않습니다.");
             return false;
         }
+        return false;
     }
 
     // 공고 삭제
-    public boolean deleteRecruit(int jobId) {
+    public boolean deleteRecruit(int jobId, UserEntity user) {
         // 해당 게시물 조회
         Optional<RecruitEntity> recruit = recruitRepository.findById(jobId);
 
         // 삭제
         if (recruit.isPresent()) {
-            recruitRepository.deleteById(jobId);
-            return true;
+            if(Objects.equals(recruit.get().getUserId().getUserID(), user.getUserID())){
+                recruitRepository.deleteById(jobId);
+                return true;
+            }
+            log.info("현재 로그인된 사용자와 게시물 작성자가 같지 않습니다.");
+            return false;
+
         } else {
             return false;
         }
@@ -166,13 +177,16 @@ public class RecruitService {
     }
 
     // 마감 여부 변경
-    public boolean updateRecruiting(int jobId) {
+    public boolean updateRecruiting(int jobId, UserEntity user) {
         RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         if (recruit != null) {
-            boolean result = !recruit.isRecruiting();
-            recruit.setRecruiting(!recruit.isRecruiting());
-            recruitRepository.save(recruit);
-            return result;
+            if(Objects.equals(recruit.getUserId().getUserID(), user.getUserID())) {
+                boolean result = !recruit.isRecruiting();
+                recruit.setRecruiting(!recruit.isRecruiting());
+                recruitRepository.save(recruit);
+                return result;
+            }
+            throw new RuntimeException("로그인된 사용자와 게시물 작성자가 같지 않습니다.");
         } else {
             throw new RuntimeException("게시물이 존재하지 않습니다.");
         }
