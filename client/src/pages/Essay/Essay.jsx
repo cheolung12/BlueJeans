@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 // import essay from '../../data/essay.json';
 import EssayCard from '../../components/Essay/Main/EssayCard';
 import ResButton from '../../components/common/ResButton';
-import Pagination from 'react-js-pagination';
 import { useState } from 'react';
 import axios from 'axios';
 import Filter from '../../components/Ebook/Main/Filter';
@@ -39,14 +38,40 @@ export default function Essay() {
     fetchdata();
   }, []);
 
-  console.log(essay);
+  // 카테고리 (인기순, 최신순, 전체보기)
+  const handleFilter = async (type) => {
+    let res;
+    if (type === 'all') {
+      try {
+        res = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/essay`,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      try {
+        res = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/essay/카태고리`,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    if (res) {
+      console.log(res);
+      setEssay(res.data);
+    }
+  };
 
   return (
     <div className='w-full flex justify-end'>
       <section className='flex flex-col items-end'>
         <div className='flex w-full'>
           <nav className='flex w-full justify-between items-center'>
-            <Filter />
+            <Filter handleFilter={handleFilter} />
 
             <Link className='m-2' to={`/essay/create`}>
               <ResButton text='글 작성' />
@@ -65,7 +90,7 @@ export default function Essay() {
         </div>
 
         <div className='flex justify-end w-full '>
-          <div className='flex flex-wrap justify-center w-[58rem]'>
+          <div className='flex flex-wrap justify-between w-[58rem]'>
             {essay.map((e) => (
               <EssayCard
                 key={e.id}

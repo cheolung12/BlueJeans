@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
-import Title from '../../components/Ebook/Main/Title';
 import { Link, useNavigate } from 'react-router-dom';
 // import bookList from '../../data/bookList.json';
 import BookCard from '../../components/Ebook/Main/BookCard';
@@ -37,15 +36,6 @@ export default function EBook() {
     };
     fetchData();
   }, []);
-
-  // 검색어가 있는 경우 필터링된 목록 보여주기
-  // 검색어가 없다면 모든 책 리스트 보여주기
-  // const filterBooks = searchInput
-  //   ? books.filter(
-  //       (book) =>
-  //         book.title.includes(searchInput) || book.author.includes(searchInput)
-  //     )
-  //   : books;
 
   // 카테고리 (인기순, 최신순, 전체보기)
   const handleFilter = async (type) => {
@@ -84,15 +74,9 @@ export default function EBook() {
     if (res.data.length !== 0) {
       setBooks(res.data);
     } else {
-      // 검색 결과가 없습니다.
+      setBooks('검색결과가 없습니다.');
     }
   };
-
-  // 검색
-  // const handleSearch = (searchInput, results) => {
-  //   setBooks(results);
-  //   navigate(`/ebook/search?keyword=${searchInput}
-  // };
 
   return (
     <div className='flex w-[93%] justify-end max-[375px]:w-full'>
@@ -114,18 +98,16 @@ export default function EBook() {
             </div>
 
             <section>
-              {/* {searchInput && (
-              <div className='font-semibold text-xl text-center py-3'>{`'${searchInput}'의 검색결과`}</div>
-            )} */}
               <div className='py-3'>
                 <div className='flex flex-wrap justify-between w-full sm:w-[900px] max-[375px]:justify-center'>
-                  {books.length === 0 ? (
-                    <>
-                      <div className='font-semibold text-xl text-center py-3'>
-                        검색결과가 없습니다.
-                      </div>
-                    </>
-                  ) : (
+                  {
+                    // searchInput !== books.title ? (
+                    //   <>
+                    //     <div className='font-semibold text-xl text-center py-3'>
+                    //       검색결과가 없습니다.
+                    //     </div>
+                    //   </>
+                    // ) : (
                     books.map((book) => (
                       // 북카드 클릭시 e-book 상세 페이지로 이동
                       <Link
@@ -154,7 +136,8 @@ export default function EBook() {
                         )}
                       </Link>
                     ))
-                  )}
+                    // )
+                  }
                 </div>
               </div>
             </section>

@@ -8,79 +8,29 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiHeartThin } from 'react-icons/pi';
 import { IoMdHeart } from 'react-icons/io';
 import { GoThumbsup } from 'react-icons/go';
+import { useParams } from 'react-router-dom';
 
 export default function AssayDibsButton({ like, notlike, id }) {
+  const { EssayId } = useParams();
   // 하트 색상 변경
   const [isLikeAdd, setIsLikeAdd] = useState(false);
   // 찜하기 수 카운트
   const [likeCount, setLikeCount] = useState(0);
 
   //찜하기 버튼
-  //   const likeCountHandler = async () => {
-  //     try {
-  //       const response = await axios({
-  //         method: 'POST',
-  //         url: `/essays/detail/${id}/Dibs`,
-  //         data: {
-  //           bookId: id,
-  //           isLikeAdd: !isLikeAdd,
-  //         },
-  //         withCredentials: true,
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-
-  //     likeCount((prevCount) => (prevCount === 0 ? 1 : 0));
-  //     setLikeCount((prevIsLiked) => !prevIsLiked);
-  //   };
-
-  //찜하기 보내기
   const likeCountHandler = async () => {
-    const updatedLikeAdd = !isLikeAdd;
-
     try {
-      if (!isLikeAdd) {
-        setLikeCount(likeCount + 1);
-
-        await axios.post(
-          `/essays/detail/${id}/Dibs`,
-          // url: `https://www.bluejeansu.site/ebook/like/${id}`,
-
-          {
-            bookId: id,
-            isLikeAdd: updatedLikeAdd,
-          },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      } else {
-        setLikeCount(likeCount - 1);
-
-        await axios.post(
-          `/essays/detail/${id}/Dibs`,
-          // url: `https://www.bluejeansu.site/ebook/like/${id}`,
-
-          {
-            bookId: id,
-            isLikeAdd: updatedLikeAdd,
-          },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-      }
+      const response = await axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}/likes`,
+        withCredentials: true,
+      });
+      console.log(response);
     } catch (error) {
-      console.error('좋아요 업데이트 실패:', error);
+      console.error('Error fetching data:', error);
     }
+
+    setLikeCount((prevIsLiked) => !prevIsLiked);
   };
 
   return (
