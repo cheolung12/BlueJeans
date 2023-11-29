@@ -82,7 +82,7 @@ public class RecruitController {
     // 일자리 수정 (오류)
     @PatchMapping("/{job_id}")
     @Operation(summary="공고 게시물 수정")
-    public boolean editRecruit(@PathVariable int job_id, @RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO)  {
+    public boolean editRecruit(@PathVariable int job_id, @RequestParam(value = "file", required = false) MultipartFile multipartFile, @ModelAttribute RecruitDTO recruitDTO, @AuthenticationPrincipal UserEntity user)  {
         String fileURL = null;
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");
@@ -90,13 +90,13 @@ public class RecruitController {
 //                throw new RuntimeException(e);
             fileURL = null;
         }
-        return recruitService.editRecruit(job_id, recruitDTO, fileURL);
+        return recruitService.editRecruit(job_id, recruitDTO, fileURL, user);
     }
 
     @DeleteMapping("/{job_id}")
     @Operation(summary="공고 게시물 삭제")
-    public boolean deleteRecruit(@PathVariable int job_id){
-        return recruitService.deleteRecruit(job_id);
+    public boolean deleteRecruit(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user){
+        return recruitService.deleteRecruit(job_id, user);
     }
 
     @PostMapping("/like/{job_id}")
@@ -110,8 +110,8 @@ public class RecruitController {
 
     @PostMapping("/recruiting/{job_id}")
     @Operation(summary="마감 여부 표시")
-    public String toggleRecruiting(@PathVariable int job_id) {
-        boolean result = recruitService.updateRecruiting(job_id);
+    public String toggleRecruiting(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user) {
+        boolean result = recruitService.updateRecruiting(job_id, user);
 
         return "변경된 상태: " + result;
     }
