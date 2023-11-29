@@ -9,11 +9,12 @@ import ResButton from '../../common/ResButton';
 import Modal from 'react-modal';
 import RecruitLikeButton from './RecruitLikeButton';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function DetailExample({ data }) {
-    const dataD = data.state.dataDetail;
+    // const dataD = data;
 
-    const workdDayfrom = data.state.dataDetail.workDay;
+    // const workdDayfrom = data.workDay;
 
     // const workDay = workdDayfrom
     //     .split(',')
@@ -45,7 +46,7 @@ export default function DetailExample({ data }) {
         setIsOpen(!isOpen);
     };
 
-    const [isRe, setIsRe] = useState(dataD.recruiting);
+    const [isRe, setIsRe] = useState(data.recruiting);
     const [isRecruiting, setIsRecruiting] = useState('');
 
     useEffect(() => {
@@ -69,15 +70,15 @@ export default function DetailExample({ data }) {
         }
     };
 
-    console.log(dataD);
-    console.log(isRe);
-    console.log('마감여부 :', isRecruiting);
+    // console.log(dataD);
+    // console.log(isRe);
+    // console.log('마감여부 :', isRecruiting);
 
     // 공고 게시일 ===========================================================
-    const dateString = dataD.createdAt;
+    const dateString = data.createdAt;
 
     // 주어진 문자열에서 날짜 부분만 추출
-    const extractedDate = dateString.split('T')[0];
+    const extractedDate = '1997-03-12'; //dateString.split('T')[0]; // 비동기 처리하기
 
     // 추출된 날짜를 Date 객체로 변환
     const givenDate = new Date(extractedDate);
@@ -103,25 +104,35 @@ export default function DetailExample({ data }) {
     console.log('시간 차이: ' + differenceInHours + '시간');
     console.log('일수 차이: ' + differenceInDays + '일 전');
 
+    // console.log(dataD.recruiting);
+
     return (
         <>
             <section className="flex flex-col justify-center">
                 <div className="w-[750px]">
                     {/* <div>=={dataD.id}번 일자리==</div>*/}
                     <div className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center">
-                        <img className="w-full h-auto " src={dataD.img_path} alt="직업 소개 이미지" />
+                        <img className="w-full h-auto " src={data.img_path} alt="직업 소개 이미지" />
                     </div>
                     <div className="m-2">글쓴이 프로필</div>
                     <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
-                            <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold cursor-pointer">
-                                {isRecruiting}
-                            </p>
-                            <p className="text-2xl font-bold">{dataD.title}</p>
+                            {data.recruiting ? (
+                                <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
+                                    모집
+                                </p>
+                            ) : (
+                                <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-red-600 rounded-lg shadow-sm font-semibold">
+                                    마감
+                                </p>
+                            )}
+
+                            <p className="text-2xl font-bold">{data.title}</p>
                         </div>
-                        <div onClick={Rclose}>마감버튼ㅋㅋ</div>
-                        {/* 찜하기 버튼 */}
-                        <RecruitLikeButton like="좋아요" notlike="해제" /> {/*  allLike={dataD.like}  */}
+                        {/* 찜하기 버튼 
+                                            <div onClick={Rclose}>마감버튼ㅋㅋ</div>*/}
+                        {/*  allLike={dataD.like}  <RecruitLikeButton like="좋아요" notlike="해제" id={dataD.id} />                        <div onClick={onChangeDIB}>좋아요~</div>
+                         */}
                         <div className="flex">
                             {/* true => dataD.recruiting */}
                             {true ? (
@@ -132,7 +143,7 @@ export default function DetailExample({ data }) {
                                     </button>
                                     {/* 지원 시 연락처 모달 생성 */}
                                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
-                                        <div>연락처 - {dataD.contact}</div>
+                                        <div>연락처 - {data.contact}</div>
                                         <div className="flex justify-end pr-4">
                                             <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
                                                 닫기
@@ -153,19 +164,19 @@ export default function DetailExample({ data }) {
                         <div className="text-xl font-semibold">정보</div>
                         <div className="text-lg flex items-center">
                             <FaWonSign className="mr-2" />
-                            급여 - {dataD.money}원
+                            급여 - {data.money}원
                         </div>
                         <div className="text-lg flex items-center">
                             <FaMapMarkerAlt className="mr-2" />
-                            지역 - {dataD.region}
+                            지역 - {data.region}
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                            근무 요일 - {dataD.workDay} {/* {dataD.workDay} */}
+                            근무 요일 - {data.workDay} {/* {dataD.workDay} */}
                         </div>
                         <div className="text-lg">
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
-                            근무 시간 - {dataD.workTime} {/* {dataD.workTime} */}
+                            근무 시간 - {data.workTime} {/* {dataD.workTime} */}
                         </div>
                     </div>
                     <hr />
@@ -173,7 +184,7 @@ export default function DetailExample({ data }) {
                         <div className="text-xl font-semibold">직무 상세 설명</div>
                         <div className="text-lg">
                             {/*내용설명-*/}
-                            {dataD.content}
+                            {data.content}
                         </div>
                     </div>
                 </div>
