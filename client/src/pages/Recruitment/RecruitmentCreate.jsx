@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
@@ -69,16 +69,21 @@ export default function RecruitmentCreate() {
         recruitData.append('file', file);
 
         if (recruitData.get('region').length == 0) {
-            alert('지역을 입력하세요');
+            alert('※ 지역을 입력하세요');
             return;
         }
 
         const numericRegex = /^[0-9]+$/;
 
         if (!numericRegex.test(recruitData.get('contact'))) {
-            alert('연락처에는 숫자만 입력하세요');
+            alert('※ 연락처에는 숫자만 입력하세요');
             return;
         }
+
+        // if (!numericRegex.test(recruitData.get('file'))) {
+        //     alert('※ 근무지 사진을 첨부하세요.');
+        //     return;
+        // }
 
         try {
             const response = await axios({
@@ -96,7 +101,7 @@ export default function RecruitmentCreate() {
             navigate('/recruitment');
         } catch (error) {
             console.error(error);
-            alert('공고 게시에 실패했습니다.');
+            alert('※ 공고 게시에 실패했습니다.');
         }
 
         for (var [key, value] of recruitData.entries()) {

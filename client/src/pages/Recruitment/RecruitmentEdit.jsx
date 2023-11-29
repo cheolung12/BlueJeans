@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
@@ -9,6 +9,7 @@ export default function RecruitmentEdit() {
     const location = useLocation();
     // const [forPatchData, setForPatchData] = useState(location.state.dataDetail)
     const forPatchData = location.state.dataDetail;
+
     console.log('패치데이터', forPatchData);
     //====================================================================
     const [recruitmentData, setRecruitmentData] = useState({
@@ -72,6 +73,23 @@ export default function RecruitmentEdit() {
         recruitData.append('content', recruitmentData.content);
         recruitData.append('file', file);
 
+        if (recruitData.get('region').length == 0) {
+            alert('※ 지역을 입력하세요');
+            return;
+        }
+
+        const numericRegex = /^[0-9]+$/;
+
+        if (!numericRegex.test(recruitData.get('contact'))) {
+            alert('※ 연락처에는 숫자만 입력하세요');
+            return;
+        }
+
+        // if (!numericRegex.test(recruitData.get('file'))) {
+        //     alert('※ 공고 수정 시에는 사진을 재 첨부해야 합니다.');
+        //     return;
+        // }
+
         try {
             const response = await axios({
                 method: 'PATCH',
@@ -84,11 +102,11 @@ export default function RecruitmentEdit() {
             });
             // console.log(JSON.stringify(recruitData));
             console.log(response.data);
-            alert('공고 게시가 완료되었습니다.');
+            alert('공고 수정이 완료되었습니다.');
             navigate('/recruitment');
         } catch (error) {
             console.error(error);
-            alert('공고 게시에 실패했습니다.');
+            alert('※ 공고 수정에 실패했습니다.');
         }
 
         for (var [key, value] of recruitData.entries()) {
@@ -133,7 +151,8 @@ export default function RecruitmentEdit() {
 
     //근무 요일 토글//////////////////////////////////////////////////////////////////////////////
     // const [workDay, setWorkDay] = useState('');
-    const [clickedDays, setClickedDays] = useState(['월', '화', '수', '목', '금']);
+    const editWorkDay = (forPatchData.workDay || '').split(',');
+    const [clickedDays, setClickedDays] = useState(editWorkDay); //'월', '화', '수', '목', '금']);
 
     // 클릭 이벤트 핸들러 함수
     const handleClick = (day) => {
@@ -186,8 +205,13 @@ export default function RecruitmentEdit() {
     }, []);
 
     // 근무 시간 변수
-    const [workTime1, setWorkTime1] = useState('10:00');
-    const [workTime2, setWorkTime2] = useState('12:00');
+    const editWorkTime1 = (forPatchData.workTime || '').split(' ~ ')[0];
+    const editWorkTime2 = (forPatchData.workTime || '').split(' ~ ')[1];
+
+    console.log('분리한 시간', editWorkTime1, editWorkTime2);
+
+    const [workTime1, setWorkTime1] = useState(editWorkTime1);
+    const [workTime2, setWorkTime2] = useState(editWorkTime2);
     // 셀렉트 처리
     const handleTimeChange1 = (event) => {
         setWorkTime1(event.target.value);
@@ -217,8 +241,8 @@ export default function RecruitmentEdit() {
                         name="title"
                         type="text"
                         placeholder="제목을 입력하세요."
-                        required
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        required
                     />
                 </div>
 
@@ -229,7 +253,7 @@ export default function RecruitmentEdit() {
                         {daysOfWeek.map((day, index) => (
                             <div
                                 key={index}
-                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 cursor-pointer ${
+                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 border cursor-pointer ${
                                     clickedDays.includes(day) ? 'bg-signatureColor text-white' : 'bg-gray-50 text-black'
                                 }`}
                                 onClick={() => handleClick(day)}
@@ -276,7 +300,7 @@ export default function RecruitmentEdit() {
                                 value={recruitmentData.money}
                                 onChange={handleInputChange}
                                 name="money"
-                                type="text"
+                                type="number"
                                 placeholder="급여를 입력하세요"
                                 required
                             />
@@ -374,7 +398,6 @@ export default function RecruitmentEdit() {
                         readOnly
                         placeholder="클릭하면 주소검색창이 나타납니다."
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                        required
                     />
                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                         <DaumPostcode onComplete={completeHandler} height="100%" />
@@ -473,6 +496,7 @@ export default function RecruitmentEdit() {
                         id="contact"
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         value={recruitmentData.contact}
+                        maxlength="11"
                         onChange={handleInputChange}
                         name="contact"
                         type="text"
