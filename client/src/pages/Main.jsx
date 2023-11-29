@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import main from '../components/main/mainImg/main.jpg';
+
 ////banner1
 import books from '../data/bookList.json';
 ///banner2
@@ -8,10 +10,6 @@ import mainL from '../data/mainL.json';
 import mainJ from '../data/mainJ.json';
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
-import { FiBookOpen } from 'react-icons/fi';
-import { FaPenNib } from 'react-icons/fa6';
-import { MdChat } from 'react-icons/md';
-import { GoHome } from 'react-icons/go';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
@@ -32,6 +30,10 @@ import TopNavbar from '../components/common/TopNavbar';
 import Footer from '../components/common/Footer';
 import MainBar from '../components/main/MainBar';
 
+import axios from 'axios';
+
+//////////state/////////
+
 window.addEventListener('scroll', () => {
   // console.log(window.scrollX, window.scrollY);
 });
@@ -48,6 +50,15 @@ export default function Main({
   contact,
   detail,
 }) {
+  // useEffect(() => {
+  //   const [mainBook, setMainBook] = useState([]);
+
+  //   axios
+  //     .get('/ebook')
+  //     .then((response) => setMainBook(response.data))
+  //     .catch((error) => console.log(error));
+  // }, []);
+
   const booksArray = Object.values(books);
   const literature = mainL;
   const mJob = mainJ;
@@ -56,11 +67,17 @@ export default function Main({
     <>
       <TopNavbar />
       <div>
-        <div className=' h-[700px] w-full'>
-          <MainBar className=' flex items-end	' />
+        <div className=' h-[700px] w-full bg-red-50'>
+          <div>
+            {/* <div>
+              <img src={main} alt='' />  */}
+            <MainBar className='flex items-end' />
+            {/* </div> */}
+          </div>
         </div>
 
         {/* 1 */}
+
         <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
             <div className='text-center mt-3'>
@@ -78,7 +95,7 @@ export default function Main({
             className=' md:w-[55rem] w-80 h-[28rem]'
             slidesPerView={3}
             loop={true}
-            centeredSlides={true}
+            centeredSlides={true} //중앙설정
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
@@ -89,7 +106,7 @@ export default function Main({
             breakpoints={{
               '@0.25': {
                 slidesPerView: 1,
-                spaceBetween: 20,
+                spaceBetween: 20, //여백
               },
               '@0.70': {
                 slidesPerView: 2,
@@ -104,25 +121,25 @@ export default function Main({
             navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
           >
-            {booksArray.map((value) =>
+            {/* 요청해서 받은 랜덤 10개 값  */}
+
+            {mainBook.map((value) =>
               value.map((book) => (
-                <React.Fragment key={book.id}>
-                  <SwiperSlide key={book.id} className='h-full w-full'>
-                    <div>
-                      <img
-                        src={book.thumbnail}
-                        alt={book.title || 'No Title'}
-                        className='h-[25rem] w-full text-blue-700'
-                      />
-                    </div>
-                  </SwiperSlide>
-                </React.Fragment>
+                <SwiperSlide className='h-full w-full'>
+                  <div>
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title || 'No Title'}
+                      className='h-[25rem] w-full text-blue-700'
+                    />
+                  </div>
+                </SwiperSlide>
               ))
             )}
           </Swiper>
         </div>
         {/* 2 */}
-
+        {/* 좋아요 많은 순서대로 3개 보여주기  */}
         <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
           <div className='flex w-full items-end pl-4 justify-evenly'>
             {/* 백일장 1*/}
@@ -183,10 +200,18 @@ export default function Main({
         </div>
 
         {/* 3 */}
+        {/* 젤 최신 3개 가져오기 */}
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
-          <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white'>
-            채용 공고
-          </p>
+          <div className='flex justify-between'>
+            <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white '>
+              채용 공고
+            </p>
+            <div className='self-end text-slate-500 hover:underline '>
+              <Link to='/recruitment' className='self-end pr-8 text-lg '>
+                더보기
+              </Link>
+            </div>
+          </div>
           <div className='flex flex-col md:flex-row items-center justify-evenly w-full h-full'>
             {mJob.mainJ.slice(0, 3).map((item2) => (
               <div
@@ -195,11 +220,10 @@ export default function Main({
               >
                 <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl md:h-[16rem] lg:h-[18rem] ml-[10px] mr-[10px]  flex-col'>
                   <div className='text-xl flex flex-col justify-between'>
-                    {/*  */}
-
                     <span class='animate-bounce pb-3 text-red-500 font-semibold '>
                       NEW
                     </span>
+
                     <div className=' self-center'>
                       <div className='mb-4 flex items-center'>
                         <IoMdBriefcase className='self-center mr-2' />

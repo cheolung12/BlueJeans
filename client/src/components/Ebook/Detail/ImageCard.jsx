@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ResButton from '../../common/ResButton';
-import DibsButton from '../../Ebook/Detail/DibsButton';
+import EbookDibsButton from '../../Ebook/Detail/EbookDibsButton';
 
 export default function ImageCard({
   id,
@@ -71,7 +71,7 @@ export default function ImageCard({
           </div>
 
           {/* 찜하기 버튼 */}
-          <DibsButton like='찜하기' notlike='찜해제' />
+          <EbookDibsButton like='찜하기' notlike='찜해제' />
           {/* 바로 읽기 버튼 */}
           <Link
             to={`/ebook/detail/viewer/${id}`}
