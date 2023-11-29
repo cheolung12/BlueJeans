@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export default function JobCard() {
+export default function JobCardSkeleton() {
     return (
         <>
             <div className="flex flex-wrap justify-between">
