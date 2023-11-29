@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import main from '../components/main/mainImg/main.jpg';
 
 ////banner1
 import books from '../data/bookList.json';
@@ -50,17 +49,33 @@ export default function Main({
   contact,
   detail,
 }) {
-  // useEffect(() => {
-  //   const [mainBook, setMainBook] = useState([]);
+  const [mainData, setMainData] = useState([]);
 
-  //   axios
-  //     .get('/ebook')
-  //     .then((response) => setMainBook(response.data))
-  //     .catch((error) => console.log(error));
-  // }, []);
+  //책전체
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/main`,
+        });
+        setMainData(res.data);
+        // console.log('yk', res.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    fetchData();
+  }, []);
+  console.log('ykyk', mainData);
+  console.log('ebook', mainData.ebookList);
+  console.log('essay', mainData.essayList);
+  console.log('recruit', mainData.recruitList);
 
-  const booksArray = Object.values(books);
-  const literature = mainL;
+  const ebookList = mainData?.ebookList || [];
+  const essayList = mainData?.essayList || [];
+  const recruitList = mainData?.recruitList || [];
+
   const mJob = mainJ;
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
@@ -119,23 +134,21 @@ export default function Main({
             }}
             spaceBetween={30}
             navigation={true}
-            modules={[Autoplay, Pagination, Navigation]}
+            modules={[Autoplay, Navigation]}
           >
             {/* 요청해서 받은 랜덤 10개 값  */}
 
-            {mainBook.map((value) =>
-              value.map((book) => (
-                <SwiperSlide className='h-full w-full'>
-                  <div>
-                    <img
-                      src={book.thumbnail}
-                      alt={book.title || 'No Title'}
-                      className='h-[25rem] w-full text-blue-700'
-                    />
-                  </div>
-                </SwiperSlide>
-              ))
-            )}
+            {ebookList.map((book) => (
+              <SwiperSlide className='h-full w-full' key={book.id}>
+                <div>
+                  <img
+                    src={book.thumbnail}
+                    alt={book.title}
+                    className='h-[25rem] w-full text-blue-700'
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
         {/* 2 */}
@@ -143,6 +156,8 @@ export default function Main({
         <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
           <div className='flex w-full items-end pl-4 justify-evenly'>
             {/* 백일장 1*/}
+            {essayList.map((essay) => {})}
+
             <div className=' h-80 w-56 rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
               <div className='content-center w-full'>
                 <div className=' text-2xl text-center p-3'>작품제목</div>
@@ -200,6 +215,7 @@ export default function Main({
         </div>
 
         {/* 3 */}
+
         {/* 젤 최신 3개 가져오기 */}
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
@@ -213,38 +229,39 @@ export default function Main({
             </div>
           </div>
           <div className='flex flex-col md:flex-row items-center justify-evenly w-full h-full'>
-            {mJob.mainJ.slice(0, 3).map((item2) => (
+            {recruitList.map((recruit) => (
               <div
-                key={item2.id}
+                key={recruit.id}
                 className='mb-6 md:mb-0 w-full md:w-1/2 lg:w-1/3'
               >
                 <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl md:h-[16rem] lg:h-[18rem] ml-[10px] mr-[10px]  flex-col'>
                   <div className='text-xl flex flex-col justify-between'>
-                    <span class='animate-bounce pb-3 text-red-500 font-semibold '>
+                    <span class='animate-bounce pb-2 text-red-500 font-semibold '>
                       NEW
                     </span>
 
                     <div className=' self-center'>
                       <div className='mb-4 flex items-center'>
                         <IoMdBriefcase className='self-center mr-2' />
-                        <span>{item2.job}</span>
+                        <span>{recruit.title}</span>
                       </div>
                       <div className='mb-4 flex items-center'>
                         <FaLocationDot className='self-center mr-2' />
-                        <span>{item2.address}</span>
+                        <span>{recruit.region}</span>
                       </div>
                       <div className='mb-4 flex items-center'>
                         <FaPhone className='self-center mr-2' />
-                        <span>{item2.contact}</span>
+                        <span>{recruit.contact}</span>
                       </div>
                       <div className='mb-4 flex items-center'>
                         <BiCommentDetail className='self-center mr-2' />
-                        <span>{item2.detail}</span>
+                        <span>{recruit.content}</span>
                       </div>
                     </div>
                   </div>
                   <div className='flex justify-end'>
-                    <div>{item2.money}</div>
+                    <div className='pr-2'>{recruit.moneyStandard}</div>
+                    <div>{recruit.money}</div>
                   </div>
                 </div>
               </div>
