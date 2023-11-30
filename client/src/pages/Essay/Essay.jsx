@@ -66,26 +66,27 @@ export default function Essay() {
     }
   };
 
+  const handleLogin = () => {
+    if (!window.localStorage.getItem('userID')) {
+      alert('로그인해라');
+    }
+  };
+
   return (
     <div className='w-full flex justify-end'>
       <section className='flex flex-col items-end'>
         <div className='flex w-full'>
           <nav className='flex w-full justify-between items-center'>
             <Filter handleFilter={handleFilter} />
-
-            <Link className='m-2' to={`/essay/create`}>
-              <ResButton text='글 작성' />
-            </Link>
-            {/* <select
-              className='m-2 px-4 py-2 border-2 rounded-md focus:border-chatColor'
-              name=''
-              id=''
-              value={selectValue}
-              onChange={handleChange}
-            >
-              <option value='latest'>최신순</option>
-              <option value='favorite'>인기순</option>
-            </select> */}
+            {window.localStorage.getItem('userID') ? (
+              <Link className='m-2' to={`/essay/create`} onClick={handleLogin}>
+                <ResButton text='글 작성' />
+              </Link>
+            ) : (
+              <Link className='m-2' to={`/login`} onClick={handleLogin}>
+                <ResButton text='글 작성' />
+              </Link>
+            )}
           </nav>
         </div>
 

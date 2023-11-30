@@ -101,32 +101,13 @@ export default function BookViewer({ data }) {
                 style={{ transform: `translateX(-${70 * currentMove}rem)` }}
               >
                 <div
-                  className='w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
                 </div>
                 <div
-                  className=' w-[35rem] h-full p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
-
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
-                <div
-                  className='w-[35rem] h-full p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-                <div
-                  className=' w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
@@ -139,32 +120,13 @@ export default function BookViewer({ data }) {
                 style={{ transform: `translateX(-${70 * currentMove}rem)` }}
               >
                 <div
-                  className='w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
                 </div>
                 <div
-                  className=' w-[35rem] h-full p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
-
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
-                <div
-                  className='w-[35rem] h-full p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-                <div
-                  className=' w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
@@ -177,13 +139,51 @@ export default function BookViewer({ data }) {
                 style={{ transform: `translateX(-${70 * currentMove}rem)` }}
               >
                 <div
-                  className='w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
                 </div>
                 <div
-                  className=' w-[35rem] h-full p-14 tracking-wider leading-loose'
+                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
+                  style={{ fontSize: `${textSize}px` }}
+                >
+                  {data.content}
+                </div>
+              </div>
+
+              <div
+                className='flex transition'
+                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
+              >
+                <div
+                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
+                  style={{ fontSize: `${textSize}px` }}
+                >
+                  {data.content}
+                </div>
+                <div
+                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
+                  style={{ fontSize: `${textSize}px` }}
+                >
+                  {data.content}
+                </div>
+              </div>
+
+              <div
+                className='flex transition'
+                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
+              >
+                <div
+                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
+                  style={{ fontSize: `${textSize}px` }}
+                >
+                  {data.content}
+                </div>
+                <div
+                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
                   {data.content}
@@ -244,9 +244,9 @@ export default function BookViewer({ data }) {
           </button>
         </div>
 
-        <div className='text-center max-[750px]:hidden max-[1200px]:hidden'>
+        <div className='text-center pb-9'>
           {/* 페이지 쪽수 */}
-          <span>
+          <span className='mb-3'>
             {count} / 5
             {/* {((currentMove + data.length) % data.length) + 1} / {data.length} */}
           </span>

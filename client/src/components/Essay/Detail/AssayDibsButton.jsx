@@ -19,8 +19,9 @@ export default function AssayDibsButton({ like, notlike }) {
         withCredentials: true,
       });
       console.log(response);
-      setIsLikeAdd((prevIsAdd) => !prevIsAdd);
-      // setLikeCount(likeCount+1);
+
+      setIsLikeAdd(!isLikeAdd);
+      setLikeCount(response.data.counts);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -41,7 +42,7 @@ export default function AssayDibsButton({ like, notlike }) {
         {/* 찜했을 때 찜해제로 변경 */}
         {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
       </span>
-      {/* <span className='pt-1'>{likeCount}</span> */}
+      <span className='pt-1'>{likeCount}</span>
     </div>
   );
 }

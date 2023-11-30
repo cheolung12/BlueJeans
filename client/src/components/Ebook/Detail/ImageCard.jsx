@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import ResButton from '../../common/ResButton';
 import EbookDibsButton from '../../Ebook/Detail/EbookDibsButton';
@@ -12,6 +12,11 @@ export default function ImageCard({
   genre,
   ISBN,
 }) {
+  const handleLogin = () => {
+    if (!window.localStorage.getItem('userID')) {
+      alert('로그인해라');
+    }
+  };
   return (
     <div>
       <section
@@ -73,13 +78,21 @@ export default function ImageCard({
           {/* 찜하기 버튼 */}
           <EbookDibsButton like='찜하기' notlike='찜해제' />
           {/* 바로 읽기 버튼 */}
-          <Link
-            to={`/ebook/detail/viewer/${id}`}
-            key={id}
-            state={{ id, title }}
-          >
-            <ResButton text='바로 읽기' />
-          </Link>
+          {/* 로그인 안한 상태에서 누르면 로그인 페이지로 이동 */}
+          {window.localStorage.getItem('userID') ? (
+            <Link
+              to={`/ebook/detail/viewer/${id}`}
+              key={id}
+              state={{ id, title }}
+              onClick={handleLogin}
+            >
+              <ResButton text='바로 읽기' />
+            </Link>
+          ) : (
+            <Link to='/login' onClick={handleLogin}>
+              <ResButton text='바로 읽기' />
+            </Link>
+          )}
         </div>
       </section>
     </div>
