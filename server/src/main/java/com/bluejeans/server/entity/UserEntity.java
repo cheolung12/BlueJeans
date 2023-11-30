@@ -54,6 +54,22 @@ public class UserEntity implements UserDetails {
     @Column
     private String img_path;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<RecruitDibsEntity> recruitDibs;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<RecruitEntity> recruit;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<EssayEntity> essay;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<EssayDibsEntity> essayDibs;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<EBookDibsEntity> ebook;
+
+
 
     @Override //권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {

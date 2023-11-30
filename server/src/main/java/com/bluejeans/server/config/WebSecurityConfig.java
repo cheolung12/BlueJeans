@@ -46,10 +46,6 @@ public class WebSecurityConfig {
 
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeRequests()
-//                    .requestMatchers("/login", "/signup","/user","/essays","essays/detail/{essay_id}", "/**").permitAll() //허가없이 접근가능한 경로
-//                    .anyRequest().authenticated()
-//                .and()
                 .formLogin(customizer-> customizer.loginPage("/login")
                         .usernameParameter("userID").passwordParameter("password")
                         .failureHandler(customAuthenticationFailureHandler)
