@@ -14,7 +14,7 @@ import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export default function DetailExample({ data, isCloseR, loading }) {
+export default function DetailExample({ data, isCloseR, loading, isHeart }) {
     // const dataD = data;
     const workdDayfrom = data.workDay;
 
@@ -129,8 +129,7 @@ export default function DetailExample({ data, isCloseR, loading }) {
                             <img className="w-full h-auto " src={data.img_path} alt="직업 소개 이미지" />
                         </div>
                     )}
-
-                    <div className="m-2">글쓴이 프로필</div>
+                    <div className="m-2">{localStorage.getItem('nickname')} 님의 공고입니다.</div>
                     <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
                             {isCloseR ? (
@@ -145,7 +144,7 @@ export default function DetailExample({ data, isCloseR, loading }) {
                             <p className="text-2xl font-bold">{data.title}</p>
                         </div>
 
-                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" countlike={data.like} mylike={data} />
+                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" countlike={data.like} mylike={isHeart} />
                     </div>
                     {loading ? (
                         <Skeleton />

@@ -4,14 +4,18 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
 
-export default function RecruitLikeButton({ like, notlike, countlike, mylike }) {
+export default function RecruitLikeButton({ countlike, mylike }) {
     const { jobId } = useParams();
 
     console.log(jobId);
+    console.log('받아온 좋아요수:', countlike);
+    console.log('내 좋아요수:', mylike);
+    const isMyHeart = mylike;
+    const isCount = countlike;
     // 하트 색상 변경
-    const [isLikeAdd, setIsLikeAdd] = useState(false);
+    const [isLikeAdd, setIsLikeAdd] = useState(isMyHeart);
     // 찜하기 수 카운트
-    const [likeCount, setLikeCount] = useState(0);
+    const [likeCount, setLikeCount] = useState(isCount);
 
     //찜하기 버튼
     const onClick = async () => {
@@ -22,8 +26,13 @@ export default function RecruitLikeButton({ like, notlike, countlike, mylike }) 
                 withCredentials: true,
             });
             console.log(response);
-            setIsLikeAdd((prevIsAdd) => !prevIsAdd);
-            // setLikeCount(likeCount + 1);
+            if (response.data.dibResult == 'DIB_REMOVED') {
+                setIsLikeAdd(false);
+                setLikeCount((prev) => prev - 1);
+            } else if (response.data.dibResult == 'DIB_ADDED') {
+                setIsLikeAdd(true);
+                setLikeCount((prev) => prev + 1);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -33,14 +42,17 @@ export default function RecruitLikeButton({ like, notlike, countlike, mylike }) 
 
     return (
         <div className="flex flex-row items-center cursor-pointer" onClick={onClick}>
-            <div>{countlike}</div>
-            {!isLikeAdd ? <IoMdHeartEmpty className="text-4xl text-gray-700" /> : <IoMdHeart className="text-4xl text-red-600" />}
-
-            <span className="pt-1 text-sm">
-                {/* 찜했을 때 찜해제로 변경 */}
-                {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
-            </span>
-            {/* <span className='pt-1'>{likeCount}</span> */}
+            {mylike ? (
+                <div>
+                    <IoMdHeart className="text-4xl text-red-600" />
+                    {likeCount}
+                </div>
+            ) : (
+                <div>
+                    <IoMdHeartEmpty className="text-4xl text-gray-700" />
+                    {likeCount}
+                </div>
+            )}
         </div>
     );
 }

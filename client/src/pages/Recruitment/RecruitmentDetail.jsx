@@ -14,6 +14,7 @@ export default function RecruitmentDetail() {
     const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
+    const [isHeart, setIsHeart] = useState();
 
     // 상세 페이지 조회
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function RecruitmentDetail() {
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
                 setIsCloseR(response.data.recruiting);
+                setIsHeart(response.data.heart);
                 setLoading(false);
                 console.log('마감 토글 :', isCloseR);
             } catch (error) {
@@ -111,7 +113,7 @@ export default function RecruitmentDetail() {
         <>
             <div className="w-full flex justify-center">
                 <section className="max-w-4xl block">
-                    <DetailExample data={works} isCloseR={isCloseR} loading={loading} />
+                    <DetailExample data={works} isCloseR={isCloseR} loading={loading} isHeart={isHeart} />
 
                     <nav className="flex justify-end">
                         {localStorage.getItem('nickname') == works.nickname ? (
