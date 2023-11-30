@@ -40,11 +40,19 @@ public class EBookService {
         return list;
     }
 
-    public ResEBookDTO getBook(int id) {
-        EBookEntity ebook =  ebookRepository.findById(id).orElse(null);
+    public ResEBookDTO getBook(int ebookId, UserEntity user) {
+        EBookEntity ebook =  ebookRepository.findById(ebookId).orElse(null);
         long like = ebookDibRepository.countByEbook(ebook);
+        int userId = user.getId();
+        boolean isHeart;
+        Optional <EBookDibsEntity> isDib = ebookDibRepository.findByUser_IdAndEbook_Id(userId, ebookId);
+        isHeart = isDib.isPresent();
 
-        return ResEBookDTO.toDTO(ebook, like);
+        if(ebook != null){
+            return ResEBookDTO.toDTODetail(ebook, like, isHeart);
+        } else {
+            return null;
+        }
     }
 
     public ResEBookContentDTO getContent(int id) {

@@ -56,8 +56,8 @@ public class EBookController {
 
     @GetMapping("/detail/{book_id}")
     @Operation(summary = "책 소개 페이지", description="특정 책의 정보를 보여주는 페이지입니다.")
-    public ResEBookDTO getBook(@PathVariable int book_id) {
-        return eBookService.getBook(book_id);
+    public ResEBookDTO getBook(@PathVariable int book_id, @AuthenticationPrincipal UserEntity user) {
+        return eBookService.getBook(book_id, user);
     }
 
 

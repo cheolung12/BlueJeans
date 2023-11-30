@@ -23,6 +23,7 @@ public class ResEBookDTO {
     private String thumbnail;
     private Timestamp createdAt;
     private long like;
+    private boolean isHeart;
 
     public static ResEBookDTO toDTO(EBookEntity entity, long like){
         if (entity == null) {
@@ -39,6 +40,25 @@ public class ResEBookDTO {
                 .thumbnail(entity.getThumbnail())
                 .createdAt(entity.getCreated_at())
                 .like(like)
+                .build();
+    }
+
+    public static ResEBookDTO toDTODetail(EBookEntity entity, long like, boolean isHeart){
+        if (entity == null) {
+            return null;
+        }
+        return new ResEBookDTO().builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .author(entity.getAuthor())
+                .publisher(entity.getPublisher())
+                .genre(entity.getGenre())
+                .ISBN(entity.getISBN())
+                .description(entity.getDescription())
+                .thumbnail(entity.getThumbnail())
+                .createdAt(entity.getCreated_at())
+                .like(like)
+                .isHeart(isHeart)
                 .build();
     }
 
