@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
@@ -68,6 +68,23 @@ export default function RecruitmentCreate() {
         recruitData.append('content', recruitmentData.content);
         recruitData.append('file', file);
 
+        if (recruitData.get('region').length == 0) {
+            alert('※ 지역을 입력하세요');
+            return;
+        }
+
+        const numericRegex = /^[0-9]+$/;
+
+        if (!numericRegex.test(recruitData.get('contact'))) {
+            alert('※ 연락처에는 숫자만 입력하세요');
+            return;
+        }
+
+        // if (!numericRegex.test(recruitData.get('file'))) {
+        //     alert('※ 근무지 사진을 첨부하세요.');
+        //     return;
+        // }
+
         try {
             const response = await axios({
                 method: 'POST',
@@ -84,7 +101,7 @@ export default function RecruitmentCreate() {
             navigate('/recruitment');
         } catch (error) {
             console.error(error);
-            alert('공고 게시에 실패했습니다.');
+            alert('※ 공고 게시에 실패했습니다.');
         }
 
         for (var [key, value] of recruitData.entries()) {
@@ -213,8 +230,8 @@ export default function RecruitmentCreate() {
                         name="title"
                         type="text"
                         placeholder="제목을 입력하세요."
-                        required
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        required
                     />
                 </div>
 
@@ -225,7 +242,7 @@ export default function RecruitmentCreate() {
                         {daysOfWeek.map((day, index) => (
                             <div
                                 key={index}
-                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 cursor-pointer ${
+                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 border cursor-pointer ${
                                     clickedDays.includes(day) ? 'bg-signatureColor text-white' : 'bg-gray-50 text-black'
                                 }`}
                                 onClick={() => handleClick(day)}
@@ -268,11 +285,11 @@ export default function RecruitmentCreate() {
                             </label>
                             <input
                                 id="money"
-                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400 remove-arrow"
                                 value={recruitmentData.money}
                                 onChange={handleInputChange}
                                 name="money"
-                                type="text"
+                                type="number"
                                 placeholder="급여를 입력하세요"
                                 required
                             />
@@ -370,7 +387,6 @@ export default function RecruitmentCreate() {
                         readOnly
                         placeholder="클릭하면 주소검색창이 나타납니다."
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                        required
                     />
                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                         <DaumPostcode onComplete={completeHandler} height="100%" />
@@ -469,6 +485,7 @@ export default function RecruitmentCreate() {
                         id="contact"
                         className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
                         value={recruitmentData.contact}
+                        maxlength="11"
                         onChange={handleInputChange}
                         name="contact"
                         type="text"

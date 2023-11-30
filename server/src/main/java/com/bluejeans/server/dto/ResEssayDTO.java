@@ -25,6 +25,7 @@ public class ResEssayDTO {
     private long like;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private int comments;
 
     public static ResEssayDTO toDTO(EssayEntity entity, long like){
         if (entity == null) {
@@ -39,6 +40,23 @@ public class ResEssayDTO {
                 .like(like)
                 .created_at(entity.getCreated_at())
                 .updated_at(entity.getUpdated_at())
+                .build();
+    }
+
+    public static ResEssayDTO toDTOessay(EssayEntity entity, long like, int comments){
+        if (entity == null) {
+            return null;
+        }
+        return new ResEssayDTO().builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .user_id(entity.getUser() != null ? entity.getUser().getId() : null)
+                .img_path(entity.getImg_path())
+                .like(like)
+                .created_at(entity.getCreated_at())
+                .updated_at(entity.getUpdated_at())
+                .comments(comments)
                 .build();
     }
 

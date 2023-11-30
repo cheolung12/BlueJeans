@@ -53,6 +53,7 @@ public class MyPageController {
         return myPageService.editUserInfo(fileURL, user, editDTO);
     }
 
+
     // 하나밖에 없어서 여기다 만들었음
     @GetMapping("/api/main")
     @Operation(summary="main 화면에서 게시물 정보 불러오기")

@@ -43,6 +43,9 @@ public class EssayEntity {
     @OneToMany(mappedBy = "essay", cascade = CascadeType.REMOVE)
     private List<EssayDibsEntity> essayDibs;
 
+    @OneToMany(mappedBy = "essay", cascade = CascadeType.REMOVE)
+    private List<EssayCommentsEntity> comments;
+
     public void updateFields(EssayDTO essayDTO, String fileURL) {
         this.setTitle(essayDTO.getTitle());
         this.setContent(essayDTO.getContent());

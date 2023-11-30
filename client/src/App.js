@@ -7,7 +7,7 @@ import Wrapper from './components/common/Wrapper';
 import Footer from './components/common/Footer';
 
 function App() {
-    const location = useLocation();
+  const location = useLocation();
 
     // 맨 위 Navbar가 필요없는 페이지 경로
     const noTopNavbarPath = [];
@@ -37,8 +37,13 @@ function App() {
             ) : (
                 <Outlet />
             )}
+
         </>
-    );
+      ) : (
+        <Outlet />
+      )}
+    </>
+  );
 }
 
 export default App;

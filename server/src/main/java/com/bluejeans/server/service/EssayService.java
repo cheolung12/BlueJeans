@@ -40,11 +40,13 @@ public class EssayService {
     public List<ResEssayDTO> findAll() {
         List<EssayEntity> essayList = essayRepository.findAll();
         List<ResEssayDTO> list = new ArrayList<>();
+
         log.info("전체찾기 서비스");
 
         for( EssayEntity essay : essayList){
             long like = essayDibRepository.countByEssay(essay);
-            list.add(ResEssayDTO.toDTO(essay, like));
+            List<EssayCommentsEntity> comments = essayCommentsRepository.findByEssayId(essay.getId());
+            list.add(ResEssayDTO.toDTOessay(essay, like, comments.size()));
         }
         return list;
     }
