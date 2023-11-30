@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import Title from '../../components/Ebook/Main/Title';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import BookCardDetail from '../../components/Ebook/Detail/BookCardDetail';
-import SideNavBar from '../../components/common/SideNavBar';
 import axios from 'axios';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
+
+  const [booksContent, setBooksContent] = useState({
+    title: '',
+    id: '',
+    author: '',
+    thumbnail: '',
+    like: 0,
+    publisher: '',
+    genre: '',
+    description: '',
+  });
 
   // get요청
   useEffect(() => {
@@ -15,9 +24,12 @@ export default function EBookDetail() {
         const response = await axios({
           method: 'GET',
           url: `${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`,
+          withCredentials: true,
         });
+        setBooksContent(response.data);
         console.log(response);
       } catch (error) {
+        console.log(`${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`);
         console.error('Error fetching data:', error);
       }
     };
@@ -28,7 +40,7 @@ export default function EBookDetail() {
   // const findBook = books.find((book) => book.id === bookId);
 
   // <Link>에서 bookcard 데이터 받아옴
-  const location = useLocation();
+  // const location = useLocation();
   // console.log(location.state);
 
   return (
@@ -37,8 +49,16 @@ export default function EBookDetail() {
         {/* <Title /> */}
         <div>
           <div>
-            {/* 데이터 props로 넘겨줌 */}
-            <BookCardDetail data={location.state.dataDetail} />
+            <BookCardDetail
+              id={booksContent.id}
+              title={booksContent.title}
+              thumbnail={booksContent.thumbnail}
+              author={booksContent.author}
+              publisher={booksContent.publisher}
+              genre={booksContent.genre}
+              ISBN={booksContent.genre}
+              description={booksContent.description}
+            />
           </div>
         </div>
       </div>

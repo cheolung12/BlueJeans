@@ -68,7 +68,7 @@ export default function Essay() {
 
   const handleLogin = () => {
     if (!window.localStorage.getItem('userID')) {
-      alert('로그인해라');
+      alert('로그인이 필요합니다.');
     }
   };
 
@@ -99,6 +99,7 @@ export default function Essay() {
                 title={e.title}
                 content={e.content}
                 thumbnail={e.img_path}
+                like={e.like}
               />
             ))}
           </div>

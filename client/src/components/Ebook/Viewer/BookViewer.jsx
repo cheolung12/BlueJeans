@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PiPlusLight } from 'react-icons/pi';
 import { PiMinusThin } from 'react-icons/pi';
-export default function BookViewer({ data }) {
+export default function BookViewer({ bookId, content }) {
   //버튼 누르면 이전, 다음 페이지로 이동
   const [currentMove, setCurrentMove] = useState(0);
   //현재 페이지 알려줌
@@ -104,13 +104,13 @@ export default function BookViewer({ data }) {
                   className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
                 <div
                   className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
               </div>
 
@@ -123,13 +123,13 @@ export default function BookViewer({ data }) {
                   className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
                 <div
                   className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
               </div>
 
@@ -142,13 +142,13 @@ export default function BookViewer({ data }) {
                   className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
                 <div
                   className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
               </div>
 
@@ -161,13 +161,13 @@ export default function BookViewer({ data }) {
                   className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
                 <div
                   className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
               </div>
 
@@ -180,13 +180,13 @@ export default function BookViewer({ data }) {
                   className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
                 <div
                   className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
                   style={{ fontSize: `${textSize}px` }}
                 >
-                  {data.content}
+                  {content}
                 </div>
               </div>
 

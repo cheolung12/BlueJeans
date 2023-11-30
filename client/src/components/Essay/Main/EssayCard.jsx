@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AiOutlineComment } from 'react-icons/ai';
+import { AiOutlineLike } from 'react-icons/ai';
 
-export default function EssayCard({ id, title, thumbnail }) {
+export default function EssayCard({ id, title, thumbnail, like }) {
   return (
     <div>
       <Link to={`/essay/detail/${id}`} key={id}>
@@ -12,8 +14,20 @@ export default function EssayCard({ id, title, thumbnail }) {
           }}
         >
           <div className='w-full h-[9rem]'>
-            <div className='flex w-full h-[9rem] justify-center items-center'>
+            <div className='flex flex-col w-full h-[9rem] justify-evenly items-center'>
               <div className='text-xl font-semibold'>{title}</div>
+
+              <div className='flex text-sm'>
+                <div className='flex items-center mx-2'>
+                  <AiOutlineLike className='mr-1' />
+                  {like}
+                </div>
+                <div className='flex items-center mx-2'>
+                  <AiOutlineComment className='mr-1' />
+                  {/* 댓글 수 데이터 받기 */}
+                  <span>2</span>
+                </div>
+              </div>
             </div>
           </div>
           <div className='w-full h-[11rem] rounded-br-2xl '>

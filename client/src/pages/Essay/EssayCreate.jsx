@@ -66,9 +66,9 @@ export default function EssayCreate() {
   return (
     <>
       <div className='w-full h-full flex flex-col justify-center items-center'>
-        <div className='sm:text-4xl text-3xl font-bold mb-5 text-[#000000]'>
+        {/* <div className='sm:text-4xl text-3xl font-bold mb-5 text-[#000000]'>
           백일장 작성
-        </div>
+        </div> */}
         <form
           onSubmit={onSubmit}
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center border'
@@ -100,7 +100,7 @@ export default function EssayCreate() {
                 사진 첨부
               </label>
               <label
-                className='mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg cursor-pointer'
+                className='mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg cursor-pointer hover:opacity-90'
                 for='inputImg'
               >
                 파일 업로드
@@ -143,7 +143,7 @@ export default function EssayCreate() {
           <div>
             <button
               type='submit'
-              className='my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg '
+              className='my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg hover:opacity-90'
             >
               백일장에 게시하기
             </button>

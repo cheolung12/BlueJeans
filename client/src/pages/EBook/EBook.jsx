@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
-import { Link, useNavigate } from 'react-router-dom';
 // import bookList from '../../data/bookList.json';
 import BookCard from '../../components/Ebook/Main/BookCard';
 import BookCardSearch from '../../components/Ebook/Main/BookCardSearch';
@@ -11,12 +10,21 @@ import axios from 'axios';
 // const books = bookList.books;
 
 export default function EBook() {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState([
+    { title: '' },
+    { id: '' },
+    { author: '' },
+    { thumbnail: '' },
+    { like: 0 },
+    { publisher: '' },
+    { genre: '' },
+    { description: '' },
+  ]);
   const [searchInput, setSearchInput] = useState('');
   const [bookLength, setBookLength] = useState(0);
   // 1. 책 목록 전체 보여주기
   // 2. 검색한 책 목록만 보여주기 => useParams
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // get 요청 (전체 책 목록)
   useEffect(() => {
@@ -100,44 +108,27 @@ export default function EBook() {
             <section>
               <div className='py-3'>
                 <div className='flex flex-wrap justify-between w-full sm:w-[900px] max-[375px]:justify-center'>
-                  {
-                    // searchInput !== books.title ? (
-                    //   <>
-                    //     <div className='font-semibold text-xl text-center py-3'>
-                    //       검색결과가 없습니다.
-                    //     </div>
-                    //   </>
-                    // ) : (
-                    books.map((book) => (
-                      // 북카드 클릭시 e-book 상세 페이지로 이동
-                      <Link
-                        to={`/ebook/detail/${book.id}`}
-                        // state로 책 데이터 전달 => useLocation으로 받음
-                        state={{ dataDetail: book }}
-                        className='p-2'
-                        key={book.id}
-                      >
-                        {searchInput ? (
-                          <>
-                            <BookCardSearch
-                              id={book.id}
-                              thumbnail={book.thumbnail}
-                              title={book.title}
-                              author={book.author}
-                            />
-                          </>
-                        ) : (
-                          <BookCard
+                  {books.map((book) => (
+                    <div>
+                      {searchInput ? (
+                        <>
+                          <BookCardSearch
                             id={book.id}
                             thumbnail={book.thumbnail}
                             title={book.title}
                             author={book.author}
                           />
-                        )}
-                      </Link>
-                    ))
-                    // )
-                  }
+                        </>
+                      ) : (
+                        <BookCard
+                          id={book.id}
+                          thumbnail={book.thumbnail}
+                          title={book.title}
+                          author={book.author}
+                        />
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>
