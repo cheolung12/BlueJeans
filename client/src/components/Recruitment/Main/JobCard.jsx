@@ -8,12 +8,8 @@ export default function JobCard({ dataList }) {
             <div className="flex flex-wrap justify-between">
                 {dataList.map((data) => (
                     <div className="p-2 lg:w-1/2 w-full transition-transform hover:ease-linear transform hover:scale-105">
-                        <Link
-                            className="p-2 h-48 flex flex-row justify-center border rounded-lg shadow-md"
-                            to={`/recruitment/detail/${data.id}`}
-                            state={{ dataDetail: data }}
-                            key={data.id}
-                        >
+                        <Link className="p-2 h-48 flex flex-row justify-center border rounded-lg shadow-md" to={`/recruitment/detail/${data.id}`}>
+                            {/* key={data.id} state={{ dataDetail: data }} */}
                             <div class="m-1 w-1/2">
                                 <img
                                     className=" w-full h-full object-none border border-solid rounded-lg "
