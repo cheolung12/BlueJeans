@@ -101,11 +101,16 @@ public class RecruitService {
     }
 
     // 공고 상세
-    public ResRecruitDTO recruitDetail(int id) {
-        RecruitEntity recruit = recruitRepository.findById(id).orElse(null);
+    public ResRecruitDTO recruitDetail(int jobId, UserEntity user) {
+        RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         int like = recruitDibRepository.countByRecruit(recruit);
+        log.info("ddd");
+        int userId = user.getId();
+        boolean isHeart;
+        Optional <RecruitDibsEntity> isDib = recruitDibRepository.findByUser_IdAndRecruit_Id(userId, jobId);
+        isHeart = isDib.isPresent();
         if(recruit != null){
-            return ResRecruitDTO.toDTO(recruit, like);
+            return ResRecruitDTO.toDetailDTO(recruit, like, isHeart);
         } else {
             return null;
         }
@@ -119,7 +124,7 @@ public class RecruitService {
         // 수정
         if(recruit.isPresent()) {
             RecruitEntity existingEntity = recruit.get();
-            if (Objects.equals(existingEntity.getUserId().getUserID(), user.getUserID())) {
+            if (Objects.equals(existingEntity.getUser().getUserID(), user.getUserID())) {
                 existingEntity.updateFields(recruitDTO, fileURL);
                 recruitRepository.save(existingEntity);
                 return true;
@@ -137,7 +142,7 @@ public class RecruitService {
 
         // 삭제
         if (recruit.isPresent()) {
-            if(Objects.equals(recruit.get().getUserId().getUserID(), user.getUserID())){
+            if(Objects.equals(recruit.get().getUser().getUserID(), user.getUserID())){
                 recruitRepository.deleteById(jobId);
                 return true;
             }
@@ -180,7 +185,7 @@ public class RecruitService {
     public boolean updateRecruiting(int jobId, UserEntity user) {
         RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         if (recruit != null) {
-            if(Objects.equals(recruit.getUserId().getUserID(), user.getUserID())) {
+            if(Objects.equals(recruit.getUser().getUserID(), user.getUserID())) {
                 boolean result = !recruit.isRecruiting();
                 recruit.setRecruiting(!recruit.isRecruiting());
                 recruitRepository.save(recruit);
