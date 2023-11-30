@@ -10,7 +10,7 @@ import mainJ from '../data/mainJ.json';
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
 import { FaRegThumbsUp } from 'react-icons/fa';
-import { FaLocationDot } from 'react-icons/fa6';
+import { FaDAndD, FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
 import { BiCommentDetail } from 'react-icons/bi';
 
@@ -19,6 +19,8 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import { useMediaQuery } from 'react-responsive';
 
+// import main from '../components/main/mainImg/main.jpeg';
+import mainl from '../components/main/mainImg/mainl.jpg';
 /////////////////컴포넌트 import///////////////
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -76,20 +78,29 @@ export default function Main({
   const essayList = mainData?.essayList || [];
   const recruitList = mainData?.recruitList || [];
 
+  const essay0 = essayList[0];
+  const essay1 = essayList[1];
+  const essay2 = essayList[2];
+
   const mJob = mainJ;
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <>
       <TopNavbar />
       <div>
-        <div className=' h-[700px] w-full bg-red-50'>
-          <div>
-            {/* <div>
-              <img src={main} alt='' />  */}
-            <MainBar className='flex items-end' />
-            {/* </div> */}
+        <div className='h-[750px] w-full relative'>
+          <div className='bg-cover bg-center h-auto w-full relative'>
+            <img
+              src={mainl}
+              alt='main'
+              className='h-auto w-full bg-cover bg-center'
+            />
+            <div className='absolute bottom-0 left-0 w-full'>
+              <MainBar className='flex items-end' />
+            </div>
           </div>
         </div>
+
         {/* 1 */}
         <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
@@ -153,19 +164,18 @@ export default function Main({
         {/* 좋아요 많은 순서대로 3개 보여주기  */}
         <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
           <div className='flex w-full items-end pl-4 justify-evenly'>
-            {/* 백일장 1*/}
-            {essayList.map((essay) => {})}
-
-            <div className=' h-80 w-56 rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+            <div className=' h-[25rem] w-64 rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
               <div className='content-center w-full'>
-                <div className=' text-2xl text-center p-3'>작품제목</div>
+                <div className=' text-2xl text-center p-3'>
+                  {/* {essay1.user_id} */}
+                </div>
                 <div className='w-full flex justify-center'>
                   <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
                 </div>
-                <div className=' text-center text-2xl  p-3'>이름</div>
+                <div className=' text-center text-2xl  p-3'>{essay1.title}</div>
                 <div className='flex justify-center'>
                   <FaRegThumbsUp className='self-center' />
-                  <div>22</div>
+                  <div>{essay1.like}</div>
                 </div>
               </div>
             </div>
@@ -176,32 +186,36 @@ export default function Main({
               <div className=' text-center text-3xl text-white pb-5'>
                 이번주 문학 왕
               </div>
-              <div className=' h-[27rem] w-56  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+              <div className=' h-[30rem] w-64  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
                 <div className='content-center w-full'>
-                  <div className='text-2xl text-center p-3'>가장 넓은 길</div>
+                  <div className='text-2xl text-center p-3'>
+                    {/* {essay0.user_id} */}
+                  </div>
                   <div className='w-full flex justify-center'>
                     <div className='h-32 w-32 rounded-full bg-red-50'></div>
                   </div>
-                  <div className='text-center text-2xl p-3'>이영경</div>
+                  <div className='text-center text-2xl p-3'>{essay0.title}</div>
                   <div className='flex justify-center'>
                     <FaRegThumbsUp className='self-center' />
-                    <div>22</div>
+                    <div>{essay0.like}</div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* 백일장 3 */}
-            <div className='h-72 w-56  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
+            <div className='h-[23rem] w-64  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
               <div className='content-center w-full'>
-                <div className=' text-2xl text-center p-3'>작품제목</div>
+                <div className=' text-2xl text-center p-3'>
+                  {/* {essay2.user_id} */}
+                </div>
                 <div className='w-full flex justify-center'>
                   <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
                 </div>
-                <div className=' text-center text-2xl  p-3'>이름</div>
+                <div className=' text-center text-2xl  p-3'>{essay2.title}</div>
                 <div className='flex justify-center'>
                   <FaRegThumbsUp className='self-center' />
-                  <div>22</div>
+                  <div>{essay2.like}</div>
                 </div>
               </div>
             </div>
@@ -213,7 +227,6 @@ export default function Main({
         </div>
         {/* 3 */}
         {/* 젤 최신 3개 가져오기 */}
-        ccc
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
             <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white '>
