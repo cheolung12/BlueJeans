@@ -9,35 +9,39 @@ import Footer from './components/common/Footer';
 function App() {
   const location = useLocation();
 
-    // 맨 위 Navbar가 필요없는 페이지 경로
-    const noTopNavbarPath = [];
-    // 사이드 Navbar가 필요없는 페이지 경로
-    const noSideNavbarPath = ['/', '/recruitment/create'];
-    // footer가 필요없는 경로
-    const noFooterPath = [];
-    // 레이아웃 필요없는 전체화면 페이지
-    const fullScreenPagePath = ['/', '/login', '/signup'];
-    
-    const fullScreenDynamicUrl = location.pathname.startsWith('/ebook/detail/viewer') ;
-    const noSideNavbarDynamicUrl = location.pathname.startsWith('/recruitment/edit') || location.pathname.startsWith('/mypage');
+  // 맨 위 Navbar가 필요없는 페이지 경로
+  const noTopNavbarPath = [];
+  // 사이드 Navbar가 필요없는 페이지 경로
+  const noSideNavbarPath = ['/', '/recruitment/create'];
+  // footer가 필요없는 경로
+  const noFooterPath = [];
+  // 레이아웃 필요없는 전체화면 페이지
+  const fullScreenPagePath = ['/', '/login', '/signup'];
 
-    return (
+  const fullScreenDynamicUrl = location.pathname.startsWith(
+    '/ebook/detail/viewer'
+  );
+  const noSideNavbarDynamicUrl =
+    location.pathname.startsWith('/recruitment/edit') ||
+    location.pathname.startsWith('/mypage');
+
+  return (
+    <>
+      {!(
+        fullScreenPagePath.includes(location.pathname) || fullScreenDynamicUrl
+      ) ? (
         <>
-            {!(fullScreenPagePath.includes(location.pathname) || fullScreenDynamicUrl) ? (
-                <>
-                    {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
-                    <Wrapper>
-                        <div className="flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12 mt-10 mb-20">
-                            {!(noSideNavbarPath.includes(location.pathname) || noSideNavbarDynamicUrl) && <SideNavBar />}
-                            <Outlet />
-                        </div>
-                        {!noFooterPath.includes(location.pathname) && <Footer />}
-                    </Wrapper>
-                </>
-            ) : (
-                <Outlet />
-            )}
-
+          {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
+          <Wrapper>
+            <div className='flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12 mt-10 mb-20'>
+              {!(
+                noSideNavbarPath.includes(location.pathname) ||
+                noSideNavbarDynamicUrl
+              ) && <SideNavBar />}
+              <Outlet />
+            </div>
+            {!noFooterPath.includes(location.pathname) && <Footer />}
+          </Wrapper>
         </>
       ) : (
         <Outlet />
