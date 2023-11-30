@@ -12,7 +12,7 @@ import RecruitLikeButton from './RecruitLikeButton';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export default function DetailExample({ data }) {
+export default function DetailExample({ data, isCloseR }) {
     // const dataD = data;
 
     const workdDayfrom = data.workDay;
@@ -127,7 +127,7 @@ export default function DetailExample({ data }) {
                     <div className="m-2">글쓴이 프로필</div>
                     <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
-                            {data.recruiting ? (
+                            {isCloseR ? (
                                 <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
                                     모집
                                 </p>

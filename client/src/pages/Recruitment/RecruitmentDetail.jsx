@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import DetailExample from '../../components/Recruitment/Detail/DetailExample';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ResButton from '../../components/common/ResButton';
 import axios from 'axios';
 
 export default function RecruitmentDetail() {
     const navigate = useNavigate();
-    const location = useLocation();
+    const { jobId } = useParams();
+
+    console.log('잡아이디', jobId);
+
+    // const location = useLocation();
     const [works, setWorks] = useState([]);
+    const [isCloseR, setIsCloseR] = useState();
 
     // 상세 페이지 조회
     useEffect(() => {
@@ -15,10 +20,12 @@ export default function RecruitmentDetail() {
             try {
                 const response = await axios({
                     method: 'GET',
-                    url: `${process.env.REACT_APP_SERVER}/jobs/${location.state.dataDetail.id}`,
+                    url: `${process.env.REACT_APP_SERVER}/jobs/${jobId}`,
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
+                setIsCloseR(response.data.recruiting);
+                console.log('마감 토글 :', isCloseR);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -27,31 +34,9 @@ export default function RecruitmentDetail() {
     }, []);
 
     // const [isRecruiting, setIsRecruiting] = useState(location.state.dataDetail.recruiting);
-    console.log(localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
-    console.log(location.state.dataDetail);
-
-    // 권한 여부
-    // 게시물 등록자와 현재 로그인된 유저가 같을 시에 => boolean => 마감 수정 삭제 버튼 활성화
-    // 게시물 등록자 - data.userId.userID
-    // 로그인된 유저 - ?
-    const [editA, setEditA] = useState(false);
-    // if (localStorage.getItem('nickname') == location.state.dataDetail.nickname) {
-    //     setEditA(true);
-    // } else if ('권한없으면') {
-    //     setEditA(false);
-    // }
-    useEffect(() => {
-        if (localStorage.getItem('nickname') == location.state.dataDetail.nickname) {
-            setEditA(true);
-        } else if ('권한없으면') {
-            setEditA(false);
-        }
-    }, []);
-
-    // 공고 수정
-    function editRecruit() {
-        console.log('공고 수정');
-    }
+    console.log('유저닉네임 : ', localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
+    console.log('작성닉네임 : ', works.nickname);
+    // console.log(location.state.dataDetail);
 
     // 공고 삭제
     const deleteRecruit = async () => {
@@ -100,7 +85,6 @@ export default function RecruitmentDetail() {
     };
 
     // 공고 마감 하기 ==================
-
     // 마감 버튼
 
     const recruitClose = async () => {
@@ -110,8 +94,9 @@ export default function RecruitmentDetail() {
                 url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`, ///${location.state.dataDetail.id}
                 withCredentials: true,
             });
-            console.log(response);
-            // setIsRecruiting(response.recruiting);
+            console.log('마감 통신', response);
+            setIsCloseR((prevIsClose) => !prevIsClose);
+            console.log(isCloseR);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -123,19 +108,21 @@ export default function RecruitmentDetail() {
         <>
             <div className="w-full flex justify-center">
                 <section className="max-w-4xl block">
-                    <DetailExample data={works} />
+                    <DetailExample data={works} isCloseR={isCloseR} />
 
                     <nav className="flex justify-end">
-                        {editA ? (
+                        {localStorage.getItem('nickname') == works.nickname ? (
                             <div className="flex flex-row  space-x-2">
+                                {/** 
                                 <div className="w-[6rem] h-[3rem] border border-gray-600">
                                     <div onClick={onChangeDIB}>좋아요~</div>
                                 </div>
+                                */}
                                 <div
                                     className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={recruitClose}
                                 >
-                                    {works.recruiting ? '마감 하기' : '다시 모집'}
+                                    {isCloseR ? '마감 하기' : '다시 모집'}
                                 </div>
                                 <Link to={`/recruitment/edit/${works.id}`} state={{ dataDetail: works }} key={works.id}>
                                     <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">

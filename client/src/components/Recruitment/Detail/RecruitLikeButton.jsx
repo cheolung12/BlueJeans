@@ -4,8 +4,10 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
 
-export default function EbookDibsButton({ like, notlike, countlike, mylike }) {
+export default function RecruitLikeButton({ like, notlike, countlike, mylike }) {
     const { jobId } = useParams();
+
+    console.log(jobId);
     // 하트 색상 변경
     const [isLikeAdd, setIsLikeAdd] = useState(false);
     // 찜하기 수 카운트
