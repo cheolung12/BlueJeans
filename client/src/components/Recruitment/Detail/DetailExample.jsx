@@ -14,7 +14,7 @@ import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export default function DetailExample({ data, isCloseR, loading, isHeart }) {
+export default function DetailExample({ data, isCloseR, loading, isHeart, allHeart }) {
     // const dataD = data;
     const workdDayfrom = data.workDay;
 
@@ -129,7 +129,7 @@ export default function DetailExample({ data, isCloseR, loading, isHeart }) {
                             <img className="w-full h-auto " src={data.img_path} alt="직업 소개 이미지" />
                         </div>
                     )}
-                    <div className="m-2">{localStorage.getItem('nickname')} 님의 공고입니다.</div>
+                    <div className="m-2">{data.nickname} 님의 공고입니다.</div>
                     <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
                             {isCloseR ? (
@@ -144,7 +144,7 @@ export default function DetailExample({ data, isCloseR, loading, isHeart }) {
                             <p className="text-2xl font-bold">{data.title}</p>
                         </div>
 
-                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" countlike={data.like} mylike={isHeart} />
+                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" isHeart={isHeart} allHeart={allHeart} />
                     </div>
                     {loading ? (
                         <Skeleton />
@@ -169,7 +169,7 @@ export default function DetailExample({ data, isCloseR, loading, isHeart }) {
                             <div className="text-xl font-semibold">정보</div>
                             <div className="text-lg flex items-center">
                                 <FaWonSign className="mr-2" />
-                                급여 - {data.money}원
+                                급여 - {data.moneyStandard} {data.money}원
                             </div>
                             <div className="text-lg flex items-center">
                                 <FaMapMarkerAlt className="mr-2" />
