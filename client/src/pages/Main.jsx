@@ -90,9 +90,7 @@ export default function Main({
             {/* </div> */}
           </div>
         </div>
-
         {/* 1 */}
-
         <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
             <div className='text-center mt-3'>
@@ -213,10 +211,9 @@ export default function Main({
             <Calligraphy className='w-[50rem] h-[30rem]' />
           </div>
         </div>
-
         {/* 3 */}
-
         {/* 젤 최신 3개 가져오기 */}
+        ccc
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
             <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white '>
