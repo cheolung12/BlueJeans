@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import AddComment from '../../components/Essay/Detail/AddComment';
 import CommentList from '../../components/Essay/Detail/CommentList';
 import AssayDibsButton from '../../components/Essay/Detail/AssayDibsButton';
@@ -8,6 +8,7 @@ import axios from 'axios';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [essayContent, setEssayContent] = useState({
     title: '',
@@ -21,8 +22,6 @@ export default function EssayDetail() {
 
   // 댓글 담고 있는 데이터
   const [commentList, setCommentList] = useState([]);
-
-  // 게시물 엔터
 
   // get 요청
   useEffect(() => {
@@ -44,6 +43,8 @@ export default function EssayDetail() {
 
   // //새로운 댓글 업데이트
   // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
+
+  // 백일장 삭제
   const handleDelete = async () => {
     const confirm = window.confirm('게시물을 삭제하시겠습니까?');
     // console.log(isFemale)
@@ -52,6 +53,7 @@ export default function EssayDetail() {
         const response = await axios({
           method: 'DELETE',
           url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
+          withCredentials: true,
         });
         console.log(response.data);
         alert('게시글이 삭제되었습니다.');
@@ -70,18 +72,17 @@ export default function EssayDetail() {
         <div className='flex flex-col w-[91%]'>
           <div className='w-full'>
             {essayContent.user_id === window.localStorage.getItem('userID') ? (
-              <div className='flex w-full justify-between'>
-                <div
-                  className='cursor-pointer w-14 h-8 mr-2 inline-flex items-center justify-center text-white bg-signatureColor rounded-lg shadow-sm font-semibold text-md'
-                  onClick={() => navigate('/essay')}
-                >
-                  목록
-                </div>
-
+              <div className='flex w-full justify-end'>
                 <div>
-                  <div className='cursor-pointer w-14 h-8 mr-2 inline-flex items-center justify-center text-white bg-signatureColor rounded-lg shadow-sm font-semibold text-md'>
-                    수정
-                  </div>
+                  <Link
+                    to={`/essay/edit/${EssayId}`}
+                    state={{ essayData: essayContent }}
+                    key={essayContent.user_id}
+                  >
+                    <div className='cursor-pointer w-14 h-8 mr-2 inline-flex items-center justify-center text-white bg-signatureColor rounded-lg shadow-sm font-semibold text-md'>
+                      수정
+                    </div>
+                  </Link>
 
                   <div
                     onClick={handleDelete}
@@ -167,6 +168,15 @@ export default function EssayDetail() {
                       // onDelete={handleDelete}
                     />
                   ))}
+                </div>
+
+                <div className='flex justify-end'>
+                  <div
+                    className='cursor-pointer w-14 h-8 mr-2 inline-flex items-center justify-center text-white bg-signatureColor rounded-lg shadow-sm font-semibold text-md'
+                    onClick={() => navigate('/essay')}
+                  >
+                    목록
+                  </div>
                 </div>
               </div>
             </section>
