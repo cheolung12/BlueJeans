@@ -13,8 +13,6 @@ public class ResMyPageDTO {
 
     private String nickname;
     private String address;
-    private List<ResRecruitDTO> MyRecruitList;
-    private List<ResEssayDTO> MyEssayList;
-    private List<ResEBookDTO> MyEBookList;
-
+    private List<MyPostsDTO> likedPost;
+    private List<MyPostsDTO> writedPost;
 }

@@ -4,6 +4,7 @@ import com.bluejeans.server.dto.EditUserInfoDTO;
 import com.bluejeans.server.dto.ResMainDTO;
 import com.bluejeans.server.dto.ResMyPageDTO;
 import com.bluejeans.server.entity.UserEntity;
+import com.bluejeans.server.service.MainPageService;
 import com.bluejeans.server.service.MyPageService;
 import com.bluejeans.server.service.S3Uploader;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,13 +23,15 @@ public class MyPageController {
     @Autowired
     private MyPageService myPageService;
 
+    @Autowired
+    private MainPageService mainPageService;
+
 
     @Autowired
     S3Uploader s3Uploader;
 
 
     @GetMapping("/api/mypage")
-
     @Operation(summary="유저 정보, 해당 유저가 찜한 게시물 불러오기")
     public ResMyPageDTO getUserInfo(@AuthenticationPrincipal UserEntity user) {
 
@@ -50,11 +53,13 @@ public class MyPageController {
         return myPageService.editUserInfo(fileURL, user, editDTO);
     }
 
+
+    // 하나밖에 없어서 여기다 만들었음
     @GetMapping("/api/main")
     @Operation(summary="main 화면에서 게시물 정보 불러오기")
     public ResMainDTO getMainPost() {
 
-        return myPageService.getMainPost();
+        return mainPageService.getMainPost();
     }
 
 }

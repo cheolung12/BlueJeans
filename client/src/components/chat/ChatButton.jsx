@@ -13,7 +13,7 @@ export default function ChatButton({ inputText, handleSendClick, enterKeyPressed
       
     > 
       <FiSend className='lg:text-3xl text-2xl mb-1.5'/> 
-      <div className='text-sm  font-semibold'>전송</div>
+      <div className='lg:text-lg md:text-md text-sm  font-semibold'>전송</div>
     </div>
   );
 }

@@ -15,4 +15,6 @@ public interface RecruitDibRepository extends JpaRepository<RecruitDibsEntity, R
     Optional<RecruitDibsEntity> findByRecruitAndUser(RecruitEntity recruit, UserEntity userEntity);
 
     int countByRecruit(RecruitEntity recruit);
+
+    Optional<RecruitDibsEntity>  findByUser_IdAndRecruit_Id(int userId, int jobId);
 }

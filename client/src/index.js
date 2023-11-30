@@ -19,6 +19,9 @@ import Login from './pages/Login';
 import EssayDetail from './pages/Essay/EssayDetail';
 import EssayCreate from './pages/Essay/EssayCreate';
 import RecruitmentEdit from './pages/Recruitment/RecruitmentEdit';
+import EssayEdit from './pages/Essay/EssayEdit';
+
+import MyPage from './pages/MyPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
             { index: true, element: <Main /> },
             { path: 'signup', element: <Signup /> },
             { path: 'login', element: <Login /> },
+            { path: 'mypage', element: <MyPage />},
             { path: 'recruitment', element: <Recruitment /> },
             { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
             { path: 'recruitment/detail', element: <RecruitmentDetail /> },
@@ -43,13 +47,14 @@ const router = createBrowserRouter([
             { path: 'essay', element: <Essay /> },
             { path: 'essay/detail/:EssayId', element: <EssayDetail /> },
             { path: 'essay/create', element: <EssayCreate /> },
+            { path: 'essay/edit/:EssayId', element: <EssayEdit /> },
             { path: 'findhome', element: <FindHome /> },
         ],
     },
 ]);
 
 root.render(
-    <>
-        <RouterProvider router={router} />
-    </>
+  <>
+    <RouterProvider router={router} />
+  </>
 );

@@ -4,30 +4,31 @@
 
 /* 중복되는 스타일 저장 */
 @layer utilities {
-    .signup-input-wrapper {
-        @apply flex flex-col items-start w-3/5 mb-4;
-    }
-    .signup-input-header {
-        @apply w-full mb-2 flex justify-between items-end;
-    }
-    .signup-input-label {
-        @apply text-base text-gray-600 font-semibold;
-    }
-    .signup-input {
-        @apply w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus:ring focus:ring-indigo-400;
-    }
-    .signup-input-duplicable {
-        @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring focus-within:ring-indigo-400;
-    }
-    .sideNav-link {
-        @apply flex flex-col justify-center items-center w-16 h-16 hover:ease-linear transform hover:scale-105;
-    }
-    .sideNav-icon {
-        @apply sm:w-12 w-8 sm:h-12 h-8 mb-1;
-    }
-    .sideNav-text {
-        @apply sm:text-lg text-base text-center font-semibold;
-    }
+  .signup-input-wrapper {
+    @apply flex flex-col items-start w-3/5 mb-4;
+  }
+  .signup-input-header {
+    @apply w-full mb-2 flex justify-between items-end
+  }
+  .signup-input-label {
+    @apply text-base text-gray-600 font-semibold;
+  }
+  .signup-input {
+    @apply w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus-within:ring-2 focus:ring-[#495A9B];
+  }
+  .signup-input-duplicable {
+    @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring-2 focus-within:ring-[#495A9B];
+  }
+  .sideNav-link {
+    @apply flex flex-col justify-center items-center w-16 h-16 hover:ease-linear transform hover:scale-105
+  }
+  .sideNav-icon {
+    @apply sm:w-12 w-8 sm:h-12 h-8 mb-1
+  }
+  .sideNav-text {
+    @apply sm:text-lg text-base text-center font-semibold
+  }
+
 }
 
 @layer base {

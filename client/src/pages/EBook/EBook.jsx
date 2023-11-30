@@ -24,8 +24,8 @@ export default function EBook() {
       try {
         const response = await axios({
           method: 'GET',
-          // url: `${process.env.REACT_APP_SERVER}/ebook`,
-          url: 'http://localhost:8080/api/ebook',
+          url: `${process.env.REACT_APP_SERVER}/ebook`,
+          // url: 'http://localhost:8080/api/ebook',
         });
         setBooks(response.data);
         console.log(response.data);

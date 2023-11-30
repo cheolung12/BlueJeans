@@ -28,4 +28,6 @@ public interface EssayRepository extends JpaRepository<EssayEntity, Integer> {
             "ORDER BY like_count DESC " +
             "LIMIT 3", nativeQuery = true)
     List<EssayEntity> findFavoritePosts();
+
+    List<EssayEntity> findByUser_Id(int userId);
 }
