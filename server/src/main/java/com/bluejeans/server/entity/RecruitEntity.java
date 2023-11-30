@@ -23,7 +23,7 @@ public class RecruitEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userId;
+    private UserEntity user;
 
     @Column(nullable = true)
     private String title;
@@ -31,8 +31,8 @@ public class RecruitEntity {
     @Column(nullable = true, length = 1000)
     private String content;
 
-    @Column
-    private boolean recruiting = true;
+    @Column(columnDefinition = "boolean default true")
+    private boolean recruiting;
 
     @Column
     private String moneyStandard;
@@ -76,6 +76,5 @@ public class RecruitEntity {
         if(fileURL != null){
             this.setImg_path(fileURL);
         }
-
     }
 }

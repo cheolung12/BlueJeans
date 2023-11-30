@@ -30,7 +30,7 @@ public class RecruitDTO {
             return null;
         }
         return RecruitEntity.builder()
-                .userId(user)
+                .user(user)
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .moneyStandard(dto.getMoneyStandard())

@@ -75,8 +75,8 @@ public class RecruitController {
 
     @GetMapping("/{job_id}")
     @Operation(summary="공고 게시물 상세 조회")
-    public ResRecruitDTO recruitDetail(@PathVariable int job_id){
-        return recruitService.recruitDetail(job_id);
+    public ResRecruitDTO recruitDetail(@PathVariable int job_id, @AuthenticationPrincipal UserEntity user){
+        return recruitService.recruitDetail(job_id, user);
     }
 
     // 일자리 수정 (오류)
