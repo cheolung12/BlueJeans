@@ -128,7 +128,7 @@ export default function RecruitmentDetail() {
                     <nav className="flex justify-end">
                         {editA ? (
                             <div className="flex flex-row  space-x-2">
-                                <div>
+                                <div className="w-[6rem] h-[3rem] border border-gray-600">
                                     <div onClick={onChangeDIB}>좋아요~</div>
                                 </div>
                                 <div
