@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -34,8 +35,8 @@ public class EBookEntity {
     @Column(length=20)
     private String genre;
 
-    @Column(length=20)
-    private String ISBN = "9791192300825";
+    @ColumnDefault("9791192300825")
+    private String ISBN;
 
     @Column(columnDefinition = "TEXT")
     private String description;
