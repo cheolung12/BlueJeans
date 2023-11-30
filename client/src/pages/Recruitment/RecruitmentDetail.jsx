@@ -11,6 +11,7 @@ export default function RecruitmentDetail() {
     console.log('잡아이디', jobId);
 
     // const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
 
@@ -21,10 +22,12 @@ export default function RecruitmentDetail() {
                 const response = await axios({
                     method: 'GET',
                     url: `${process.env.REACT_APP_SERVER}/jobs/${jobId}`,
+                    withCredentials: true,
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
                 setIsCloseR(response.data.recruiting);
+                setLoading(false);
                 console.log('마감 토글 :', isCloseR);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -108,7 +111,7 @@ export default function RecruitmentDetail() {
         <>
             <div className="w-full flex justify-center">
                 <section className="max-w-4xl block">
-                    <DetailExample data={works} isCloseR={isCloseR} />
+                    <DetailExample data={works} isCloseR={isCloseR} loading={loading} />
 
                     <nav className="flex justify-end">
                         {localStorage.getItem('nickname') == works.nickname ? (
