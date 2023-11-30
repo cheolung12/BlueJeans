@@ -9,7 +9,11 @@ import { useParams } from 'react-router-dom';
 
 export default function EBookViewer() {
   const { bookId } = useParams();
-  const [bookData, setBookData] = useState([]);
+  const [bookData, setBookData] = useState({
+    book_id: '',
+    title: '',
+    content: '',
+  });
 
   // get요청
   useEffect(() => {
@@ -20,6 +24,7 @@ export default function EBookViewer() {
           url: `http://localhost:8080/api/ebook/detail/viewer/${bookId}`,
           // url: 'http://localhost:8080/api/ebook',
           // url: `${process.env.REACT_APP_SERVER}/ebook/detail/viewer/${bookId}`,
+          withCredentials: true,
         });
         console.log(response);
         setBookData(response.data);
@@ -35,8 +40,8 @@ export default function EBookViewer() {
       <div className='flex justify-end m-3 min-w-[375px]:w-full'>
         <ExitButton />
       </div>
-      <BookTitle />
-      <BookViewer data={bookData} />
+      <BookTitle title={bookData.title} />
+      <BookViewer bookId={bookData.book_id} content={bookData.content} />
     </div>
   );
 }

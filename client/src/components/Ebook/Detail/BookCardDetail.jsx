@@ -1,10 +1,16 @@
 import React from 'react';
 import ImageCard from './ImageCard';
 import ContentCard from './ContentCard';
-export default function BookCardDetail({ data }) {
-  const { thumbnail, title, author, id, description, publisher, genre, ISBN } =
-    data;
-  // console.log(data);
+export default function BookCardDetail({
+  id,
+  title,
+  thumbnail,
+  author,
+  publisher,
+  genre,
+  ISBN,
+  description,
+}) {
   return (
     <div>
       <div>

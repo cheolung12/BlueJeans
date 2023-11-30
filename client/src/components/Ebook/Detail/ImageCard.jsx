@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ResButton from '../../common/ResButton';
 import EbookDibsButton from '../../Ebook/Detail/EbookDibsButton';
 
@@ -12,11 +12,13 @@ export default function ImageCard({
   genre,
   ISBN,
 }) {
+  const { bookId } = useParams();
   const handleLogin = () => {
     if (!window.localStorage.getItem('userID')) {
-      alert('로그인해라');
+      alert('로그인이 필요합니다.');
     }
   };
+
   return (
     <div>
       <section
@@ -78,10 +80,9 @@ export default function ImageCard({
           {/* 찜하기 버튼 */}
           <EbookDibsButton like='찜하기' notlike='찜해제' />
           {/* 바로 읽기 버튼 */}
-          {/* 로그인 안한 상태에서 누르면 로그인 페이지로 이동 */}
           {window.localStorage.getItem('userID') ? (
             <Link
-              to={`/ebook/detail/viewer/${id}`}
+              to={`/ebook/detail/viewer/${bookId}`}
               key={id}
               state={{ id, title }}
               onClick={handleLogin}

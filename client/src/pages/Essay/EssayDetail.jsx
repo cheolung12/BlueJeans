@@ -8,7 +8,6 @@ import axios from 'axios';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [essayContent, setEssayContent] = useState({
     title: '',
@@ -148,7 +147,11 @@ export default function EssayDetail() {
 
             {/* 좋아요 버튼 */}
             <div className='my-4'>
-              <AssayDibsButton like='추천해요' notlike='추천해제' />
+              <AssayDibsButton
+                like='추천해요'
+                notlike='추천해제'
+                essayLike={essayContent.like}
+              />
             </div>
 
             {/* 댓글 container */}
