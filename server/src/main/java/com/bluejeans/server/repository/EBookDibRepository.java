@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface EBookDibRepository extends JpaRepository<EBookDibsEntity, EBookDibsEntityKey> {
     Optional<EBookDibsEntity> findByEbookAndUser(EBookEntity ebook, UserEntity userEntity);
     long countByEbook(EBookEntity ebook);
+
+    Optional<EBookDibsEntity> findByUser_IdAndEbook_Id(int userId, int ebookId);
 }

@@ -104,11 +104,11 @@ public class RecruitService {
     public ResRecruitDTO recruitDetail(int jobId, UserEntity user) {
         RecruitEntity recruit = recruitRepository.findById(jobId).orElse(null);
         int like = recruitDibRepository.countByRecruit(recruit);
-        log.info("ddd");
         int userId = user.getId();
         boolean isHeart;
         Optional <RecruitDibsEntity> isDib = recruitDibRepository.findByUser_IdAndRecruit_Id(userId, jobId);
         isHeart = isDib.isPresent();
+
         if(recruit != null){
             return ResRecruitDTO.toDetailDTO(recruit, like, isHeart);
         } else {
