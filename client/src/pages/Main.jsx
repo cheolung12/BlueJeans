@@ -39,18 +39,7 @@ window.addEventListener('scroll', () => {
   // console.log(window.scrollX, window.scrollY);
 });
 
-export default function Main({
-  id,
-  thumbnail,
-  title,
-  userid,
-  pro,
-  job,
-  money,
-  address,
-  contact,
-  detail,
-}) {
+export default function Main() {
   const [mainData, setMainData] = useState([]);
 
   //책전체
@@ -152,7 +141,7 @@ export default function Main({
                 <div>
                   <img
                     src={book.thumbnail}
-                    alt={book.title}
+                    // alt={book.title}
                     className='h-[25rem] w-full text-blue-700'
                   />
                 </div>
@@ -172,10 +161,10 @@ export default function Main({
                 <div className='w-full flex justify-center'>
                   <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
                 </div>
-                <div className=' text-center text-2xl  p-3'>{essay1.title}</div>
+                {/* <div className=' text-center text-2xl  p-3'>{essay1.title}</div> */}
                 <div className='flex justify-center'>
                   <FaRegThumbsUp className='self-center' />
-                  <div>{essay1.like}</div>
+                  {/* <div>{essay1.like}</div> */}
                 </div>
               </div>
             </div>
@@ -194,10 +183,10 @@ export default function Main({
                   <div className='w-full flex justify-center'>
                     <div className='h-32 w-32 rounded-full bg-red-50'></div>
                   </div>
-                  <div className='text-center text-2xl p-3'>{essay0.title}</div>
+                  {/* <div className='text-center text-2xl p-3'>{essay0.title}</div> */}
                   <div className='flex justify-center'>
                     <FaRegThumbsUp className='self-center' />
-                    <div>{essay0.like}</div>
+                    {/* <div>{essay0.like}</div> */}
                   </div>
                 </div>
               </div>
@@ -212,10 +201,10 @@ export default function Main({
                 <div className='w-full flex justify-center'>
                   <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
                 </div>
-                <div className=' text-center text-2xl  p-3'>{essay2.title}</div>
+                {/* <div className=' text-center text-2xl  p-3'>{essay2.title}</div> */}
                 <div className='flex justify-center'>
                   <FaRegThumbsUp className='self-center' />
-                  <div>{essay2.like}</div>
+                  {/* <div>{essay2.like}</div> */}
                 </div>
               </div>
             </div>
@@ -253,7 +242,7 @@ export default function Main({
                     <div className=' self-center'>
                       <div className='mb-4 flex items-center'>
                         <IoMdBriefcase className='self-center mr-2' />
-                        <span>{recruit.title}</span>
+                        {/* <span>{recruit.title}</span> */}
                       </div>
                       <div className='mb-4 flex items-center'>
                         <FaLocationDot className='self-center mr-2' />
