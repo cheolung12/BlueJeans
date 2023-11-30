@@ -27,56 +27,73 @@ public class MyPageService {
     private EBookRepository ebookRepository;
 
     @Autowired
-    EssayRepository essayRepository;
-
-    @Autowired
-    private RecruitDibRepository recruitDibRepository;
+    private EssayRepository essayRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private EBookDibRepository eBookDibRepository;
-
-    @Autowired
-    private EssayDibRepository essayDibRepository;
 
     @Autowired
     S3Uploader s3Uploader;
 
 
-    public List<ResRecruitDTO> convertRecruitEntitiesToDTOList(List<RecruitEntity> recruitList) {
-        return recruitList.stream()
-                .map(recruit -> ResRecruitDTO.toDTO(recruit, recruitDibRepository.countByRecruit(recruit)))
-                .collect(Collectors.toList());
+    public void convertRecruitEntitiesToDTO(List<MyPostsDTO> DTOList, List<RecruitEntity> recruitList) {
+        for(RecruitEntity recruit :recruitList){
+            DTOList.add(MyPostsDTO.builder()
+                    .type("recruit")
+                    .id(recruit.getId())
+                    .title(recruit.getTitle())
+                    .img_path(recruit.getImg_path())
+                    .createdAt(recruit.getCreated_at())
+                    .build()
+            );
+        }
     }
 
-    public List<ResEBookDTO> convertEBookEntitiesToDTOList(List<EBookEntity> ebookList) {
-        return ebookList.stream()
-                .map(ebook -> ResEBookDTO.toDTO(ebook, eBookDibRepository.countByEbook(ebook)))
-                .collect(Collectors.toList());
+    public void convertEBookEntitiesToDTO(List<MyPostsDTO> DTOList, List<EBookEntity> ebookList) {
+        for(EBookEntity ebook :ebookList){
+            DTOList.add(MyPostsDTO.builder()
+                    .type("ebook")
+                    .id(ebook.getId())
+                    .title(ebook.getTitle())
+                    .img_path(ebook.getThumbnail())
+                    .createdAt(ebook.getCreated_at())
+                    .build()
+            );
+        }
     }
 
-    public List<ResEssayDTO> convertEssayEntitiesToDTOList(List<EssayEntity> essayList) {
-        return essayList.stream()
-                .map(essay -> ResEssayDTO.toDTO(essay, essayDibRepository.countByEssay(essay)))
-                .collect(Collectors.toList());
+    public void convertEssayEntitiesToDTO(List<MyPostsDTO> DTOList, List<EssayEntity> essayList) {
+        for(EssayEntity essay :essayList){
+            DTOList.add(MyPostsDTO.builder()
+                    .type("essay")
+                    .id(essay.getId())
+                    .title(essay.getTitle())
+                    .img_path(essay.getImg_path())
+                    .createdAt(essay.getCreated_at())
+                    .build()
+            );
+        }
     }
 
     public ResMyPageDTO getUserInfo(UserEntity user) {
         int userId = user.getId();
 
-        // 엔티티 리스트를 DTO 리스트로
-        List<ResRecruitDTO> RecruitLists = convertRecruitEntitiesToDTOList(recruitRepository.findByRecruitDibsUserId(userId));
-        List<ResEBookDTO> EBookLists = convertEBookEntitiesToDTOList(ebookRepository.findByEbookDibsUserId(userId));
-        List<ResEssayDTO> EssayLists = convertEssayEntitiesToDTOList(essayRepository.findByEssayDibsUserId(userId));
+        List<MyPostsDTO> MyLikePosts= new ArrayList<>();
+        List<MyPostsDTO> MyWritePosts = new ArrayList<>();
+
+        convertRecruitEntitiesToDTO(MyLikePosts, recruitRepository.findByRecruitDibsUserId(userId));
+        convertEBookEntitiesToDTO(MyLikePosts, ebookRepository.findByEbookDibsUserId(userId));
+        convertEssayEntitiesToDTO(MyLikePosts, essayRepository.findByEssayDibsUserId(userId));
+
+        convertRecruitEntitiesToDTO(MyWritePosts, recruitRepository.findByUser_Id(userId));
+        convertEssayEntitiesToDTO(MyWritePosts, essayRepository.findByUser_Id(userId));
 
         return ResMyPageDTO.builder()
                 .nickname(user.getNickname())
                 .address(user.getAddress())
-                .MyEssayList(EssayLists)
-                .MyEBookList(EBookLists)
-                .MyRecruitList(RecruitLists)
+                .likedPost(MyLikePosts)
+                .writedPost(MyWritePosts)
                 .build();
     }
 
@@ -87,19 +104,4 @@ public class MyPageService {
         return true;
 
     }
-
-    public ResMainDTO getMainPost() {
-
-        List<ResRecruitDTO> RecruitLists = convertRecruitEntitiesToDTOList(recruitRepository.findLatestPosts());
-        List<ResEBookDTO> EBookLists = convertEBookEntitiesToDTOList(ebookRepository.findRandomEBooks());
-        List<ResEssayDTO> EssayLists = convertEssayEntitiesToDTOList(essayRepository.findFavoritePosts());
-
-        return ResMainDTO.builder()
-                .EssayList(EssayLists)
-                .EBookList(EBookLists)
-                .RecruitList(RecruitLists)
-                .build();
-    }
-
-
 }
