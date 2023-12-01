@@ -116,6 +116,7 @@ export default function Recruitment() {
             setWorks(res.data);
             setSaveSearch(res.data);
             setLoading(false);
+            setIsChecked(false);
         }
     };
 
@@ -149,6 +150,7 @@ export default function Recruitment() {
             setWorks(res.data);
             setSaveSearch(res.data);
             setLoading(false);
+            setIsChecked(false);
         }
     };
 
