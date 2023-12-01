@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DetailExample from '../../components/Recruitment/Detail/DetailExample';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import ResButton from '../../components/common/ResButton';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function RecruitmentDetail() {
@@ -10,7 +9,6 @@ export default function RecruitmentDetail() {
 
     console.log('잡아이디', jobId);
 
-    // const location = useLocation();
     const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
@@ -32,9 +30,6 @@ export default function RecruitmentDetail() {
                 setIsHeart(response.data.heart);
                 setAllIsHeart(response.data.like);
                 setLoading(false);
-                // console.log('마감 토글 :', isCloseR);
-                // console.log('내 좋아요 :', isHeart);
-                // console.log('총 좋아요 :', allHeart);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -42,10 +37,8 @@ export default function RecruitmentDetail() {
         fetchdata();
     }, []);
 
-    // const [isRecruiting, setIsRecruiting] = useState(location.state.dataDetail.recruiting);
     console.log('유저닉네임 : ', localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
     console.log('작성닉네임 : ', works.nickname);
-    // console.log(location.state.dataDetail);
 
     // 공고 삭제
     const deleteRecruit = async () => {
@@ -64,18 +57,7 @@ export default function RecruitmentDetail() {
                 console.error('Error fetching data:', error);
             }
         } else {
-            // 취소 버튼을 눌렀을 때 실행되는 코드
-            // Optional: 원하는 작업을 수행하지 않을 때의 처리
         }
-        // try {
-        //     const response = await axios({
-        //         method: 'DELETE',
-        //         url: `${process.env.REACT_APP_SERVER}/jobs/${works.id}`,
-        //     });
-        //     console.log(response);
-        // } catch (error) {
-        //     console.error('Error fetching data:', error);
-        // }
         console.log(works.id);
     };
 
@@ -93,14 +75,11 @@ export default function RecruitmentDetail() {
     //     }
     // };
 
-    // 공고 마감 하기 ==================
-    // 마감 버튼
-
     const recruitClose = async () => {
         try {
             const response = await axios({
                 method: 'POST',
-                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`, ///${location.state.dataDetail.id}
+                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`,
                 withCredentials: true,
             });
             console.log('마감 통신', response);
@@ -122,11 +101,6 @@ export default function RecruitmentDetail() {
                     <nav className="flex justify-end">
                         {localStorage.getItem('nickname') == works.nickname ? (
                             <div className="flex flex-row  space-x-2">
-                                {/** 
-                                <div className="w-[6rem] h-[3rem] border border-gray-600">
-                                    <div onClick={onChangeDIB}>좋아요~</div>
-                                </div>
-                                */}
                                 <div
                                     className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={recruitClose}

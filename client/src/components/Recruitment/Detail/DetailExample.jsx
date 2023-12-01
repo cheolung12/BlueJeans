@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FaWonSign } from 'react-icons/fa6';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { GiRotaryPhone } from 'react-icons/gi';
 import '@fortawesome/fontawesome-free/js/all.js';
-import ResButton from '../../common/ResButton';
-import Modal from 'react-modal';
 import RecruitLikeButton from './RecruitLikeButton';
-import { useEffect } from 'react';
-import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function DetailExample({ data, isCloseR, loading, isHeart, allHeart }) {
-    // const dataD = data;
     const workdDayfrom = data.workDay;
 
     const workDay = (workdDayfrom || '')
@@ -25,56 +19,6 @@ export default function DetailExample({ data, isCloseR, loading, isHeart, allHea
             return sortWeek.indexOf(a) - sortWeek.indexOf(b);
         })
         .join(', ');
-
-    const sampleimg = '/images/s1.jpeg';
-
-    const [isOpen, setIsOpen] = useState(false);
-    // Modal 스타일
-    const customStyles = {
-        overlay: {
-            backgroundColor: 'rgba(0,0,0,0.5)',
-        },
-        content: {
-            left: '0',
-            margin: 'auto',
-            width: '250px',
-            height: '150px',
-            padding: '0',
-            overflow: 'hidden',
-        },
-    };
-
-    const modalToggle = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const [isRe, setIsRe] = useState(data.recruiting);
-    const [isRecruiting, setIsRecruiting] = useState('');
-
-    useEffect(() => {
-        if (isRe == true) {
-            setIsRecruiting('모집');
-        } else if (isRe == false) {
-            setIsRecruiting('마감');
-        }
-    }, [isRe]);
-
-    // if (isRe == true) {
-    //     setIsRecruiting('모집');
-    // } else if (isRe == false) {
-    //     setIsRecruiting('마감');
-    // }
-    const Rclose = () => {
-        if (isRe == true) {
-            setIsRe(false);
-        } else if (isRe == false) {
-            setIsRe(true);
-        }
-    };
-
-    // console.log(dataD);
-    // console.log(isRe);
-    // console.log('마감여부 :', isRecruiting);
 
     // 공고 게시일 ===========================================================
     const dateString = data.createdAt;
@@ -95,25 +39,15 @@ export default function DetailExample({ data, isCloseR, loading, isHeart, allHea
     const differenceInDays = Math.floor(daysDifference);
     const differenceInHours = Math.floor(timeDifference / (1000 * 3600));
 
-    // if (differenceInDays < 1) {
-    //     differenceInHours = Math.floor(timeDifference / (1000 * 3600));
-    //     console.log('시간 차이: ' + differenceInHours + '시간');
-    // } else {
-    //     console.log('일수 차이 변수에 담기: ' + differenceInDays + '일');
-    // }
-
     console.log(currentDate);
     console.log('시간 차이: ' + differenceInHours + '시간');
     console.log('일수 차이: ' + differenceInDays + '일 전');
-
-    // console.log(dataD.recruiting);
 
     // 전화번호 자르기
     const phoneNumbers = data.contact;
     const startNumbers = (phoneNumbers || '').slice(0, 3);
     const middleNumbers = (phoneNumbers || '').slice(3, 7);
     const endNumbers = (phoneNumbers || '').slice(7);
-    // {startNumbers}-{middleNumbers}-{endNumbers}
 
     console.log('좋아요수', data.like);
 
@@ -177,11 +111,11 @@ export default function DetailExample({ data, isCloseR, loading, isHeart, allHea
                             </div>
                             <div className="text-lg">
                                 <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                                근무 요일 - {workDay} {/* {dataD.workDay} */}
+                                근무 요일 - {workDay}
                             </div>
                             <div className="text-lg">
                                 <FontAwesomeIcon icon={faClock} className="mr-2" />
-                                근무 시간 - {data.workTime} {/* {dataD.workTime} */}
+                                근무 시간 - {data.workTime}
                             </div>
                             <div className="text-lg flex items-center">
                                 <GiRotaryPhone className="mr-2" />
