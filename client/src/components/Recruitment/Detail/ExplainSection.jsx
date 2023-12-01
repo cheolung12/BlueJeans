@@ -51,7 +51,7 @@ export default function ExplainSection({ loading, data }) {
     console.log('좋아요수', data.like);
 
     return (
-        <>
+        <div className="sm:p-0 p-3">
             {loading ? (
                 <Skeleton />
             ) : (
@@ -73,23 +73,23 @@ export default function ExplainSection({ loading, data }) {
             ) : (
                 <div className="m-2 flex flex-col space-y-4">
                     <div className="text-xl font-semibold">정보</div>
-                    <div className="text-lg flex items-center">
+                    <div className="sm:text-lg text-base flex items-center">
                         <FaWonSign className="mr-2" />
                         급여 - {data.moneyStandard} {data.money.toLocaleString()}원
                     </div>
-                    <div className="text-lg flex items-center">
+                    <div className="sm:text-lg text-base flex items-center">
                         <FaMapMarkerAlt className="mr-2" />
                         지역 - {data.region}
                     </div>
-                    <div className="text-lg">
+                    <div className="sm:text-lg text-base">
                         <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
                         근무 요일 - {workDay}
                     </div>
-                    <div className="text-lg">
+                    <div className="sm:text-lg text-base">
                         <FontAwesomeIcon icon={faClock} className="mr-2" />
                         근무 시간 - {data.workTime}
                     </div>
-                    <div className="text-lg flex items-center">
+                    <div className="sm:text-lg text-base flex items-center">
                         <GiRotaryPhone className="mr-2" />
                         연락처 - {startNumbers}-{middleNumbers}-{endNumbers}
                     </div>
@@ -98,11 +98,11 @@ export default function ExplainSection({ loading, data }) {
             <hr />
             <div className="m-2 flex flex-col space-y-4">
                 <div className="text-xl font-semibold">직무 상세 설명</div>
-                <div className="text-lg">
+                <div className="sm:text-lg text-base">
                     {/*내용설명-*/}
                     {data.content}
                 </div>
             </div>
-        </>
+        </div>
     );
 }

@@ -183,7 +183,7 @@ export default function RecruitmentCreate() {
         <div className="w-full h-full flex flex-col justify-center items-center">
             <form
                 onSubmit={onSubmit}
-                className=" sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
+                className="sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border sm:border-white md:border-gray-200 border-white"
                 encType="multipart/form-data"
             >
                 <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#000000]">공고 게시</div>

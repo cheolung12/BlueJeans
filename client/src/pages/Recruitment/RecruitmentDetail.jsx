@@ -104,23 +104,23 @@ export default function RecruitmentDetail() {
     return (
         <>
             <div className="w-full flex justify-center">
-                <section className="max-w-4xl block">
+                <section className=" block">
                     <section className="flex flex-col justify-center">
-                        <div className="w-[750px]">
+                        <div className="w-full">
                             <ImgSection loading={loading} data={works} />
-                            <div className="m-2">{works.nickname} 님의 공고입니다.</div>{' '}
-                            <div className="m-2  flex justify-between items-center">
-                                <div className="text-justify flex">
+                            <div className="mx-3 my-2">{works.nickname} 님의 공고입니다.</div>{' '}
+                            <div className="mx-3 my-2 flex sm:flex-row flex-col sm:justify-between sm:items-center items-start">
+                                <div className="text-justify flex sm:flex-row flex-col">
                                     {isCloseR ? (
-                                        <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
+                                        <p className="w-[3rem] h-[2rem] mr-2 mb-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
                                             모집
                                         </p>
                                     ) : (
-                                        <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-red-600 rounded-lg shadow-sm font-semibold">
+                                        <p className="w-[3rem] h-[2rem] mr-2 mb-2 inline-flex items-center justify-center px-2 py-2 text-white bg-red-600 rounded-lg shadow-sm font-semibold">
                                             마감
                                         </p>
                                     )}
-                                    <p className="text-2xl font-bold">{works.title}</p>
+                                    <p className="sm:text-2xl text-lg mb-2 font-bold">{works.title}</p>
                                 </div>
                                 <div>
                                     {isHeart ? (
@@ -139,35 +139,35 @@ export default function RecruitmentDetail() {
                             <ExplainSection loading={loading} data={works} />
                         </div>
                     </section>
-                    <nav className="flex justify-end">
+                    <nav className="pr-2 w-full flex justify-end">
                         {localStorage.getItem('nickname') === works.nickname ? (
                             <div className="flex flex-row  space-x-2">
                                 <div
-                                    className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
+                                    className="sm:w-[6rem] w-[5rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white  bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={recruitClose}
                                 >
                                     {isCloseR ? '마감 하기' : '다시 모집'}
                                 </div>
                                 <Link to={`/recruitment/edit/${works.id}`} state={{ dataDetail: works }} key={works.id}>
-                                    <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                    <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                         수정
                                     </div>
                                 </Link>
                                 <button
-                                    className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
+                                    className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={deleteRecruit}
                                 >
                                     삭제
                                 </button>
                                 <Link to={`/recruitment`}>
-                                    <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                    <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                         목록
                                     </div>
                                 </Link>
                             </div>
                         ) : (
                             <Link to={`/recruitment`}>
-                                <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                     목록
                                 </div>
                             </Link>
