@@ -13,6 +13,7 @@ export default function Recruitment() {
     console.log('로그인 했냐?', localStorage.getItem('isLogin'));
     const userRegion = (localStorage.getItem('address') || '').split(' ').slice(0, 2).join(' ');
     console.log(isLogin);
+    const [noSearchResult, setNoSearchResult] = useState();
 
     // 통신시 데이터(정식)
     const [works, setWorks] = useState([]);
@@ -106,7 +107,8 @@ export default function Recruitment() {
             url: `${process.env.REACT_APP_SERVER}/jobs?search=${searchInput}&sort=${selectValue}`,
         });
         console.log('조회', res.data);
-        if (res.length === 0) {
+        if (res.data.length === 0) {
+            alert('해당 검색 결과가 없습니다.');
             // 검색 결과가 없습니다.
         } else {
             setWorks(res.data);
@@ -122,6 +124,9 @@ export default function Recruitment() {
         setIsChecked((prev) => !prev);
         if (!isChecked) {
             setWorks(fil);
+            if (fil.length === 0) {
+                alert('집 근처의 공고가 없습니다.');
+            }
         } else {
             setWorks(saveSearch);
         }

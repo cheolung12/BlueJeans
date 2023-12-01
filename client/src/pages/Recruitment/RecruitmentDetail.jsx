@@ -38,7 +38,7 @@ export default function RecruitmentDetail() {
             }
         };
         fetchdata();
-    }, []);
+    }, [jobId]);
 
     console.log('유저닉네임 : ', localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
     console.log('작성닉네임 : ', works.nickname);
@@ -74,9 +74,9 @@ export default function RecruitmentDetail() {
             });
             console.log(response.data);
             setIsHeart((prev) => !prev);
-            if (isHeart == true) {
+            if (isHeart === true) {
                 setAllIsHeart((prev) => prev - 1);
-            } else if (isHeart == false) {
+            } else if (isHeart === false) {
                 setAllIsHeart((prev) => prev + 1);
             }
         } catch (error) {
@@ -140,7 +140,7 @@ export default function RecruitmentDetail() {
                         </div>
                     </section>
                     <nav className="flex justify-end">
-                        {localStorage.getItem('nickname') == works.nickname ? (
+                        {localStorage.getItem('nickname') === works.nickname ? (
                             <div className="flex flex-row  space-x-2">
                                 <div
                                     className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
