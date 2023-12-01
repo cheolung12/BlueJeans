@@ -30,4 +30,6 @@ public interface EssayRepository extends JpaRepository<EssayEntity, Integer> {
     List<EssayEntity> findFavoritePosts();
 
     List<EssayEntity> findByUser_Id(int userId);
+
+    void deleteByUser_Id(int userId);
 }

@@ -29,7 +29,7 @@ export default function EBookDetail() {
         });
         setBooksContent(response.data);
         console.log(response);
-        console.log('찜하기 여부', response.data.heart);
+        // console.log('찜하기 여부', response.data.heart);
       } catch (error) {
         console.log(`${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`);
         console.error('Error fetching data:', error);
