@@ -11,10 +11,11 @@ import Modal from 'react-modal';
 import RecruitLikeButton from './RecruitLikeButton';
 import { useEffect } from 'react';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
-export default function DetailExample({ data, isCloseR }) {
+export default function DetailExample({ data, isCloseR, loading, isHeart, allHeart }) {
     // const dataD = data;
-
     const workdDayfrom = data.workDay;
 
     const workDay = (workdDayfrom || '')
@@ -121,10 +122,14 @@ export default function DetailExample({ data, isCloseR }) {
             <section className="flex flex-col justify-center">
                 <div className="w-[750px]">
                     {/* <div>=={dataD.id}번 일자리==</div>*/}
-                    <div className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center">
-                        <img className="w-full h-auto " src={data.img_path} alt="직업 소개 이미지" />
-                    </div>
-                    <div className="m-2">글쓴이 프로필</div>
+                    {loading ? (
+                        <Skeleton className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center" />
+                    ) : (
+                        <div className="w-full h-[450px] overflow-hidden border border-solid rounded-lg flex items-center justify-center">
+                            <img className="w-full h-auto " src={data.img_path} alt="직업 소개 이미지" />
+                        </div>
+                    )}
+                    <div className="m-2">{data.nickname} 님의 공고입니다.</div>
                     <div className="m-2  flex justify-between items-center">
                         <div className="text-justify flex">
                             {isCloseR ? (
@@ -136,69 +141,54 @@ export default function DetailExample({ data, isCloseR }) {
                                     마감
                                 </p>
                             )}
-
                             <p className="text-2xl font-bold">{data.title}</p>
                         </div>
-                        {/* 찜하기 버튼 
-                                            <div onClick={Rclose}>마감버튼ㅋㅋ</div>*/}
-                        {/*  allLike={dataD.like}  <RecruitLikeButton like="좋아요" notlike="해제" id={dataD.id} />                        <div onClick={onChangeDIB}>좋아요~</div>
-                         */}
-                        <div>
-                            {/*
-                        <div className="flex">
-                            {data.recruiting ? (
-                                <div>
-                                    공고 지원 버튼
-                                    <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
-                                        공고 지원하기
-                                    </button>
-                                    지원 시 연락처 모달 생성
-                                    <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
-                                        <div>
-                                            연락처 : {startNumbers}-{middleNumbers}-{endNumbers}
-                                        </div>
-                                        <div className="flex justify-end pr-4">
-                                            <button className="bg-signatureColor text-white p-2 rounded-md hover:bg-opacity-80" onClick={modalToggle}>
-                                                닫기
-                                            </button>
-                                        </div>
-                                    </Modal>
-                                </div>
-                            ) : (
-                                <div />
-                            )}
-                        </div>
-                        */}
-                        </div>
-                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" countlike={data.like} mylike={data} />
+
+                        <RecruitLikeButton like="공고 좋아요" notlike="좋아요 취소" isHeart={isHeart} allHeart={allHeart} />
                     </div>
-                    <div className="m-2 text-gray-600">
-                        {differenceInDays == 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
-                    </div>
+                    {loading ? (
+                        <Skeleton />
+                    ) : (
+                        <div className="m-2 text-gray-600">
+                            {differenceInDays == 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
+                        </div>
+                    )}
+
                     <hr />
-                    <div className="m-2 flex flex-col space-y-4">
-                        <div className="text-xl font-semibold">정보</div>
-                        <div className="text-lg flex items-center">
-                            <FaWonSign className="mr-2" />
-                            급여 - {data.money}원
+                    {loading ? (
+                        <div className="m-2 flex flex-col space-y-4">
+                            <div className="text-xl font-semibold">정보</div>
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
                         </div>
-                        <div className="text-lg flex items-center">
-                            <FaMapMarkerAlt className="mr-2" />
-                            지역 - {data.region}
+                    ) : (
+                        <div className="m-2 flex flex-col space-y-4">
+                            <div className="text-xl font-semibold">정보</div>
+                            <div className="text-lg flex items-center">
+                                <FaWonSign className="mr-2" />
+                                급여 - {data.moneyStandard} {data.money}원
+                            </div>
+                            <div className="text-lg flex items-center">
+                                <FaMapMarkerAlt className="mr-2" />
+                                지역 - {data.region}
+                            </div>
+                            <div className="text-lg">
+                                <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
+                                근무 요일 - {workDay} {/* {dataD.workDay} */}
+                            </div>
+                            <div className="text-lg">
+                                <FontAwesomeIcon icon={faClock} className="mr-2" />
+                                근무 시간 - {data.workTime} {/* {dataD.workTime} */}
+                            </div>
+                            <div className="text-lg flex items-center">
+                                <GiRotaryPhone className="mr-2" />
+                                연락처 - {startNumbers}-{middleNumbers}-{endNumbers}
+                            </div>
                         </div>
-                        <div className="text-lg">
-                            <FontAwesomeIcon icon={faCalendarDays} className="mr-2" />
-                            근무 요일 - {workDay} {/* {dataD.workDay} */}
-                        </div>
-                        <div className="text-lg">
-                            <FontAwesomeIcon icon={faClock} className="mr-2" />
-                            근무 시간 - {data.workTime} {/* {dataD.workTime} */}
-                        </div>
-                        <div className="text-lg flex items-center">
-                            <GiRotaryPhone className="mr-2" />
-                            연락처 - {startNumbers}-{middleNumbers}-{endNumbers}
-                        </div>
-                    </div>
+                    )}
                     <hr />
                     <div className="m-2 flex flex-col space-y-4">
                         <div className="text-xl font-semibold">직무 상세 설명</div>
@@ -209,8 +199,6 @@ export default function DetailExample({ data, isCloseR }) {
                     </div>
                 </div>
             </section>
-
-            {/* {title} {money} {region} {contact} {content} {workDay} {workTime} */}
         </>
     );
 }

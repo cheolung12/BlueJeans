@@ -11,8 +11,11 @@ export default function RecruitmentDetail() {
     console.log('잡아이디', jobId);
 
     // const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
+    const [isHeart, setIsHeart] = useState();
+    const [allHeart, setAllIsHeart] = useState();
 
     // 상세 페이지 조회
     useEffect(() => {
@@ -21,11 +24,17 @@ export default function RecruitmentDetail() {
                 const response = await axios({
                     method: 'GET',
                     url: `${process.env.REACT_APP_SERVER}/jobs/${jobId}`,
+                    withCredentials: true,
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
                 setIsCloseR(response.data.recruiting);
-                console.log('마감 토글 :', isCloseR);
+                setIsHeart(response.data.heart);
+                setAllIsHeart(response.data.like);
+                setLoading(false);
+                // console.log('마감 토글 :', isCloseR);
+                // console.log('내 좋아요 :', isHeart);
+                // console.log('총 좋아요 :', allHeart);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -71,18 +80,18 @@ export default function RecruitmentDetail() {
     };
 
     /////띱 ===============
-    const onChangeDIB = async () => {
-        try {
-            const response = await axios({
-                method: 'POST',
-                url: `${process.env.REACT_APP_SERVER}/jobs/like/${works.id}`, ///${location.state.dataDetail.id}
-                withCredentials: true,
-            });
-            console.log(response);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+    // const onChangeDIB = async () => {
+    //     try {
+    //         const response = await axios({
+    //             method: 'POST',
+    //             url: `${process.env.REACT_APP_SERVER}/jobs/like/${works.id}`, ///${location.state.dataDetail.id}
+    //             withCredentials: true,
+    //         });
+    //         console.log(response);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     // 공고 마감 하기 ==================
     // 마감 버튼
@@ -96,7 +105,7 @@ export default function RecruitmentDetail() {
             });
             console.log('마감 통신', response);
             setIsCloseR((prevIsClose) => !prevIsClose);
-            console.log(isCloseR);
+            console.log('버튼 속 마감 콘솔', isCloseR);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -108,7 +117,7 @@ export default function RecruitmentDetail() {
         <>
             <div className="w-full flex justify-center">
                 <section className="max-w-4xl block">
-                    <DetailExample data={works} isCloseR={isCloseR} />
+                    <DetailExample data={works} isCloseR={isCloseR} loading={loading} isHeart={isHeart} allHeart={allHeart} />
 
                     <nav className="flex justify-end">
                         {localStorage.getItem('nickname') == works.nickname ? (

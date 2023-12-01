@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
 
-export default function RecruitLikeButton({ like, notlike, countlike, mylike }) {
+export default function RecruitLikeButton({ isHeart, allHeart }) {
     const { jobId } = useParams();
-
-    console.log(jobId);
-    // 하트 색상 변경
-    const [isLikeAdd, setIsLikeAdd] = useState(false);
-    // 찜하기 수 카운트
-    const [likeCount, setLikeCount] = useState(0);
 
     //찜하기 버튼
     const onClick = async () => {
@@ -21,26 +15,18 @@ export default function RecruitLikeButton({ like, notlike, countlike, mylike }) 
                 url: `${process.env.REACT_APP_SERVER}/jobs/like/${jobId}`,
                 withCredentials: true,
             });
-            console.log(response);
-            setIsLikeAdd((prevIsAdd) => !prevIsAdd);
-            // setLikeCount(likeCount + 1);
+            console.log(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    console.log('좋아요수', countlike);
-
     return (
-        <div className="flex flex-row items-center cursor-pointer" onClick={onClick}>
-            <div>{countlike}</div>
-            {!isLikeAdd ? <IoMdHeartEmpty className="text-4xl text-gray-700" /> : <IoMdHeart className="text-4xl text-red-600" />}
-
-            <span className="pt-1 text-sm">
-                {/* 찜했을 때 찜해제로 변경 */}
-                {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
-            </span>
-            {/* <span className='pt-1'>{likeCount}</span> */}
+        <div>
+            <div></div>
+            <div className="flex flex-row items-center cursor-pointer" onClick={onClick}>
+                {isHeart ? <IoMdHeart className="text-4xl text-red-600" /> : <IoMdHeartEmpty className="text-4xl text-gray-700" />}
+            </div>
         </div>
     );
 }
