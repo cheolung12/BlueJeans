@@ -9,13 +9,10 @@ export default function RecruitmentCreate() {
 
     const [recruitmentData, setRecruitmentData] = useState({
         title: '',
-        // moneyStandard: '시급',
         money: 9620,
         region: '',
         content: '',
         contact: '',
-        // workDay: '',
-        // workTime: '',
     });
 
     // 인풋 이미지 태그 커스텀//////////////////////////////////////////////////////////////
@@ -48,19 +45,11 @@ export default function RecruitmentCreate() {
         e.preventDefault();
 
         const recruitData = new FormData();
-        // if (recruitmentData.money == 0) {
-        //     recruitData.append('money', '협의');
-        // } else {
-        //     recruitData.append('money', recruitmentData.money);
-        // }
         recruitData.append('title', recruitmentData.title);
-        // const dayJoin = clickedDays.join(',');
-        // setWorkDay(dayJoin);
         const workDay = clickedDays.join(',');
         recruitData.append('workDay', workDay);
         const workTime = workTime1 + ' ~ ' + workTime2;
         recruitData.append('workTime', workTime);
-        // recruitData.append('workTime', recruitmentData.workTime);
         recruitData.append('moneyStandard', moneyStandard);
         recruitData.append('money', recruitmentData.money);
         recruitData.append('region', recruitmentData.region);
@@ -68,7 +57,7 @@ export default function RecruitmentCreate() {
         recruitData.append('content', recruitmentData.content);
         recruitData.append('file', file);
 
-        if (recruitData.get('region').length == 0) {
+        if (recruitData.get('region').length === 0) {
             alert('※ 지역을 입력하세요');
             return;
         }
@@ -80,11 +69,6 @@ export default function RecruitmentCreate() {
             return;
         }
 
-        // if (!numericRegex.test(recruitData.get('file'))) {
-        //     alert('※ 근무지 사진을 첨부하세요.');
-        //     return;
-        // }
-
         try {
             const response = await axios({
                 method: 'POST',
@@ -95,7 +79,6 @@ export default function RecruitmentCreate() {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            // console.log(JSON.stringify(recruitData));
             console.log(response.data);
             alert('공고 게시가 완료되었습니다.');
             navigate('/recruitment');
@@ -137,15 +120,10 @@ export default function RecruitmentCreate() {
             ...prevData,
             region: data.roadAddress,
         }));
-        // setFormValid((prevData) => ({
-        //     ...prevData,
-        //     address: true,
-        // }));
         setIsOpen(false);
     };
 
     //근무 요일 토글//////////////////////////////////////////////////////////////////////////////
-    // const [workDay, setWorkDay] = useState('');
     const [clickedDays, setClickedDays] = useState(['월', '화', '수', '목', '금']);
 
     // 클릭 이벤트 핸들러 함수
@@ -168,14 +146,6 @@ export default function RecruitmentCreate() {
 
     // 요일 정보를 담은 배열
     const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
-
-    const handleDay = () => {
-        // const dayJoin = clickedDays.join(',');
-        // setWorkDay(dayJoin);
-        // setWorkDay(clickedDays);
-    };
-
-    // console.log(workDay);
 
     //급여 기준 토글/////////////////////////////////////////////////////////////////////////////
 
@@ -213,7 +183,7 @@ export default function RecruitmentCreate() {
         <div className="w-full h-full flex flex-col justify-center items-center">
             <form
                 onSubmit={onSubmit}
-                className="my-10 sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
+                className=" sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
                 encType="multipart/form-data"
             >
                 <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#000000]">공고 게시</div>
@@ -237,12 +207,12 @@ export default function RecruitmentCreate() {
 
                 {/* ========================근무 요일 (new)======================== */}
                 <div className="w-full h-full flex flex-col justify-center">
-                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">근무 요일</label>
+                    <label className="mx-3 mt-3 mb-1 text-base text-gray-600 font-semibold">근무 요일</label>
                     <div className="flex flex-wrap justify-center">
                         {daysOfWeek.map((day, index) => (
                             <div
                                 key={index}
-                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 border cursor-pointer ${
+                                className={`sm:w-16 w-12 sm:h-16 h-12 rounded-full flex items-center justify-center sm:m-2 m-0.5 border cursor-pointer ${
                                     clickedDays.includes(day) ? 'bg-signatureColor text-white' : 'bg-gray-50 text-black'
                                 }`}
                                 onClick={() => handleClick(day)}
@@ -250,16 +220,6 @@ export default function RecruitmentCreate() {
                                 {day}
                             </div>
                         ))}
-                        {/** 
-                        <p>클릭된 요일들:</p>
-                        <ul>
-                            {clickedDays.map((day, index) => (
-                                <li key={index}>{day}</li>
-                            ))}
-                        </ul>
-                        <div onClick={handleDay}>선택 완료</div>
-                        <div>선택된 요일 - {workDay}</div>
-                        */}
                     </div>
                 </div>
 
@@ -296,80 +256,6 @@ export default function RecruitmentCreate() {
                         </div>
                     </div>
                 </div>
-                {/* ========================근무 급여 (폐기 예정)======================== */}
-                <div>
-                    {/*
-                    <div className="w-full h-full flex flex-col justify-center">
-                        <div className="w-full h-full flex flex-row justify-center">
-                            <div className="w-full h-full flex flex-col justify-center">
-                                <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">급여 기준</label>
-                                <div className="my-3">
-
-                                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                        시급
-                                        <input
-                                            className="ml-3"
-                                            type="radio"
-                                            name="moneyStandard"
-                                            value="시급"
-                                            checked={recruitmentData.moneyStandard === '시급'}
-                                            onChange={handleInputChange}
-                                        />
-                                    </label>
-                                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                        일급
-                                        <input
-                                            className="ml-3"
-                                            type="radio"
-                                            name="moneyStandard"
-                                            value="일급"
-                                            checked={recruitmentData.moneyStandard === '일급'}
-                                            onChange={handleInputChange}
-                                        />
-                                    </label>
-                                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                        주급
-                                        <input
-                                            className="ml-3"
-                                            type="radio"
-                                            name="moneyStandard"
-                                            value="주급"
-                                            checked={recruitmentData.moneyStandard === '주급'}
-                                            onChange={handleInputChange}
-                                        />
-                                    </label>
-                                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                        월급
-                                        <input
-                                            className="ml-3"
-                                            type="radio"
-                                            name="moneyStandard"
-                                            value="월급"
-                                            checked={recruitmentData.moneyStandard === '월급'}
-                                            onChange={handleInputChange}
-                                        />
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="w-full h-full flex flex-col justify-center">
-                                <label htmlFor="money" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                    급여 (단위 : 원)
-                                </label>
-                                <input
-                                    id="money"
-                                    className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                                    value={recruitmentData.money}
-                                    onChange={handleInputChange}
-                                    name="money"
-                                    type="text"
-                                    placeholder="급여를 입력하세요"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                            */}
-                </div>
 
                 {/* ========================근무 지역 (done)======================== */}
                 <div className="w-full h-full flex flex-col justify-center">
@@ -396,45 +282,6 @@ export default function RecruitmentCreate() {
                     </Modal>
                 </div>
 
-                {/* ========================근무 요일&시간 (폐기 예정)======================== */}
-                <div>
-                    {/*
-                    <div className="w-full h-full flex flex-col justify-center">
-                        <div className="w-full h-full flex flex-row justify-center">
-                            <div className="w-full h-full flex flex-col justify-center">
-                                <label htmlFor="workDay" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                    근무 요일
-                                </label>
-                                <input
-                                    id="workDay"
-                                    className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                                    value={recruitmentData.workDay}
-                                    onChange={handleInputChange}
-                                    name="workDay"
-                                    type="text"
-                                    placeholder="예) 월요일~금요일, 주말"
-                                    required
-                                />
-                            </div>
-                            <div className="w-full h-full flex flex-col justify-center">
-                                <label htmlFor="workTime" className="mx-3 mt-3 text-base text-gray-600 font-semibold">
-                                    근무 시간
-                                </label>
-                                <input
-                                    id="workTime"
-                                    className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
-                                    value={recruitmentData.workTime}
-                                    onChange={handleInputChange}
-                                    name="workTime"
-                                    type="text"
-                                    placeholder="예) 15:00 ~ 20:00"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    */}
-                </div>
                 {/* ========================근무 시간 (new)======================== */}
                 <div className="w-full h-full flex flex-col justify-center">
                     <div className="w-full h-full flex flex-row justify-center">

@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from 'react';
-// import SelectRecruit from '../../components/Recruitment/Main/SelectRecruit';
 import { Link } from 'react-router-dom';
 import ResButton from '../../components/common/ResButton';
 import JobCard from '../../components/Recruitment/Main/JobCard';
 import JobCardSkeleton from '../../components/Recruitment/Main/JobCardSkeleton';
-// import SearchRecruit from '../../components/Recruitment/Main/SearchRecruit';
-import workC from '../../data/workC.json';
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import '../../App.css';
 
 export default function Recruitment() {
     const [loading, setLoading] = useState(true);
-    const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin'));
-    // setIsLogin(localStorage.getItem('isLogin'));
-    console.log('로그인 했냐?', localStorage.getItem('isLogin'));
+    const isLogin = localStorage.getItem('isLogin');
     const userRegion = (localStorage.getItem('address') || '').split(' ').slice(0, 2).join(' ');
-    console.log(isLogin);
-    // json 파일데이터(임시)
-    // const works = workC.works;
+
     // 통신시 데이터(정식)
     const [works, setWorks] = useState([]);
-    const [works2, setWorks2] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-    const [filtered, setFiltered] = useState([]);
     const [saveSearch, setSaveSearch] = useState([]);
 
     // 기본 데이터 조회 ==========================================================
@@ -37,18 +28,8 @@ export default function Recruitment() {
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
-                setWorks2(response.data);
                 setSaveSearch(response.data);
-                // setFiltered(works.filter((work) => work.region.includes(userRegion)));
                 setLoading(false);
-                // console.log('필터됨', filtered);
-                // const filteredData = response.data.filter((item) => {
-                //     const regionParts = item.region.split(' ');
-                //     const combinedRegion = `${regionParts[0]} ${regionParts[1]}`;
-                //     return combinedRegion === userRegion;
-                // });
-                // setFiltered(filteredData);
-                // console.log('필터전', filtered);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -56,29 +37,6 @@ export default function Recruitment() {
         fetchdata();
     }, []);
 
-    // console.log('필터전', filtered);
-    // console.log(userRegion);
-    // const doneFil = [];
-    // let test;
-
-    // for (let i = 0; i < filtered.length; i++) {
-    //     console.log('지역정보나열'); //, filtered[i].region
-    //     console.log(filtered[i].region.split(' ').slice(0, 2).join(' ') === userRegion);
-
-    //     console.log(filtered[i].region)
-    //     console.log(filtered[i].region)
-    //     console.log(filtered[i].region)
-    // }
-    // const filteredData = filtered.filter((item) => {
-    //     const regionParts = item.region.split(' ');
-    //     const combinedRegion = `${regionParts[0]} ${regionParts[1]}`;
-    //     return combinedRegion === userRegion;
-    // });
-
-    // console.log('필터된건', filteredData);
-    // console.log(works);
-
-    // const [data, setData] = useState([]); // fetch data
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10); // 페이지당 아이템 수
 
@@ -123,7 +81,7 @@ export default function Recruitment() {
     // 현재 페이지의 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = works.slice(indexOfFirstItem, indexOfLastItem); // 백엔드 통신시 work => response.data변수
+    const currentItems = works.slice(indexOfFirstItem, indexOfLastItem);
 
     // 페이지 변경 처리
     const handlePageChange = (pageNumber) => {
@@ -144,7 +102,8 @@ export default function Recruitment() {
             url: `${process.env.REACT_APP_SERVER}/jobs?search=${searchInput}&sort=${selectValue}`,
         });
         console.log('조회', res.data);
-        if (res.length === 0) {
+        if (res.data.length === 0) {
+            alert('해당 검색 결과가 없습니다.');
             // 검색 결과가 없습니다.
         } else {
             setWorks(res.data);
@@ -160,26 +119,21 @@ export default function Recruitment() {
         setIsChecked((prev) => !prev);
         if (!isChecked) {
             setWorks(fil);
+            if (fil.length === 0) {
+                alert('집 근처의 공고가 없습니다.');
+                setIsChecked((prev) => !prev);
+                setWorks(saveSearch);
+            }
         } else {
             setWorks(saveSearch);
         }
     };
 
     const handleKeyDown = (e) => {
-        // 빨간줄이 뜨긴하는데 정상 작동하는 아이러니...
         if (e.key === 'Enter') {
             searchSubmit();
         }
     };
-
-    // 집근처만 체크========================
-    // const [nearbyOnly, setNearbyOnly] = useState(false);
-
-    // const handleCheckboxChange = (event) => {
-    //     setNearbyOnly(event.target.checked);
-    //     // 여기서 nearbyOnly 값에 따라 근처만 보기 옵션을 활성화 또는 비활성화할 수 있습니다.
-    //     // 필요에 따라 다른 동작을 추가할 수 있습니다.
-    // };
 
     return (
         <>

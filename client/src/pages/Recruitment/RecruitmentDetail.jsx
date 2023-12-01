@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import DetailExample from '../../components/Recruitment/Detail/DetailExample';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import ResButton from '../../components/common/ResButton';
+import ImgSection from '../../components/Recruitment/Detail/ImgSection';
+import ExplainSection from '../../components/Recruitment/Detail/ExplainSection';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeart } from 'react-icons/io';
 
 export default function RecruitmentDetail() {
     const navigate = useNavigate();
@@ -10,7 +12,6 @@ export default function RecruitmentDetail() {
 
     console.log('잡아이디', jobId);
 
-    // const location = useLocation();
     const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
@@ -32,20 +33,15 @@ export default function RecruitmentDetail() {
                 setIsHeart(response.data.heart);
                 setAllIsHeart(response.data.like);
                 setLoading(false);
-                // console.log('마감 토글 :', isCloseR);
-                // console.log('내 좋아요 :', isHeart);
-                // console.log('총 좋아요 :', allHeart);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         fetchdata();
-    }, []);
+    }, [jobId]);
 
-    // const [isRecruiting, setIsRecruiting] = useState(location.state.dataDetail.recruiting);
     console.log('유저닉네임 : ', localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
     console.log('작성닉네임 : ', works.nickname);
-    // console.log(location.state.dataDetail);
 
     // 공고 삭제
     const deleteRecruit = async () => {
@@ -64,43 +60,35 @@ export default function RecruitmentDetail() {
                 console.error('Error fetching data:', error);
             }
         } else {
-            // 취소 버튼을 눌렀을 때 실행되는 코드
-            // Optional: 원하는 작업을 수행하지 않을 때의 처리
         }
-        // try {
-        //     const response = await axios({
-        //         method: 'DELETE',
-        //         url: `${process.env.REACT_APP_SERVER}/jobs/${works.id}`,
-        //     });
-        //     console.log(response);
-        // } catch (error) {
-        //     console.error('Error fetching data:', error);
-        // }
         console.log(works.id);
     };
 
-    /////띱 ===============
-    // const onChangeDIB = async () => {
-    //     try {
-    //         const response = await axios({
-    //             method: 'POST',
-    //             url: `${process.env.REACT_APP_SERVER}/jobs/like/${works.id}`, ///${location.state.dataDetail.id}
-    //             withCredentials: true,
-    //         });
-    //         console.log(response);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
-
-    // 공고 마감 하기 ==================
-    // 마감 버튼
+    //좋아요 버튼
+    const onClickHeart = async () => {
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: `${process.env.REACT_APP_SERVER}/jobs/like/${jobId}`,
+                withCredentials: true,
+            });
+            console.log(response.data);
+            setIsHeart((prev) => !prev);
+            if (isHeart === true) {
+                setAllIsHeart((prev) => prev - 1);
+            } else if (isHeart === false) {
+                setAllIsHeart((prev) => prev + 1);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const recruitClose = async () => {
         try {
             const response = await axios({
                 method: 'POST',
-                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`, ///${location.state.dataDetail.id}
+                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`,
                 withCredentials: true,
             });
             console.log('마감 통신', response);
@@ -117,16 +105,43 @@ export default function RecruitmentDetail() {
         <>
             <div className="w-full flex justify-center">
                 <section className="max-w-4xl block">
-                    <DetailExample data={works} isCloseR={isCloseR} loading={loading} isHeart={isHeart} allHeart={allHeart} />
-
-                    <nav className="flex justify-end">
-                        {localStorage.getItem('nickname') == works.nickname ? (
-                            <div className="flex flex-row  space-x-2">
-                                {/** 
-                                <div className="w-[6rem] h-[3rem] border border-gray-600">
-                                    <div onClick={onChangeDIB}>좋아요~</div>
+                    <section className="flex flex-col justify-center">
+                        <div className="w-[750px]">
+                            <ImgSection loading={loading} data={works} />
+                            <div className="m-2">{works.nickname} 님의 공고입니다.</div>{' '}
+                            <div className="m-2  flex justify-between items-center">
+                                <div className="text-justify flex">
+                                    {isCloseR ? (
+                                        <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
+                                            모집
+                                        </p>
+                                    ) : (
+                                        <p className="w-[3rem] h-[2rem] mr-2 inline-flex items-center justify-center px-2 py-2 text-white bg-red-600 rounded-lg shadow-sm font-semibold">
+                                            마감
+                                        </p>
+                                    )}
+                                    <p className="text-2xl font-bold">{works.title}</p>
                                 </div>
-                                */}
+                                <div>
+                                    {isHeart ? (
+                                        <div className="flex flex-row items-center cursor-pointer" onClick={onClickHeart}>
+                                            <IoMdHeart className="mr-2 text-4xl text-red-600" />
+                                            {allHeart}개
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-row items-center cursor-pointer" onClick={onClickHeart}>
+                                            <IoMdHeartEmpty className="mr-2 text-4xl text-gray-700" />
+                                            {allHeart}개
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <ExplainSection loading={loading} data={works} />
+                        </div>
+                    </section>
+                    <nav className="flex justify-end">
+                        {localStorage.getItem('nickname') === works.nickname ? (
+                            <div className="flex flex-row  space-x-2">
                                 <div
                                     className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={recruitClose}
