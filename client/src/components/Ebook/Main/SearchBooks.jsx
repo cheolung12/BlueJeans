@@ -80,17 +80,17 @@ export default function SearchBooks({
           placeholder='제목을 입력하세요'
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className='rounded-full w-[13rem] h-[2.2rem] border-gray-300 outline-none pl-3 text-sm focus:border-[#818CF8] border-2 '
+          className='rounded-full w-[25.5rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
         />
         <button
           disabled={searchInput.length === 0}
-          className='ml-[-2.5rem] w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer'
+          className='ml-[-2.5rem] mt-1 w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer'
         >
           {/* 검색 아이콘 */}
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
+            width='30'
+            height='30'
             viewBox='0 0 24 24'
             fill='none'
           >

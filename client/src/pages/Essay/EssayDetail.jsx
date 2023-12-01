@@ -8,7 +8,6 @@ import axios from 'axios';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [essayContent, setEssayContent] = useState({
     title: '',
@@ -46,7 +45,7 @@ export default function EssayDetail() {
 
   // 백일장 삭제
   const handleDelete = async () => {
-    const confirm = window.confirm('게시물을 삭제하시겠습니까?');
+    const confirm = window.confirm('게시글을 삭제하시겠습니까?');
     // console.log(isFemale)
     if (confirm) {
       try {
@@ -62,7 +61,7 @@ export default function EssayDetail() {
         console.error('Error fetching data:', error);
       }
     } else {
-      alert('삭제취소');
+      alert('게시글 삭제를 취소했습니다.');
     }
   };
 
@@ -148,7 +147,11 @@ export default function EssayDetail() {
 
             {/* 좋아요 버튼 */}
             <div className='my-4'>
-              <AssayDibsButton like='추천해요' notlike='추천해제' />
+              <AssayDibsButton
+                like='추천해요'
+                notlike='추천해제'
+                essayLike={essayContent.like}
+              />
             </div>
 
             {/* 댓글 container */}
