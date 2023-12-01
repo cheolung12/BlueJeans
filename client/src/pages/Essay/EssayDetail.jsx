@@ -24,6 +24,7 @@ export default function EssayDetail() {
 
   // get 요청
   useEffect(() => {
+    console.log(EssayId);
     const fetchdata = async () => {
       try {
         const response = await axios({

@@ -57,7 +57,7 @@ export default function SearchBooks({
       console.error('Error fetching data:', error);
     }
 
-    // 제목, 작가 검색
+    // // 제목, 작가 검색
     // const filterBooks = book.filter(
     //   (book) =>
     //     book.title.includes(searchInput) || book.author.includes(searchInput)
