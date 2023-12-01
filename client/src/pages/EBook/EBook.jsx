@@ -22,9 +22,6 @@ export default function EBook() {
   ]);
   const [searchInput, setSearchInput] = useState('');
   const [bookLength, setBookLength] = useState(0);
-  // 1. 책 목록 전체 보여주기
-  // 2. 검색한 책 목록만 보여주기 => useParams
-  // const navigate = useNavigate();
 
   // get 요청 (전체 책 목록)
   useEffect(() => {

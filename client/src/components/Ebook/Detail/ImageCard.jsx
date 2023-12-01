@@ -11,6 +11,8 @@ export default function ImageCard({
   publisher,
   genre,
   ISBN,
+  heart,
+  like,
 }) {
   const { bookId } = useParams();
   const handleLogin = () => {
@@ -73,18 +75,24 @@ export default function ImageCard({
             <div>
               <div className='text-sm mb-1'>{publisher}</div>
               <div className='text-sm mb-1'>{genre}</div>
-              <div className='text-sm mb-1'>ISBN : {ISBN}</div>
+              {/* <div className='text-sm mb-1'>ISBN : {ISBN}</div> */}
             </div>
           </div>
 
           {/* 찜하기 버튼 */}
-          <EbookDibsButton like='찜하기' notlike='찜해제' />
+          <EbookDibsButton
+            likebtn='찜하기'
+            notlikebtn='찜해제'
+            heart={heart}
+            like={like}
+            id={id}
+          />
           {/* 바로 읽기 버튼 */}
           {window.localStorage.getItem('userID') ? (
             <Link
               to={`/ebook/detail/viewer/${bookId}`}
               key={id}
-              state={{ id, title }}
+              // state={{ id, title }}
               onClick={handleLogin}
             >
               <ResButton text='바로 읽기' />

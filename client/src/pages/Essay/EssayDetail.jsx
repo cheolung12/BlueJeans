@@ -45,7 +45,7 @@ export default function EssayDetail() {
 
   // 백일장 삭제
   const handleDelete = async () => {
-    const confirm = window.confirm('게시물을 삭제하시겠습니까?');
+    const confirm = window.confirm('게시글을 삭제하시겠습니까?');
     // console.log(isFemale)
     if (confirm) {
       try {
@@ -61,7 +61,7 @@ export default function EssayDetail() {
         console.error('Error fetching data:', error);
       }
     } else {
-      alert('삭제취소');
+      alert('게시글 삭제를 취소했습니다.');
     }
   };
 
