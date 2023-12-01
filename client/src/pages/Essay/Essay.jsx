@@ -36,7 +36,7 @@ export default function Essay() {
           method: 'GET',
           url: `${process.env.REACT_APP_SERVER}/essays`,
         });
-        // console.log(response); // 받은 데이터를 상태에 업데이트
+        console.log(response); // 받은 데이터를 상태에 업데이트
         let essays = response.data;
         let latestEssays = [...essays].sort((a, b) =>
           b.created_at.localeCompare(a.created_at)
@@ -79,31 +79,6 @@ export default function Essay() {
         console.error('정렬에러', error);
       }
     }
-
-    // let res;
-    // if (type === 'all') {
-    //   try {
-    //     res = await axios({
-    //       method: 'GET',
-    //       url: `${process.env.REACT_APP_SERVER}/essay`,
-    //     });
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // } else {
-    //   try {
-    //     res = await axios({
-    //       method: 'GET',
-    //       url: `${process.env.REACT_APP_SERVER}/essay/`,
-    //     });
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // }
-    // if (res) {
-    //   console.log(res);
-    //   setEssay(res.data);
-    // }
   };
 
   const handleLogin = () => {
@@ -118,26 +93,13 @@ export default function Essay() {
 
     // 제목, 작가 검색
     const searchEssays = essayInits.filter(
-      (essay) => essay.title.includes(searchInput)
-      // || essay.nickname.includes(searchInput)
+      (essay) =>
+        essay.title.includes(searchInput) ||
+        essay.nickname.includes(searchInput)
     );
     setSearchInput('');
     setFiltered(searchEssays);
     console.log(searchEssays);
-
-    // try {
-    //   const response = await axios({
-    //     method: 'GET',
-    //     url: `${process.env.REACT_APP_SERVER}/essays?search=${searchInput}`,
-    //     // url: `https://www.bluejeansu.site/ebook/search?keyword=${searchInput}`,
-    //   });
-    //   // setBooks(response.data);
-    //   setFiltered(response.data);
-
-    //   console.log('검색 결과', response.data);
-    // } catch (error) {
-    //   console.error('Error fetching data:', error);
-    // }
   };
 
   return (
@@ -203,6 +165,7 @@ export default function Essay() {
                 content={e.content}
                 thumbnail={e.img_path}
                 like={e.like}
+                nickname={e.nickname}
               />
             ))}
           </div>

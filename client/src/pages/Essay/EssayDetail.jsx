@@ -4,6 +4,7 @@ import AddComment from '../../components/Essay/Detail/AddComment';
 import CommentList from '../../components/Essay/Detail/CommentList';
 import AssayDibsButton from '../../components/Essay/Detail/AssayDibsButton';
 import axios from 'axios';
+import { GoThumbsup } from 'react-icons/go';
 
 export default function EssayDetail() {
   const { EssayId } = useParams();
@@ -21,24 +22,54 @@ export default function EssayDetail() {
 
   // 댓글 담고 있는 데이터
   const [commentList, setCommentList] = useState([]);
+  const [isHeart, setIsHeart] = useState();
+  const [allHeart, setAllIsHeart] = useState();
 
   // get 요청
   useEffect(() => {
-    console.log(EssayId);
-    const fetchdata = async () => {
-      try {
-        const response = await axios({
-          method: 'GET',
-          url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
-        });
-        console.log(response.data); // 받은 데이터를 상태에 업데이트
-        setEssayContent(response.data);
-        setCommentList(response.data.comments); //댓글 추가
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchdata();
+    const isLogin = localStorage.getItem('isLogin');
+
+    //로그인된 경우에는 좋아요 여부도 같이 반환
+    if (isLogin) {
+      console.log(EssayId);
+      const fetchdata = async () => {
+        try {
+          const response = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_SERVER}/essays/detail/islogin/${EssayId}`,
+            withCredentials: true,
+          });
+          console.log(response.data); // 받은 데이터를 상태에 업데이트
+          setEssayContent(response.data);
+          setCommentList(response.data.comments); //댓글 추가
+          setIsHeart(response.data.heart);
+          setAllIsHeart(response.data.like);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchdata();
+
+      //로그인이 안된경우
+    } else {
+      console.log(EssayId);
+      const fetchdata = async () => {
+        try {
+          const response = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
+          });
+          console.log(response.data); // 받은 데이터를 상태에 업데이트
+          setEssayContent(response.data);
+          setCommentList(response.data.comments); //댓글 추가
+          setIsHeart(false);
+          setAllIsHeart(response.data.like);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchdata();
+    }
   }, []);
 
   // //새로운 댓글 업데이트
@@ -66,6 +97,30 @@ export default function EssayDetail() {
     }
   };
 
+  //좋아요 버튼
+  const onClickHeart = async () => {
+    try {
+      // 로그인이 안된 경우, 에세이 디테일 페이지로 이동
+      if (!window.localStorage.getItem('userID')) {
+        alert('로그인이 필요합니다.');
+      } else {
+        const response = await axios({
+          method: 'POST',
+          url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}/likes`,
+          withCredentials: true,
+        });
+        console.log(response.data);
+        setIsHeart((prev) => !prev);
+        if (isHeart === true) {
+          setAllIsHeart((prev) => prev - 1);
+        } else if (isHeart === false) {
+          setAllIsHeart((prev) => prev + 1);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   return (
     <div className='w-full flex justify-end'>
       <div className='w-[80%]'>
@@ -95,7 +150,6 @@ export default function EssayDetail() {
             ) : (
               <></>
             )}
-
             {/* 백일장 사진, 제목, 이름 */}
             <section className='flex justify-center'>
               <div className='w-full flex flex-col'>
@@ -132,7 +186,6 @@ export default function EssayDetail() {
                 </div>
               </div>
             </section>
-
             <section>
               <div className='w-full h-96 mt-3 text-black'>
                 <div
@@ -145,16 +198,50 @@ export default function EssayDetail() {
                 </div>
               </div>
             </section>
-
             {/* 좋아요 버튼 */}
-            <div className='my-4'>
+            <div className='flex flex-col'>
+              {isHeart ? (
+                <div
+                  className='flex flex-row items-center cursor-pointer'
+                  onClick={onClickHeart}
+                >
+                  <GoThumbsup className='mr-2 text-4xl text-red-600' />
+                  {allHeart}개
+                </div>
+              ) : (
+                <div
+                  className='flex flex-row items-center cursor-pointer'
+                  onClick={onClickHeart}
+                >
+                  <GoThumbsup className='mr-2 text-4xl text-gray-700' />
+                  {allHeart}개
+                </div>
+              )}
+            </div>
+
+            {/* <div
+              className='flex flex-col items-center cursor-pointer'
+              onClick={onClickHeart}
+            >
+              {!isHeart ? (
+                <GoThumbsup className='text-4xl' />
+              ) : (
+                <GoThumbsup className='text-4xl text-yellow-300' />
+              )}
+
+              <span className='pt-1 text-sm'> */}
+            {/* 찜했을 때 찜해제로 변경 */}
+            {/* {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
+              </span>
+              <span className='pt-1'>{essayLike}</span>
+            </div> */}
+            {/* <div className='my-4'>
               <AssayDibsButton
                 like='추천해요'
                 notlike='추천해제'
                 essayLike={essayContent.like}
               />
-            </div>
-
+            </div> */}
             {/* 댓글 container */}
             <section className='flex justify-center h-full'>
               <div className='w-full flex flex-col'>

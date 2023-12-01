@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineComment } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
 
-export default function EssayCard({ id, title, thumbnail, like }) {
+export default function EssayCard({ id, title, thumbnail, like, nickname }) {
   return (
     <div>
       <Link to={`/essay/detail/${id}`} key={id}>
@@ -16,6 +16,7 @@ export default function EssayCard({ id, title, thumbnail, like }) {
           <div className='w-full h-[9rem]'>
             <div className='flex flex-col w-full h-[9rem] justify-evenly items-center'>
               <div className='text-xl font-semibold'>{title}</div>
+              <div className='text-xl font-semibold'>{nickname}</div>
 
               <div className='flex text-sm'>
                 <div className='flex items-center mx-2'>
