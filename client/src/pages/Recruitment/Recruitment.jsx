@@ -19,7 +19,6 @@ export default function Recruitment() {
     const [works2, setWorks2] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-    const [filtered, setFiltered] = useState([]);
     const [saveSearch, setSaveSearch] = useState([]);
 
     // 기본 데이터 조회 ==========================================================
