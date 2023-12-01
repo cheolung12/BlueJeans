@@ -10,6 +10,8 @@ export default function BookCardDetail({
   genre,
   ISBN,
   description,
+  heart,
+  like,
 }) {
   return (
     <div>
@@ -23,6 +25,8 @@ export default function BookCardDetail({
             publisher={publisher}
             genre={genre}
             ISBN={ISBN}
+            heart={heart}
+            like={like}
           />
 
           <ContentCard description={description} />

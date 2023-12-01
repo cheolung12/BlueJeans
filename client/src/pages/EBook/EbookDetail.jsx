@@ -15,6 +15,7 @@ export default function EBookDetail() {
     publisher: '',
     genre: '',
     description: '',
+    heart: false,
   });
 
   // get요청
@@ -28,6 +29,7 @@ export default function EBookDetail() {
         });
         setBooksContent(response.data);
         console.log(response);
+        console.log('찜하기 여부', response.data.heart);
       } catch (error) {
         console.log(`${process.env.REACT_APP_SERVER}/ebook/detail/${bookId}`);
         console.error('Error fetching data:', error);
@@ -36,17 +38,9 @@ export default function EBookDetail() {
     fetchData();
   }, []);
 
-  // map 대신 find 사용
-  // const findBook = books.find((book) => book.id === bookId);
-
-  // <Link>에서 bookcard 데이터 받아옴
-  // const location = useLocation();
-  // console.log(location.state);
-
   return (
     <div className='flex w-[91%] min-w-200 justify-end'>
       <div className='w-[80%] ]'>
-        {/* <Title /> */}
         <div>
           <div>
             <BookCardDetail
@@ -58,6 +52,8 @@ export default function EBookDetail() {
               genre={booksContent.genre}
               ISBN={booksContent.genre}
               description={booksContent.description}
+              heart={booksContent.heart}
+              like={booksContent.like}
             />
           </div>
         </div>
