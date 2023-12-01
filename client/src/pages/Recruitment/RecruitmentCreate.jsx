@@ -57,7 +57,7 @@ export default function RecruitmentCreate() {
         recruitData.append('content', recruitmentData.content);
         recruitData.append('file', file);
 
-        if (recruitData.get('region').length == 0) {
+        if (recruitData.get('region').length === 0) {
             alert('※ 지역을 입력하세요');
             return;
         }
@@ -183,7 +183,7 @@ export default function RecruitmentCreate() {
         <div className="w-full h-full flex flex-col justify-center items-center">
             <form
                 onSubmit={onSubmit}
-                className="my-10 sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
+                className=" sm:p-14 p-0 w-full max-w-3xl h-full flex flex-col justify-center items-center border"
                 encType="multipart/form-data"
             >
                 <div className="sm:text-4xl text-3xl font-bold mb-2 text-[#000000]">공고 게시</div>
@@ -207,12 +207,12 @@ export default function RecruitmentCreate() {
 
                 {/* ========================근무 요일 (new)======================== */}
                 <div className="w-full h-full flex flex-col justify-center">
-                    <label className="mx-3 mt-3 text-base text-gray-600 font-semibold">근무 요일</label>
+                    <label className="mx-3 mt-3 mb-1 text-base text-gray-600 font-semibold">근무 요일</label>
                     <div className="flex flex-wrap justify-center">
                         {daysOfWeek.map((day, index) => (
                             <div
                                 key={index}
-                                className={`w-16 h-16 rounded-full flex items-center justify-center m-2 border cursor-pointer ${
+                                className={`sm:w-16 w-12 sm:h-16 h-12 rounded-full flex items-center justify-center sm:m-2 m-0.5 border cursor-pointer ${
                                     clickedDays.includes(day) ? 'bg-signatureColor text-white' : 'bg-gray-50 text-black'
                                 }`}
                                 onClick={() => handleClick(day)}

@@ -9,15 +9,11 @@ import '../../App.css';
 
 export default function Recruitment() {
     const [loading, setLoading] = useState(true);
-    const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin'));
-    console.log('로그인 했냐?', localStorage.getItem('isLogin'));
+    const isLogin = localStorage.getItem('isLogin');
     const userRegion = (localStorage.getItem('address') || '').split(' ').slice(0, 2).join(' ');
-    console.log(isLogin);
-    const [noSearchResult, setNoSearchResult] = useState();
 
     // 통신시 데이터(정식)
     const [works, setWorks] = useState([]);
-    const [works2, setWorks2] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [isChecked, setIsChecked] = useState(false);
     const [saveSearch, setSaveSearch] = useState([]);
@@ -32,7 +28,6 @@ export default function Recruitment() {
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
-                setWorks2(response.data);
                 setSaveSearch(response.data);
                 setLoading(false);
             } catch (error) {
@@ -126,6 +121,8 @@ export default function Recruitment() {
             setWorks(fil);
             if (fil.length === 0) {
                 alert('집 근처의 공고가 없습니다.');
+                setIsChecked((prev) => !prev);
+                setWorks(saveSearch);
             }
         } else {
             setWorks(saveSearch);
