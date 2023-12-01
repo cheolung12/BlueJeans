@@ -21,6 +21,7 @@ public class ResEssayDTO {
     private String title;
     private String content;
     private int user_id;
+    private String nickname;
     private String img_path;
     private long like;
     private Timestamp created_at;
@@ -57,6 +58,7 @@ public class ResEssayDTO {
                 .created_at(entity.getCreated_at())
                 .updated_at(entity.getUpdated_at())
                 .comments(comments)
+                .nickname(entity.getUser().getNickname())
                 .build();
     }
 
