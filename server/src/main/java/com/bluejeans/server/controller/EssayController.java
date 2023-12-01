@@ -43,7 +43,7 @@ public class EssayController {
         try {
             fileURL = s3Uploader.upload(multipartFile, "essay");
         } catch (IOException e) {
-            fileURL = null;
+            fileURL = "https://www.moodfit.com/front/images/genral_image_notfound.png";
         }
         EssayEntity result = essayService.addEssay(essayDTO, user, fileURL);
         return result;
