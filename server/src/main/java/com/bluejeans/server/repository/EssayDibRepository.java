@@ -14,4 +14,6 @@ public interface EssayDibRepository extends JpaRepository<EssayDibsEntity, Essay
     Optional<EssayDibsEntity> findByEssayAndUser(EssayEntity essay, UserEntity userEntity);
     long countByEssay(EssayEntity essay);
 
+    Optional<EssayDibsEntity> findByUser_IdAndEssay_Id(int userId, int essayId);
+
 }

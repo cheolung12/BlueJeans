@@ -49,10 +49,18 @@ public class EssayController {
         return result;
     }
 
-    //에세이 상세조회 +댓글
+    //에세이 상세조회 +댓글 + 좋아요
     @GetMapping("/detail/{essay_id}")
     public ResEssayDetailDTO essayDetail(@PathVariable int essay_id){
         ResEssayDetailDTO result = essayService.essayDetail(essay_id);
+        //결과가 없을경우 null로 들어옴
+        return result;
+    }
+
+    //에세이 상세조회(로그인 되어있을때)
+    @GetMapping("/detail/islogin/{essay_id}")
+    public ResEssayDetailDTO essayDetailisLogin(@PathVariable int essay_id, @AuthenticationPrincipal UserEntity user){
+        ResEssayDetailDTO result = essayService.essayDetailisLogin(essay_id, user);
         //결과가 없을경우 null로 들어옴
         return result;
     }
