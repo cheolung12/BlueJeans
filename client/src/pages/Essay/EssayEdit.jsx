@@ -12,6 +12,7 @@ export default function EssayEdit() {
   const [essayData, setEssayData] = useState({
     title: forPatchData.title,
     content: forPatchData.content,
+    file: forPatchData.img_path,
   });
 
   // 인풋 이미지 태그 커스텀
