@@ -12,7 +12,7 @@ export default function FindHome() {
       <div className=''>
         <div className='flex justify-end h-[650px]'>
           <div class='flex flex-col space-y-4'>
-            <Info></Info>
+            <Info className='pb-7'></Info>
             <Map className='mb-0 p-6' userAddress={userAddress}></Map>
           </div>
           <AddressButton
