@@ -3,8 +3,9 @@ import axios from 'axios';
 import { GoThumbsup } from 'react-icons/go';
 import { useParams } from 'react-router-dom';
 
-export default function AssayDibsButton({ like, notlike }) {
+export default function AssayDibsButton({ like, notlike, essayLike }) {
   const { EssayId } = useParams();
+
   // 하트 색상 변경
   const [isLikeAdd, setIsLikeAdd] = useState(false);
   // 찜하기 수 카운트
@@ -21,7 +22,7 @@ export default function AssayDibsButton({ like, notlike }) {
       console.log(response);
 
       setIsLikeAdd(!isLikeAdd);
-      setLikeCount(response.data.counts);
+      setLikeCount();
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -42,7 +43,7 @@ export default function AssayDibsButton({ like, notlike }) {
         {/* 찜했을 때 찜해제로 변경 */}
         {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
       </span>
-      <span className='pt-1'>{likeCount}</span>
+      <span className='pt-1'>{essayLike}</span>
     </div>
   );
 }

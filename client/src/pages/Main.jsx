@@ -2,11 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-////banner1
-import books from '../data/bookList.json';
-///banner2
-import mainL from '../data/mainL.json';
-import mainJ from '../data/mainJ.json';
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
 import { FaRegThumbsUp } from 'react-icons/fa';
@@ -19,13 +14,12 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import { useMediaQuery } from 'react-responsive';
 
-// import main from '../components/main/mainImg/main.jpeg';
-import mainl from '../components/main/mainImg/mainl.jpg';
+import lastMain from '../components/main/mainImg/lastMain.jpeg';
 /////////////////컴포넌트 import///////////////
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 /////////////////////////////////////////////
-import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { Keyboard, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import Calligraphy from '../components/main/Calligraphy';
 import TopNavbar from '../components/common/TopNavbar';
 import Footer from '../components/common/Footer';
@@ -71,18 +65,24 @@ export default function Main() {
   const essay1 = essayList[1];
   const essay2 = essayList[2];
 
-  const mJob = mainJ;
+  const recruit0 = recruitList[0];
+  const recruit1 = recruitList[1];
+  const recruit2 = recruitList[2];
+
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <>
       <TopNavbar />
       <div>
-        <div className='h-[750px] w-full relative'>
-          <div className='bg-cover bg-center h-auto w-full relative'>
+        <div className=' h-4/5 w-full relative'>
+          <div
+            className='h-4/5 w-full relative '
+            style={{ backgroundPosition: 'bottom' }}
+          >
             <img
-              src={mainl}
+              src={lastMain}
               alt='main'
-              className='h-auto w-full bg-cover bg-center'
+              className='h-full w-full object-cover bg-bottom'
             />
             <div className='absolute bottom-0 left-0 w-full'>
               <MainBar className='flex items-end' />
@@ -104,6 +104,7 @@ export default function Main() {
               </div>
             </div>
           </div>
+
           <Swiper
             className=' md:w-[55rem] w-80 h-[28rem]'
             slidesPerView={3}
@@ -137,84 +138,74 @@ export default function Main() {
             {/* 요청해서 받은 랜덤 10개 값  */}
 
             {ebookList.map((book) => (
-              <SwiperSlide className='h-full w-full' key={book.id}>
-                <div>
-                  <img
-                    src={book.thumbnail}
-                    // alt={book.title}
-                    className='h-[25rem] w-full text-blue-700'
-                  />
-                </div>
-              </SwiperSlide>
+              <Link to={`/ebook/detail/${book.id}`}>
+                <SwiperSlide className='h-full w-full' key={book.id}>
+                  <div>
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title}
+                      className='h-[25rem] w-full text-blue-700'
+                    />
+                  </div>
+                </SwiperSlide>
+              </Link>
             ))}
           </Swiper>
         </div>
         {/* 2 */}
+
         {/* 좋아요 많은 순서대로 3개 보여주기  */}
-        <div className='bg-[#5495B1] h-[37rem] flex justify-around'>
-          <div className='flex w-full items-end pl-4 justify-evenly'>
-            <div className=' h-[25rem] w-64 rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
-              <div className='content-center w-full'>
-                <div className=' text-2xl text-center p-3'>
-                  {/* {essay1.user_id} */}
-                </div>
-                <div className='w-full flex justify-center'>
-                  <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
-                </div>
-                {/* <div className=' text-center text-2xl  p-3'>{essay1.title}</div> */}
-                <div className='flex justify-center'>
-                  <FaRegThumbsUp className='self-center' />
-                  {/* <div>{essay1.like}</div> */}
-                </div>
-              </div>
-            </div>
-
-            {/* 백일장 2 */}
-
-            <div className='w-56'>
-              <div className=' text-center text-3xl text-white pb-5'>
-                이번주 문학 왕
-              </div>
-              <div className=' h-[30rem] w-64  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
-                <div className='content-center w-full'>
-                  <div className='text-2xl text-center p-3'>
-                    {/* {essay0.user_id} */}
-                  </div>
-                  <div className='w-full flex justify-center'>
-                    <div className='h-32 w-32 rounded-full bg-red-50'></div>
-                  </div>
-                  {/* <div className='text-center text-2xl p-3'>{essay0.title}</div> */}
+        <div className='bg-[#5495B1] h-[35rem] sm:h-[37rem] flex justify-around'>
+          <div className='flex w-full items-end pl-4 pr-4 justify-evenly'>
+            {/* 하나 */}
+            {essay1 && (
+              <div className='bg-white w-28 sm:w-44 lg:w-56 h-72  lg:h-96 rounded-t-xl flex justify-center text-center self'>
+                <div className=' self-center'>
+                  <div className='p-2'>{essay1.user_id}</div>
+                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                  <div className='p-2'>{essay1.title}</div>
                   <div className='flex justify-center'>
-                    <FaRegThumbsUp className='self-center' />
-                    {/* <div>{essay0.like}</div> */}
+                    <FaRegThumbsUp />
+                    <div>{essay1.like}</div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* 백일장 3 */}
-            <div className='h-[23rem] w-64  rounded-t-3xl drop-shadow-2xl bg-white flex items-center justify-center'>
-              <div className='content-center w-full'>
-                <div className=' text-2xl text-center p-3'>
-                  {/* {essay2.user_id} */}
-                </div>
-                <div className='w-full flex justify-center'>
-                  <div className='h-32 w-32 rounded-full  justify-self-center bg-red-50'></div>
-                </div>
-                {/* <div className=' text-center text-2xl  p-3'>{essay2.title}</div> */}
-                <div className='flex justify-center'>
-                  <FaRegThumbsUp className='self-center' />
-                  {/* <div>{essay2.like}</div> */}
+            {essay0 && (
+              <div className='bg-white  w-28 sm:w-44 lg:w-56  h-96 lg:h-[30rem] rounded-t-xl flex justify-center text-center self'>
+                <div className=' self-center'>
+                  <div className='p-2'>{essay0.user_id}</div>
+                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                  <div className='p-2'>{essay0.title}</div>
+                  <div className='flex justify-center self-end'>
+                    <FaRegThumbsUp />
+                    <div>{essay0.like}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {essay2 && (
+              <div className='bg-white  w-28 sm:w-44 lg:w-56  h-64 lg:h-80 rounded-t-xl flex justify-center text-center self'>
+                <div className=' self-center'>
+                  <div className='p-2'>{essay2.user_id}</div>
+                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                  <div className='p-2'>{essay2.title}</div>
+                  <div className='flex justify-center'>
+                    <FaRegThumbsUp />
+                    <div>{essay2.like}</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           {/* 2-2  900부터*/}
-          <div className='h-full  pr-4 '>
+          <div className='h-full  pr-4 hidden lg:block'>
             <Calligraphy className='w-[50rem] h-[30rem]' />
           </div>
         </div>
         {/* 3 */}
+
         {/* 젤 최신 3개 가져오기 */}
         <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
@@ -227,45 +218,215 @@ export default function Main() {
               </Link>
             </div>
           </div>
-          <div className='flex flex-col md:flex-row items-center justify-evenly w-full h-full'>
+
+          {/* 직업 */}
+          <div className='hidden sm:block'>
+            <div className='flex justify-center '>
+              {recruit0 && (
+                <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
+                  <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                    NEW
+                  </span>
+                  <div className='pl-5 pt-2'>
+                    <div className='mb-4 flex items-center'>
+                      <IoMdBriefcase className='self-center mr-2' />
+                      <span>{recruit0.title}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaLocationDot className='self-center mr-2' />
+                      <span>{recruit0.region}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaPhone className='self-center mr-2' />
+                      <span>{recruit0.contact}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <BiCommentDetail className='self-center mr-2' />
+                      <span>{recruit0.content}</span>
+                    </div>
+                  </div>
+                  <div className='flex justify-end'>
+                    <div className='p-2'>{recruit0.moneyStandard}</div>
+                    <div className='p-2'>{recruit0.money}</div>
+                  </div>
+                </div>
+              )}
+
+              {recruit1 && (
+                // <Link to={`/recruitment/detail/${recruit1.id}`}>
+                <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
+                  <span className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                    NEW
+                  </span>
+                  <div className='pl-5 pt-2'>
+                    <div className='mb-4 flex items-center'>
+                      <IoMdBriefcase className='self-center mr-2' />
+                      <span>{recruit1.title}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaLocationDot className='self-center mr-2' />
+                      <span>{recruit1.region}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaPhone className='self-center mr-2' />
+                      <span>{recruit1.contact}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <BiCommentDetail className='self-center mr-2' />
+                      <span>{recruit1.content}</span>
+                    </div>
+                  </div>
+                  <div className='flex justify-end'>
+                    <div className='p-2'>{recruit1.moneyStandard}</div>
+                    <div className='p-2'>{recruit1.money}</div>
+                  </div>
+                </div>
+                // </Link>
+              )}
+              {recruit2 && (
+                // <Link to={`/recruitment/detail/${recruit1.id}`}>
+                <div className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 text-base hidden lg:block'>
+                  <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                    NEW
+                  </span>
+                  <div className='pl-5 pt-2'>
+                    <div className='mb-4 flex items-center'>
+                      <IoMdBriefcase className='self-center mr-2' />
+                      <span>{recruit2.title}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaLocationDot className='self-center mr-2' />
+                      <span>{recruit2.region}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <FaPhone className='self-center mr-2' />
+                      <span>{recruit2.contact}</span>
+                    </div>
+                    <div className='mb-4 flex items-center'>
+                      <BiCommentDetail className='self-center mr-2' />
+                      <span>{recruit2.content}</span>
+                    </div>
+                  </div>
+                  <div className='flex justify-end'>
+                    <div className='p-2'>{recruit2.moneyStandard}</div>
+                    <div className='p-2'>{recruit2.money}</div>
+                  </div>
+                </div>
+                // </Link>
+              )}
+            </div>
+          </div>
+
+          <div className='sm:hidden p-10'>
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={30}
+              keyboard={{
+                enabled: true,
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              modules={[Keyboard, Pagination, Navigation]}
+              className='h-72'
+            >
+              {recruitList.map(
+                (recruit) => (
+                  console.log('dfdf', recruit),
+                  (
+                    <SwiperSlide
+                      className='h-full w-full z-30 bg-white'
+                      key={recruit.id}
+                    >
+                      <>
+                        <div className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 text-base hidden lg:block'>
+                          <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                            NEW
+                          </span>
+                          <div className='pl-5 pt-2'>
+                            <div className='mb-4 flex items-center'>
+                              <IoMdBriefcase className='self-center mr-2' />
+                              <span>{recruit.title}</span>
+                            </div>
+                            <div className='mb-4 flex items-center'>
+                              <FaLocationDot className='self-center mr-2' />
+                              <span>{recruit.region}</span>
+                            </div>
+                            <div className='mb-4 flex items-center'>
+                              <FaPhone className='self-center mr-2' />
+                              <span>{recruit.contact}</span>
+                            </div>
+                            <div className='mb-4 flex items-center'>
+                              <BiCommentDetail className='self-center mr-2' />
+                              <span>{recruit.content}</span>
+                            </div>
+                          </div>
+                          <div className='flex justify-end'>
+                            <div className='p-2'>{recruit.moneyStandard}</div>
+                            <div className='p-2'>{recruit.money}</div>
+                          </div>
+                        </div>
+                      </>
+                    </SwiperSlide>
+                  )
+                )
+              )}
+              {/* <SwiperSlide className='bg-red-500'>Slide 1</SwiperSlide>
+
+              <SwiperSlide className='bg-blue-500'>Slide 2</SwiperSlide>
+
+              <SwiperSlide className='bg-orange-500'>Slide 3</SwiperSlide> */}
+            </Swiper>
+          </div>
+
+          {/* <div className='flex flex-col md:flex-row text-start items-center justify-evenly w-full h-full'>
             {recruitList.map((recruit) => (
               <div
                 key={recruit.id}
                 className='mb-6 md:mb-0 w-full md:w-1/2 lg:w-1/3'
               >
-                <div className='bg-white rounded-2xl p-8 md:p-8 shadow-xl md:h-[16rem] lg:h-[18rem] ml-[10px] mr-[10px]  flex-col'>
-                  <div className='text-xl flex flex-col justify-between'>
-                    <span class='animate-bounce pb-2 text-red-500 font-semibold '>
-                      NEW
-                    </span>
+                <Link to={`/recruitment/detail/${recruit.id}`}>
+                  <div className='bg-white rounded-2xl p-8  md:p-8 shadow-xl lg:h-[18rem] md:h-[22rem] ml-[10px] mr-[10px]  flex-col'>
+                    <div className='text-xl flex flex-col justify-between'>
+                      {recruit && (
+                        <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                          NEW
+                        </span>
+                      )}
 
-                    <div className=' self-center'>
-                      <div className='mb-4 flex items-center'>
-                        <IoMdBriefcase className='self-center mr-2' />
-                        {/* <span>{recruit.title}</span> */}
-                      </div>
-                      <div className='mb-4 flex items-center'>
-                        <FaLocationDot className='self-center mr-2' />
-                        <span>{recruit.region}</span>
-                      </div>
-                      <div className='mb-4 flex items-center'>
-                        <FaPhone className='self-center mr-2' />
-                        <span>{recruit.contact}</span>
-                      </div>
-                      <div className='mb-4 flex items-center'>
-                        <BiCommentDetail className='self-center mr-2' />
-                        <span>{recruit.content}</span>
+                      <div className='self-center md:self-start md:text-xl lg:text-lg '>
+                        <div className='mb-4 flex items-center'>
+                          <IoMdBriefcase className='self-center mr-2' />
+                          {recruit && <span>{recruit.title}</span>}
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaLocationDot className='self-center mr-2' />
+                          {recruit && <span>{recruit.region}</span>}
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <FaPhone className='self-center mr-2' />
+                          {recruit && <span>{recruit.contact}</span>}
+                        </div>
+                        <div className='mb-4 flex items-center'>
+                          <BiCommentDetail className='self-center mr-2' />
+                          {recruit && <span>{recruit.content}</span>}
+                        </div>
                       </div>
                     </div>
+                    <div className='flex justify-end'>
+                      {recruit && (
+                        <>
+                          <div className='pr-2'>{recruit.moneyStandard}</div>
+                          <div>{recruit.money}</div>
+                        </>
+                      )}
+                    </div>
                   </div>
-                  <div className='flex justify-end'>
-                    <div className='pr-2'>{recruit.moneyStandard}</div>
-                    <div>{recruit.money}</div>
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

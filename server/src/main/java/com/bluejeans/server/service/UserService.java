@@ -1,14 +1,20 @@
 package com.bluejeans.server.service;
 
 import com.bluejeans.server.dto.UserDTO;
+import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.entity.Usertype;
+import com.bluejeans.server.repository.EssayRepository;
+import com.bluejeans.server.repository.RecruitDibRepository;
+import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -16,6 +22,8 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EssayRepository essayRepository;
+    private final RecruitRepository recruitRepository;
 
 
     //회원가입
@@ -31,6 +39,7 @@ public class UserService {
                 .nickname(userDTO.getNickname())
                 .address(userDTO.getAddress())
                 .userType(Usertype.USER)
+                .img_path("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/defaultprofile.jpeg")
                 .build()).getId();
     }
 
@@ -54,10 +63,15 @@ public class UserService {
         userRepository.save(existingUser);
     }
 
+    @Transactional
     public void delete(int id) {
         Optional<UserEntity> userOptional = userRepository.findById(id);
 
-        if (userOptional.isPresent()) {
+
+        if (userOptional.isPresent())  {
+
+            recruitRepository.deleteByUser_Id(userOptional.get().getId());
+            essayRepository.deleteByUser_Id(userOptional.get().getId());
             userRepository.delete(userOptional.get());
         } else {
             throw new IllegalArgumentException("User not found with id: " + id);

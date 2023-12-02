@@ -31,13 +31,15 @@ public class S3Uploader {
 
     //multipartfile을 file로 전환후 s3에 업로드
     public String upload(MultipartFile multipartFile, String dirName) throws IOException{
-        if(multipartFile.isEmpty()) {
-            new IllegalArgumentException("업로드될 파일이 없습니다.");
+        if(multipartFile == null) {
+//            new IllegalArgumentException("업로드될 파일이 없습니다.");
+            return "https://www.moodfit.com/front/images/genral_image_notfound.png";
+        }else{
+            File uploadFile = convert(multipartFile)
+                    .orElseThrow(() -> new IllegalArgumentException("multipartfile -> file전환 실패"));
+            return upload(uploadFile, dirName);
         }
 
-        File uploadFile = convert(multipartFile)
-                .orElseThrow(() -> new IllegalArgumentException("multipartfile -> file전환 실패"));
-        return upload(uploadFile, dirName);
     }
 
     private String upload(File uploadFile, String dirName){

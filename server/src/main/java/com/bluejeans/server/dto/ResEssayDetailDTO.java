@@ -27,7 +27,28 @@ public class ResEssayDetailDTO {
     private Timestamp created_at;
     private Timestamp updated_at;
     private List<EssayCommentsEntity> comments;
+    private boolean isHeart;
 
+
+    public static ResEssayDetailDTO toDTO2(EssayEntity entity, long like, List<EssayCommentsEntity> comments, boolean isHeart){
+        if (entity == null) {
+            return null;
+        }
+        return new ResEssayDetailDTO().builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .user_id(entity.getUser() != null ? entity.getUser().getUserID() : null)
+                .user_img(entity.getUser().getImg_path())
+                .img_path(entity.getImg_path())
+                .nickname(entity.getUser().getNickname())
+                .like(like)
+                .created_at(entity.getCreated_at())
+                .updated_at(entity.getUpdated_at())
+                .comments(comments)
+                .isHeart(isHeart)
+                .build();
+    }
     public static ResEssayDetailDTO toDTO(EssayEntity entity, long like, List<EssayCommentsEntity> comments){
         if (entity == null) {
             return null;

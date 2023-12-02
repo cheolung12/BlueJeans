@@ -47,4 +47,6 @@ public interface RecruitRepository extends JpaRepository<RecruitEntity, Integer>
     List<RecruitEntity> findLatestPosts();
 
     List<RecruitEntity> findByUser_Id(int userId);
+
+    void deleteByUser_Id(int userId);
 }

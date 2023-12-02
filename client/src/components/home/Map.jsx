@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Sktelecom from './Skeleton';
+import axios from 'axios';
 
 function Map({ userAddress }) {
   const mapContainerRef = useRef();
@@ -110,6 +111,23 @@ function Map({ userAddress }) {
           longitude: startLongitude,
         });
 
+        const requestData = {
+          startX: currentMarkerPosition.latitude,
+          startY: currentMarkerPosition.longitude,
+          endX: startLatitude,
+          endY: startLongitude,
+          // passList: '경도,위도_경도,위도_경도,위도',
+          // reqCoordType: 'WGS84GEO',
+          // resCoordType: 'EPSG3857',
+          // startName: '출발지',
+          // endName: '도착지',
+        };
+        console.log(requestData);
+
+        const headers = {
+          appKey: process.env.REACT_APP_T_MAP_API_KEY,
+        };
+
         if (mapInstanceRef.current) {
           markersRef.current.forEach((marker) => marker.setMap(null));
 
@@ -142,7 +160,7 @@ function Map({ userAddress }) {
             { latitude: startLatitude, longitude: startLongitude },
           ];
 
-          drawPedestrianRoute(
+          await drawPedestrianRoute(
             currentMarkerPosition.latitude,
             currentMarkerPosition.longitude,
             startLatitude,
@@ -178,28 +196,38 @@ function Map({ userAddress }) {
 
       const polyline_ = new window.Tmapv2.Polyline({
         path: lineCoordinates,
-        strokeColor: 'FF0000',
-        strokeWeight: 7,
+        strokeColor: 'red',
+        strokeWeight: 4,
         map: mapInstanceRef.current,
       });
     }
   };
-
-  const drawPedestrianRoute = async (startLat, startLng, endLat, endLng) => {
-    const apiEndpoint = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result&startX=${startLng}&startY=${startLat}&endX=${endLng}&endY=${endLat}&reqCoordType=WGS84GEO&resCoordType=EPSG3857&startName=출발지&endName=도착지&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
-
+  const drawPedestrianRoute = async (lineCoordinates) => {
     try {
-      const response = await fetch(apiEndpoint);
-      const data = await response.json();
+      const response = await axios.post(
+        'https://apis.openapi.sk.com/tmap/routes/pedestrian',
+        {
+          startX: lineCoordinates[0].latitude,
+          startY: lineCoordinates[0].longitude,
+          endX: lineCoordinates[lineCoordinates.length - 1].latitude,
+          endY: lineCoordinates[lineCoordinates.length - 1].longitude,
+          reqCoordType: 'WGS84GEO',
+          resCoordType: 'EPSG3857',
+          appKey: process.env.REACT_APP_T_MAP_API_KEY,
+        }
+      );
+
+      const data = response.data;
 
       if (data.features && data.features.length > 0) {
         const geometry = data.features[0].geometry;
 
         if (geometry.type === 'LineString') {
-          const lineCoordinates = geometry.coordinates.map(
+          const routeCoordinates = geometry.coordinates.map(
             (coord) => new window.Tmapv2.LatLng(coord[1], coord[0])
           );
 
+          // 기존 도보 경로를 지우고 새로운 도보 경로를 그립니다.
           if (resultdrawArr.length > 0) {
             for (let i in resultdrawArr) {
               resultdrawArr[i].setMap(null);
@@ -207,20 +235,18 @@ function Map({ userAddress }) {
             resultdrawArr = [];
           }
 
-          const polyline_ = new window.Tmapv2.Polyline({
-            path: lineCoordinates,
-            strokeColor: '0000FF',
+          const pedestrianPolyline = new window.Tmapv2.Polyline({
+            path: routeCoordinates,
+            strokeColor: 'blue',
             strokeWeight: 3,
             map: mapInstanceRef.current,
           });
 
-          resultdrawArr.push(polyline_);
-
-          setMapVisible(true);
+          resultdrawArr.push(pedestrianPolyline);
         }
       }
     } catch (error) {
-      console.error('에러:', error);
+      console.error('도보 경로를 그리는 중 에러:', error);
     }
   };
 
@@ -249,7 +275,7 @@ function Map({ userAddress }) {
       <div
         ref={mapContainerRef}
         id='TMapApp'
-        className='w-[53.125rem] h-[34.375rem] pt-7 drop-shadow-md'
+        className='w-[53.125rem] h-[30rem] drop-shadow-md'
       ></div>
     </div>
   );

@@ -4,12 +4,19 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
 
-export default function EbookDibsButton({ like, notlike }) {
+export default function EbookDibsButton({ likebtn, notlikebtn, like, heart }) {
   const { bookId } = useParams();
-  // 하트 색상 변경
-  const [isLikeAdd, setIsLikeAdd] = useState(false);
+  // 초기 좋아요 상태(t/f)
+  // const [isLikeAdd, setIsLikeAdd] = useState(heart);
+
+  // 로컬 스토리지 저장
+  const [isLikeAdd, setIsLikeAdd] = useState(() => {
+    const storedIsLikeAdd = localStorage.getItem('isLikeAdd');
+    return storedIsLikeAdd ? JSON.parse(storedIsLikeAdd) : false;
+  });
+
   // 찜하기 수 카운트
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(like);
 
   //찜하기 버튼
   const onClick = async () => {
@@ -19,9 +26,24 @@ export default function EbookDibsButton({ like, notlike }) {
         url: `${process.env.REACT_APP_SERVER}/ebook/like/${bookId}`,
         withCredentials: true,
       });
+
       console.log(response);
-      setIsLikeAdd((prevIsAdd) => !prevIsAdd);
-      // setLikeCount(likeCount + 1);
+      console.log('찜하기 여부22', heart);
+      setIsLikeAdd((prevIsLikeAdd) => !prevIsLikeAdd);
+      // setLikeCount((prevLikeCount) =>
+      //   heart ? prevLikeCount + 1 : prevLikeCount - 1
+      // );
+
+      if (isLikeAdd === false) {
+        setLikeCount((prevLikeCount) => prevLikeCount + 1);
+      } else if (isLikeAdd === true) {
+        setLikeCount((prevLikeCount) => prevLikeCount - 1);
+      }
+
+      // 로컬 스토리지에 좋아요 상태 저장
+      localStorage.setItem('isLikeAdd', isLikeAdd);
+      // 로컬 스토리지에 카운트 상태 저장
+      // localStorage.setItem('likeCount', likeCount);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -32,7 +54,7 @@ export default function EbookDibsButton({ like, notlike }) {
       className='flex flex-col items-center cursor-pointer'
       onClick={onClick}
     >
-      {!isLikeAdd ? (
+      {isLikeAdd ? (
         <IoMdHeartEmpty className='text-4xl text-gray-700' />
       ) : (
         <IoMdHeart className='text-4xl text-red-600' />
@@ -40,9 +62,9 @@ export default function EbookDibsButton({ like, notlike }) {
 
       <span className='pt-1 text-sm'>
         {/* 찜했을 때 찜해제로 변경 */}
-        {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
+        {isLikeAdd ? <span>{likebtn}</span> : <span>{notlikebtn}</span>}
       </span>
-      {/* <span className='pt-1'>{likeCount}</span> */}
+      <span className='pt-1'>{like}</span>
     </div>
   );
 }

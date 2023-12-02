@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import DetailExample from '../../components/Recruitment/Detail/DetailExample';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import ResButton from '../../components/common/ResButton';
+import ImgSection from '../../components/Recruitment/Detail/ImgSection';
+import ExplainSection from '../../components/Recruitment/Detail/ExplainSection';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeart } from 'react-icons/io';
 
 export default function RecruitmentDetail() {
     const navigate = useNavigate();
@@ -10,9 +12,11 @@ export default function RecruitmentDetail() {
 
     console.log('잡아이디', jobId);
 
-    // const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
+    const [isHeart, setIsHeart] = useState();
+    const [allHeart, setAllIsHeart] = useState();
 
     // 상세 페이지 조회
     useEffect(() => {
@@ -21,22 +25,23 @@ export default function RecruitmentDetail() {
                 const response = await axios({
                     method: 'GET',
                     url: `${process.env.REACT_APP_SERVER}/jobs/${jobId}`,
+                    withCredentials: true,
                 });
                 console.log(response); // 받은 데이터를 상태에 업데이트
                 setWorks(response.data);
                 setIsCloseR(response.data.recruiting);
-                console.log('마감 토글 :', isCloseR);
+                setIsHeart(response.data.heart);
+                setAllIsHeart(response.data.like);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         fetchdata();
-    }, []);
+    }, [jobId]);
 
-    // const [isRecruiting, setIsRecruiting] = useState(location.state.dataDetail.recruiting);
     console.log('유저닉네임 : ', localStorage.getItem('nickname')); // 로그인된 유저의 닉네임
     console.log('작성닉네임 : ', works.nickname);
-    // console.log(location.state.dataDetail);
 
     // 공고 삭제
     const deleteRecruit = async () => {
@@ -55,48 +60,40 @@ export default function RecruitmentDetail() {
                 console.error('Error fetching data:', error);
             }
         } else {
-            // 취소 버튼을 눌렀을 때 실행되는 코드
-            // Optional: 원하는 작업을 수행하지 않을 때의 처리
         }
-        // try {
-        //     const response = await axios({
-        //         method: 'DELETE',
-        //         url: `${process.env.REACT_APP_SERVER}/jobs/${works.id}`,
-        //     });
-        //     console.log(response);
-        // } catch (error) {
-        //     console.error('Error fetching data:', error);
-        // }
         console.log(works.id);
     };
 
-    /////띱 ===============
-    const onChangeDIB = async () => {
+    //좋아요 버튼
+    const onClickHeart = async () => {
         try {
             const response = await axios({
                 method: 'POST',
-                url: `${process.env.REACT_APP_SERVER}/jobs/like/${works.id}`, ///${location.state.dataDetail.id}
+                url: `${process.env.REACT_APP_SERVER}/jobs/like/${jobId}`,
                 withCredentials: true,
             });
-            console.log(response);
+            console.log(response.data);
+            setIsHeart((prev) => !prev);
+            if (isHeart === true) {
+                setAllIsHeart((prev) => prev - 1);
+            } else if (isHeart === false) {
+                setAllIsHeart((prev) => prev + 1);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    // 공고 마감 하기 ==================
-    // 마감 버튼
-
     const recruitClose = async () => {
         try {
             const response = await axios({
                 method: 'POST',
-                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`, ///${location.state.dataDetail.id}
+                url: `${process.env.REACT_APP_SERVER}/jobs/recruiting/${works.id}`,
                 withCredentials: true,
             });
             console.log('마감 통신', response);
             setIsCloseR((prevIsClose) => !prevIsClose);
-            console.log(isCloseR);
+            console.log('버튼 속 마감 콘솔', isCloseR);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -107,43 +104,70 @@ export default function RecruitmentDetail() {
     return (
         <>
             <div className="w-full flex justify-center">
-                <section className="max-w-4xl block">
-                    <DetailExample data={works} isCloseR={isCloseR} />
-
-                    <nav className="flex justify-end">
-                        {localStorage.getItem('nickname') == works.nickname ? (
-                            <div className="flex flex-row  space-x-2">
-                                {/** 
-                                <div className="w-[6rem] h-[3rem] border border-gray-600">
-                                    <div onClick={onChangeDIB}>좋아요~</div>
+                <section className=" block">
+                    <section className="flex flex-col justify-center">
+                        <div className="w-full">
+                            <ImgSection loading={loading} data={works} />
+                            <div className="mx-3 my-2">{works.nickname} 님의 공고입니다.</div>{' '}
+                            <div className="mx-3 my-2 flex sm:flex-row flex-col sm:justify-between sm:items-center items-start">
+                                <div className="text-justify flex sm:flex-row flex-col">
+                                    {isCloseR ? (
+                                        <p className="w-[3rem] h-[2rem] mr-2 mb-2 inline-flex items-center justify-center px-2 py-2 text-white bg-green-600 rounded-lg shadow-sm font-semibold">
+                                            모집
+                                        </p>
+                                    ) : (
+                                        <p className="w-[3rem] h-[2rem] mr-2 mb-2 inline-flex items-center justify-center px-2 py-2 text-white bg-red-600 rounded-lg shadow-sm font-semibold">
+                                            마감
+                                        </p>
+                                    )}
+                                    <p className="sm:text-2xl text-lg mb-2 font-bold">{works.title}</p>
                                 </div>
-                                */}
+                                <div>
+                                    {isHeart ? (
+                                        <div className="flex flex-row items-center cursor-pointer" onClick={onClickHeart}>
+                                            <IoMdHeart className="mr-2 text-4xl text-red-600" />
+                                            {allHeart}개
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-row items-center cursor-pointer" onClick={onClickHeart}>
+                                            <IoMdHeartEmpty className="mr-2 text-4xl text-gray-700" />
+                                            {allHeart}개
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <ExplainSection loading={loading} data={works} />
+                        </div>
+                    </section>
+                    <nav className="pr-2 w-full flex justify-end">
+                        {localStorage.getItem('nickname') === works.nickname ? (
+                            <div className="flex flex-row  space-x-2">
                                 <div
-                                    className="w-[6rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
+                                    className="sm:w-[6rem] w-[5rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white  bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={recruitClose}
                                 >
                                     {isCloseR ? '마감 하기' : '다시 모집'}
                                 </div>
                                 <Link to={`/recruitment/edit/${works.id}`} state={{ dataDetail: works }} key={works.id}>
-                                    <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                    <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                         수정
                                     </div>
                                 </Link>
                                 <button
-                                    className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
+                                    className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer"
                                     onClick={deleteRecruit}
                                 >
                                     삭제
                                 </button>
                                 <Link to={`/recruitment`}>
-                                    <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                    <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                         목록
                                     </div>
                                 </Link>
                             </div>
                         ) : (
                             <Link to={`/recruitment`}>
-                                <div className="w-[4rem] h-[3rem] inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                <div className="sm:w-[4rem] w-[3rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
                                     목록
                                 </div>
                             </Link>

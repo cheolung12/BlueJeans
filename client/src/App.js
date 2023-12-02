@@ -7,7 +7,8 @@ import Wrapper from './components/common/Wrapper';
 import Footer from './components/common/Footer';
 
 function App() {
-  const location = useLocation();
+    const location = useLocation();
+
 
   // 맨 위 Navbar가 필요없는 페이지 경로
   const noTopNavbarPath = [];
@@ -24,29 +25,25 @@ function App() {
   const noSideNavbarDynamicUrl =
     location.pathname.startsWith('/recruitment/edit');
 
-  return (
-    <>
-      {!(
-        fullScreenPagePath.includes(location.pathname) || fullScreenDynamicUrl
-      ) ? (
+
+    return (
         <>
-          {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
-          <Wrapper>
-            <div className='flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12  mb-20'>
-              {!(
-                noSideNavbarPath.includes(location.pathname) ||
-                noSideNavbarDynamicUrl
-              ) && <SideNavBar />}
-              <Outlet />
-            </div>
-            {!noFooterPath.includes(location.pathname) && <Footer />}
-          </Wrapper>
+            {!(fullScreenPagePath.includes(location.pathname) || fullScreenDynamicUrl) ? (
+                <>
+                    {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
+                    <Wrapper>
+                        <div className="flex justify-between sm:items-start items-center sm:flex-row flex-col w-full mt-10 mb-20">
+                            {!(noSideNavbarPath.includes(location.pathname) || noSideNavbarDynamicUrl) && <SideNavBar />}
+                            <Outlet />
+                        </div>
+                        {!noFooterPath.includes(location.pathname) && <Footer />}
+                    </Wrapper>
+                </>
+            ) : (
+                <Outlet />
+            )}
         </>
-      ) : (
-        <Outlet />
-      )}
-    </>
-  );
+    );
 }
 
 export default App;
