@@ -9,7 +9,7 @@ const Info = () => {
   };
 
   return (
-    <div className='relative flex justify-items-end justify-end pr-3 w-[31rem] self-end mt-4'>
+    <div className='relative flex justify-items-end justify-end pr-3 w-[31rem] self-end mt-4 pb-12'>
       <button onClick={toggleToolTip} className='w-7 h-7 text-[#2e375d]'>
         <FaQuestionCircle className='h-10 w-10 flex items-center' />
         {!isToolTipVisible && (
