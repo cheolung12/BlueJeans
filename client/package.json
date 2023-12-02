@@ -30,6 +30,7 @@
     "redux": "^4.2.1",
     "swiper": "^11.0.5",
     "tmap-api": "^1.0.0",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
