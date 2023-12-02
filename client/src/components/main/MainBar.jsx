@@ -12,8 +12,8 @@ import { GoHome } from 'react-icons/go';
 const MainBar = () => {
   return (
     <div>
-      <div className='flex items-end justify-center h-full'>
-        <div className='rounded-[30px] shadow-md items-center z-20 flex justify-around bg-white w-full md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
+      <div className='flex items-end justify-center h-full pl-4 pr-4'>
+        <div className='rounded-[30px] shadow-lg items-center z-20 flex justify-around bg-white w-full max-md:pt-4 md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
           <Link
             to='/recruitment'
             className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'
@@ -30,7 +30,7 @@ const MainBar = () => {
           >
             <div className='flex flex-col items-center'>
               <FiBookOpen className='h-8 md:h-12 w-8 md:w-12 text-[#FED001]' />
-              <p className='font-bold mt-1'>e-book</p>
+              <p className='font-bold mt-1'>전자책</p>
             </div>
           </Link>
 
