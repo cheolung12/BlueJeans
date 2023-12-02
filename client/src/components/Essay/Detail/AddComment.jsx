@@ -37,7 +37,7 @@ export default function AddComment() {
       const response = await axios({
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER}/essays/comment/${EssayId}`,
-        data: { comment },
+        data: { comment: comment },
         withCredentials: true,
       });
       console.log(response.data);
@@ -57,7 +57,7 @@ export default function AddComment() {
         <div>댓글</div>
       </div>
       <input
-        className='w-[78%] h-14 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#818CF8] border-2 shadow-sm '
+        className='w-[78%] h-14 px-2 rounded-lg border-gray-300 outline-none pl-3 text-md focus:border-[#48599A] border-2 shadow-sm '
         type='text'
         placeholder='댓글을 입력해주세요'
         value={comment}

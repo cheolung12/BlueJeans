@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { PiPlusLight } from 'react-icons/pi';
 import { PiMinusThin } from 'react-icons/pi';
-export default function BookViewer({ data }) {
+import { FaPlus } from 'react-icons/fa6';
+import { FaMinus } from 'react-icons/fa6';
+
+export default function BookViewer({ content }) {
   //버튼 누르면 이전, 다음 페이지로 이동
   const [currentMove, setCurrentMove] = useState(0);
   //현재 페이지 알려줌
@@ -44,153 +47,160 @@ export default function BookViewer({ data }) {
   };
 
   return (
-    <div className='w-full flex flex-col'>
+    <div className='w-full flex flex-col h-full'>
       <div className='flex justify-center'>
-        <div className='flex justify-end w-[63rem]'>
-          <div
-            className='cursor-pointer p-1 mr-2 border-[1px] border-solid border-black w-[40px] h-[40px] flex justify-center items-center'
-            onClick={handleZoonIn}
-          >
-            <PiPlusLight className='text-2xl text-black' />
-          </div>
-          <div
-            className='cursor-pointer p-1 border-[1px] border-black w-[40px] h-[40px] flex justify-center items-center'
-            onClick={handleZoonOut}
-          >
-            <PiMinusThin className='text-2xl text-black' />
+        {/* 확대, 축소 버튼 */}
+        <div className='flex justify-end my-4 w-[70rem] max-[640px]:w-[22rem] max-[800px]:w-[35rem] max-[1300px]:w-[35rem]'>
+          <div className='flex'>
+            <div
+              className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
+              onClick={handleZoonIn}
+            >
+              <FaPlus className='text-xl text-white' />
+              {/* <PiPlusLight className='text-2xl text-white' /> */}
+            </div>
+            <div
+              className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
+              onClick={handleZoonOut}
+            >
+              <FaMinus className='text-xl text-white' />
+              {/* <PiMinusThin className='text-2xl text-white' /> */}
+            </div>
           </div>
         </div>
       </div>
       <div className='px-30 h-[41rem] flex flex-col'>
-        <div className='flex justify-center'>
-          <button
-            onClick={preHandler}
-            // disabled={currentMove === 0}
-            className='pr-3 cursor-pointer w-[7rem] flex items-center justify-end max-[750px]:hidden max-[1200px]:hidden'
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='32'
-              height='32'
-              viewBox='0 0 32 32'
-              fill='none'
+        <div className='flex flex-col'>
+          <div className='flex justify-center'>
+            {/* 이전 페이지 버튼 */}
+            <button
+              onClick={preHandler}
+              className='pr-3 cursor-pointer w-[7rem] flex items-center justify-end max-[750px]:hidden max-[1300px]:hidden'
             >
-              {' '}
-              <g clipPath='url(#clip0_5308_49633)'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='32'
+                height='32'
+                viewBox='0 0 32 32'
+                fill='none'
+              >
                 {' '}
-                <path
-                  d='M6 15.9996L22.9132 32.0017L24.0028 30.9708L8.17921 15.9996L24.0028 1.02846L22.9132 -0.00244141L6 15.9996Z'
-                  fill='#222222'
-                />{' '}
-              </g>{' '}
-              <defs>
-                {' '}
-                <clipPath id='clip0_5308_49633'>
+                <g clipPath='url(#clip0_5308_49633)'>
                   {' '}
-                  <rect width='32' height='32' fill='white' />{' '}
-                </clipPath>{' '}
-              </defs>{' '}
-            </svg>{' '}
-          </button>
+                  <path
+                    d='M6 15.9996L22.9132 32.0017L24.0028 30.9708L8.17921 15.9996L24.0028 1.02846L22.9132 -0.00244141L6 15.9996Z'
+                    fill='#222222'
+                  />{' '}
+                </g>{' '}
+                <defs>
+                  {' '}
+                  <clipPath id='clip0_5308_49633'>
+                    {' '}
+                    <rect width='32' height='32' fill='white' />{' '}
+                  </clipPath>{' '}
+                </defs>{' '}
+              </svg>{' '}
+            </button>
 
-          <div className='flex overflow-hidden h-[640px] w-[70rem]'>
-            <div className='flex overflow-y-auto overflow-hidden text-sm'>
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
+            {/* 책 본문 */}
+            <div className='flex overflow-hidden h-[640px] w-[70rem]  max-[640px]:justify-center max-[640px]:w-[22rem] max-[800px]:justify-center max-[1300px]:justify-center '>
+              <div className='flex overflow-y-auto overflow-hidden text-sm max-[800px]:flex-col max-[1300px]:flex-col'>
                 <div
-                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
+                  className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
+                  // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                  style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  {data.content}
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
+                  <div
+                    className=' w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
                 </div>
-                <div
-                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
 
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
                 <div
-                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
+                  className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
+                  // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                  style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  {data.content}
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
                 </div>
-                <div
-                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
 
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
                 <div
-                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
+                  className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
+                  // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                  style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  {data.content}
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
                 </div>
-                <div
-                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
 
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
                 <div
-                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
+                  className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
+                  // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                  style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  {data.content}
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
                 </div>
-                <div
-                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
 
-              <div
-                className='flex transition'
-                // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
-                style={{ transform: `translateX(-${70 * currentMove}rem)` }}
-              >
                 <div
-                  className='w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
+                  className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
+                  // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
+                  style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  {data.content}
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
+                  <div
+                    className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                    style={{ fontSize: `${textSize}px` }}
+                  >
+                    {content}
+                  </div>
                 </div>
-                <div
-                  className=' w-[35rem] h-4/5 p-14 tracking-wider leading-loose'
-                  style={{ fontSize: `${textSize}px` }}
-                >
-                  {data.content}
-                </div>
-              </div>
 
-              {/* {data.map((item) => (
+                {/* {data.map((item) => (
               <div key={item.id}>
                 <div
                   className={`flex transition`}
@@ -198,13 +208,13 @@ export default function BookViewer({ data }) {
                   style={{ transform: `translateX(-${54 * currentMove}rem)` }}
                 >
                   <div
-                    className='w-[27rem] h-[34rem] p-14 text-lg tracking-wider leading-loose'
+                    className='w-[27rem] h-[34rem] px-14 py-7 text-lg tracking-wider leading-loose'
                     key={item.id}
                   >
                     {item.content}
                   </div>
                   <div
-                    className=' w-[27rem] h-[34rem] p-14 text-lg tracking-wider leading-loose'
+                    className=' w-[27rem] h-[34rem] px-14 py-7 text-lg tracking-wider leading-loose'
                     key={item.id}
                   >
                     {item.content}
@@ -212,44 +222,43 @@ export default function BookViewer({ data }) {
                 </div>
               </div>
             ))} */}
+              </div>
             </div>
-          </div>
-          <button
-            onClick={nextHandler}
-            className='pl-3 cursor-pointer w-[7rem] flex items-center max-[750px]:hidden max-[1200px]:hidden'
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='32'
-              height='32'
-              viewBox='0 0 32 32'
-              fill='none'
-            >
-              {' '}
-              <g clipPath='url(#clip0_5308_49689)'>
-                {' '}
-                <path
-                  d='M25 15.9996L8.08678 32.0017L6.99718 30.9708L22.8208 15.9996L6.99718 1.02846L8.08678 -0.00244141L25 15.9996Z'
-                  fill='#222222'
-                />{' '}
-              </g>{' '}
-              <defs>
-                {' '}
-                <clipPath id='clip0_5308_49689'>
-                  {' '}
-                  <rect width='32' height='32' fill='white' />{' '}
-                </clipPath>{' '}
-              </defs>{' '}
-            </svg>{' '}
-          </button>
-        </div>
 
-        <div className='text-center pb-9'>
-          {/* 페이지 쪽수 */}
-          <span className='mb-3'>
-            {count} / 5
-            {/* {((currentMove + data.length) % data.length) + 1} / {data.length} */}
-          </span>
+            {/* 다음페이지 버튼 */}
+            <button
+              onClick={nextHandler}
+              className='pl-3 cursor-pointer w-[7rem] flex items-center max-[750px]:hidden max-[1300px]:hidden'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='32'
+                height='32'
+                viewBox='0 0 32 32'
+                fill='none'
+              >
+                {' '}
+                <g clipPath='url(#clip0_5308_49689)'>
+                  {' '}
+                  <path
+                    d='M25 15.9996L8.08678 32.0017L6.99718 30.9708L22.8208 15.9996L6.99718 1.02846L8.08678 -0.00244141L25 15.9996Z'
+                    fill='#222222'
+                  />{' '}
+                </g>{' '}
+                <defs>
+                  {' '}
+                  <clipPath id='clip0_5308_49689'>
+                    {' '}
+                    <rect width='32' height='32' fill='white' />{' '}
+                  </clipPath>{' '}
+                </defs>{' '}
+              </svg>{' '}
+            </button>
+          </div>
+          <div className='text-center py-7 max-[750px]:hidden max-[1300px]:hidden'>
+            {/* 페이지 쪽수 */}
+            <span className='my-3'>{count} / 5</span>
+          </div>
         </div>
       </div>
     </div>

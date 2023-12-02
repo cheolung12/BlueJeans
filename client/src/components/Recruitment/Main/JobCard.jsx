@@ -5,10 +5,13 @@ export default function JobCard({ dataList }) {
     return (
         <>
             {/* 데이터 표시 */}
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-wrap justify-between fade-in">
                 {dataList.map((data) => (
                     <div className="p-2 lg:w-1/2 w-full transition-transform hover:ease-linear transform hover:scale-105">
-                        <Link className="p-2 h-48 flex flex-row justify-center border rounded-lg shadow-md" to={`/recruitment/detail/${data.id}`}>
+                        <Link
+                            className="p-2 h-48 flex flex-row justify-center border rounded-lg shadow-md bg-green-50"
+                            to={`/recruitment/detail/${data.id}`}
+                        >
                             {/* key={data.id} state={{ dataDetail: data }} */}
                             <div class="m-1 w-1/2">
                                 <img

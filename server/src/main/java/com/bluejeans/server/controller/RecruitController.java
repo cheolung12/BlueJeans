@@ -35,8 +35,8 @@ public class RecruitController {
         try {
             fileURL = s3Uploader.upload(multipartFile, "jobs");
         } catch (IOException e) {
-//             throw new RuntimeException(e);
-            fileURL = null;
+             throw new RuntimeException(e);
+//            fileURL = null;
         }
 
         return recruitService.registerRecruit(recruitDTO,user, fileURL);
