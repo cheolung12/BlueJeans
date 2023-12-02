@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { IoHome } from 'react-icons/io5';
-import LikedPost from '../components/mypage/LikedPost';
+import TopNavbar from '../components/common/TopNavbar';
+import MyPagePosts from '../components/mypage/MyPagePosts';
 
 export default function MyPage() {
-  const { userId } = useParams();
+  const [myPost, setMyPost] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    nickname: '',
+    address: '',
+    likedPost: [],
+    writedPost: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +22,26 @@ export default function MyPage() {
         });
         console.log(res.data);
         const { nickname, address, likedPost, writedPost } = res.data;
+        // 최신순으로 게시물들을 정렬
+        const sortedLikedPost = likedPost.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+
+          return dateB - dateA;
+        });
+        const sortedWritedPost = writedPost.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+
+          return dateB - dateA;
+        });
+
+        setUserInfo({
+          nickname,
+          address,
+          likedPost: sortedLikedPost,
+          writedPost: sortedWritedPost,
+        });
       } catch (error) {
         console.log('fetch error', error);
       }
@@ -25,31 +50,26 @@ export default function MyPage() {
     fetchData();
   }, []);
 
-  return (
-    <div className='w-full'>
-      {/* // userInfo */}
-      <div className='w-full h-72 bg-slate-600 relative'>
-        <div className='absolute -bottom-10 left-24 rounded-full w-24 h-24'>
-          <img
-            src='/images/jinsu.jpeg'
-            alt='프로필 사진'
-            className='w-full h-full object-cover rounded-full'
-          />
-        </div>
-      </div>
-      <div className='mt-14 mx-24'>
-        <div>
-          <div className='text-3xl font-semibold pl-2 mb-12'>뀡뀡이</div>
-          <div className='flex items-center mb-5 text-xl'>
-            <IoHome className='mr-4' />
-            서울시 강동구 아리수로 93길 40
-          </div>
-        </div>
-        <div className='mt-12 '>
-          <div>내가 쓴 게시물</div>
+  const toggleMyPost = () => setMyPost((prev) => !prev);
 
-          <div>
-            <LikedPost />
+  return (
+    <div className='w-full h-screen'>
+      <TopNavbar />
+      <div className='flex w-full h-full'>
+        {/* 회원정보 */}
+        <div className='w-1/3 h-full bg-slate-500'></div>
+        {/* 게시물 보기 */}
+        <div className='w-2/3 h-full box-border px-8 '>
+          <div className='flex w-full justify-evenly'>
+            <div className='w-full text-center' onClick={toggleMyPost}>내 게시물</div>
+            <div className='w-full text-center' onClick={toggleMyPost}>찜한 게시물</div>
+          </div>
+          <div className='w-full grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-y-14 overflow-scroll box-border'>
+            {!myPost ? (
+              <MyPagePosts postLists={userInfo.likedPost} />
+            ) : (
+              <MyPagePosts postLists={userInfo.writedPost} />
+            )}
           </div>
         </div>
       </div>

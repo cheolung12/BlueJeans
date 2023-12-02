@@ -40,7 +40,7 @@ public class MyPageService {
     public void convertRecruitEntitiesToDTO(List<MyPostsDTO> DTOList, List<RecruitEntity> recruitList) {
         for(RecruitEntity recruit :recruitList){
             DTOList.add(MyPostsDTO.builder()
-                    .type("recruit")
+                    .type("recruitment")
                     .id(recruit.getId())
                     .title(recruit.getTitle())
                     .img_path(recruit.getImg_path())
