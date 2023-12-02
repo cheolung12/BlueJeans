@@ -16,14 +16,13 @@ function App() {
   // footer가 필요없는 경로
   const noFooterPath = [];
   // 레이아웃 필요없는 전체화면 페이지
-  const fullScreenPagePath = ['/', '/login', '/signup'];
+  const fullScreenPagePath = ['/', '/login', '/signup', '/mypage'];
 
   const fullScreenDynamicUrl = location.pathname.startsWith(
     '/ebook/detail/viewer'
   );
   const noSideNavbarDynamicUrl =
-    location.pathname.startsWith('/recruitment/edit') ||
-    location.pathname.startsWith('/mypage');
+    location.pathname.startsWith('/recruitment/edit');
 
   return (
     <>
@@ -33,7 +32,7 @@ function App() {
         <>
           {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
           <Wrapper>
-            <div className='flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12 mt-10 mb-20'>
+            <div className='flex justify-between sm:items-start items-center sm:flex-row flex-col w-full px-12  mb-20'>
               {!(
                 noSideNavbarPath.includes(location.pathname) ||
                 noSideNavbarDynamicUrl
