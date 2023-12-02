@@ -21,7 +21,7 @@ export default function TopNavbar() {
 
   return (
     <nav className='bg-white  w-full z-50'>
-      <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-4 px-4'>
+      <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-4 px-4 gap-10 gap-y-14'>
         <Link
           to='/'
           className='flex items-center space-x-3 rtl:space-x-reverse'
