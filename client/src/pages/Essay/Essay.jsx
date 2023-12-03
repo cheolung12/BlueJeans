@@ -21,6 +21,7 @@ export default function Essay() {
     { created_at: '' },
     { updated_at: '' },
     { nickname: '' },
+    { comments: '' },
   ]);
 
   const [searchInput, setSearchInput] = useState('');
@@ -174,6 +175,7 @@ export default function Essay() {
                 thumbnail={e.img_path}
                 like={e.like}
                 nickname={e.nickname}
+                comments={e.comments}
               />
             ))}
           </div>

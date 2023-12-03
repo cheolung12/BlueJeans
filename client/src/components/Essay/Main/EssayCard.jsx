@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IoMdHeartEmpty } from 'react-icons/io';
+import { FaRegComments } from 'react-icons/fa6';
 
-export default function EssayCard({ id, title, thumbnail, nickname }) {
+export default function EssayCard({
+  id,
+  title,
+  thumbnail,
+  nickname,
+  like,
+  comments,
+}) {
   return (
     <div className='transition-transform hover:ease-linear transform hover:scale-105'>
       <Link to={`/essay/detail/${id}`}>
@@ -22,6 +31,17 @@ export default function EssayCard({ id, title, thumbnail, nickname }) {
             <div className='flex flex-col w-full h-[9rem] justify-evenly items-center'>
               <div className='text-xl font-bold'>{title}</div>
               <div className='text-md'>{nickname}</div>
+
+              <div className='flex items-center'>
+                <div className='flex items-center mx-2'>
+                  <IoMdHeartEmpty className='mx-1' />
+                  <div className='mx-[0.5px]'>{like}</div>
+                </div>
+                <div className='flex items-center mx-2'>
+                  <FaRegComments className='mx-1' />
+                  <div className='mx-[0.5px]'>{comments}</div>
+                </div>
+              </div>
             </div>
           </div>
           <div className='w-full h-[11rem] rounded-br-2xl '>
