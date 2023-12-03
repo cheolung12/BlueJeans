@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResCommentDTO {
+    private int id;
+    private String img_path;
+    private String userID;
     private String nickname;
     private String comment;
 
@@ -18,6 +21,9 @@ public class ResCommentDTO {
         return new ResCommentDTO().builder()
                 .nickname(comments.getUser().getNickname())
                 .comment(comments.getComment())
+                .id(comments.getId())
+                .userID(comments.getUser().getUserID())
+                .img_path(comments.getUser().getImg_path())
                 .build();
     }
 }

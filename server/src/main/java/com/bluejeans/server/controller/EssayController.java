@@ -71,10 +71,12 @@ public class EssayController {
         //로그인한 유저의 id와 에세이의 user_id가 일치할경우 수정가능하도록(불일치할 경우 null반환)
         //하려했으나 프론트에서 검사해야함.
         String fileURL = null;
-        try {
-            fileURL = s3Uploader.upload(multipartFile, "essay");
-        } catch (IOException e) {
-            fileURL = null;
+        if(multipartFile != null) {
+            try {
+                fileURL = s3Uploader.upload(multipartFile, "essay");
+            } catch (IOException e) {
+                fileURL = null;
+            }
         }
         return essayService.edit(essay_id,fileURL, essayDTO);
     }

@@ -24,19 +24,19 @@ export default function CommentList({ comment }) {
         <div className='flex justify-between'>
           <div>
             <img
-              src={`${comment.user.img_path}`}
+              src={`${comment.img_path}`}
               alt='프로필 사진'
               className='w-14 h-14 rounded-3xl'
             />
           </div>
           <div className='flex flex-col justify-between ml-2'>
-            <div className='font-bold text-xl'>{comment.user.nickname}</div>
+            <div className='font-bold text-xl'>{comment.nickname}</div>
             <div className='text-md'>{comment.comment}</div>
           </div>
         </div>
 
         <div>
-          {comment.user.userID === window.localStorage.getItem('userID') ? (
+          {comment.userID === window.localStorage.getItem('userID') ? (
             // userid 대신에 닉네임
             <button onClick={handleDelete} className='font-semibold'>
               삭제

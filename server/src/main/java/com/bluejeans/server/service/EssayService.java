@@ -106,6 +106,7 @@ public class EssayService {
         //수정
         if(essay.isPresent()){
             EssayEntity existingEntity = essay.get();
+
             existingEntity.updateFields(essayDTO,fileURL);
             essayRepository.save(existingEntity);
             return  true;
