@@ -94,7 +94,7 @@ export default function Login() {
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center'
         >
           <div className='w-3/5 flex flex-col justify-start'>
-            <div className='sm:text-4xl text-3xl font-bold mb-2 text-signatureColor'>
+            <div className='sm:text-4xl text-3xl font-bold mb-2 text-gray-600'>
               로그인
             </div>
             <div className='sm:text-base text-sm font-light sm:mb-8 mb-6'>

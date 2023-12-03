@@ -62,7 +62,6 @@ export default function Signup() {
       if (opacity <= 0) {
         clearInterval(fadingInterval);
       }
-      element.focus();
     }, 100);
   }
 
@@ -229,7 +228,7 @@ export default function Signup() {
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center'
         >
           <div className='w-3/5 flex flex-col justify-start'>
-            <div className='sm:text-4xl text-3xl font-bold mb-2 text-[#2e375d]'>
+            <div className='sm:text-4xl text-3xl font-bold mb-2 text-gray-600'>
               회원가입
             </div>
             <div className='sm:text-base text-sm font-light sm:mb-8 mb-6'>
@@ -284,12 +283,12 @@ export default function Signup() {
                 닉네임
               </label>
               {formValid.nickname === true && (
-                <span className='text-xs text-green-400'>
+                <span className='text-sm font-semibold text-green-400'>
                   사용가능한 닉네임입니다
                 </span>
               )}
               {formValid.nickname === false && (
-                <span className='text-xs text-red-600'>
+                <span className='text-sm font-semibold text-red-600'>
                   다른닉네임을 입력해주세요
                 </span>
               )}
@@ -341,7 +340,7 @@ export default function Signup() {
                 비밀번호 확인
               </label>
               {formData.pwCheck && formData.password !== formData.pwCheck && (
-                <span className='text-xs text-red-600'>
+                <span className='text-sm font-semibold text-red-600'>
                   비밀번호가 일치하지 않습니다.
                 </span>
               )}
@@ -387,7 +386,7 @@ export default function Signup() {
           <div className='flex justify-center w-3/5 sm:mt-8 mt-6'>
             <button
               type='submit'
-              className={`sm:w-1/2 w-3/4 cursor-pointer bg-[#2e375d] font-semibold text-white text-xl  sm:py-4 py-3 rounded-lg ${
+              className={`sm:w-1/2 w-3/4 cursor-pointer bg-signatureColor font-semibold text-white text-xl  sm:py-4 py-3 rounded-lg ${
                 isFormValid
                   ? 'opacity-none cursor-pointer hover:opacity-95'
                   : 'opacity-70 cursor-not-allowed'
