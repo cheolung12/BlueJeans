@@ -3,8 +3,10 @@ import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
 import BookCard from '../../components/Ebook/Main/BookCard';
 import axios from 'axios';
+import BookCardSkeleton from '../../components/Ebook/Main/BookCardSkeleton';
 
 export default function EBook() {
+  const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([
     { title: '' },
     { id: '' },
@@ -29,6 +31,7 @@ export default function EBook() {
         setBooks(response.data);
         console.log(response.data);
         setBookLength(response.data.length);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -81,7 +84,7 @@ export default function EBook() {
     <div className='flex justify-center w-full'>
       <div className='flex flex-col w-[60%] items-centers justify-center'>
         {/* 카테고리, 검색창 */}
-        <div className='flex flex-col items-center justify-between md:flex-row'>
+        <div className='flex flex-col items-center justify-between lg:flex-row'>
           <Filter handleFilter={handleFilter} />
           <SearchBooks
             book={books}
@@ -98,12 +101,16 @@ export default function EBook() {
                 <div className='flex flex-wrap justify-center sm:justify-between w-full'>
                   {books.map((book, index) => (
                     <div key={index}>
-                      <BookCard
-                        id={book.id}
-                        thumbnail={book.thumbnail}
-                        title={book.title}
-                        author={book.author}
-                      />
+                      {loading ? (
+                        <BookCardSkeleton />
+                      ) : (
+                        <BookCard
+                          id={book.id}
+                          thumbnail={book.thumbnail}
+                          title={book.title}
+                          author={book.author}
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
