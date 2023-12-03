@@ -32,7 +32,7 @@ function App() {
                 <>
                     {!noTopNavbarPath.includes(location.pathname) && <TopNavbar />}
                     <Wrapper>
-                        <div className="flex justify-between sm:items-start items-center sm:flex-row flex-col w-full mt-10 mb-20">
+                        <div className="flex justify-between lg:items-start items-center lg:flex-row flex-col w-full mt-10 mb-20">
                             {!(noSideNavbarPath.includes(location.pathname) || noSideNavbarDynamicUrl) && <SideNavBar />}
                             <Outlet />
                         </div>
