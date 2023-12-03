@@ -236,16 +236,16 @@ function Map({ userAddress }) {
   };
 
   return (
-    <div className='relative self-center '>
+    <div className='w-full'>
       {loading && (
         <div className='text-red'>
-          <Sktelecom />
+          <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md'/>
         </div>
       )}
       <div
         ref={mapContainerRef}
         id='TMapApp'
-        className='w-[20rem] h-[25rem] md:w-[40rem] lg:w-[45rem] xl:w-[53.125rem] lg:h-[30rem] drop-shadow-md'
+        className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md'
       ></div>
     </div>
   );
