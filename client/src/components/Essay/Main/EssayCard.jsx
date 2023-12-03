@@ -1,34 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AiOutlineComment } from 'react-icons/ai';
-import { AiOutlineLike } from 'react-icons/ai';
 
 export default function EssayCard({ id, title, thumbnail, like, nickname }) {
   return (
-    <div>
+    <div className='transition-transform hover:ease-linear transform hover:scale-105'>
       <Link to={`/essay/detail/${id}`} key={id}>
         <div
           className='w-[18rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
           style={{
-            boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
+            // boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
+            boxShadow:
+              'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+
+            // boxShadow:
+            //   'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset',
+            // boxShadow:
+            //   ' rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px',
           }}
         >
           <div className='w-full h-[9rem]'>
             <div className='flex flex-col w-full h-[9rem] justify-evenly items-center'>
-              <div className='text-xl font-semibold'>{title}</div>
-              <div className='text-xl font-semibold'>{nickname}</div>
+              <div className='text-xl font-bold'>{title}</div>
+              <div className='text-md'>{nickname}</div>
 
-              <div className='flex text-sm'>
-                <div className='flex items-center mx-2'>
-                  <AiOutlineLike className='mr-1' />
+              {/* <div className='flex text-sm'>
+                <div className='flex items-center justify-center'>
+                  <AiOutlineLike className='mr-1 text-lg' />
                   {like}
                 </div>
+
                 <div className='flex items-center mx-2'>
                   <AiOutlineComment className='mr-1' />
-                  {/* 댓글 수 데이터 받기 */}
                   <span>2</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className='w-full h-[11rem] rounded-br-2xl '>

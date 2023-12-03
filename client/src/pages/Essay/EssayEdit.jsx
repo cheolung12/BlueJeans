@@ -12,7 +12,6 @@ export default function EssayEdit() {
   const [essayData, setEssayData] = useState({
     title: forPatchData.title,
     content: forPatchData.content,
-    file: forPatchData.img_path,
   });
 
   // 인풋 이미지 태그 커스텀
@@ -76,7 +75,7 @@ export default function EssayEdit() {
     <>
       <div className='w-full h-full flex flex-col justify-center items-center'>
         <div className='sm:text-4xl text-3xl font-bold mb-5 text-[#000000]'>
-          백일장 작성
+          백일장 수정
         </div>
         <form
           onSubmit={onSubmit}
@@ -97,7 +96,7 @@ export default function EssayEdit() {
               type='text'
               placeholder='제목을 입력하세요.'
               required
-              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400'
+              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-[#48599A] border-2'
             />
           </div>
           <div className='w-full h-full flex flex-col justify-center'>
@@ -109,14 +108,14 @@ export default function EssayEdit() {
                 사진 첨부
               </label>
               <label
-                className='mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg cursor-pointer'
+                className='mx-3 mt-2 h-[2rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor hover:opacity-90 rounded-lg cursor-pointer'
                 for='inputImg'
               >
                 파일 업로드
               </label>
             </div>
             <input
-              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400'
+              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 '
               placeholder={placeholder}
               disabled
             />
@@ -140,7 +139,7 @@ export default function EssayEdit() {
             </label>
             <textarea
               rows='7'
-              className='m-2 w-100 p-2 sm:text-base text-xs resize-none border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400'
+              className='m-2 w-100 p-2 sm:text-base text-xs resize-none rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-[#48599A] border-2'
               value={essayData.content}
               onChange={handleInputChange}
               name='content'
@@ -152,7 +151,7 @@ export default function EssayEdit() {
           <div>
             <button
               type='submit'
-              className='my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-gray-400 rounded-lg '
+              className='my-3 w-[10rem] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor hover:opacity-90 rounded-lg '
             >
               백일장에 게시하기
             </button>

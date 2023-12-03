@@ -66,9 +66,9 @@ export default function EssayCreate() {
   return (
     <>
       <div className='w-full h-full flex flex-col justify-center items-center'>
-        {/* <div className='sm:text-4xl text-3xl font-bold mb-5 text-[#000000]'>
+        <div className='sm:text-4xl text-3xl font-bold mb-5 text-[#000000]'>
           백일장 작성
-        </div> */}
+        </div>
         <form
           onSubmit={onSubmit}
           className='w-full max-w-2xl h-full flex flex-col justify-center items-center border'
