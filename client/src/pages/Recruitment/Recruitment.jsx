@@ -138,14 +138,14 @@ export default function Recruitment() {
     return (
         <>
             <div className="w-full flex justify-center">
-                <section className="lg:max-w-4xl max-w-lg block">
+                <section className="md:max-w-md lg:max-w-4xl max-w-sm block">
                     {/* 데이터 요청 버튼 
                 <button onClick={handleClick}>일자리 불러오기</button> */}
-                    <div className="lg:w-[896px] w-[400px] flex lg:flex-row flex-col items-center justify-between px-4">
+                    <div className="lg:w-[896px] w-full flex lg:flex-row flex-col items-center justify-between px-4">
                         {/* 인기순 & 최신순 셀렉트 */}
-                        <nav className="flex sm:justify-start justify-center items-center sm:flex-row flex-col">
+                        <nav className="lg:w-full w-[390px] flex lg:justify-normal justify-between items-center flex-row sm:px-3 md:px-1 lg:px-0 px-4">
                             <select
-                                className="m-2 px-4 py-2 border-2 rounded-md focus:border-signatureColor"
+                                className="m-2 px-4 py-2 border-2 rounded-md focus:border-signatureColor sm:text-base text-sm"
                                 name=""
                                 id=""
                                 value={selectValue}
@@ -155,8 +155,8 @@ export default function Recruitment() {
                                 <option value="likes">인기순</option>
                             </select>
                             {isLogin ? (
-                                <div className="form-control w-44 mx-2">
-                                    <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
+                                <div className="form-control w-48 mx-2">
+                                    <label className="lg:justify-normal justify-end autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
                                         <input
                                             type="checkbox"
                                             name="autoSaver"
@@ -175,7 +175,7 @@ export default function Recruitment() {
                                                 }`}
                                             ></span>
                                         </span>
-                                        <span className="label flex items-center text-sm font-medium text-black">집 근처만 보기</span>
+                                        <span className="label flex items-center sm:text-base text-sm font-medium text-black">집 근처만 보기</span>
                                     </label>
                                 </div>
                             ) : (
@@ -184,13 +184,13 @@ export default function Recruitment() {
                         </nav>
                         {/* 일자리 검색창 */}
                         <div className="flex">
-                            <div className="flex mr-3">
+                            <div className="flex mr-3 lg:justify-normal justify-center">
                                 <input
                                     type="text"
                                     placeholder="찾고 있는 직무를 입력하세요..."
                                     value={searchInput}
                                     onChange={(e) => setSearchInput(e.target.value)}
-                                    className="border rounded-full w-[25.5rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base"
+                                    className="border rounded-full md:w-[23.5rem] lg:w-[25.5rem] w-[21.5rem] lg:h-[2.7rem] h-[2.4rem] border-gray-300 outline-none pl-3 sm:text-base text-sm"
                                     onKeyDown={handleKeyDown}
                                 />
                                 <button
@@ -226,7 +226,9 @@ export default function Recruitment() {
                     <nav>
                         <div className="mr-3 mt-3 flex justify-end">
                             <Link className="hover:opacity-95" to={`/recruitment/create`}>
-                                <ResButton text="공고 게시" width={'120px'} />
+                                <div className="sm:w-[6rem] w-[5rem] sm:h-[3rem] h-[2rem] sm:text-lg text-sm inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer">
+                                    공고 게시
+                                </div>
                             </Link>
                         </div>
 
