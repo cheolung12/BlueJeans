@@ -190,12 +190,12 @@ export default function EssayDetail() {
             </section>
 
             <section>
-              <div className='w-full h-[30rem] mt-3 text-black mb-8'>
+              <div className='w-full h-[30rem] text-black mb-8'>
                 <div
-                  className='text-center text-lg pt-4 h-full whitespace-pre'
-                  style={{
-                    boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-                  }}
+                  className='text-center text-lg pt-4 h-full whitespace-pre border-solid border-gray-300 border-2'
+                  // style={{
+                  //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                  // }}
                 >
                   {essayContent.content}
                 </div>
