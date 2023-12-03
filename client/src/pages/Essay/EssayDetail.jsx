@@ -3,10 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import AddComment from '../../components/Essay/Detail/AddComment';
 import CommentList from '../../components/Essay/Detail/CommentList';
 import axios from 'axios';
-import { PiThumbsUpLight } from 'react-icons/pi';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
-import { FaRegComment } from 'react-icons/fa6';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
@@ -169,7 +167,7 @@ export default function EssayDetail() {
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                   >
                     <div className='flex flex-col h-full justify-center items-center'>
-                      <div className='w-full text-2xl sm:text-3xl font-bold mb-5 text-white text-center'>
+                      <div className='w-full text-2xl sm:text-3xl font-bold mb-2 text-white text-center'>
                         {essayContent.title}
                       </div>
                       {/* <div>
@@ -192,9 +190,9 @@ export default function EssayDetail() {
             </section>
 
             <section>
-              <div className='w-full h-[30rem] mt-3 text-black mb-8'>
+              <div className='w-full h-[30rem] text-black mb-8'>
                 <div
-                  className='text-center text-lg pt-4 h-full whitespace-pre'
+                  className='text-center text-lg pt-4 h-full whitespace-pre border-solid border-gray-300 border-2'
                   // style={{
                   //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
                   // }}

@@ -1,12 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IoMdHeartEmpty } from 'react-icons/io';
+import { FaRegComments } from 'react-icons/fa6';
 
-export default function EssayCard({ id, title, thumbnail, like, nickname }) {
+export default function EssayCard({
+  id,
+  title,
+  thumbnail,
+  nickname,
+  like,
+  comments,
+}) {
   return (
     <div className='transition-transform hover:ease-linear transform hover:scale-105'>
-      <Link to={`/essay/detail/${id}`} key={id}>
+      <Link to={`/essay/detail/${id}`}>
         <div
-          className='w-[18rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
+          className='w-[17rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
           style={{
             // boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
             boxShadow:
@@ -23,17 +32,16 @@ export default function EssayCard({ id, title, thumbnail, like, nickname }) {
               <div className='text-xl font-bold'>{title}</div>
               <div className='text-md'>{nickname}</div>
 
-              {/* <div className='flex text-sm'>
-                <div className='flex items-center justify-center'>
-                  <AiOutlineLike className='mr-1 text-lg' />
-                  {like}
-                </div>
-
+              <div className='flex items-center'>
                 <div className='flex items-center mx-2'>
-                  <AiOutlineComment className='mr-1' />
-                  <span>2</span>
+                  <IoMdHeartEmpty className='mx-1' />
+                  <div className='mx-[0.5px]'>{like}</div>
                 </div>
-              </div> */}
+                <div className='flex items-center mx-2'>
+                  <FaRegComments className='mx-1' />
+                  <div className='mx-[0.5px]'>{comments}</div>
+                </div>
+              </div>
             </div>
           </div>
           <div className='w-full h-[11rem] rounded-br-2xl '>
