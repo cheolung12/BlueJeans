@@ -27,7 +27,7 @@ const Calligraphy = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      const threshold = 900;
+      const threshold = 1000;
 
       if (scrollY >= threshold) {
         const delays = [0, 100, 150, 200, 250, 300, 350, 400, 450, 500];

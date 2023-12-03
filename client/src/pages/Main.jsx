@@ -74,17 +74,22 @@ export default function Main() {
     <>
       <TopNavbar />
       <div>
-        <div className=' h-4/5 w-full relative'>
+        <div className='h-full flex items-center justify-center'>
           <div
-            className='h-4/5 w-full relative '
+            className='md:h-1/2 w-full flex flex-col items-center relative'
             style={{ backgroundPosition: 'bottom' }}
           >
             <img
               src={lastMain}
               alt='main'
-              className='h-full w-full object-cover bg-bottom'
+              className='min-h-[50%] md:h-[50rem] lg:h-[60rem] w-full object-cover bg-bottom'
             />
-            <div className='absolute bottom-0 left-0 w-full'>
+            <div className='absolute bottom-0  left-0 w-full'>
+              {/* 여기 안 */}
+              <div className='  w-full h-[500px] text-white text-4xl font-bold text-center'>
+                <p className='p-3'>언제나 당신 곁에</p>
+                <p className='p-3'>Bluejeans</p>
+              </div>
               <MainBar className='flex items-end' />
             </div>
           </div>
@@ -95,7 +100,7 @@ export default function Main() {
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
             <div className='text-center mt-3'>
               <div className='text-4xl pb-10 font-bold'>오늘의 추천도서</div>
-              <div className='whitespace-pre-line'>
+              <div className='md:text-lx'>
                 <div className='text-lg'>1970년대의 감성부터 현대까지</div>
                 <div className='text-lg'>
                   지금 봐도 세련된 문장으로 감동을 주는
@@ -159,44 +164,50 @@ export default function Main() {
           <div className='flex w-full items-end pl-4 pr-4 justify-evenly'>
             {/* 하나 */}
             {essay1 && (
-              <div className='bg-white w-28 sm:w-44 lg:w-56 h-72  lg:h-96 rounded-t-xl flex justify-center text-center self'>
-                <div className=' self-center'>
-                  <div className='p-2'>{essay1.user_id}</div>
-                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                  <div className='p-2'>{essay1.title}</div>
-                  <div className='flex justify-center'>
-                    <FaRegThumbsUp />
-                    <div>{essay1.like}</div>
+              <Link to={`/essay/detail/${essay1.id_essay}`}>
+                <div className='bg-white w-28 sm:w-44 lg:w-56 h-72 lg:h-96 rounded-t-xl flex justify-center text-center self'>
+                  <div className='self-center'>
+                    <div className='p-2'>{essay1.user_id}</div>
+                    <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                    <div className='p-2'>{essay1.title}</div>
+                    <div className='flex justify-center'>
+                      <FaRegThumbsUp />
+                      <div>{essay1.like}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             )}
 
             {essay0 && (
-              <div className='bg-white  w-28 sm:w-44 lg:w-56  h-96 lg:h-[30rem] rounded-t-xl flex justify-center text-center self'>
-                <div className=' self-center'>
-                  <div className='p-2'>{essay0.user_id}</div>
-                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                  <div className='p-2'>{essay0.title}</div>
-                  <div className='flex justify-center self-end'>
-                    <FaRegThumbsUp />
-                    <div>{essay0.like}</div>
+              <Link to={`/essay/detail/${essay0.id_essay}`}>
+                <div className='bg-white  w-28 sm:w-44 lg:w-56  h-96 lg:h-[30rem] rounded-t-xl flex justify-center text-center self'>
+                  <div className=' self-center'>
+                    <div className='p-2'>{essay0.user_id}</div>
+                    <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                    <div className='p-2'>{essay0.title}</div>
+                    <div className='flex justify-center self-end'>
+                      <FaRegThumbsUp />
+                      <div>{essay0.like}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             )}
             {essay2 && (
-              <div className='bg-white  w-28 sm:w-44 lg:w-56  h-64 lg:h-80 rounded-t-xl flex justify-center text-center self'>
-                <div className=' self-center'>
-                  <div className='p-2'>{essay2.user_id}</div>
-                  <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                  <div className='p-2'>{essay2.title}</div>
-                  <div className='flex justify-center'>
-                    <FaRegThumbsUp />
-                    <div>{essay2.like}</div>
+              <Link to={`/essay/detail/${essay2.id_essay}`}>
+                <div className='bg-white  w-28 sm:w-44 lg:w-56  h-64 lg:h-80 rounded-t-xl flex justify-center text-center self'>
+                  <div className=' self-center'>
+                    <div className='p-2'>{essay2.user_id}</div>
+                    <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
+                    <div className='p-2'>{essay2.title}</div>
+                    <div className='flex justify-center'>
+                      <FaRegThumbsUp />
+                      <div>{essay2.like}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             )}
           </div>
           {/* 2-2  900부터*/}
@@ -224,9 +235,9 @@ export default function Main() {
             <div className='flex justify-center '>
               {recruit0 && (
                 <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
-                  <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                  <div className='animate-bounce pb-2 text-red-500 font-semibold'>
                     NEW
-                  </span>
+                  </div>
                   <div className='pl-5 pt-2'>
                     <div className='mb-4 flex items-center'>
                       <IoMdBriefcase className='self-center mr-2' />
@@ -253,11 +264,10 @@ export default function Main() {
               )}
 
               {recruit1 && (
-                // <Link to={`/recruitment/detail/${recruit1.id}`}>
                 <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
-                  <span className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                  <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
                     NEW
-                  </span>
+                  </div>
                   <div className='pl-5 pt-2'>
                     <div className='mb-4 flex items-center'>
                       <IoMdBriefcase className='self-center mr-2' />
@@ -281,14 +291,12 @@ export default function Main() {
                     <div className='p-2'>{recruit1.money}</div>
                   </div>
                 </div>
-                // </Link>
               )}
               {recruit2 && (
-                // <Link to={`/recruitment/detail/${recruit1.id}`}>
                 <div className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 text-base hidden lg:block'>
-                  <span className='animate-bounce pb-2 text-red-500 font-semibold'>
+                  <div className='animate-bounce pb-2 text-red-500 font-semibold'>
                     NEW
-                  </span>
+                  </div>
                   <div className='pl-5 pt-2'>
                     <div className='mb-4 flex items-center'>
                       <IoMdBriefcase className='self-center mr-2' />
@@ -312,7 +320,6 @@ export default function Main() {
                     <div className='p-2'>{recruit2.money}</div>
                   </div>
                 </div>
-                // </Link>
               )}
             </div>
           </div>
