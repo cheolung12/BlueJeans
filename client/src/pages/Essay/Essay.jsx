@@ -165,9 +165,9 @@ export default function Essay() {
           </div>
 
           <div className='flex flex-wrap justify-center md:justify-between lg:justify-center'>
-            {currentItems.map((e) => (
+            {currentItems.map((e, index) => (
               <EssayCard
-                key={e.id}
+                key={index}
                 id={e.id}
                 title={e.title}
                 content={e.content}

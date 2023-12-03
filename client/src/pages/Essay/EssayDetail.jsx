@@ -3,10 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import AddComment from '../../components/Essay/Detail/AddComment';
 import CommentList from '../../components/Essay/Detail/CommentList';
 import axios from 'axios';
-import { PiThumbsUpLight } from 'react-icons/pi';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
-import { FaRegComment } from 'react-icons/fa6';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();

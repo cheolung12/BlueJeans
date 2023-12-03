@@ -104,8 +104,8 @@ export default function EBook() {
             <section>
               <div className='py-3'>
                 <div className='flex flex-wrap justify-center sm:justify-between w-full'>
-                  {books.map((book) => (
-                    <div>
+                  {books.map((book, index) => (
+                    <div key={index}>
                       {searchInput ? (
                         <>
                           <BookCardSearch
