@@ -1,5 +1,6 @@
 package com.bluejeans.server.entity;
 
+import com.bluejeans.server.dto.ResCommentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +39,7 @@ public class EssayCommentsEntity {
 
     @UpdateTimestamp
     private Timestamp updated_at;
+
 
 
 }

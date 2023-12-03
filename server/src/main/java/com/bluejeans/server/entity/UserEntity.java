@@ -3,6 +3,8 @@ package com.bluejeans.server.entity;
 
 import com.bluejeans.server.dto.EditUserInfoDTO;
 import com.bluejeans.server.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -60,8 +62,10 @@ public class UserEntity implements UserDetails {
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<RecruitEntity> recruit;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<EssayEntity> essay;
+    @JsonIgnore
+//    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<EssayEntity> essay;
 //
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<EssayDibsEntity> essayDibs;

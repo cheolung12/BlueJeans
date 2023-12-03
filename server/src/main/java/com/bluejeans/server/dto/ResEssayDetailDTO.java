@@ -26,11 +26,11 @@ public class ResEssayDetailDTO {
     private long like;
     private Timestamp created_at;
     private Timestamp updated_at;
-    private List<EssayCommentsEntity> comments;
+    private List<ResCommentDTO> comments;
     private boolean isHeart;
 
 
-    public static ResEssayDetailDTO toDTO2(EssayEntity entity, long like, List<EssayCommentsEntity> comments, boolean isHeart){
+    public static ResEssayDetailDTO toDTO2(EssayEntity entity, long like, List<ResCommentDTO> comments, boolean isHeart){
         if (entity == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class ResEssayDetailDTO {
                 .isHeart(isHeart)
                 .build();
     }
-    public static ResEssayDetailDTO toDTO(EssayEntity entity, long like, List<EssayCommentsEntity> comments){
+    public static ResEssayDetailDTO toDTO(EssayEntity entity, long like, List<ResCommentDTO> comments){
         if (entity == null) {
             return null;
         }

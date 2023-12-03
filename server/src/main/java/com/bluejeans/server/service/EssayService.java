@@ -63,13 +63,17 @@ public class EssayService {
 
         //댓글조회
         List<EssayCommentsEntity> essaycomments = essayCommentsRepository.findByEssayId(essayId);
+        List<ResCommentDTO> commentDTOS = new ArrayList<>();
+        for(EssayCommentsEntity comment : essaycomments){
+            commentDTOS.add(ResCommentDTO.toDTO(comment));
+        }
         boolean isHeart;
         Optional<EssayDibsEntity> isDib = essayDibRepository.findByUser_IdAndEssay_Id(user.getId(), essayId);
         isHeart = isDib.isPresent();
 
         if (result.isPresent()) {
             long like = essayDibRepository.countByEssay(result.get());
-            ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO2(result.get(), like, essaycomments, isHeart);
+            ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO2(result.get(), like, commentDTOS, isHeart);
             return essay;
         } else {
             return null;
@@ -80,11 +84,15 @@ public class EssayService {
         Optional<EssayEntity> result = essayRepository.findById(essayId);
         //댓글조회
         List<EssayCommentsEntity> essaycomments = essayCommentsRepository.findByEssayId(essayId);
+        List<ResCommentDTO> commentDTOS = new ArrayList<>();
+        for(EssayCommentsEntity comment : essaycomments){
+            commentDTOS.add(ResCommentDTO.toDTO(comment));
+        }
 
 
         if (result.isPresent()) {
             long like = essayDibRepository.countByEssay(result.get());
-            ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO(result.get(), like, essaycomments);
+            ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO(result.get(), like, commentDTOS);
             return essay;
         } else {
             return null;
@@ -182,4 +190,10 @@ public class EssayService {
         }
         return false;
     }
+
+
+
+
+
+
 }

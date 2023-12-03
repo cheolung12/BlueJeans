@@ -1,6 +1,8 @@
 package com.bluejeans.server.entity;
 
 import com.bluejeans.server.dto.EssayDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
