@@ -22,6 +22,7 @@ import RecruitmentEdit from './pages/Recruitment/RecruitmentEdit';
 import EssayEdit from './pages/Essay/EssayEdit';
 
 import MyPage from './pages/MyPage';
+import MPg from './pages/MPg';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
             { index: true, element: <Main /> },
             { path: 'signup', element: <Signup /> },
             { path: 'login', element: <Login /> },
-            { path: 'mypage', element: <MyPage />},
+            { path: 'mypage', element: <MyPage /> },
+            { path: 'mp', element: <MPg /> },
             { path: 'recruitment', element: <Recruitment /> },
             { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },
             { path: 'recruitment/detail', element: <RecruitmentDetail /> },
@@ -54,7 +56,7 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <>
-    <RouterProvider router={router} />
-  </>
+    <>
+        <RouterProvider router={router} />
+    </>
 );
