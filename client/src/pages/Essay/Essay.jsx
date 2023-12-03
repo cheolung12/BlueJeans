@@ -6,6 +6,7 @@ import ResButton from '../../components/common/ResButton';
 import { useState } from 'react';
 import axios from 'axios';
 import Filter from '../../components/Ebook/Main/Filter';
+import Pagination from 'react-js-pagination';
 
 // 백일장 임시데이터
 // const essays = essay.essays;
@@ -25,8 +26,25 @@ export default function Essay() {
   const [searchInput, setSearchInput] = useState('');
   const [essayInits, setEssayInits] = useState([]);
 
-  //정렬순
-  // const [filtered, setFiltered] = useState([]);
+  // 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(9); // 페이지당 아이템 수
+
+  // 현재 페이지의 데이터 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
+
+  // 페이지 변경 처리
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    scrollToTop(); // 페이지 변경 후 페이지 상단으로 스크롤
+  };
+
+  // 페이지 상단으로 스크롤하는 함수
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // get 요청
   useEffect(() => {
@@ -103,61 +121,51 @@ export default function Essay() {
   };
 
   return (
-    <div className='w-full flex justify-end'>
-      <section className='flex flex-col items-end'>
-        <div className='flex w-full'>
-          <nav className='flex w-full justify-between items-center'>
-            <Filter handleFilter={handleFilter} />
+    <div className='w-full flex justify-center'>
+      <section className='flex flex-col items-center w-full justify-end'>
+        <div className='flex flex-col justify-end w-[72%]'>
+          <div className='flex w-full'>
+            <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4'>
+              <Filter handleFilter={handleFilter} />
 
-            {/* 검색창 */}
-            <div>
-              <form onSubmit={searchSubmit} className='flex items-center'>
-                <input
-                  type='text'
-                  placeholder='제목을 입력하세요'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  className='rounded-full w-[25.5rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
-                />
-                <button
-                  disabled={searchInput.length === 0}
-                  className='ml-[-2.5rem] mt-1 w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer'
-                >
-                  {/* 검색 아이콘 */}
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='30'
-                    height='30'
-                    viewBox='0 0 24 24'
-                    fill='none'
+              {/* 검색창 */}
+              <div>
+                <form onSubmit={searchSubmit} className='flex items-center'>
+                  <input
+                    type='text'
+                    placeholder='제목, 이름을 입력하세요.'
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    className='rounded-full w-80 h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
+                  />
+                  <button
+                    disabled={searchInput.length === 0}
+                    className='ml-[-2.5rem] mt-1 w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer'
                   >
-                    {' '}
-                    <path
-                      fillRule='evenodd'
-                      clipRule='evenodd'
-                      d='M15.1991 6.74703C12.865 4.4131 9.08077 4.4131 6.74668 6.74703C4.41256 9.08098 4.41256 12.8651 6.74668 15.199C8.90131 17.3535 12.2917 17.5192 14.6364 15.696L17.9384 18.9978L18.999 17.9371L15.6969 14.6353C17.5194 12.2908 17.3535 8.90121 15.1991 6.74703ZM7.8073 7.80772C9.55561 6.05953 12.3902 6.05953 14.1385 7.80772C15.8868 9.55588 15.8868 12.3902 14.1385 14.1383C12.3902 15.8865 9.55561 15.8865 7.8073 14.1383C6.05902 12.3902 6.05902 9.55588 7.8073 7.80772Z'
-                      fill='#222222'
-                    />{' '}
-                  </svg>
-                </button>
-              </form>
-            </div>
+                    {/* 검색 아이콘 */}
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='30'
+                      height='30'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                    >
+                      {' '}
+                      <path
+                        fillRule='evenodd'
+                        clipRule='evenodd'
+                        d='M15.1991 6.74703C12.865 4.4131 9.08077 4.4131 6.74668 6.74703C4.41256 9.08098 4.41256 12.8651 6.74668 15.199C8.90131 17.3535 12.2917 17.5192 14.6364 15.696L17.9384 18.9978L18.999 17.9371L15.6969 14.6353C17.5194 12.2908 17.3535 8.90121 15.1991 6.74703ZM7.8073 7.80772C9.55561 6.05953 12.3902 6.05953 14.1385 7.80772C15.8868 9.55588 15.8868 12.3902 14.1385 14.1383C12.3902 15.8865 9.55561 15.8865 7.8073 14.1383C6.05902 12.3902 6.05902 9.55588 7.8073 7.80772Z'
+                        fill='#222222'
+                      />{' '}
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </nav>
+          </div>
 
-            {window.localStorage.getItem('userID') ? (
-              <Link className='m-2' to={`/essay/create`} onClick={handleLogin}>
-                <ResButton text='글 작성' />
-              </Link>
-            ) : (
-              <Link className='m-2' to={`/login`} onClick={handleLogin}>
-                <ResButton text='글 작성' />
-              </Link>
-            )}
-          </nav>
-        </div>
-
-        <div className='flex justify-end w-full '>
-          <div className='flex flex-wrap justify-between w-[58rem]'>
-            {filtered.map((e) => (
+          <div className='flex flex-wrap justify-center md:justify-between lg:justify-center'>
+            {currentItems.map((e) => (
               <EssayCard
                 key={e.id}
                 id={e.id}
@@ -169,6 +177,32 @@ export default function Essay() {
               />
             ))}
           </div>
+
+          {/* 글작성 버튼 */}
+          <div className='flex justify-center md:justify-end w-full'>
+            {window.localStorage.getItem('userID') ? (
+              <Link className='m-2' to={`/essay/create`} onClick={handleLogin}>
+                <ResButton text='글 작성' width={'120px'} />
+              </Link>
+            ) : (
+              <Link className='m-2' to={`/login`} onClick={handleLogin}>
+                <ResButton text='글 작성' />
+              </Link>
+            )}
+          </div>
+
+          {/* 페이지네이션 */}
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={itemsPerPage}
+            totalItemsCount={filtered.length}
+            pageRangeDisplayed={5} // 보여질 페이지 범위
+            onChange={handlePageChange}
+            prevPageText={'<'}
+            nextPageText={'>'}
+            itemClass='page-item'
+            linkClass='page-link'
+          />
         </div>
       </section>
     </div>

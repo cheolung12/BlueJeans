@@ -30,7 +30,6 @@ export default function EBook() {
         const response = await axios({
           method: 'GET',
           url: `${process.env.REACT_APP_SERVER}/ebook`,
-          // url: 'http://localhost:8080/api/ebook',
         });
         setBooks(response.data);
         console.log(response.data);
@@ -84,15 +83,15 @@ export default function EBook() {
   };
 
   return (
-    <div className='flex w-[93%] justify-end max-[375px]:w-full'>
-      <div className='flex flex-col items-center sm:w-[850px]'>
+    <div className='flex justify-center'>
+      <div className='flex items-centers justify-center'>
         {/* <div className='w-full'>
           <Title />
         </div> */}
-        <div className='flex justify-center sm:w-5/6'>
-          <div className='w-full sm:w-[61rem]'>
+        <div className='flex justify-center w-[70%]'>
+          <div className='w-full'>
             {/* 카테고리, 검색창 */}
-            <div className='flex flex-col sm:flex-row items-center justify-between px-4'>
+            <div className='flex flex-col items-center justify-between md:flex-row'>
               <Filter handleFilter={handleFilter} />
               <SearchBooks
                 book={books}
@@ -104,7 +103,7 @@ export default function EBook() {
 
             <section>
               <div className='py-3'>
-                <div className='flex flex-wrap justify-between w-full sm:w-[900px] max-[375px]:justify-center'>
+                <div className='flex flex-wrap justify-center sm:justify-between w-full'>
                   {books.map((book) => (
                     <div>
                       {searchInput ? (

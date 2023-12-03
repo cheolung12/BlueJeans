@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function BookCard({ id, thumbnail, title, author }) {
   return (
-    <div>
+    <div className='transition-transform hover:ease-linear transform hover:scale-105'>
       <Link to={`/ebook/detail/${id}`} key={id}>
         <div
           key={id}

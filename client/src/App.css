@@ -1,26 +1,26 @@
 /* //////////////////////페이지네이션 css 시작////////////////////// */
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 ul.pagination li {
-    margin: 5px;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #e2e2e2;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
+  margin: 5px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /* border: 1px solid #e2e2e2; */
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
 }
 
 /* ul.pagination li:first-child {
@@ -32,28 +32,28 @@ ul.pagination li:last-child {
 } */
 
 ul.pagination li a {
-    text-decoration: none;
-    color: #337ab7;
-    font-size: 1rem;
+  text-decoration: none;
+  color: #2e375d;
+  font-size: 1.3rem;
 }
 
 ul.pagination li.active a {
-    color: white;
+  color: white;
 }
 
 ul.pagination li.active {
-    background-color: #337ab7;
+  background-color: #2e375d;
 }
 
-ul.pagination li a:hover,
+/* ul.pagination li a:hover,
 ul.pagination li a.active {
-    color: blue;
-}
+  color: #2e375d;
+} */
 
 .page-selection {
-    width: 48px;
-    height: 30px;
-    color: #337ab7;
+  width: 48px;
+  height: 30px;
+  color: #2e375d;
 }
 
 /* //////////////////////페이지네이션 css 끝////////////////////// */
