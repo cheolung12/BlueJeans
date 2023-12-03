@@ -8,6 +8,9 @@ module.exports = {
                 chatColor: '#4d70e3',
                 signatureColor: '#2C86ED',
             },
+            fontFamily:{
+                'suitR':['SUIT-Regular']
+              },
         },
     },
     plugins: [require('daisyui')],
