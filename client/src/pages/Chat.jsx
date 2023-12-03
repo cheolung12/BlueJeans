@@ -69,7 +69,7 @@ const ChatApp = () => {
   return (
     <div className='w-full flex lg:justify-end justify-center items-center lg:mr-16 mr-0'>
       {/* content wrapper */}
-      <div className='xl:w-[950px] lg:w-[800px] w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
+      <div className='xl:w-[950px] lg:w-3/4 w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
         <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
           <ChatBox
             inputText={inputText}

@@ -90,6 +90,7 @@ public class MyPageService {
         convertEssayEntitiesToDTO(MyWritePosts, essayRepository.findByUser_Id(userId));
 
         return ResMyPageDTO.builder()
+                .userId(user.getUserID())
                 .nickname(user.getNickname())
                 .address(user.getAddress())
                 .likedPost(MyLikePosts)

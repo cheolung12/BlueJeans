@@ -9,9 +9,9 @@ const Info = () => {
   };
 
   return (
-    <div className='relative flex justify-items-end justify-end pr-3 w-[31rem] self-end mt-4 pb-12'>
+    <div className='relative flex justify-items-end justify-end w-[31rem] self-end mt-4 pb-12'>
       <button onClick={toggleToolTip} className='w-7 h-7 text-[#2e375d]'>
-        <FaQuestionCircle className='h-10 w-10 md:flex items-center hidden ' />
+        <FaQuestionCircle className='h-10 w-10 md:flex items-center'/>
         {!isToolTipVisible && (
           <div className='absolute left-0 hidden md:block top-1/2 drop-shadow-md transform rounded-lg -translate-y-1/2 p-3 bg-green-200  shadow'>
             <div className='relative text-black '>

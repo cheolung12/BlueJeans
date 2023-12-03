@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ResMyPageDTO {
 
+    private String userId;
     private String nickname;
     private String address;
     private List<MyPostsDTO> likedPost;

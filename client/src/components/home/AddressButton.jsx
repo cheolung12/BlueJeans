@@ -39,7 +39,10 @@ export default function AddressButton({ setUserAddress }) {
     <>
       <div className='flex justify-center'>
         <button onClick={handleClick} className='w-30  text-[#2e375d]'>
-          <RiHomeHeartFill className=' w-36 h-20 drop-shadow-md' />
+          <RiHomeHeartFill
+            style={{ width: 'fit-content' }}
+            className='h-20 drop-shadow-md'
+          />
           <p className=' text-lg text-black font-bold'>집찾기</p>
         </button>
       </div>
