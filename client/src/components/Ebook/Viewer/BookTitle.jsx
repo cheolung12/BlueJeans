@@ -3,7 +3,7 @@ import React from 'react';
 export default function BookTitle({ title }) {
   return (
     <div className='flex justify-center'>
-      <h1 className='text-3xl font-semibold'>{title}</h1>
+      <h1 className='text-xl sm:text-3xl font-semibold mt-3'>{title}</h1>
     </div>
   );
 }

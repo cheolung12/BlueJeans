@@ -80,7 +80,7 @@ export default function SearchBooks({
           placeholder='제목을 입력하세요'
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className='rounded-full w-[25.5rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
+          className='rounded-full w-80 h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
         />
         <button
           disabled={searchInput.length === 0}

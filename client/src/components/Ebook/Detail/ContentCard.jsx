@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function ContentCard({ description }) {
   return (
-    <div>
+    <div className='max-[768px]:w-[21rem]'>
       <section
-        className='flex flex-col items-center w-[90%] h-[46rem] rounded-[1rem] ml-2 pt-[2.3rem] overflow-y-auto max-[800px]:w-[20rem] max-[800px]:ml-0'
+        className='flex flex-col items-center md:w-[70%] h-[46rem] rounded-[1rem] m-2 pt-[2.3rem] overflow-y-auto'
         style={{
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}

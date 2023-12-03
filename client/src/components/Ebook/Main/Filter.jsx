@@ -13,7 +13,7 @@ function Filter({ handleFilter }) {
       <ul className='flex'>
         <li
           onClick={() => handleClick('all')}
-          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2  ${
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem]  ${
             select === 'all'
               ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
               : 'font-semibold '
@@ -23,7 +23,7 @@ function Filter({ handleFilter }) {
         </li>
         <li
           onClick={() => handleClick('likes')}
-          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2 ${
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] ${
             select === 'likes'
               ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
               : 'font-semibold '
@@ -33,7 +33,7 @@ function Filter({ handleFilter }) {
         </li>
         <li
           onClick={() => handleClick('latest')}
-          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] mr-2 ${
+          className={`flex justify-center items-center px-1 cursor-pointer w-[5rem] ${
             select === 'latest'
               ? 'font-semibold text-white bg-signatureColor border-2 border-signatureColor rounded-lg'
               : 'font-semibold '
