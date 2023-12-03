@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import SearchBooks from '../../components/Ebook/Main/SearchBooks';
 import Filter from '../../components/Ebook/Main/Filter';
-// import bookList from '../../data/bookList.json';
 import BookCard from '../../components/Ebook/Main/BookCard';
-import BookCardSearch from '../../components/Ebook/Main/BookCardSearch';
 import axios from 'axios';
-
-// 임시데이터
-// const books = bookList.books;
 
 export default function EBook() {
   const [books, setBooks] = useState([
@@ -83,46 +78,32 @@ export default function EBook() {
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className='flex items-centers justify-center'>
-        {/* <div className='w-full'>
-          <Title />
-        </div> */}
-        <div className='flex justify-center w-[70%]'>
-          <div className='w-full'>
-            {/* 카테고리, 검색창 */}
-            <div className='flex flex-col items-center justify-between md:flex-row'>
-              <Filter handleFilter={handleFilter} />
-              <SearchBooks
-                book={books}
-                setBooks={setBooks}
-                searchInput={searchInput}
-                setSearchInput={setSearchInput}
-              />
-            </div>
+    <div className='flex justify-center w-full'>
+      <div className='flex flex-col w-[60%] items-centers justify-center'>
+        {/* 카테고리, 검색창 */}
+        <div className='flex flex-col items-center justify-between md:flex-row'>
+          <Filter handleFilter={handleFilter} />
+          <SearchBooks
+            book={books}
+            setBooks={setBooks}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+          />
+        </div>
 
+        <div className='flex justify-center'>
+          <div className='w-full'>
             <section>
               <div className='py-3'>
                 <div className='flex flex-wrap justify-center sm:justify-between w-full'>
                   {books.map((book, index) => (
                     <div key={index}>
-                      {searchInput ? (
-                        <>
-                          <BookCardSearch
-                            id={book.id}
-                            thumbnail={book.thumbnail}
-                            title={book.title}
-                            author={book.author}
-                          />
-                        </>
-                      ) : (
-                        <BookCard
-                          id={book.id}
-                          thumbnail={book.thumbnail}
-                          title={book.title}
-                          author={book.author}
-                        />
-                      )}
+                      <BookCard
+                        id={book.id}
+                        thumbnail={book.thumbnail}
+                        title={book.title}
+                        author={book.author}
+                      />
                     </div>
                   ))}
                 </div>

@@ -167,7 +167,7 @@ export default function EssayDetail() {
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                   >
                     <div className='flex flex-col h-full justify-center items-center'>
-                      <div className='w-full text-2xl sm:text-3xl font-bold mb-5 text-white text-center'>
+                      <div className='w-full text-2xl sm:text-3xl font-bold mb-2 text-white text-center'>
                         {essayContent.title}
                       </div>
                       {/* <div>

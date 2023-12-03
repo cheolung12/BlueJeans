@@ -126,7 +126,7 @@ export default function Essay() {
       <section className='flex flex-col items-center w-full justify-end'>
         <div className='flex flex-col justify-end w-[72%]'>
           <div className='flex w-full'>
-            <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4'>
+            <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4 sm:mx-8 mx-0'>
               <Filter handleFilter={handleFilter} />
 
               {/* 검색창 */}
@@ -181,7 +181,7 @@ export default function Essay() {
           </div>
 
           {/* 글작성 버튼 */}
-          <div className='flex justify-center md:justify-end w-full'>
+          <div className='flex justify-center md:justify-end w-full pr-0 sm:pr-8'>
             {window.localStorage.getItem('userID') ? (
               <Link className='m-2' to={`/essay/create`} onClick={handleLogin}>
                 <ResButton text='글 작성' width={'120px'} />

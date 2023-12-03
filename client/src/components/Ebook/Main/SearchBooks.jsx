@@ -47,7 +47,6 @@ export default function SearchBooks({
       const response = await axios({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/ebook?search=${searchInput}`,
-        // url: `https://www.bluejeansu.site/ebook/search?keyword=${searchInput}`,
       });
       setBooks(response.data);
 

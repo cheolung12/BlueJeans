@@ -15,7 +15,7 @@ export default function EssayCard({
     <div className='transition-transform hover:ease-linear transform hover:scale-105'>
       <Link to={`/essay/detail/${id}`}>
         <div
-          className='w-[18rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
+          className='w-[17rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
           style={{
             // boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
             boxShadow:
