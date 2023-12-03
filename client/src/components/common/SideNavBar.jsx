@@ -8,8 +8,8 @@ import { GoHome } from 'react-icons/go';
 
 export default function SideNavBar() {
   return (
-    <div className='sm:fixed block z-10 bg-white 2xl:top-52 xl:top-36 md:top-32 top-28 '>
-      <div className='flex sm:flex-col flex-row sm:space-y-10 space-y-0 sm:space-x-0 space-x-1 sm:py-10 py-8 sm:px-10 px-2 border rounded-lg shadow-lg sm:mb-0 mb-12'>
+    <div className='lg:fixed block z-10 bg-white   2xl:top-52 lg:top-36 2xl:left-30 lg:left-20'>
+      <div className='flex lg:flex-col flex-row lg:space-y-10 space-y-0 lg:space-x-0 sm:space-x-8  space-x-1 lg:py-10 py-8 lg:px-10 sm:px-10 px-2 border rounded-lg shadow-lg lg:mb-0 mb-12'>
         <Link to='/recruitment' className='sideNav-link'>
           <p>
             <IoMdBriefcase className='sideNav-icon text-[#FE8080]' />
