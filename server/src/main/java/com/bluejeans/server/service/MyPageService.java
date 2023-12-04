@@ -93,6 +93,7 @@ public class MyPageService {
                 .userId(user.getUserID())
                 .nickname(user.getNickname())
                 .address(user.getAddress())
+                .img_path(user.getImg_path())
                 .likedPost(MyLikePosts)
                 .writedPost(MyWritePosts)
                 .build();
