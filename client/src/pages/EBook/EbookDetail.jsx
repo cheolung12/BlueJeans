@@ -81,7 +81,7 @@ export default function EBookDetail() {
         <div className='flex max-[1020px]:flex-col px-38 pb-11 justify-center items-center md:flex-row'>
           {/* 이미지카드 */}
           <section
-            className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[46rem] m-2'
+            className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[46rem] m-2 bg-white'
             style={{
               boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
             }}
