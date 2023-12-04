@@ -12,4 +12,7 @@ import lombok.Setter;
 public class EditUserInfoDTO {
     private String nickname;
     private String address;
+    private String password;
+//    private String img_path;
+
 }

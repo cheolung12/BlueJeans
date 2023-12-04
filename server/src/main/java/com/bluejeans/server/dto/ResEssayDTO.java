@@ -41,6 +41,7 @@ public class ResEssayDTO {
                 .like(like)
                 .created_at(entity.getCreated_at())
                 .updated_at(entity.getUpdated_at())
+                .nickname(entity.getUser().getNickname())
                 .build();
     }
 
