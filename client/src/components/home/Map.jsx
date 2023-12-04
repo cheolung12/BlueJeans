@@ -235,6 +235,43 @@ function Map({ userAddress }) {
     }
   };
 
+  // const drawDirections = () => {
+  //   // 경로의 출발지 및 목적지 좌표 정의
+  //   const startX = 14129005.823725;
+  //   const startY = 4516902.583792;
+  //   const endX = 14128464.387021;
+  //   const endY = 4516740.197076;
+
+  //   // 경로 포맷 생성
+  //   const route = new Tmapv2.Format.KML({ extractStyles: true, extractAttributes: true });
+
+  //   // Tmap API 요청을 위한 URL 작성
+  //   let urlStr = 'https://apis.skplanetx.com/tmap/routes/pedestrian?version=1&sort=custom&format=xml';
+  //   urlStr += `&startName='${encodeURIComponent('출발지')}'&endName='${encodeURIComponent('도착지')}'`;
+  //   urlStr += `&startX=${startX}&startY=${startY}&endX=${endX}&endY=${endY}`;
+  //   urlStr += `&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
+
+  //   // Tmap API 요청을 위한 HTTP 프로토콜 생성
+  //   const road = new Tmapv2.Protocol.HTTP({
+  //     url: urlStr,
+  //     format: route
+  //   });
+
+  //   // 경로용 Tmap 벡터 레이어 생성
+  //   const routeLayer = new Tmapv2.Layer.Vector('route', { protocol: road, strategies: [new Tmap.Strategy.Fixed()] });
+
+  //   // 레이어에 피처가 추가될 때 경로를 보여주는 이벤트 등록
+  //   routeLayer.events.register('featuresadded', routeLayer, showRoute);
+
+  //   // 맵에 경로 레이어 추가
+  //   map.addLayers([routeLayer]);
+  // };
+
+  // const showRoute = (event) => {
+  //   // 피처가 추가되면 맵을 경로의 범위에 맞게 줌
+  //   map.zoomToExtent(event.target.getDataExtent());
+  // };
+
   return (
     <div className='w-full'>
       {loading && (

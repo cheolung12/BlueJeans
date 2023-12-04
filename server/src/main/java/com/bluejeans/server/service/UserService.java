@@ -66,7 +66,8 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(UserEntity user) {
+        int id = user.getId();
         Optional<UserEntity> userOptional = userRepository.findById(id);
 
 

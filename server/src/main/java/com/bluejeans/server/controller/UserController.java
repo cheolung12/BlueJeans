@@ -53,9 +53,9 @@ public class UserController {
 //    }
 
     //회원 탈퇴
-    @DeleteMapping("/user/{id}")
-    public String deleteUser(@PathVariable int id){
-        userService.delete(id);
+    @DeleteMapping("/user")
+    public String deleteUser(@AuthenticationPrincipal UserEntity user){
+        userService.delete(user);
         return "회원탈퇴완료";
     }
 
