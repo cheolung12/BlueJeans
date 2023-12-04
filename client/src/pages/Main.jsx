@@ -4,10 +4,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
-import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaEyeSlash, FaRegThumbsUp } from 'react-icons/fa';
 import { FaDAndD, FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
 import { BiCommentDetail } from 'react-icons/bi';
+
+import { FaCrown } from 'react-icons/fa6';
 
 ///////////////
 import 'swiper/css';
@@ -26,6 +28,8 @@ import Footer from '../components/common/Footer';
 import MainBar from '../components/main/MainBar';
 
 import axios from 'axios';
+
+import inkBg from '../components/main/mainImg/inkBg.mp4';
 
 //////////state/////////
 
@@ -52,6 +56,7 @@ export default function Main() {
     };
     fetchData();
   }, []);
+
   console.log('ykyk', mainData);
   console.log('ebook', mainData.ebookList);
   console.log('essay', mainData.essayList);
@@ -82,14 +87,11 @@ export default function Main() {
             <img
               src={lastMain}
               alt='main'
-              className='min-h-[50%] md:h-[50rem] lg:h-[60rem] w-full object-cover bg-bottom'
+              className='min-h-[50%] md:h-[50rem] lg:h-[55rem] w-full object-cover bg-bottom opacity-90'
             />
             <div className='absolute bottom-0  left-0 w-full'>
-              {/* 여기 안 */}
-              <div className='  w-full h-[500px] text-white text-4xl font-bold text-center'>
-                <p className='p-3'>언제나 당신 곁에</p>
-                <p className='p-3'>Bluejeans</p>
-              </div>
+              {/* 글씨가 안보이고... 어색하다 ㅜ...? ㅠㅜ*/}
+
               <MainBar className='flex items-end' />
             </div>
           </div>
@@ -101,8 +103,10 @@ export default function Main() {
             <div className='text-center mt-3'>
               <div className='text-4xl pb-10 font-bold'>오늘의 추천도서</div>
               <div className='md:text-lx'>
-                <div className='text-lg'>1970년대의 감성부터 현대까지</div>
-                <div className='text-lg'>
+                <div className='text-lg font-[SUIT-Regular]'>
+                  1970년대의 감성부터 현대까지
+                </div>
+                <div className='text-lg font-[SUIT-Regular]'>
                   지금 봐도 세련된 문장으로 감동을 주는
                 </div>
                 <div className='text-lg'>작품을 만나 보세요</div>
@@ -125,7 +129,7 @@ export default function Main() {
             breakpoints={{
               '@0.25': {
                 slidesPerView: 1,
-                spaceBetween: 20, //여백
+                spaceBetween: 40, //여백
               },
               '@0.70': {
                 slidesPerView: 2,
@@ -143,73 +147,124 @@ export default function Main() {
             {/* 요청해서 받은 랜덤 10개 값  */}
 
             {ebookList.map((book) => (
-              <Link to={`/ebook/detail/${book.id}`}>
-                <SwiperSlide className='h-full w-full' key={book.id}>
+              <SwiperSlide className='h-full w-full' key={book.id}>
+                <Link to={`/ebook/detail/${book.id}`}>
                   <div>
                     <img
                       src={book.thumbnail}
                       alt={book.title}
-                      className='h-[25rem] w-full text-blue-700'
+                      className='h-[25rem] w-full text-blue-700 p-10 md:p-0'
                     />
                   </div>
-                </SwiperSlide>
-              </Link>
+                </Link>
+              </SwiperSlide>
             ))}
           </Swiper>
         </div>
         {/* 2 */}
 
-        {/* 좋아요 많은 순서대로 3개 보여주기  */}
-        <div className='bg-[#5495B1] h-[35rem] sm:h-[37rem] flex justify-around'>
-          <div className='flex w-full items-end pl-4 pr-4 justify-evenly'>
-            {/* 하나 */}
-            {essay1 && (
-              <Link to={`/essay/detail/${essay1.id_essay}`}>
-                <div className='bg-white w-28 sm:w-44 lg:w-56 h-72 lg:h-96 rounded-t-xl flex justify-center text-center self'>
-                  <div className='self-center'>
-                    <div className='p-2'>{essay1.user_id}</div>
-                    <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                    <div className='p-2'>{essay1.title}</div>
-                    <div className='flex justify-center'>
-                      <FaRegThumbsUp />
-                      <div>{essay1.like}</div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            )}
+        {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
 
+        <div className='bg-[#5495B1] h-[35rem] w-full flex '>
+          <div className='flex h-full w-full items-center pl-4 pr-4 justify-evenly'>
             {essay0 && (
-              <Link to={`/essay/detail/${essay0.id_essay}`}>
-                <div className='bg-white  w-28 sm:w-44 lg:w-56  h-96 lg:h-[30rem] rounded-t-xl flex justify-center text-center self'>
-                  <div className=' self-center'>
-                    <div className='p-2'>{essay0.user_id}</div>
-                    <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                    <div className='p-2'>{essay0.title}</div>
-                    <div className='flex justify-center self-end'>
-                      <FaRegThumbsUp />
+              <Link to={`/essay/detail/${essayList.id}`}>
+                <div
+                  style={{
+                    boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                  }}
+                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                >
+                  <div className='self-center'>
+                    <div className='h-10 w-full'>
+                      <FaCrown className='h-full w-full justify-center' />
+                    </div>
+                    <div className='flex justify-center'>
+                      <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl text-center overflow-hidden'>
+                        <img
+                          className='w-full h-full object-cover'
+                          src={essay0.img_path}
+                          alt=''
+                        />
+                      </div>
+                    </div>
+                    <div className='p-2 text-lg'>{essay0.nickname}</div>
+                    <div className='p-2 text-2xl'>{essay0.title}</div>
+                    <div className='flex pb-0 justify-center text-xl'>
+                      <FaRegThumbsUp className=' self-center' />
                       <div>{essay0.like}</div>
                     </div>
                   </div>
                 </div>
               </Link>
             )}
-            {essay2 && (
-              <Link to={`/essay/detail/${essay2.id_essay}`}>
-                <div className='bg-white  w-28 sm:w-44 lg:w-56  h-64 lg:h-80 rounded-t-xl flex justify-center text-center self'>
-                  <div className=' self-center'>
-                    <div className='p-2'>{essay2.user_id}</div>
-                    <div className=' hidden   lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-900 rounded-full'></div>
-                    <div className='p-2'>{essay2.title}</div>
+            {essay1 && (
+              <Link to={`/essay/detail/${essayList.id}`}>
+                <div
+                  style={{
+                    boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                  }}
+                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                >
+                  <div className='self-center'>
                     <div className='flex justify-center'>
-                      <FaRegThumbsUp />
-                      <div>{essay2.like}</div>
+                      <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl  text-center'>
+                        {' '}
+                        <img
+                          className='w-full h-full object-cover'
+                          src={essay1.img_path}
+                          alt=''
+                        />
+                      </div>
+                    </div>
+                    <div className='p-2 text-lg'>{essay1.nickname}</div>
+                    <div className='p-2 text-2xl'>{essay1.title}</div>
+                    <div className='flex pb-0 justify-center text-xl'>
+                      <FaRegThumbsUp className=' self-center' />
+                      <div>{essay1.like}</div>
                     </div>
                   </div>
                 </div>
               </Link>
             )}
+            {essay2 && (
+              <Link to={`/essay/detail/${essayList.id}`}>
+                <div
+                  style={{
+                    boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                  }}
+                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                >
+                  <div className='self-center'>
+                    <div className='flex justify-center'>
+                      <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl  text-center'>
+                        {' '}
+                        <img
+                          className='w-full h-full object-cover'
+                          src={essay2.img_path}
+                          alt=''
+                        />
+                      </div>
+                    </div>
+                    <div className='p-2 text-lg'>{essay2.nickname}</div>
+                    <div className='p-2 text-2xl'>{essay2.title}</div>
+                    <div className='flex pb-0 justify-center text-xl'>
+                      <FaRegThumbsUp className=' self-center' />
+                      <div>{essay2.like}</div>
+                    </div>
+                  </div>
+                  {/* </Link> */}
+                </div>
+              </Link>
+            )}
           </div>
+
           {/* 2-2  900부터*/}
           <div className='h-full  pr-4 hidden lg:block'>
             <Calligraphy className='w-[50rem] h-[30rem]' />
@@ -218,10 +273,10 @@ export default function Main() {
         {/* 3 */}
 
         {/* 젤 최신 3개 가져오기 */}
-        <div className='flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
+        <div className=' flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
             <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white '>
-              채용 공고
+              놀면 뭐하니!?
             </p>
             <div className='self-end text-slate-500 hover:underline '>
               <Link to='/recruitment' className='self-end pr-8 text-lg '>
@@ -234,7 +289,14 @@ export default function Main() {
           <div className='hidden sm:block'>
             <div className='flex justify-center '>
               {recruit0 && (
-                <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
+                <div
+                  style={{
+                    boxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    WebkitBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    MozBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                  }}
+                  className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-2xl text-lg'
+                >
                   <div className='animate-bounce pb-2 text-red-500 font-semibold'>
                     NEW
                   </div>
@@ -264,7 +326,14 @@ export default function Main() {
               )}
 
               {recruit1 && (
-                <div className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-lg'>
+                <div
+                  style={{
+                    boxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    WebkitBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    MozBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                  }}
+                  className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-2xl text-lg'
+                >
                   <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
                     NEW
                   </div>
@@ -293,7 +362,14 @@ export default function Main() {
                 </div>
               )}
               {recruit2 && (
-                <div className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 text-base hidden lg:block'>
+                <div
+                  style={{
+                    boxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    WebkitBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                    MozBoxShadow: '-2px 5px 5px 0px rgba(79,66,66,0.54)',
+                  }}
+                  className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 hidden lg:block shadow-2xl text-lg'
+                >
                   <div className='animate-bounce pb-2 text-red-500 font-semibold'>
                     NEW
                   </div>
@@ -324,116 +400,124 @@ export default function Main() {
             </div>
           </div>
 
-          <div className='sm:hidden p-10'>
+          {/* 작아졌을 때 반응형 */}
+          <div className='sm:hidden p-10 text-lg'>
             <Swiper
               slidesPerView={1}
               spaceBetween={30}
+              loop={true}
               keyboard={{
                 enabled: true,
               }}
               pagination={{
                 clickable: true,
               }}
-              navigation={true}
               modules={[Keyboard, Pagination, Navigation]}
               className='h-72'
             >
-              {recruitList.map(
-                (recruit) => (
-                  console.log('dfdf', recruit),
-                  (
-                    <SwiperSlide
-                      className='h-full w-full z-30 bg-white'
-                      key={recruit.id}
-                    >
-                      <>
-                        <div className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 text-base hidden lg:block'>
-                          <span className='animate-bounce pb-2 text-red-500 font-semibold'>
-                            NEW
-                          </span>
-                          <div className='pl-5 pt-2'>
-                            <div className='mb-4 flex items-center'>
-                              <IoMdBriefcase className='self-center mr-2' />
-                              <span>{recruit.title}</span>
-                            </div>
-                            <div className='mb-4 flex items-center'>
-                              <FaLocationDot className='self-center mr-2' />
-                              <span>{recruit.region}</span>
-                            </div>
-                            <div className='mb-4 flex items-center'>
-                              <FaPhone className='self-center mr-2' />
-                              <span>{recruit.contact}</span>
-                            </div>
-                            <div className='mb-4 flex items-center'>
-                              <BiCommentDetail className='self-center mr-2' />
-                              <span>{recruit.content}</span>
-                            </div>
-                          </div>
-                          <div className='flex justify-end'>
-                            <div className='p-2'>{recruit.moneyStandard}</div>
-                            <div className='p-2'>{recruit.money}</div>
-                          </div>
-                        </div>
-                      </>
-                    </SwiperSlide>
-                  )
-                )
-              )}
-              {/* <SwiperSlide className='bg-red-500'>Slide 1</SwiperSlide>
-
-              <SwiperSlide className='bg-blue-500'>Slide 2</SwiperSlide>
-
-              <SwiperSlide className='bg-orange-500'>Slide 3</SwiperSlide> */}
-            </Swiper>
-          </div>
-
-          {/* <div className='flex flex-col md:flex-row text-start items-center justify-evenly w-full h-full'>
-            {recruitList.map((recruit) => (
-              <div
-                key={recruit.id}
-                className='mb-6 md:mb-0 w-full md:w-1/2 lg:w-1/3'
-              >
-                <Link to={`/recruitment/detail/${recruit.id}`}>
-                  <div className='bg-white rounded-2xl p-8  md:p-8 shadow-xl lg:h-[18rem] md:h-[22rem] ml-[10px] mr-[10px]  flex-col'>
-                    <div className='text-xl flex flex-col justify-between'>
-                      {recruit && (
-                        <span className='animate-bounce pb-2 text-red-500 font-semibold'>
-                          NEW
-                        </span>
-                      )}
-
-                      <div className='self-center md:self-start md:text-xl lg:text-lg '>
-                        <div className='mb-4 flex items-center'>
-                          <IoMdBriefcase className='self-center mr-2' />
-                          {recruit && <span>{recruit.title}</span>}
-                        </div>
-                        <div className='mb-4 flex items-center'>
-                          <FaLocationDot className='self-center mr-2' />
-                          {recruit && <span>{recruit.region}</span>}
-                        </div>
-                        <div className='mb-4 flex items-center'>
-                          <FaPhone className='self-center mr-2' />
-                          {recruit && <span>{recruit.contact}</span>}
-                        </div>
-                        <div className='mb-4 flex items-center'>
-                          <BiCommentDetail className='self-center mr-2' />
-                          {recruit && <span>{recruit.content}</span>}
-                        </div>
+              {/* 각 배열과 사이즈가 작을 때 실행? */}
+              {recruit0 && (
+                <SwiperSlide
+                  style={{
+                    boxShadow: '15px 14px 197px -87px rgba(79,66,66,0.75)',
+                    WebkitBoxShadow:
+                      '15px 14px 197px -87px rgba(79,66,66,0.75)',
+                    MozBoxShadow: '15px 14px 197px -87px rgba(79,66,66,0.75)',
+                  }}
+                >
+                  <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
+                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                      NEW
+                    </div>
+                    <div className='pl-5 pt-2'>
+                      <div className='mb-4 flex items-center'>
+                        <IoMdBriefcase className='self-center mr-2' />
+                        <span>{recruit0.title}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaLocationDot className='self-center mr-2' />
+                        <span>{recruit0.region}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaPhone className='self-center mr-2' />
+                        <span>{recruit0.contact}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <BiCommentDetail className='self-center mr-2' />
+                        <span>{recruit0.content}</span>
                       </div>
                     </div>
                     <div className='flex justify-end'>
-                      {recruit && (
-                        <>
-                          <div className='pr-2'>{recruit.moneyStandard}</div>
-                          <div>{recruit.money}</div>
-                        </>
-                      )}
+                      <div className='p-2'>{recruit0.moneyStandard}</div>
+                      <div className='p-2'>{recruit0.money}</div>
                     </div>
                   </div>
-                </Link>
-              </div>
-            ))}
-          </div> */}
+                </SwiperSlide>
+              )}
+              {recruit1 && (
+                <SwiperSlide>
+                  <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
+                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                      NEW
+                    </div>
+                    <div className='pl-5 pt-2'>
+                      <div className='mb-4 flex items-center'>
+                        <IoMdBriefcase className='self-center mr-2' />
+                        <span>{recruit1.title}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaLocationDot className='self-center mr-2' />
+                        <span>{recruit1.region}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaPhone className='self-center mr-2' />
+                        <span>{recruit1.contact}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <BiCommentDetail className='self-center mr-2' />
+                        <span>{recruit1.content}</span>
+                      </div>
+                    </div>
+                    <div className='flex justify-end'>
+                      <div className='p-2'>{recruit1.moneyStandard}</div>
+                      <div className='p-2'>{recruit1.money}</div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              )}
+              {recruit2 && (
+                <SwiperSlide>
+                  <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
+                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                      NEW
+                    </div>
+                    <div className='pl-5 pt-2'>
+                      <div className='mb-4 flex items-center'>
+                        <IoMdBriefcase className='self-center mr-2' />
+                        <span>{recruit2.title}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaLocationDot className='self-center mr-2' />
+                        <span>{recruit2.region}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <FaPhone className='self-center mr-2' />
+                        <span>{recruit2.contact}</span>
+                      </div>
+                      <div className='mb-4 flex items-center'>
+                        <BiCommentDetail className='self-center mr-2' />
+                        <span>{recruit2.content}</span>
+                      </div>
+                    </div>
+                    <div className='flex justify-end'>
+                      <div className='p-2'>{recruit2.moneyStandard}</div>
+                      <div className='p-2'>{recruit2.money}</div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              )}
+            </Swiper>
+          </div>
         </div>
       </div>
 
