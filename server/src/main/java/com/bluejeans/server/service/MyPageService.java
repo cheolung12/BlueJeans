@@ -6,7 +6,9 @@ import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.RecruitEntity;
 import com.bluejeans.server.entity.UserEntity;
 import com.bluejeans.server.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class MyPageService {
 
@@ -35,6 +38,9 @@ public class MyPageService {
 
     @Autowired
     S3Uploader s3Uploader;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 
     public void convertRecruitEntitiesToDTO(List<MyPostsDTO> DTOList, List<RecruitEntity> recruitList) {
@@ -98,11 +104,34 @@ public class MyPageService {
                 .build();
     }
 
-    public boolean editUserInfo (String fileURL, UserEntity user, EditUserInfoDTO editDTO)  {
+//    public boolean editUserInfo (UserEntity user, EditUserInfoDTO editDTO)  {
+//        String fileURL =null;
+//        user.updateFields(editDTO, fileURL);
+//        userRepository.save(user);
+//        return true;
+//    }
 
-        user.updateFields(editDTO, fileURL);
-        userRepository.save(user);
+    public boolean editUser(String fileURL, UserEntity user, EditUserInfoDTO updateUser) {
+        UserEntity existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + user.getUserID()));
+
+        // 업데이트할 필드가 비어있지 않다면 새로운 값으로 업데이트
+        if (!updateUser.getPassword().isEmpty()) {
+            existingUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
+        }
+        if (!updateUser.getNickname().isEmpty()) {
+            System.out.println("닉네임 Null 아님");
+            existingUser.setNickname(updateUser.getNickname());
+        }
+        if (!updateUser.getAddress().isEmpty()) {
+            existingUser.setAddress(updateUser.getAddress());
+        }
+        if(fileURL != null) {
+            existingUser.setImg_path(fileURL);
+        }
+
+        // 수정된 정보를 저장
+        userRepository.save(existingUser);
         return true;
-
     }
 }
