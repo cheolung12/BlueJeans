@@ -1,5 +1,6 @@
 package com.bluejeans.server.service;
 
+import com.bluejeans.server.config.WebSecurityConfig;
 import com.bluejeans.server.dto.UserDTO;
 import com.bluejeans.server.entity.EssayEntity;
 import com.bluejeans.server.entity.UserEntity;
@@ -9,12 +10,12 @@ import com.bluejeans.server.repository.RecruitDibRepository;
 import com.bluejeans.server.repository.RecruitRepository;
 import com.bluejeans.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EssayRepository essayRepository;
     private final RecruitRepository recruitRepository;
+    private final WebSecurityConfig webSecurityConfig;
 
 
     //회원가입
@@ -87,5 +89,10 @@ public class UserService {
             return userRepository.existsByNickname(value);
         }
         return false;
+    }
+
+    public boolean authUser(String password, UserEntity user) {
+
+        return webSecurityConfig.verifyPassword(password, user.getPassword());
     }
 }
