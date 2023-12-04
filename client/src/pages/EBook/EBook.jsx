@@ -81,10 +81,10 @@ export default function EBook() {
   };
 
   return (
-    <div className='flex justify-center w-full'>
-      <div className='flex flex-col w-[60%] items-centers justify-center'>
+    <div className='flex justify-center w-full ml-0 lg:ml-[100px]'>
+      <div className='flex flex-col w-[74%] items-centers justify-center'>
         {/* 카테고리, 검색창 */}
-        <div className='flex flex-col items-center justify-between lg:flex-row'>
+        <div className='flex flex-col items-center justify-between lg:flex-row mb-5'>
           <Filter handleFilter={handleFilter} />
           <SearchBooks
             book={books}

@@ -76,9 +76,9 @@ export default function EBookDetail() {
   };
 
   return (
-    <div className='flex sm:justify-end w-full justify-center'>
+    <div className='flex lg:justify-end w-full justify-center'>
       <div className='w-[80%]'>
-        <div className='flex max-[640px]:flex-col max-[768px]:flex-col px-38 pb-11 justify-center items-center md:flex-row'>
+        <div className='flex max-[1020px]:flex-col px-38 pb-11 justify-center items-center md:flex-row'>
           {/* 이미지카드 */}
           <section
             className='flex flex-col justify-center items-center rounded-2xl w-[20rem] h-[46rem] m-2'
@@ -126,9 +126,13 @@ export default function EBookDetail() {
             </div>
 
             <div className='flex flex-col items-center justify-evenly w-[18rem] h-[29rem]'>
-              <div className='text-center flex flex-col h-40 justify-between'>
-                <h1 className='text-xl font-semibold'>{booksContent.title}</h1>
-                <div className='text-lg font-medium'>{booksContent.author}</div>
+              <div className='text-center flex flex-col h-44 justify-between px-7'>
+                <h1 className='text-xl font-semibold mb-3'>
+                  {booksContent.title}
+                </h1>
+                <div className='text-lg font-medium mb-2'>
+                  {booksContent.author}
+                </div>
                 <div>
                   <div className='text-sm mb-1'>
                     출판사 : {booksContent.publisher}
@@ -191,7 +195,7 @@ export default function EBookDetail() {
           {/* 내용 카드 */}
           <ContentCard description={booksContent.description} />
         </div>
-        <div className='flex w-10/12]'>
+        <div className='flex w-10/12 pr-[130px]'>
           <Link to={`/ebook`}>
             <div className='w-[7rem] h-[3rem] text-md hover:opacity-90 inline-flex items-center justify-center px-2 py-2 text-white bg-signatureColor rounded-lg shadow-sm font-semibold cursor-pointer'>
               목록

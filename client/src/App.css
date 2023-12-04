@@ -33,7 +33,7 @@ ul.pagination li:last-child {
 
 ul.pagination li a {
   text-decoration: none;
-  color: #2e375d;
+  color: #2c86ed;
   font-size: 1.3rem;
 }
 
@@ -42,7 +42,7 @@ ul.pagination li.active a {
 }
 
 ul.pagination li.active {
-  background-color: #2e375d;
+  background-color: #2c86ed;
 }
 
 /* ul.pagination li a:hover,
@@ -53,7 +53,7 @@ ul.pagination li a.active {
 .page-selection {
   width: 48px;
   height: 30px;
-  color: #2e375d;
+  color: #2c86ed;
 }
 
 /* //////////////////////페이지네이션 css 끝////////////////////// */
