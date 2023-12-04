@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-// import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-// export default function AddComment({ onAdd }) {
 export default function AddComment() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
-  // console.log(EssayId);
 
   //댓글 입력
   const [comment, setComment] = useState('');
 
   const handleAdd = (e) => {
     setComment(e.target.value);
-    console.log(comment);
+    // console.log(comment);
   };
 
   // 로그인 여부 확인
