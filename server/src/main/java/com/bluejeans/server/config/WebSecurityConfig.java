@@ -80,6 +80,10 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    public boolean verifyPassword(String rawPassword, String encodedPassword) {
+        return bCryptPasswordEncoder().matches(rawPassword, encodedPassword);
+    }
+
 
     //CORS 설정
     @Bean

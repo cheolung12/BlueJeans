@@ -39,12 +39,18 @@ public class UserController {
         return userService.checkDuplicate(type, value);
     }
 
-    //회원정보 수정하기
-    @PatchMapping("/user/{id}")
-    public String patchUser(@PathVariable int id, @RequestBody UserDTO userDTO){
-        userService.patchUser(id, userDTO);
-    return "user";
+    //비번인증 (회원정보수정)
+    @PostMapping("/user/auth")
+    public boolean authUser(@RequestParam String password, @AuthenticationPrincipal UserEntity user){
+       return userService.authUser(password, user);
     }
+
+    //회원정보 수정하기
+//    @PatchMapping("/user/{id}")
+//    public String patchUser(@PathVariable int id, @RequestBody UserDTO userDTO){
+//        userService.patchUser(id, userDTO);
+//    return "user";
+//    }
 
     //회원 탈퇴
     @DeleteMapping("/user/{id}")
