@@ -128,7 +128,7 @@ export default function Essay() {
   return (
     <div className='w-full flex justify-center'>
       <section className='flex flex-col items-center w-full justify-end'>
-        <div className='flex flex-col justify-end w-[72%]'>
+        <div className='flex flex-col justify-end w-[72%] ml-0 lg:ml-[120px]'>
           <div className='flex w-full'>
             <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4 sm:mx-8 mx-0'>
               <Filter handleFilter={handleFilter} />

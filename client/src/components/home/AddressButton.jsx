@@ -31,8 +31,8 @@ import axios from 'axios';
 
 export default function AddressButton({ setUserAddress }) {
   const handleClick = () => {
-    // setUserAddress(' 서울특별시 마포구 염리동 숭문길 47');
-    setUserAddress('서울특별시 동작구 상도로41가길 17');
+    setUserAddress(' 서울특별시 마포구 염리동 숭문길 47');
+    // setUserAddress('서울특별시 동작구 상도로41가길 17');
   };
 
   return (

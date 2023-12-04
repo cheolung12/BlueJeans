@@ -121,7 +121,7 @@ export default function EssayDetail() {
   };
 
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-full flex justify-center ml-0 lg:ml-[107px]'>
       <div className='block w-[93%] sm:w-[64%]'>
         <div className='flex flex-col'>
           <div className='w-full'>

@@ -24,6 +24,7 @@ public class UserDTO {
     private String address;
 
     private Usertype usertype;
+    private String img_path;
 
     public static UserEntity userDtoToEntity(UserDTO userdto){
         UserEntity user = UserEntity.builder()

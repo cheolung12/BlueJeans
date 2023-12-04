@@ -2,22 +2,16 @@ package com.bluejeans.server.entity;
 
 
 import com.bluejeans.server.dto.EditUserInfoDTO;
-import com.bluejeans.server.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.usertype.UserType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import static com.bluejeans.server.entity.Usertype.*;
 
@@ -66,6 +60,7 @@ public class UserEntity implements UserDetails {
 //    @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<EssayEntity> essay;
+
 //
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<EssayDibsEntity> essayDibs;
@@ -110,14 +105,17 @@ public class UserEntity implements UserDetails {
         return true; // true: 사용가
     }
 
-
     public void updateFields(EditUserInfoDTO userDTO, String fileURL){
-
-            this.setNickname(userDTO.getNickname());
-            this.setAddress(userDTO.getAddress());
+            if(userDTO.getNickname() != null) {
+                this.setNickname(userDTO.getNickname());
+            }
+            if(userDTO.getAddress() != null) {
+                this.setAddress(userDTO.getAddress());
+            }
             if(fileURL != null){
                 this.setImg_path(fileURL);
             }
+
 
 
 

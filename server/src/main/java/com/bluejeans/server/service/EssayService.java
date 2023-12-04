@@ -116,6 +116,7 @@ public class EssayService {
 
     }
 
+    @Transactional
     public void essayDelete(int essayId) {
         Optional<EssayEntity> essay = essayRepository.findById(essayId);
         essay.ifPresent(essayRepository::delete);
@@ -177,9 +178,11 @@ public class EssayService {
 
     }
 
+    @Transactional
     public boolean deleteComment(int commentId, UserEntity user) {
         EssayCommentsEntity comment = essayCommentsRepository.findById(commentId).orElse(null);
         if(comment != null){
+
             if(comment.getUser().getId() != user.getId()){
                 System.out.println(comment.getUser().getId());
                 System.out.println(user.getId());

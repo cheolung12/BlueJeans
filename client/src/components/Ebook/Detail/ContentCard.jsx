@@ -4,7 +4,7 @@ export default function ContentCard({ description }) {
   return (
     <div className='max-[768px]:w-[21rem]'>
       <section
-        className='flex flex-col items-center md:w-[70%] h-[46rem] rounded-[1rem] m-2 pt-[2.3rem] overflow-y-auto'
+        className='flex flex-col items-center md:w-[92%] lg:w-[80%] h-[46rem] rounded-[1rem] m-2 pt-[2.3rem] overflow-y-auto bg-white'
         style={{
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
@@ -15,7 +15,7 @@ export default function ContentCard({ description }) {
         <div>
           <div>
             <div className='px-7 py-5'>
-              <span className='h-96'>{description}</span>
+              <span className='h-96 whitespace-pre-line'>{description}</span>
             </div>
           </div>
         </div>
