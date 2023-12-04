@@ -7,11 +7,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import Filter from '../../components/Ebook/Main/Filter';
 import Pagination from 'react-js-pagination';
+import EssayCardSkeleton from '../../components/Essay/Main/EssayCardSkeleton';
 
 // 백일장 임시데이터
 // const essays = essay.essays;
 
 export default function Essay() {
+  const [loading, setLoading] = useState(true);
+
   const [filtered, setFiltered] = useState([
     { title: '' },
     { content: '' },
@@ -62,6 +65,7 @@ export default function Essay() {
         );
         setFiltered(latestEssays);
         setEssayInits(latestEssays);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -166,18 +170,22 @@ export default function Essay() {
           </div>
 
           <div className='flex flex-wrap justify-center md:justify-between lg:justify-center'>
-            {currentItems.map((e, index) => (
-              <EssayCard
-                key={index}
-                id={e.id}
-                title={e.title}
-                content={e.content}
-                thumbnail={e.img_path}
-                like={e.like}
-                nickname={e.nickname}
-                comments={e.comments}
-              />
-            ))}
+            {currentItems.map((e, index) =>
+              loading ? (
+                <EssayCardSkeleton />
+              ) : (
+                <EssayCard
+                  key={index}
+                  id={e.id}
+                  title={e.title}
+                  content={e.content}
+                  thumbnail={e.img_path}
+                  like={e.like}
+                  nickname={e.nickname}
+                  comments={e.comments}
+                />
+              )
+            )}
           </div>
 
           {/* 글작성 버튼 */}

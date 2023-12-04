@@ -8,7 +8,6 @@ import { IoMdHeart } from 'react-icons/io';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
-  const navigate = useNavigate();
 
   const [booksContent, setBooksContent] = useState({
     title: '',
@@ -77,7 +76,7 @@ export default function EBookDetail() {
   };
 
   return (
-    <div className='flex justify-end w-full max-[640px]:justify-center'>
+    <div className='flex sm:justify-end w-full justify-center'>
       <div className='w-[80%]'>
         <div className='flex max-[640px]:flex-col max-[768px]:flex-col px-38 pb-11 justify-center items-center md:flex-row'>
           {/* 이미지카드 */}
