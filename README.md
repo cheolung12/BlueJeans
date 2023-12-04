@@ -85,7 +85,7 @@
 
 
 ## 4. 시스템 구조도
-![architecture](https://github.com/cheolung12/BlueJeans/assets/109952479/a42e9f1b-5b20-439c-9ad4-e0c763f609f0)
+![architecture](https://github.com/cheolung12/BlueJeans/assets/109952479/f699bd24-7298-4e4f-9021-bbfc72d2ac64)
 <br /><br />
 
 ## 5. 실행 방법
