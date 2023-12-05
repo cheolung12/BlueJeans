@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageSlider from '../components/common/ImageSlider';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,6 +10,8 @@ export default function Login() {
   });
   const [isFail, setIsFail] = useState(false);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
   const navigate = useNavigate();
 
   function fadingEffect(elementId) {
@@ -23,6 +25,14 @@ export default function Login() {
       }
     }, 100);
   }
+  useEffect(() => {
+    let bluejeansId = getCookie('BlueJeans_id');
+    console.log(bluejeansId);
+    if (bluejeansId) {
+      setIsChecked(true);
+      setFormData({ userID: bluejeansId });
+    }
+  }, []);
 
   const blockSpace = (e) => {
     if (e.key === ' ') {
@@ -49,6 +59,14 @@ export default function Login() {
       setTimeout(() => {
         setIsFormSubmitting(false);
       }, 1000);
+    }
+
+    if (isChecked) {
+      //아이디 저장 체크되어있는경우
+      setCookie('BlueJeans_id', formData.userID, 7); // 쿠키에 저장하는 이벤트를 호출 bluejeans_id 이름으로 id가 7일동안 저장
+    } else {
+      // 체크가 해제 된 경우 (false)
+      deleteCookie('BlueJeans_id'); // 쿠키 정보를 지우는 이벤트를 호출한다.
     }
 
     if (formData.userID && formData.password) {
@@ -84,6 +102,42 @@ export default function Login() {
       return;
     }
   };
+
+  /////////쿠키관련
+
+  //쿠키저장
+  function setCookie(cookieName, value, exdays) {
+    let exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays); // 쿠키 저장 기간
+    let cookieValue =
+      escape(value) +
+      (exdays == null ? '' : '; expires=' + exdate.toGMTString());
+    document.cookie = cookieName + '=' + cookieValue;
+  }
+
+  //쿠키 조회
+  function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    let cookieData = document.cookie;
+    let start = cookieData.indexOf(cookieName);
+    let cookieValue = '';
+
+    if (start != -1) {
+      start += cookieName.length;
+      let end = cookieData.indexOf(';', start);
+      if (end == -1) end = cookieData.length;
+      cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+  }
+
+  //쿠키삭제
+  function deleteCookie(cookieName) {
+    let expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie =
+      cookieName + '= ' + '; expires=' + expireDate.toGMTString();
+  }
 
   return (
     <div className='w-screen h-screen flex'>
@@ -143,6 +197,23 @@ export default function Login() {
               placeholder='비밀번호를 입력해주세요.'
               className='signup-input'
             />
+          </div>
+          <div class='flex items-center mb-4'>
+            <input
+              id='rememberId'
+              type='checkbox'
+              checked={isChecked}
+              onChange={() => {
+                setIsChecked(!isChecked);
+              }}
+              class='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+            />
+            <label
+              for='default-checkbox'
+              class='ms-2 text-sm font-medium text-gray-500 dark:text-gray-300'
+            >
+              아이디 기억하기
+            </label>
           </div>
           <div className='flex justify-center w-3/5 sm:mt-6 mt-4'>
             <button

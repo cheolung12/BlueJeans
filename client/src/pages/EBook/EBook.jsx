@@ -7,6 +7,8 @@ import BookCardSkeleton from '../../components/Ebook/Main/BookCardSkeleton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Link } from 'react-router-dom';
+import MiniBookCard from '../../components/Ebook/Main/MiniBookCard';
+import 'animate.css';
 
 export default function EBook() {
   const [loading, setLoading] = useState(true);
@@ -22,6 +24,7 @@ export default function EBook() {
   ]);
   const [searchInput, setSearchInput] = useState('');
   const [bookLength, setBookLength] = useState(0);
+  const [popularBook, setPopularBook] = useState([]);
 
   // get 요청 (전체 책 목록)
   useEffect(() => {
@@ -35,6 +38,8 @@ export default function EBook() {
         console.log(response.data);
         setBookLength(response.data.length);
         setLoading(false);
+        let popular = [...response.data].sort((a, b) => b.like - a.like);
+        setPopularBook(popular.slice(0, 5));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -100,7 +105,7 @@ export default function EBook() {
             className='w-full h-full flex justify-center absolute inset-0 overflow-hidden'
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
           >
-            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
+            <div className='animate__animated animate__fadeInDown flex flex-col justify-start w-full pl-6 pt-6'>
               <div className='text-white text-5xl font-bold pb-3'>
                 내 손안의 작은 도서관
               </div>
@@ -108,13 +113,31 @@ export default function EBook() {
             </div>
           </div>
         </div>
+        <br />
 
-        <div className='w-[95%] h-60 bg-slate-200 font-bold relative'>
-          지금 서점 인기 도서👍🏻
-          {/* <Swiper
-          spaceBetween={50}
-          slidesPerView={4}
-          on  */}
+
+        {/* 인기도서 */}
+        <div className='w-[82%] h-[13rem] bg-slate-200 font-bold relative pl-2 pt-0.5'>
+          <p className='font-bold leading-9 mb-2 text-[16px]'>
+            지금 서점 인기 도서👍🏻
+          </p>
+          <div className='flex justify-center sm:justify-between w-full overflow-scroll'>
+            {popularBook.map((book, index) => (
+              <div key={index}>
+                {loading ? (
+                  <BookCardSkeleton />
+                ) : (
+                  <MiniBookCard
+                    id={book.id}
+                    thumbnail={book.thumbnail}
+                    title={book.title}
+                    author={book.author}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+
         </div>
 
         <div className='flex flex-col w-[95%] items-centers justify-center'>
