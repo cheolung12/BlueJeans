@@ -63,7 +63,7 @@ export default function AddComment() {
         <div>댓글</div>
       </div>
       <input
-        className='w-full h-10 sm:h-14 px-2  border-gray-300 border-2 outline-none pl-3 text-xs sm:text-lg focus:border-[#48599A] shadow-sm '
+        className='w-full h-10 sm:h-14 px-2  border-gray-300 border-2 outline-none pl-3 text-xs sm:text-lg focus:border-signatureColor shadow-sm '
         type='text'
         placeholder='댓글을 입력해주세요.'
         value={comment}
