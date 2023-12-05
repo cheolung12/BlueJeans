@@ -22,7 +22,6 @@ import RecruitmentEdit from './pages/Recruitment/RecruitmentEdit';
 import EssayEdit from './pages/Essay/EssayEdit';
 
 import MyPage from './pages/MyPage';
-import MPg from './pages/MPg';
 import UserEdit from './pages/UserEdit';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -36,7 +35,6 @@ const router = createBrowserRouter([
             { path: 'signup', element: <Signup /> },
             { path: 'login', element: <Login /> },
             { path: 'mypage', element: <MyPage /> },
-            { path: 'mp', element: <MPg /> },
             { path: 'useredit', element: <UserEdit /> },
             { path: 'recruitment', element: <Recruitment /> },
             { path: 'recruitment/detail/:jobId', element: <RecruitmentDetail /> },

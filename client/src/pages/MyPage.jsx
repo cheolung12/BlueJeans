@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TopNavbar from '../components/common/TopNavbar';
-import MyPagePosts from '../components/mypage/MyPagePosts';
+import SideMenuList from '../components/mypage/SideMenuList';
+import WithDrawal from '../components/mypage/WithDrawal';
+import SideMenuContent from '../components/mypage/SideMenuContent';
 
 export default function MyPage() {
-  const [myPost, setMyPost] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    nickname: '',
-    address: '',
-    likedPost: [],
-    writedPost: [],
+  // 불러온 회원 정보
+  const [userInfo, setUserInfo] = useState({});
+  // 사이드 메뉴
+  const [sideMenu, setSideMenu] = useState({
+    myHome: true,
+    myPost: false,
+    myHeart: false,
   });
+  console.log(sideMenu);
 
+  // 첫 로드시 데이터 받기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,58 +25,59 @@ export default function MyPage() {
           url: `${process.env.REACT_APP_SERVER}/mypage`,
           withCredentials: true,
         });
-        console.log(res.data);
-        const { nickname, address, likedPost, writedPost } = res.data;
-        // 최신순으로 게시물들을 정렬
-        const sortedLikedPost = likedPost.sort((a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-
-          return dateB - dateA;
-        });
-        const sortedWritedPost = writedPost.sort((a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-
-          return dateB - dateA;
-        });
-
-        setUserInfo({
-          nickname,
-          address,
-          likedPost: sortedLikedPost,
-          writedPost: sortedWritedPost,
-        });
+        if (res.data) {
+          const { userId, nickname, address, likedPost, writedPost, img_path } =
+            res.data;
+          setUserInfo({
+            userId,
+            nickname,
+            address,
+            img_path,
+            likedPost: sortArray(likedPost),
+            writedPost: sortArray(writedPost),
+          });
+          console.log(res.data);
+        } else {
+          console.log('데이터 불러오기 실패!');
+        }
       } catch (error) {
         console.log('fetch error', error);
       }
     };
-
     fetchData();
   }, []);
 
-  const toggleMyPost = () => setMyPost((prev) => !prev);
+  // 받아온 게시물들을 시간순 정렬해주는 함수
+  const sortArray = (arr) => {
+    return arr.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+
+      return dateB - dateA;
+    });
+  };
 
   return (
     <div className='w-full h-screen'>
       <TopNavbar />
-      <div className='flex w-full h-full'>
-        {/* 회원정보 */}
-        <div className='w-1/3 h-full bg-slate-500'></div>
-        {/* 게시물 보기 */}
-        <div className='w-2/3 h-full box-border px-8 '>
-          <div className='flex w-full justify-evenly'>
-            <div className='w-full text-center' onClick={toggleMyPost}>내 게시물</div>
-            <div className='w-full text-center' onClick={toggleMyPost}>찜한 게시물</div>
-          </div>
-          <div className='w-full grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-y-14 overflow-scroll box-border'>
-            {!myPost ? (
-              <MyPagePosts postLists={userInfo.likedPost} />
-            ) : (
-              <MyPagePosts postLists={userInfo.writedPost} />
-            )}
+      <div className='flex w-full h-full lg:flex-row flex-col'>
+        <div className='lg:w-1/3 w-full lg:h-full h-[500px] bg-slate-100 flex justify-center'>
+          <div className='w-full lg:mt-24 mt-5 lg:flex-row flex-col'>
+            <div className='m-3 flex justify-center flex-col items-center space-y-2'>
+              <div className='w-24 h-24 rounded-full flex justify-center items-center bg-white'>
+                <img
+                  className='w-full h-full overflow-hidden rounded-full flex justify-center items-center'
+                  src={userInfo.img_path}
+                  alt='회원 프로필 이미지'
+                />
+              </div>
+              <div>{localStorage.getItem('nickname')} 님</div>
+            </div>
+            <SideMenuList sideMenu={sideMenu} setSideMenu={setSideMenu}/>
+            <WithDrawal />
           </div>
         </div>
+        <SideMenuContent sideMenu={sideMenu} userInfo={userInfo} setUserInfo={setUserInfo}/>
       </div>
     </div>
   );

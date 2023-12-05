@@ -127,40 +127,41 @@ export default function Essay() {
   return (
     <div className='w-full'>
       <div className='w-full flex flex-col justify-center'>
-        <div
-          className='w-[79%] h-72 relative ml-[196px] rounded-3xl'
-          style={{
-            // backgroundImage:
-            //   'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
-            // backgroundSize: 'cover',
-            // backgroundPosition: 'center',
-            // backgroundRepeat: 'no-repeat',
-            boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
-          }}
-        >
+        <div className='flex justify-center lg:justify-start'>
           <div
-            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+            className='w-[79%] h-72 relative ml-0 lg:ml-[196px] sm:justify-center rounded-3xl'
+            style={{
+              backgroundImage:
+                'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/essay/KakaoTalk_Image_2023-12-05-16-50-29.jpeg")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+            }}
           >
-            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
-              <div className='text-white text-5xl font-bold pb-3'>
-                멋진 글솜씨를
+            <div
+              className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+            >
+              <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+                <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown'>
+                  당신의 멋진 글솜씨를
+                </div>
+                <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
+                  뽐내 보세요!
+                </div>
               </div>
-              <div className='text-white text-3xl'>뽐내 보세요!</div>
             </div>
           </div>
         </div>
 
-        {/* <div className='w-[82%] h-60 bg-slate-200 font-bold relative'>
-        지금 서점 인기 도서👍🏻
-       
-      </div> */}
-
+        <br />
         <section className='flex flex-col items-center w-full justify-end'>
           <div className='flex flex-col justify-end w-[82%] ml-0 lg:ml-[120px]'>
             <div className='flex w-full'>
               <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4 my-2 sm:mx-8 mx-0'>
                 <Filter handleFilter={handleFilter} />
+                <br />
 
                 {/* 검색창 */}
                 <div>
