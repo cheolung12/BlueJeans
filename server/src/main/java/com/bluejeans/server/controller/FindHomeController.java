@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name="findhome API", description = "집찾기 api 입니다.")
+@Tag(name="FindHome API", description = "집찾기 api 입니다.")
 @RequestMapping("/api/findhome")
 public class FindHomeController {
 
