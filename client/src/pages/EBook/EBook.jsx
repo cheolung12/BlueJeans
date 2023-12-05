@@ -92,7 +92,7 @@ export default function EBook() {
     <div>
       <div className='flex flex-col justify-center w-full pl-[255px]'>
         <div
-          className='w-[82%] h-72 relative'
+          className='w-[95%] h-72 relative'
           style={{
             backgroundImage:
               'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
@@ -115,6 +115,7 @@ export default function EBook() {
         </div>
         <br />
 
+
         {/* 인기도서 */}
         <div className='w-[82%] h-[13rem] bg-slate-200 font-bold relative pl-2 pt-0.5'>
           <p className='font-bold leading-9 mb-2 text-[16px]'>
@@ -136,9 +137,10 @@ export default function EBook() {
               </div>
             ))}
           </div>
+
         </div>
 
-        <div className='flex flex-col w-[82%] items-centers justify-center'>
+        <div className='flex flex-col w-[95%] items-centers justify-center'>
           {/* 카테고리, 검색창 */}
           <div className='flex flex-col items-center justify-between lg:flex-row mb-5'>
             <Filter handleFilter={handleFilter} />

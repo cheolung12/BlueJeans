@@ -6,26 +6,22 @@ export default function EssayCardSkeleton() {
   return (
     <div>
       <div
-        className='w-[17rem] h-[20rem] m-2 flex flex-col rounded-br-2xl'
+        className='w-[20rem] h-[24rem] m-2 flex flex-col rounded-br-2xl bg-white'
         style={{
-          boxShadow:
-            'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
         }}
       >
         <div className='w-full h-[9rem]'>
-          <div className='flex flex-col w-full h-[9rem] justify-evenly items-center'>
-            <Skeleton width={150} />
-            <Skeleton width={150} />
+          <div className='w-full h-[18rem] rounded-br-2xl '>
+            <Skeleton className='w-full h-[18rem] rounded-br-2xl ' />
+          </div>
 
-            <div className='flex items-center'>
-              <Skeleton width={30} className='flex items-center mx-2' />
-              <Skeleton width={30} className='flex items-center mx-2' />
+          <div className='flex items-center justify-center'>
+            <div className='flex flex-col w-5/6 h-[6rem] justify-center'>
+              <Skeleton />
+              <Skeleton />
             </div>
           </div>
-        </div>
-
-        <div className='w-full h-[11rem] rounded-br-2xl '>
-          <Skeleton className='w-full h-full rounded-br-2xl' />
         </div>
       </div>
     </div>

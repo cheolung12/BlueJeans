@@ -92,6 +92,8 @@ public class EssayService {
 
         if (result.isPresent()) {
             long like = essayDibRepository.countByEssay(result.get());
+            System.out.println(result.get().getUser().getUserID());
+            System.out.println(result.get().getUser().getImg_path());
             ResEssayDetailDTO essay = ResEssayDetailDTO.toDTO(result.get(), like, commentDTOS);
             return essay;
         } else {

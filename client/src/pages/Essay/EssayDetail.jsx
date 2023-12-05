@@ -5,9 +5,12 @@ import CommentList from '../../components/Essay/Detail/CommentList';
 import axios from 'axios';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
+import EssayDetailSkeleton from '../../components/Essay/Detail/EssayDetailSkeleton';
 export default function EssayDetail() {
   const { EssayId } = useParams();
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
 
   const [essayContent, setEssayContent] = useState({
     title: '',
@@ -42,6 +45,7 @@ export default function EssayDetail() {
           setCommentList(response.data.comments);
           setIsHeart(response.data.heart);
           setAllIsHeart(response.data.like);
+          setLoading(false);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -120,9 +124,11 @@ export default function EssayDetail() {
     }
   };
 
-  return (
+  return loading ? (
+    <EssayDetailSkeleton />
+  ) : (
     <div className='w-full flex justify-center ml-0 lg:ml-[107px]'>
-      <div className='block w-[93%] sm:w-[64%]'>
+      <div className='block w-[93%] sm:w-[75%]'>
         <div className='flex flex-col'>
           <div className='w-full'>
             {essayContent.user_id === window.localStorage.getItem('userID') ? (
@@ -153,7 +159,7 @@ export default function EssayDetail() {
             <section className='flex justify-center'>
               <div className='w-full flex flex-col'>
                 <div
-                  className='w-full h-full mt-3 relative overflow-hidden bg-no-repeat'
+                  className='w-full h-full mt-3 relative overflow-hidden bg-no-repeat rounded-t-3xl'
                   style={{
                     backgroundImage: `url(${essayContent.img_path})`,
                     backgroundSize: 'cover',
@@ -244,29 +250,6 @@ export default function EssayDetail() {
               </div>
             </section>
 
-            {/* <div
-              className='flex flex-col items-center cursor-pointer'
-              onClick={onClickHeart}
-            >
-              {!isHeart ? (
-                <GoThumbsup className='text-4xl' />
-              ) : (
-                <GoThumbsup className='text-4xl text-yellow-300' />
-              )}
-
-              <span className='pt-1 text-sm'> */}
-            {/* 찜했을 때 찜해제로 변경 */}
-            {/* {!isLikeAdd ? <span>{like}</span> : <span>{notlike}</span>}
-              </span>
-              <span className='pt-1'>{essayLike}</span>
-            </div> */}
-            {/* <div className='my-4'>
-              <AssayDibsButton
-                like='추천해요'
-                notlike='추천해제'
-                essayLike={essayContent.like}
-              />
-            </div> */}
             {/* 댓글 container */}
             <section className='flex justify-center h-full'>
               <div className='w-full flex flex-col'>

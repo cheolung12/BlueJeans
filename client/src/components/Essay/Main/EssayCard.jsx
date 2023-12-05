@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IoMdHeartEmpty } from 'react-icons/io';
-import { FaRegComments } from 'react-icons/fa6';
+import { IoMdHeart } from 'react-icons/io';
 
 export default function EssayCard({
   id,
@@ -15,7 +14,7 @@ export default function EssayCard({
     <div className='transition-transform hover:ease-linear transform hover:scale-105'>
       <Link to={`/essay/detail/${id}`}>
         <div
-          className='w-[17rem] h-[20rem] m-2 flex flex-col rounded-br-2xl bg-white'
+          className='w-[20rem] h-[24rem] m-2 flex flex-col rounded-br-2xl bg-white'
           style={{
             boxShadow: 'rgba(99, 99, 99, 0.2) 1px 3px 8px 0px',
             // boxShadow:
@@ -28,7 +27,7 @@ export default function EssayCard({
           }}
         >
           <div className='w-full h-[9rem]'>
-            <div className='w-full h-[14.6rem] rounded-br-2xl '>
+            <div className='w-full h-[18rem] rounded-br-2xl '>
               <img
                 src={thumbnail}
                 alt='백일장썸네일'
@@ -37,16 +36,16 @@ export default function EssayCard({
             </div>
 
             <div className='flex items-center'>
-              <div className='flex flex-col w-full h-[5rem] justify-center pl-3'>
+              <div className='flex flex-col w-full h-[6rem] justify-center pl-5'>
                 <div className='text-xl font-bold'>{title}</div>
-                <div className='text-sm text-[#8d8d8d]'>{nickname}</div>
+                <div className='text-md text-[#8d8d8d]'>{nickname}</div>
               </div>
 
               <div>
                 <div className='flex items-center'>
                   <div className='flex items-center mx-5'>
-                    <IoMdHeartEmpty className='mx-1 text-lg' />
-                    <div className='mx-[0.5px] text-lg'>{like}</div>
+                    <IoMdHeart className='text-2xl text-[#FE8080]' />
+                    <div className='mx-1 text-lg'>{like}</div>
                   </div>
                   {/* <div className='flex items-center mx-2'>
                   <FaRegComments className='mx-1' />

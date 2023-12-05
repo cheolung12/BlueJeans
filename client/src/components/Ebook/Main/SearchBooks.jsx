@@ -48,10 +48,15 @@ export default function SearchBooks({
         method: 'GET',
         url: `${process.env.REACT_APP_SERVER}/ebook?search=${searchInput}`,
       });
-      setBooks(response.data);
 
       console.log('검색 결과', response.data);
-      navigate(`/ebook/search?keyword=${searchInput}`);
+
+      if (response.data.length === 0) {
+        alert('해당 검색 결과가 없습니다.');
+      } else {
+        setBooks(response.data);
+        navigate(`/ebook/search?keyword=${searchInput}`);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -79,7 +84,7 @@ export default function SearchBooks({
           placeholder='제목을 입력하세요'
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className='rounded-full w-80 h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-[#48599A]'
+          className='rounded-full w-80 h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-signatureColor'
         />
         <button
           disabled={searchInput.length === 0}

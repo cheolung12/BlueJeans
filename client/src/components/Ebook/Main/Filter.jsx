@@ -9,7 +9,7 @@ function Filter({ handleFilter }) {
   };
 
   return (
-    <div className='m-4'>
+    <div className='my-4'>
       <ul className='flex'>
         <li
           onClick={() => handleClick('all')}
