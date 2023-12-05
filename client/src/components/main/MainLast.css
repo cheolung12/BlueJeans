@@ -1,0 +1,47 @@
+.swiper-button-prev,
+.swiper-button-next {
+  z-index: 999 !important;
+  /* border: 1px solid black; */
+  width: 50px !important;
+  background-color: none;
+  border-radius: none;
+  color: #2e375d !important;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+.my-element {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: bounce; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
+}
+.Info {
+  position: relative;
+  z-index: 999;
+}
+
+.btn {
+  width: 6rem;
+  height: 6rem;
+  background-color: #8d62e9;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #8d62e9 inset, 0 0 0 2px rgba(255, 255, 255, 0.779),
+    0 8px;
+}
+.btn:active {
+  box-shadow: 0 0 0 1px #8d62e9 inset, 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+:root {
+  --animate-duration: 100ms; /*애니메이션(ani) 실행 시간*/
+  --animate-delay: 200s; /*ani 실행 지연 시간 설정*/
+}
+
+.stlye {
+  display: flex;
+}

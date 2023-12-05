@@ -13,7 +13,7 @@ const MainBar = () => {
   return (
     <div>
       <div className='flex items-end justify-center h-full pl-4 pr-4'>
-        <div className='rounded-[30px] shadow-lg items-center z-20 flex justify-around bg-white w-full max-md:pt-4 md:w-3/4 mb-4 md:h-36 md:mb-24 text-sm md:text-lg'>
+        <div className='rounded-[30px] shadow-lg items-center z-20 flex justify-around bg-white w-full max-md:pt-4 md:w-3/4 mb-4 md:h-36 md:mb-20 text-sm md:text-lg'>
           <Link
             to='/recruitment'
             className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'

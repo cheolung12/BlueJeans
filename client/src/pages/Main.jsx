@@ -8,7 +8,6 @@ import { FaEyeSlash, FaRegThumbsUp } from 'react-icons/fa';
 import { FaDAndD, FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
 import { BiCommentDetail } from 'react-icons/bi';
-
 import { FaCrown } from 'react-icons/fa6';
 
 ///////////////
@@ -29,7 +28,7 @@ import MainBar from '../components/main/MainBar';
 
 import axios from 'axios';
 
-import inkBg from '../components/main/mainImg/inkBg.mp4';
+import MainLast from '../components/main/MainLast.css';
 
 //////////state/////////
 
@@ -38,7 +37,70 @@ window.addEventListener('scroll', () => {
 });
 
 export default function Main() {
+  <head>
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+    />
+  </head>;
+
   const [mainData, setMainData] = useState([]);
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible1, setIsVisible1] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollY >= 1100) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollY >= 1200) {
+        setIsVisible1(true);
+      } else {
+        setIsVisible1(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollY >= 1300) {
+        setIsVisible2(true);
+      } else {
+        setIsVisible2(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   //책전체
   useEffect(() => {
@@ -57,11 +119,6 @@ export default function Main() {
     fetchData();
   }, []);
 
-  console.log('ykyk', mainData);
-  console.log('ebook', mainData.ebookList);
-  console.log('essay', mainData.essayList);
-  console.log('recruit', mainData.recruitList);
-
   const ebookList = mainData?.ebookList || [];
   const essayList = mainData?.essayList || [];
   const recruitList = mainData?.recruitList || [];
@@ -74,20 +131,19 @@ export default function Main() {
   const recruit1 = recruitList[1];
   const recruit2 = recruitList[2];
 
-  const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <>
       <TopNavbar />
       <div>
-        <div className='h-full flex items-center justify-center'>
+        <div className=' flex items-center justify-center'>
           <div
-            className='md:h-1/2 w-full flex flex-col items-center relative'
+            className=' md:h-1/2 w-full flex flex-col items-center relative'
             style={{ backgroundPosition: 'bottom' }}
           >
             <img
               src={lastMain}
               alt='main'
-              className='min-h-[50%] md:h-[50rem] lg:h-[55rem] w-full object-cover bg-bottom opacity-90'
+              className='h-[45rem] w-full object-cover bg-bottom opacity-90'
             />
             <div className='absolute bottom-0  left-0 w-full'>
               {/* 글씨가 안보이고... 어색하다 ㅜ...? ㅠㅜ*/}
@@ -96,20 +152,19 @@ export default function Main() {
             </div>
           </div>
         </div>
-
         {/* 1 */}
         <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
           <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
             <div className='text-center mt-3'>
               <div className='text-4xl pb-10 font-bold'>오늘의 추천도서</div>
               <div className='md:text-lx'>
-                <div className='text-lg font-[SUIT-Regular]'>
+                <div className='text-2xl font-[SUIT-Regular]'>
                   1970년대의 감성부터 현대까지
                 </div>
-                <div className='text-lg font-[SUIT-Regular]'>
+                <div className='text-2xl font-[SUIT-Regular]'>
                   지금 봐도 세련된 문장으로 감동을 주는
                 </div>
-                <div className='text-lg'>작품을 만나 보세요</div>
+                <div className=' text-2xl'>작품을 만나 보세요</div>
               </div>
             </div>
           </div>
@@ -120,27 +175,27 @@ export default function Main() {
             loop={true}
             centeredSlides={true} //중앙설정
             autoplay={{
-              delay: 3500,
+              delay: 2500,
               disableOnInteraction: false,
             }}
             pagination={{
               clickable: true,
             }}
             breakpoints={{
-              '@0.25': {
+              '@0.3': {
                 slidesPerView: 1,
-                spaceBetween: 40, //여백
+                spaceBetween: 10, //여백
               },
-              '@0.70': {
+              '@.90': {
                 slidesPerView: 2,
-                spaceBetween: 40,
+                spaceBetween: 30,
               },
               '@1.50': {
                 slidesPerView: 3,
-                spaceBetween: 50,
+                spaceBetween: 10,
               },
             }}
-            spaceBetween={30}
+            spaceBetween={10}
             navigation={true}
             modules={[Autoplay, Navigation]}
           >
@@ -153,7 +208,7 @@ export default function Main() {
                     <img
                       src={book.thumbnail}
                       alt={book.title}
-                      className='h-[25rem] w-full text-blue-700 p-10 md:p-0'
+                      className='h-[25rem] w-full p-5 md:p-0'
                     />
                   </div>
                 </Link>
@@ -162,20 +217,27 @@ export default function Main() {
           </Swiper>
         </div>
         {/* 2 */}
-
         {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
-
-        <div className='bg-[#5495B1] h-[35rem] w-full flex '>
-          <div className='flex h-full w-full items-center pl-4 pr-4 justify-evenly'>
-            {essay0 && (
+        {/* className={`fade-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} */}
+        <div className='bg-[#5495B1] w-full h-20'>
+          <div className='h-full w-full text-center justify-center items-center'>
+            이달의 문학왕
+          </div>
+        </div>
+        <div className='bg-[#5495B1] h-[35rem] w-full flex'>
+          <div className='flex h-full w-full items-center pl-4 pr-4 justify-start'>
+            {isVisible && essay0 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
+                    transform: isVisible ? 'translateY(0)' : 'translateY(100%)',
                     boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    animationDuration: 'var(--animate-duration)',
+                    animationDelay: 'var(--animate-delay)',
                   }}
-                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className=' w-60 h-96 bg-white ml-20 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md'
                 >
                   <div className='self-center'>
                     <div className='h-10 w-full'>
@@ -200,7 +262,7 @@ export default function Main() {
                 </div>
               </Link>
             )}
-            {essay1 && (
+            {isVisible1 && essay1 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
@@ -208,14 +270,14 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
                 >
-                  <div className='self-center'>
+                  <div className='self-center pt-10'>
                     <div className='flex justify-center'>
                       <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl  text-center'>
                         {' '}
                         <img
-                          className='w-full h-full object-cover'
+                          className='w-full h-full object-cover justify-center'
                           src={essay1.img_path}
                           alt=''
                         />
@@ -231,7 +293,7 @@ export default function Main() {
                 </div>
               </Link>
             )}
-            {essay2 && (
+            {isVisible2 && essay2 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
@@ -239,9 +301,9 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='w-60 h-96 bg-white  shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
                 >
-                  <div className='self-center'>
+                  <div className='self-center mt-10'>
                     <div className='flex justify-center'>
                       <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl  text-center'>
                         {' '}
@@ -271,7 +333,6 @@ export default function Main() {
           </div>
         </div>
         {/* 3 */}
-
         {/* 젤 최신 3개 가져오기 */}
         <div className=' flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
@@ -287,7 +348,7 @@ export default function Main() {
 
           {/* 직업 */}
           <div className='hidden sm:block'>
-            <div className='flex justify-center '>
+            <div className='flex justify-center md:text-base lg:pl-20 lg:pr-20 '>
               {recruit0 && (
                 <div
                   style={{
