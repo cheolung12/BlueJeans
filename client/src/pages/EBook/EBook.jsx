@@ -86,8 +86,8 @@ export default function EBook() {
   };
 
   return (
-    <div>
-      <div className='flex flex-col justify-center w-full pl-[197px]'>
+    <div className='w-full'>
+      <div className='flex flex-col justify-center w-full pl-0 lg:pl-[197px] items-center lg:items-start'>
         <div
           className='w-[93%] h-72 relative rounded-3xl'
           style={{
@@ -99,14 +99,14 @@ export default function EBook() {
           }}
         >
           <div
-            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
+            className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
           >
-            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
-              <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown '>
+            <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+              <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown '>
                 내 손안의 작은 도서관
               </div>
-              <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+              <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
                 어디서든 즐겨 보세요!
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function EBook() {
 
         {/* 인기도서 */}
         <div
-          className='w-[95%] h-[16rem] font-bold relative pl-2 pt-0.5'
+          className='justify-center w-[95%] h-full font-bold relative pl-2 pt-0.5 hidden lg:flex'
           // style={{
           //   boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
           // }}
@@ -127,7 +127,7 @@ export default function EBook() {
             <p className='font-bold leading-9 mb-2 text-lg ml-3'>
               지금 서점 인기 도서 👍🏻
             </p>
-            <div className='flex justify-center sm:justify-between w-full'>
+            <div className='flex flex-wrap justify-center sm:justify-between w-full'>
               {popularBook.map((book, index) => (
                 <div key={index}>
                   {loading ? (
@@ -165,7 +165,7 @@ export default function EBook() {
             <div className='w-full'>
               <section>
                 <div className='py-3'>
-                  <div className='flex flex-wrap justify-center sm:justify-between w-full'>
+                  <div className='flex flex-wrap justify-around w-full'>
                     {books.map((book, index) => (
                       <div key={index}>
                         {loading ? (

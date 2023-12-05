@@ -7,13 +7,13 @@ export default function BookCard({ id, thumbnail, title, author }) {
       <Link to={`/ebook/detail/${id}`} key={id}>
         <div
           key={id}
-          className=' flex flex-col items-center justify-around w-[11rem] h-[21rem]'
+          className=' flex flex-col items-center justify-around w-[13rem] h-[25rem]'
         >
           <div>
             <img
               src={thumbnail}
               alt='book'
-              className=' w-[10rem] h-[13rem]'
+              className='w-[14rem] h-[17.4rem]'
               style={{
                 // WebkitBoxShadow:
                 //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
@@ -30,9 +30,9 @@ export default function BookCard({ id, thumbnail, title, author }) {
               }}
             />
           </div>
-          <div className='flex flex-col text-center w-[10rem] h-[6rem] text-black'>
-            <div className='font-semibold text-md'>{title}</div>
-            <div className='text-sm mt-2 text-neutral-500'>{author}</div>
+          <div className='flex flex-col text-center w-[13rem] h-[6rem] text-black'>
+            <div className='font-semibold text-lg'>{title}</div>
+            <div className='text-md mt-2 text-neutral-500'>{author}</div>
           </div>
         </div>
       </Link>
