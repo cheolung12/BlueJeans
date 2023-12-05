@@ -3,25 +3,20 @@ import { Link } from 'react-router-dom';
 import 'animate.css';
 export default function MiniBookCard({ id, thumbnail, title, author }) {
   return (
-    <div className='animate__animated animate__fadeIn transition-transform hover:ease-linear transform hover:scale-105 '>
+    <div className=' transition-transform hover:ease-linear transform hover:scale-105 '>
       <Link to={`/ebook/detail/${id}`} key={id}>
-        <div key={id} className=' flex flex-col items-center w-[9rem] h-51'>
+        <div
+          key={id}
+          className=' flex flex-col items-center w-[9rem] h-51 animate__animated animate__fadeIn'
+        >
           <div className='mb-1'>
             <img
               src={thumbnail}
               alt='book'
-              className=' w-[7rem] h-[9rem]'
+              className=' w-[8rem] h-[10.3rem]'
               style={{
-                WebkitBoxShadow:
-                  '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                MozBoxShadow:
-                  '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                MsBoxShadow:
-                  '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                OBoxShadow:
-                  '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
                 boxShadow:
-                  '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                  'rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em',
               }}
             />
           </div>

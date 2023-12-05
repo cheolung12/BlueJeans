@@ -6,7 +6,7 @@ export default function ContentCard({ description }) {
       <section
         className='flex flex-col items-center md:w-[92%] lg:w-[80%] h-[46rem] rounded-[1rem] m-2 pt-[2.3rem] overflow-y-auto bg-white'
         style={{
-          boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
         }}
       >
         <div className='w-full'>

@@ -4,9 +4,6 @@ import Filter from '../../components/Ebook/Main/Filter';
 import BookCard from '../../components/Ebook/Main/BookCard';
 import axios from 'axios';
 import BookCardSkeleton from '../../components/Ebook/Main/BookCardSkeleton';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Keyboard, Pagination, Navigation, Autoplay } from 'swiper/modules';
-import { Link } from 'react-router-dom';
 import MiniBookCard from '../../components/Ebook/Main/MiniBookCard';
 import 'animate.css';
 
@@ -39,7 +36,7 @@ export default function EBook() {
         setBookLength(response.data.length);
         setLoading(false);
         let popular = [...response.data].sort((a, b) => b.like - a.like);
-        setPopularBook(popular.slice(0, 5));
+        setPopularBook(popular.slice(0, 6));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -90,55 +87,68 @@ export default function EBook() {
 
   return (
     <div>
-      <div className='flex flex-col justify-center w-full pl-[255px]'>
+      <div className='flex flex-col justify-center w-full pl-[197px]'>
         <div
-          className='w-[95%] h-72 relative'
+          className='w-[93%] h-72 relative rounded-3xl'
           style={{
             backgroundImage:
               'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            // boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
           }}
         >
           <div
-            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden'
+            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
           >
-            <div className='animate__animated animate__fadeInDown flex flex-col justify-start w-full pl-6 pt-6'>
-              <div className='text-white text-5xl font-bold pb-3'>
+            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
+              <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown '>
                 내 손안의 작은 도서관
               </div>
-              <div className='text-white text-3xl'>어디서든 즐겨 보세요!</div>
+              <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+                어디서든 즐겨 보세요!
+              </div>
             </div>
           </div>
         </div>
+
+        <br />
         <br />
 
-
         {/* 인기도서 */}
-        <div className='w-[82%] h-[13rem] bg-slate-200 font-bold relative pl-2 pt-0.5'>
-          <p className='font-bold leading-9 mb-2 text-[16px]'>
-            지금 서점 인기 도서👍🏻
-          </p>
-          <div className='flex justify-center sm:justify-between w-full overflow-scroll'>
-            {popularBook.map((book, index) => (
-              <div key={index}>
-                {loading ? (
-                  <BookCardSkeleton />
-                ) : (
-                  <MiniBookCard
-                    id={book.id}
-                    thumbnail={book.thumbnail}
-                    title={book.title}
-                    author={book.author}
-                  />
-                )}
-              </div>
-            ))}
+        <div
+          className='w-[95%] h-[16rem] font-bold relative pl-2 pt-0.5'
+          // style={{
+          //   boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+          // }}
+        >
+          <div className='flex flex-col w-full h-full justify-evenly '>
+            <p className='font-bold leading-9 mb-2 text-lg ml-3'>
+              지금 서점 인기 도서 👍🏻
+            </p>
+            <div className='flex justify-center sm:justify-between w-full'>
+              {popularBook.map((book, index) => (
+                <div key={index}>
+                  {loading ? (
+                    <BookCardSkeleton />
+                  ) : (
+                    <MiniBookCard
+                      id={book.id}
+                      thumbnail={book.thumbnail}
+                      title={book.title}
+                      author={book.author}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-
         </div>
+
+        <br />
+        <br />
 
         <div className='flex flex-col w-[95%] items-centers justify-center'>
           {/* 카테고리, 검색창 */}
