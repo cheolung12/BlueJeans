@@ -16,7 +16,7 @@ function App() {
     // footer가 필요없는 경로
     const noFooterPath = [];
     // 레이아웃 필요없는 전체화면 페이지
-    const fullScreenPagePath = ['/', '/login', '/signup', '/mypage', '/mp'];
+    const fullScreenPagePath = ['/', '/login', '/signup', '/mypage', '/mp', '/useredit'];
 
     const fullScreenDynamicUrl = location.pathname.startsWith('/ebook/detail/viewer');
     const noSideNavbarDynamicUrl = location.pathname.startsWith('/recruitment/edit');
