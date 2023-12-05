@@ -67,30 +67,61 @@ const ChatApp = () => {
   };
 
   return (
-    <div className='w-full flex lg:justify-end justify-center items-center lg:mr-16 mr-0'>
-      {/* content wrapper */}
-      <div className='xl:w-[950px] lg:w-3/4 w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
-        <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
-          <ChatBox
-            inputText={inputText}
-            chatMessages={chatMessages}
-            isLoading={isLoading}
-          />
+    <div className='flex flex-col pl-[196px] w-[94%]'>
+      <div
+        className='w-full h-72 relative rounded-3xl'
+        style={{
+          backgroundImage:
+            'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          // boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+        }}
+      >
+        <div
+          className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+        >
+          <div className='flex flex-col justify-start w-full pl-6 pt-6'>
+            <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown '>
+              심심이
+            </div>
+            <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+              채팅
+            </div>
+          </div>
         </div>
-        {/* input wrapper */}
-        <div className='flex justify-end lg:h-1/6 md:h-20 '>
-          <ChatInput
-            inputText={inputText}
-            setInputText={setInputText}
-            handleSendClick={handleSendClick}
-            inputRef={inputRef}
-            setEnterKeyPressed={setEnterKeyPressed}
-          />
-          <ChatButton
-            inputText={inputText}
-            handleSendClick={handleSendClick}
-            enterKeyPressed={enterKeyPressed}
-          />
+      </div>
+
+      <br />
+      <br />
+
+      <div className='w-full flex justify-center items-center'>
+        {/* content wrapper */}
+        <div className='xl:w-[950px] lg:w-3/4 w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
+          <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
+            <ChatBox
+              inputText={inputText}
+              chatMessages={chatMessages}
+              isLoading={isLoading}
+            />
+          </div>
+          {/* input wrapper */}
+          <div className='flex justify-end lg:h-1/6 md:h-20 '>
+            <ChatInput
+              inputText={inputText}
+              setInputText={setInputText}
+              handleSendClick={handleSendClick}
+              inputRef={inputRef}
+              setEnterKeyPressed={setEnterKeyPressed}
+            />
+            <ChatButton
+              inputText={inputText}
+              handleSendClick={handleSendClick}
+              enterKeyPressed={enterKeyPressed}
+            />
+          </div>
         </div>
       </div>
     </div>

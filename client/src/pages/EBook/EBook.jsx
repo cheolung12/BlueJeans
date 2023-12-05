@@ -96,7 +96,6 @@ export default function EBook() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            // boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
           }}
         >
           <div
