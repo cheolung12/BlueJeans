@@ -67,7 +67,7 @@ const ChatApp = () => {
   };
 
   return (
-    <div className='flex flex-col pl-[196px] w-[94%]'>
+    <div className='flex flex-col pl-0 lg:pl-[196px] w-[94%]'>
       <div
         className='w-full h-72 relative rounded-3xl'
         style={{
@@ -76,18 +76,17 @@ const ChatApp = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          // boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
         }}
       >
         <div
-          className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
+          className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
         >
-          <div className='flex flex-col justify-start w-full pl-6 pt-6'>
-            <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown '>
+          <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+            <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown '>
               심심이
             </div>
-            <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+            <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
               채팅
             </div>
           </div>
@@ -99,7 +98,7 @@ const ChatApp = () => {
 
       <div className='w-full flex justify-center items-center'>
         {/* content wrapper */}
-        <div className='xl:w-[950px] lg:w-3/4 w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
+        <div className='xl:w-[950px] lg:w-3/4 w-full 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
           <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
             <ChatBox
               inputText={inputText}

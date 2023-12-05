@@ -7,7 +7,7 @@ export default function FindHome() {
 
   return (
     <>
-      <div className='flex flex-col pl-[196px] w-[94%]'>
+      <div className='flex flex-col pl-0 lg:pl-[196px] w-[94%]'>
         <div
           className='w-full h-72 relative rounded-3xl'
           style={{
@@ -19,14 +19,14 @@ export default function FindHome() {
           }}
         >
           <div
-            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
+            className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
           >
-            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
-              <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown '>
+            <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+              <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown '>
                 집찾기
               </div>
-              <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+              <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
                 굿
               </div>
             </div>
@@ -35,8 +35,8 @@ export default function FindHome() {
 
         <br />
 
-        <div className=' w-full flex lg:justify-end justify-center lg:mr-10 mr-0'>
-          <div className='flex flex-col space-y-4 xl:w-[1000px] lg:w-3/4 w-2/3'>
+        <div className=' w-full flex justify-center'>
+          <div className='flex flex-col space-y-4 xl:w-[1000px] w-full'>
             <div className='flex justify-between w-full'>
               <AddressButton
                 setUserAddress={setUserAddress}

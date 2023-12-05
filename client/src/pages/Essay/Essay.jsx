@@ -129,7 +129,7 @@ export default function Essay() {
       <div className='w-full flex flex-col justify-center'>
         <div className='flex justify-center lg:justify-start'>
           <div
-            className='w-[79%] h-72 relative ml-0 lg:ml-[196px] sm:justify-center rounded-3xl'
+            className='w-[94%] sm:w-[79%] h-72 relative ml-0 lg:ml-[196px] sm:justify-center rounded-3xl'
             style={{
               backgroundImage:
                 'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/essay/KakaoTalk_Image_2023-12-05-16-50-29.jpeg")',
@@ -171,7 +171,7 @@ export default function Essay() {
                       placeholder='제목, 이름을 입력하세요.'
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}
-                      className='rounded-full w-80 h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-signatureColor'
+                      className='rounded-full w-[21rem] h-[2.7rem] border-gray-300 outline-none pl-3 text-base border-2 focus:border-signatureColor'
                     />
                     <button
                       disabled={searchInput.length === 0}
