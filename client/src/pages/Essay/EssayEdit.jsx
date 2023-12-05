@@ -96,7 +96,7 @@ export default function EssayEdit() {
               type='text'
               placeholder='제목을 입력하세요.'
               required
-              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-[#48599A] border-2'
+              className='w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-signatureColor border-2'
             />
           </div>
           <div className='w-full h-full flex flex-col justify-center'>
@@ -139,7 +139,7 @@ export default function EssayEdit() {
             </label>
             <textarea
               rows='7'
-              className='m-2 w-100 p-2 sm:text-base text-xs resize-none rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-[#48599A] border-2'
+              className='m-2 w-100 p-2 sm:text-base text-xs resize-none rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-signatureColor border-2'
               value={essayData.content}
               onChange={handleInputChange}
               name='content'
