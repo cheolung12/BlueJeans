@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Map from '../components/home/Map';
 import AddressButton from '../components/home/AddressButton';
 import Info from '../components/home/Info';
-
+import Main from '../components/main/MainLast.css';
 export default function FindHome() {
   const [userAddress, setUserAddress] = useState('');
 
@@ -13,9 +13,9 @@ export default function FindHome() {
           <div className='flex justify-between w-full'>
             <AddressButton
               setUserAddress={setUserAddress}
-              className='h-20 w-20 bg-red-600'
+              className='btn'
             ></AddressButton>
-            <Info className=' hidden md:block pb-7'></Info>
+            <Info></Info>
           </div>
           <Map userAddress={userAddress}></Map>
         </div>
