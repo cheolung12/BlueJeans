@@ -33,10 +33,7 @@ const ChatApp = () => {
     setInputText('');
 
     // 이전 대화 저장
-    const previousConversation =
-      chatMessages.length >= 4
-        ? chatMessages.slice(-4).map((message) => message.text)
-        : chatMessages.map((message) => message.text);
+    const previousConversation = chatMessages.map((message) => message.text);
 
     // 챗봇에게 응답 받아와서 추가
     try {
@@ -49,7 +46,7 @@ const ChatApp = () => {
           previousConversation,
         },
       });
-
+      console.log(response.data);
       const responseText = response.data.choices[0].text
         .replace(/\n/g, '')
         .replace('A: ', ''); // 형식 맞추기
@@ -62,7 +59,6 @@ const ChatApp = () => {
       console.log('전송 오류: ', error);
     } finally {
       setIsLoading(false);
-      console.log(previousConversation);
     }
   };
 
