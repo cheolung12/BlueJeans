@@ -36,8 +36,12 @@ public class MyPageController {
     @GetMapping("/api/mypage")
     @Operation(summary="유저 정보, 해당 유저가 찜한 게시물 불러오기")
     public ResMyPageDTO getUserInfo(@AuthenticationPrincipal UserEntity user) {
-
-        return myPageService.getUserInfo(user);
+        System.out.printf("/////////////////////////////////api/mypage////////////////////////////////////////");
+        ResMyPageDTO result = myPageService.getUserInfo(user);
+        System.out.printf("getuserId" +result.getUserId());
+        System.out.printf("path" + result.getImg_path());
+        System.out.printf("nickname" +result.getNickname());
+        return  result;
     }
 
 
@@ -64,11 +68,13 @@ public class MyPageController {
     @Operation(summary = "사용자 정보 수정")
     public boolean editUserimg(@RequestParam(name = "file", required = false) MultipartFile multipartFile, @ModelAttribute EditUserInfoDTO userdto, @AuthenticationPrincipal UserEntity user) {
         String fileURL = null;
-        try {
-            fileURL = s3Uploader.upload(multipartFile, "user");
-        } catch (IOException e) {
+        if(multipartFile != null) {
+            try {
+                fileURL = s3Uploader.upload(multipartFile, "user");
+            } catch (IOException e) {
 //                throw new RuntimeException(e);
-            fileURL = null;
+                fileURL = null;
+            }
         }
 
 
