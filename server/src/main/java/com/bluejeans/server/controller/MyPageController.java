@@ -64,11 +64,13 @@ public class MyPageController {
     @Operation(summary = "사용자 정보 수정")
     public boolean editUserimg(@RequestParam(name = "file", required = false) MultipartFile multipartFile, @ModelAttribute EditUserInfoDTO userdto, @AuthenticationPrincipal UserEntity user) {
         String fileURL = null;
-        try {
-            fileURL = s3Uploader.upload(multipartFile, "user");
-        } catch (IOException e) {
+        if(multipartFile != null) {
+            try {
+                fileURL = s3Uploader.upload(multipartFile, "user");
+            } catch (IOException e) {
 //                throw new RuntimeException(e);
-            fileURL = null;
+                fileURL = null;
+            }
         }
 
 
