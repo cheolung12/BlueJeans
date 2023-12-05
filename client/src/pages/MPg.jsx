@@ -26,8 +26,8 @@ export default function MP() {
 
     // 폼데이터 append용
     const [forEdit, setForEdit] = useState({
-        nickname: localStorage.getItem('nickname'),
-        address: localStorage.getItem('address'),
+        nickname: '', //localStorage.getItem('nickname'),
+        address: '', //localStorage.getItem('address'),
         password: '',
         pwCheck: '',
     });
@@ -65,10 +65,10 @@ export default function MP() {
                 });
                 setBfFile(img_path);
                 setFile(img_path);
-                // setForEdit({
-                //     nickname,
-                //     address,
-                // });
+                setForEdit({
+                    nickname: localStorage.getItem('nickname'),
+                    address,
+                });
             } catch (error) {
                 console.log('fetch error', error);
             }
@@ -215,14 +215,18 @@ export default function MP() {
 
         const editUsefData = new FormData();
         if (afFile === undefined) {
-            console.log('없어');
+            console.log('사진 없어');
         } else {
             editUsefData.append('file', file);
         }
-        // editUsefData.append('file', file);
         editUsefData.append('nickname', forEdit.nickname);
         editUsefData.append('address', forEdit.address);
         editUsefData.append('password', forEdit.password);
+        // if (forEdit.password === undefined || forEdit.password === '') {
+        //     console.log('비번 없어');
+        // } else {
+        //     editUsefData.append('password', forEdit.password);
+        // }
 
         console.log(afFile);
 
@@ -236,9 +240,12 @@ export default function MP() {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(response.data);
+            console.log('수정 여부', response.data);
+            localStorage.setItem('nickname', forEdit.nickname);
             alert('회원 정보 수정이 완료되었습니다.');
+            // setBfFile(response.data.)
             //네이비게이션 말고 리로드
+            // window.location.reload();
         } catch (error) {
             console.error(error);
             alert('※ 회원 정보 수정에 실패했습니다.');
@@ -279,7 +286,7 @@ export default function MP() {
                                     alt="회원 프로필 이미지"
                                 />
                             </div>
-                            <div>{localStorage.getItem('nickname')} 님</div>
+                            <div>{userInfo.nickname} 님</div>
                         </div>
                         <div className="w-full flex  flex-col lg:items-end items-center my-12 lg:space-y-4 space-y-2">
                             {myHome ? (
