@@ -4,17 +4,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 //////아이콘들//////
 import { IoMdBriefcase } from 'react-icons/io';
-import { FaEyeSlash, FaRegThumbsUp } from 'react-icons/fa';
-import { FaDAndD, FaLocationDot } from 'react-icons/fa6';
+import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
-import { BiCommentDetail } from 'react-icons/bi';
 import { FaCrown } from 'react-icons/fa6';
 import { PiCurrencyKrwFill } from 'react-icons/pi';
 
 ///////////////
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
-import { useMediaQuery } from 'react-responsive';
 
 import lastMain from '../components/main/mainImg/lastMain.jpeg';
 /////////////////컴포넌트 import///////////////
@@ -43,7 +41,7 @@ export default function Main() {
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
     />
-  </head>
+  </head>;
 
   const [mainData, setMainData] = useState([]);
 
@@ -154,27 +152,31 @@ export default function Main() {
           </div>
         </div>
         {/* 1 */}
-        <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center md:flex-row md:justify-center'>
-          <div className='w-full md:w-1/3 relative flex items-center justify-center mb-8 md:mb-0'>
+        <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center lg:flex-row lg:justify-center'>
+          <div className='w-full relative flex items-center justify-center'>
             <div className='text-center mt-3'>
-              <div className='text-4xl pb-10 font-bold'>오늘의 추천도서</div>
-              <div className='md:text-lx'>
-                <div className='text-2xl font-[SUIT-Regular]'>
+              <div className='sm:text-4xl text-3xl pb-7 pt-4 font-bold '>
+                오늘의 추천도서
+              </div>
+              <div>
+                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
                   1970년대의 감성부터 현대까지
                 </div>
-                <div className='text-2xl font-[SUIT-Regular]'>
+                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
                   지금 봐도 세련된 문장으로 감동을 주는
                 </div>
-                <div className=' text-2xl'>작품을 만나 보세요</div>
+                <div className='text-xl sm:text-2xl mb-5'>
+                  작품을 만나 보세요!
+                </div>
               </div>
             </div>
           </div>
 
           <Swiper
-            className=' md:w-[55rem] w-80 h-[28rem]'
-            slidesPerView={3}
+            className='w-[19rem] h-[28rem] lg:w-[83rem] xl:w-[130rem]'
+            slidesPerView={1}
             loop={true}
-            centeredSlides={true} //중앙설정
+            centeredSlides={false} //중앙설정
             autoplay={{
               delay: 2500,
               disableOnInteraction: false,
@@ -183,17 +185,18 @@ export default function Main() {
               clickable: true,
             }}
             breakpoints={{
-              '@0.3': {
+              376: {
                 slidesPerView: 1,
                 spaceBetween: 10, //여백
               },
-              '@.90': {
+              1024: {
                 slidesPerView: 2,
-                spaceBetween: 30,
-              },
-              '@1.50': {
-                slidesPerView: 3,
                 spaceBetween: 10,
+              },
+
+              1280: {
+                slidesPerView: 3,
+                spaceBetween: 20,
               },
             }}
             spaceBetween={10}
@@ -209,7 +212,7 @@ export default function Main() {
                     <img
                       src={book.thumbnail}
                       alt={book.title}
-                      className='h-[25rem] w-full p-5 md:p-0'
+                      className='h-[25rem] w-80 p-5 md:p-0'
                     />
                   </div>
                 </Link>
@@ -220,23 +223,27 @@ export default function Main() {
         {/* 2 */}
         {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
         {/* className={`fade-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} */}
-        <div className='bg-[#5495B1] w-full h-20'>
+        <div className='bg-[#5495B1] w-full h-full'>
           <div className='h-full w-full text-center justify-center items-center pt-10'>
             {/* <div className='text-center mt-3'> */}
-            <div className='text-4xl pb-5 font-bold text-white'>
-              오늘의 문학왕
-            </div>
-            <div className='md:text-lx'>
-              <div className='text-2xl font-[SUIT-Regular] text-white'>
-                오늘의 문학왕은 누구일까요? 당신의 작품을 올리고 문학왕에
-                도전하세요!
+            <div className='flex flex-col'>
+              <div className='sm:text-4xl text-3xl pb-5 font-bold text-white'>
+                오늘의 문학왕
               </div>
-              {/* </div> */}
+              <div className=''>
+                <div className='w-full text-xl sm:text-2xl font-[SUIT-Regular] text-white'>
+                  오늘의 문학왕은 누구일까요?
+                </div>
+                <div className='w-full text-xl sm:text-2xl font-[SUIT-Regular] text-white'>
+                  당신의 작품을 올리고 문학왕에 도전하세요!
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className='bg-[#5495B1] h-[35rem] w-full flex'>
-          <div className='flex h-full w-full items-center pl-4 pr-4 justify-start '>
+
+        <div className='bg-[#5495B1] h-[35rem] w-full flex justify-evenly max-[1200px]:justify-center'>
+          <div className='flex h-full w-[70%] max-[800px]:justify-center max-[1200px]:justify-between items-center pl-4 pr-4 justify-between'>
             {isVisible && essay0 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
@@ -248,7 +255,7 @@ export default function Main() {
                     animationDuration: 'var(--animate-duration)',
                     animationDelay: 'var(--animate-delay)',
                   }}
-                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-20 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md'
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white shadow-2xl-black relative flex justify-center text-center rounded-md'
                 >
                   <div className='self-center'>
                     <div className='h-10 w-full'>
@@ -263,11 +270,11 @@ export default function Main() {
                         />
                       </div>
                     </div>
-                    <div className='p-2 text-lg'>{essay0.nickname}</div>
-                    <div className='p-2 text-2xl'>{essay0.title}</div>
+                    <div className='p-2 text-lg'>이름 : {essay0.nickname}</div>
+                    <div className='p-2 text-2xl'>제목 : {essay0.title}</div>
                     <div className='flex pb-0 justify-center text-xl'>
                       <FaRegThumbsUp className=' self-center' />
-                      <div>{essay0.like}</div>
+                      <div className='pl-2'>{essay0.like}</div>
                     </div>
                   </div>
                 </div>
@@ -281,7 +288,7 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white shadow-2xl-black relative flex justify-center text-center rounded-md max-[800px]:hidden '
                 >
                   <div className='self-center pt-10'>
                     <div className='flex justify-center'>
@@ -294,11 +301,11 @@ export default function Main() {
                         />
                       </div>
                     </div>
-                    <div className='p-2 text-lg'>{essay1.nickname}</div>
-                    <div className='p-2 text-2xl'>{essay1.title}</div>
+                    <div className='p-2 text-lg'>이름 : {essay1.nickname}</div>
+                    <div className='p-2 text-2xl'>제목 : {essay1.title}</div>
                     <div className='flex pb-0 justify-center text-xl'>
                       <FaRegThumbsUp className=' self-center' />
-                      <div>{essay1.like}</div>
+                      <div className='pl-2'>{essay1.like}</div>
                     </div>
                   </div>
                 </div>
@@ -312,7 +319,7 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white shadow-2xl-black relative flex justify-center text-center rounded-md  max-[1200px]:hidden'
                 >
                   <div className='self-center mt-10'>
                     <div className='flex justify-center'>
@@ -325,11 +332,11 @@ export default function Main() {
                         />
                       </div>
                     </div>
-                    <div className='p-2 text-lg'>{essay2.nickname}</div>
-                    <div className='p-2 text-2xl'>{essay2.title}</div>
+                    <div className='p-2 text-lg'>이름 : {essay2.nickname}</div>
+                    <div className='p-2 text-2xl'>제목 : {essay2.title}</div>
                     <div className='flex pb-0 justify-center text-xl'>
                       <FaRegThumbsUp className=' self-center' />
-                      <div>{essay2.like}</div>
+                      <div className='pl-2'>{essay2.like}</div>
                     </div>
                   </div>
                   {/* </Link> */}
@@ -339,7 +346,7 @@ export default function Main() {
           </div>
 
           {/* 2-2  900부터*/}
-          <div className='h-full  pr-4 hidden lg:block'>
+          <div className='h-full pr-4 hidden xl:block'>
             <Calligraphy className='w-[50rem] h-[30rem]' />
           </div>
         </div>

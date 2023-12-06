@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { PiPlusLight } from 'react-icons/pi';
 import { PiMinusThin } from 'react-icons/pi';
@@ -24,13 +23,12 @@ export default function BookViewer({ content }) {
       return resultArray;
     }
 
-    const chunkSize = 100;
+    const chunkSize = 500;
 
     const result = splitTextIntoArray(content, chunkSize);
-    setBookContent(result);
+    setBookContent((prevBookContent) => [...prevBookContent, ...result]);
     console.log('res', result);
-    console.log('배열', bookContent);
-  }, []);
+  }, [content]);
 
   //이전 페이지 버튼
   const preHandler = () => {
@@ -79,20 +77,19 @@ export default function BookViewer({ content }) {
             </Link>
           </div>
           <div className='flex'>
-            <div
+            <button
               className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
               onClick={handleZoonIn}
             >
               <FaPlus className='text-xl text-white' />
-              {/* <PiPlusLight className='text-2xl text-white' /> */}
-            </div>
-            <div
+            </button>
+
+            <button
               className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
               onClick={handleZoonOut}
             >
               <FaMinus className='text-xl text-white' />
-              {/* <PiMinusThin className='text-2xl text-white' /> */}
-            </div>
+            </button>
           </div>
         </div>
       </div>
