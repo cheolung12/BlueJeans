@@ -48,6 +48,17 @@ export default function ExplainSection({ loading, data }) {
     const middleNumbers = (phoneNumbers || '').slice(3, 7);
     const endNumbers = (phoneNumbers || '').slice(7);
 
+    // 내용 개행 처리
+    const contentLine = (text) => {
+        const lines = (text || '').split('\n');
+        return lines.map((line, index) => (
+            <div key={index}>
+                {line}
+                <br />
+            </div>
+        ));
+    };
+
     console.log('좋아요수', data.like);
 
     return (
@@ -100,7 +111,7 @@ export default function ExplainSection({ loading, data }) {
                 <div className="text-xl font-semibold">직무 상세 설명</div>
                 <div className="sm:text-lg text-base">
                     {/*내용설명-*/}
-                    {data.content}
+                    {contentLine(data.content)}
                 </div>
             </div>
         </div>
