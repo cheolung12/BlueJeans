@@ -4,7 +4,7 @@ import { PuffLoader } from 'react-spinners';
 
 const Sktelecom = () => {
   return (
-    <div className=' animate-pulse flex items-center justify-center bg-slate-200 w-[20rem] h-[25rem] md:w-[40rem] lg:w-[45rem] xl:w-[53.125rem] lg:h-[30rem]  pt-7 rounded'>
+    <div className=' animate-pulse flex items-center justify-center bg-slate-200  md:w-[40rem] lg:w-[53rem] xl:w-[53.125rem]   pt-7 rounded  w-full h-[25rem] lg:h-[30rem] drop-shadow-md'>
       <PuffLoader
         height='80'
         width='80'

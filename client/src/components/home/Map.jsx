@@ -6,15 +6,16 @@ function Map({ userAddress }) {
   const mapContainerRef = useRef();
   const mapInstanceRef = useRef(null);
   const markersRef = useRef([]);
-  let resultdrawArr = [];
+  let resultDrawArr = [];
 
   const [endMarkerPosition, setEndMarkerPosition] = useState(null);
   const [currentMarkerPosition, setCurrentMarkerPosition] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mapVisible, setMapVisible] = useState(false);
   const [showSktelecom, setShowSkelecom] = useState(false);
-
+  const [routeLine, setRouteLine] = useState();
   const [arrPoint, setArrPoint] = useState([]);
+
   const imgUrlS =
     'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
 
@@ -50,10 +51,12 @@ function Map({ userAddress }) {
     handleGeoLocation();
   }, []);
 
+  //////////////////////////////////////////
   useEffect(() => {
     if (userAddress) {
       setLoading(true);
       reAddress(userAddress);
+      drawWalkingRoute();
     }
   }, [userAddress]);
 
@@ -86,6 +89,7 @@ function Map({ userAddress }) {
     setCurrentMarkerPosition(nowPosition);
   };
 
+  //주소를 좌표로 변환해주는 함수
   const reAddress = async (endpoint) => {
     try {
       const apiUrl = `https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&callback=result&coordType=WGS84GEO&fullAddr=${endpoint}&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
@@ -96,6 +100,8 @@ function Map({ userAddress }) {
       }
 
       const data = await response.json();
+
+      //좌표로 변경된 집주소 데이터
       const resultCoordinate = data.coordinateInfo.coordinate[0];
 
       let startLatitude, startLongitude;
@@ -109,10 +115,12 @@ function Map({ userAddress }) {
           startLatitude = resultCoordinate.newLat;
         }
 
+        //집주소 마커 스테이트
         setEndMarkerPosition({
           latitude: startLatitude,
           longitude: startLongitude,
         });
+
         console.log('start', { startLatitude, startLongitude });
         const house = { startLatitude, startLongitude };
         console.log('house', house);
@@ -154,7 +162,6 @@ function Map({ userAddress }) {
           //drawLine 함수만 다시 정의해서 LindCoordinates 넣기
           // drawLine(lineCoordinates);
           //ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅜㅠㅜㅠㅜㅠㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ
-          drawWalkingRoute(currentMarkerPosition, endMarkerPosition);
 
           centerMap(currentMarkerPosition, {
             latitude: startLatitude,
@@ -191,43 +198,7 @@ function Map({ userAddress }) {
     }
   };
 
-  const headers = {
-    appKey: process.env.REACT_APP_T_MAP_API_KEY,
-  };
-  const drawLine = (resultData) => {
-    if (resultData.features) {
-      //forEach돌면서 poly연결
-      resultData.features.forEach((feature) => {
-        if (feature.geometry.type === 'LineString') {
-          console.log('LineString 좌표:', feature.geometry.coordinates);
-
-          const coordinates = feature.geometry.coordinates.map((coord) => {
-            const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
-            const convertPoint =
-              new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-            const convertChange = new window.Tmapv2.LatLng(
-              convertPoint._lat,
-              convertPoint._lng
-            );
-            return convertChange;
-          });
-
-          const polyline = new window.Tmapv2.Polyline({
-            path: arrPoint,
-            strokeColor: '#DD0000',
-            strokeWeight: 6,
-            map: mapInstanceRef.current,
-          });
-
-          resultdrawArr.push(polyline);
-          drawLine(resultdrawArr);
-        }
-      });
-    }
-
-    // You might return something here if needed
-  };
-
+  //길 그리기
   const drawWalkingRoute = async () => {
     console.log(endMarkerPosition);
     const requestData = {
@@ -238,50 +209,71 @@ function Map({ userAddress }) {
       startName: '출발지',
       endName: '도착',
     };
-    console.log(requestData);
-    try {
-      const apiUrl = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json`;
 
+    const apiUrl = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
+
+    try {
       const response = await axios({
         method: 'POST',
         url: apiUrl,
         data: requestData,
         headers: {
           'Content-Type': 'application/json',
-          appKey: process.env.REACT_APP_T_MAP_API_KEY,
         },
       });
-      const resultData = response.data;
-      console.log('경로 좌표들', resultData);
 
-      const polyline = drawLine(resultData);
+      console.log('API 응답:', response);
+
+      const resultData = response.data;
+      console.log('경로 좌표들!!!', resultData);
+
+      drawLine(resultData);
     } catch (error) {
       console.error('에러:', error);
     }
   };
 
-  // const drawLine = (resultData) => {
-  //   let drawInfoArr = [];
-  //   if (resultData.features) {
-  //     resultData.features.forEach((feature) => {
-  //       if (feature.geometry.type === 'LineString') {
-  //         console.log('LineString 좌표:', feature.geometry.coordinates);
+  const drawLine = (resultData) => {
+    //경로를 담을 배열
+    let drawInfoArr = [];
 
-  //         feature.geometry.coordinates.forEach((coord) => {
-  //           const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
-  //           const convertPoint =
-  //             new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-  //           const convertChange = new window.Tmapv2.LatLng(
-  //             convertPoint._lat,
-  //             convertPoint._lng
-  //           );
-  //           drawInfoArr.push(convertChange);
-  //         });
-  //       }
-  //     });
-  //     drawLine(drawInfoArr);
-  //   }
+    if (resultData.features) {
+      resultData.features.forEach((feature) => {
+        if (feature.geometry.type === 'LineString') {
+          console.log('LineString 좌표:', feature.geometry.coordinates);
 
+          feature.geometry.coordinates.forEach((coord) => {
+            // console.log('coooooooood', coord);
+            const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
+            const convertPoint =
+              new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+            //console.log('convertPoint', convertPoint);
+            const convertChange = new window.Tmapv2.LatLng(
+              convertPoint._lat,
+              convertPoint._lng
+            );
+
+            drawInfoArr.push(convertChange);
+            // drawPolyline(convertChange);
+          });
+        }
+      });
+      console.log('drawInfoArr', drawInfoArr);
+      drawPolyline(drawInfoArr);
+    }
+  };
+
+  const drawPolyline = (coordinates) => {
+    console.log('그려줘...제발...ㅠ');
+    console.log('배열이다', coordinates);
+    let polyline = new window.Tmapv2.Polyline({
+      path: coordinates,
+      strokeColor: '#FF0000',
+      strokeWeight: 7,
+      map: mapInstanceRef.current,
+    });
+    setRouteLine(polyline);
+  };
   return (
     <div className='w-full'>
       {loading && (
