@@ -175,6 +175,7 @@ function Map({ userAddress }) {
     }
   };
 
+  //좌표 중간 다시 찍어서 보여주기
   const centerMap = (position1, position2) => {
     if (mapInstanceRef.current && position1 && position2) {
       const bounds = new window.Tmapv2.LatLngBounds();
@@ -190,69 +191,42 @@ function Map({ userAddress }) {
     }
   };
 
-  const drawLine = async (resultData) => {
-    let drawInfoArr = [];
+  const headers = {
+    appKey: process.env.REACT_APP_T_MAP_API_KEY,
+  };
+  const drawLine = (resultData) => {
+    if (resultData.features) {
+      //forEach돌면서 poly연결
+      resultData.features.forEach((feature) => {
+        if (feature.geometry.type === 'LineString') {
+          console.log('LineString 좌표:', feature.geometry.coordinates);
 
-    for (const feature of resultData.features) {
-      console.log(feature.geometry.type);
-      if (feature.geometry.type === 'LineString') {
-        // 좌표에 다 있음 배열안에 배열
-        console.log('LineString 좌표:', feature.geometry.coordinates);
+          const coordinates = feature.geometry.coordinates.map((coord) => {
+            const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
+            const convertPoint =
+              new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+            const convertChange = new window.Tmapv2.LatLng(
+              convertPoint._lat,
+              convertPoint._lng
+            );
+            return convertChange;
+          });
 
-        for (const coord of feature.geometry.coordinates) {
-          const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
-          const convertPoint =
-            new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-          const convertChange = new window.Tmapv2.LatLng(
-            convertPoint._lat,
-            convertPoint._lng
-          );
-          drawInfoArr.push(convertChange);
+          const polyline = new window.Tmapv2.Polyline({
+            path: arrPoint,
+            strokeColor: '#DD0000',
+            strokeWeight: 6,
+            map: mapInstanceRef.current,
+          });
+
+          resultdrawArr.push(polyline);
+          drawLine(resultdrawArr);
         }
-      }
+      });
     }
 
-    // console.log('tqtqtqtqt', drawInfoArr);
-    // new window.Tmapv2.Polyline({
-    //   path: arr,
-    //   strokeColor: '#DD0000',
-    //   strokeWeight: 6,
-    //   map: mapInstanceRef.current,
-    // });
+    // You might return something here if needed
   };
-
-  // const forfunc = (x) => {
-  //   let drawInfoArr = [];
-  //   for (const feature of x) {
-  //     console.log(feature.geometry.type);
-  //     if (feature.geometry.type === 'LineString') {
-  //       // 좌표에 다 있음 배열안에 배열
-  //       console.log('LineString 좌표:', feature.geometry.coordinates);
-
-  //       for (const coord of feature.geometry.coordinates) {
-  //         const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
-  //         const convertPoint =
-  //           new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-  //         const convertChange = new window.Tmapv2.LatLng(
-  //           convertPoint._lat,
-  //           convertPoint._lng
-  //         );
-  //         drawInfoArr.push(convertChange);
-  //       }
-  //     }
-  //   }
-
-  //   return drawInfoArr;
-  // };
-
-  // const poly = (arr) => {
-  //   new window.Tmapv2.Polyline({
-  //     path: arr,
-  //     strokeColor: '#DD0000',
-  //     strokeWeight: 6,
-  //     map: mapInstanceRef.current,
-  //   });
-  // };
 
   const drawWalkingRoute = async () => {
     console.log(endMarkerPosition);
@@ -264,13 +238,9 @@ function Map({ userAddress }) {
       startName: '출발지',
       endName: '도착',
     };
-    const headers = {
-      appKey: process.env.REACT_APP_T_MAP_API_KEY,
-    };
-
     console.log(requestData);
     try {
-      const apiUrl = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result`;
+      const apiUrl = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json`;
 
       const response = await axios({
         method: 'POST',
@@ -282,9 +252,9 @@ function Map({ userAddress }) {
         },
       });
       const resultData = response.data;
-      drawLine(resultData);
-
       console.log('경로 좌표들', resultData);
+
+      const polyline = drawLine(resultData);
     } catch (error) {
       console.error('에러:', error);
     }
@@ -316,7 +286,7 @@ function Map({ userAddress }) {
     <div className='w-full'>
       {loading && (
         <div className='text-red'>
-          <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md -z-10' />
+          <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md' />
         </div>
       )}
       <div

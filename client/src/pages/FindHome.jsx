@@ -3,6 +3,7 @@ import Map from '../components/home/Map';
 import AddressButton from '../components/home/AddressButton';
 import Info from '../components/home/Info';
 import Main from '../components/main/MainLast.css';
+import HowToUse from '../components/home/HowToUse';
 export default function FindHome() {
   const [userAddress, setUserAddress] = useState('');
 
@@ -15,9 +16,10 @@ export default function FindHome() {
               setUserAddress={setUserAddress}
               className='btn'
             ></AddressButton>
-            <Info></Info>
           </div>
+
           <Map userAddress={userAddress}></Map>
+          <HowToUse />
         </div>
       </div>
     </>
