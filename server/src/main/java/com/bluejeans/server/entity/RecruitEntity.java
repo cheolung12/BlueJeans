@@ -3,6 +3,7 @@ package com.bluejeans.server.entity;
 import com.bluejeans.server.dto.RecruitDTO;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -31,8 +32,8 @@ public class RecruitEntity {
     @Column(nullable = true, length = 1000)
     private String content;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean recruiting;
+    @Column
+    private boolean recruiting = true;
 
     @Column
     private String moneyStandard;

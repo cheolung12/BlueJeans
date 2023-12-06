@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function TopNavbar() {
+    const navigate = useNavigate();
+
     const handleLogout = async () => {
         const res = await axios({
             method: 'GET',
@@ -10,10 +13,8 @@ export default function TopNavbar() {
             withCredentials: true,
         });
         if (res.data === 'redirect:/login') {
-            console.log('login');
             localStorage.clear();
-
-            window.location.reload();
+            navigate('/');
         } else {
             console.log('로그아웃 실패!');
         }
