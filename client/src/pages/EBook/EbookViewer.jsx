@@ -35,10 +35,12 @@ export default function EBookViewer() {
 
   return (
     <div>
-      <div className='flex justify-end m-3 min-w-[375px]:w-full'>
-        <ExitButton />
-      </div>
+      <div className='flex justify-end m-3 min-w-[375px]:w-full'></div>
       <BookTitle title={bookData.title} />
+      {/* <div>
+        <ExitButton />
+      </div> */}
+
       <BookViewer bookId={bookData.book_id} content={bookData.content} />
     </div>
   );
