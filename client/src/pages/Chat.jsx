@@ -33,10 +33,7 @@ const ChatApp = () => {
     setInputText('');
 
     // 이전 대화 저장
-    const previousConversation =
-      chatMessages.length >= 4
-        ? chatMessages.slice(-4).map((message) => message.text)
-        : chatMessages.map((message) => message.text);
+    const previousConversation = chatMessages.map((message) => message.text);
 
     // 챗봇에게 응답 받아와서 추가
     try {
@@ -49,7 +46,7 @@ const ChatApp = () => {
           previousConversation,
         },
       });
-
+      console.log(response.data);
       const responseText = response.data.choices[0].text
         .replace(/\n/g, '')
         .replace('A: ', ''); // 형식 맞추기
@@ -62,35 +59,64 @@ const ChatApp = () => {
       console.log('전송 오류: ', error);
     } finally {
       setIsLoading(false);
-      console.log(previousConversation);
     }
   };
 
   return (
-    <div className='w-full flex lg:justify-end justify-center items-center lg:mr-16 mr-0'>
-      {/* content wrapper */}
-      <div className='xl:w-[950px] lg:w-3/4 w-2/3 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
-        <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
-          <ChatBox
-            inputText={inputText}
-            chatMessages={chatMessages}
-            isLoading={isLoading}
-          />
+    <div className='flex flex-col pl-0 lg:pl-[196px] w-[94%]'>
+      <div
+        className='w-full h-72 relative rounded-3xl'
+        style={{
+          backgroundImage:
+            'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div
+          className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+        >
+          <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+            <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown '>
+              심심이
+            </div>
+            <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
+              채팅
+            </div>
+          </div>
         </div>
-        {/* input wrapper */}
-        <div className='flex justify-end lg:h-1/6 md:h-20 '>
-          <ChatInput
-            inputText={inputText}
-            setInputText={setInputText}
-            handleSendClick={handleSendClick}
-            inputRef={inputRef}
-            setEnterKeyPressed={setEnterKeyPressed}
-          />
-          <ChatButton
-            inputText={inputText}
-            handleSendClick={handleSendClick}
-            enterKeyPressed={enterKeyPressed}
-          />
+      </div>
+
+      <br />
+      <br />
+
+      <div className='w-full flex justify-center items-center'>
+        {/* content wrapper */}
+        <div className='xl:w-[950px] lg:w-3/4 w-full 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between'>
+          <div className='h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md'>
+            <ChatBox
+              inputText={inputText}
+              chatMessages={chatMessages}
+              isLoading={isLoading}
+            />
+          </div>
+          {/* input wrapper */}
+          <div className='flex justify-end lg:h-1/6 md:h-20 '>
+            <ChatInput
+              inputText={inputText}
+              setInputText={setInputText}
+              handleSendClick={handleSendClick}
+              inputRef={inputRef}
+              setEnterKeyPressed={setEnterKeyPressed}
+            />
+            <ChatButton
+              inputText={inputText}
+              handleSendClick={handleSendClick}
+              enterKeyPressed={enterKeyPressed}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -36,7 +36,6 @@ public class MyPageController {
     @GetMapping("/api/mypage")
     @Operation(summary="유저 정보, 해당 유저가 찜한 게시물 불러오기")
     public ResMyPageDTO getUserInfo(@AuthenticationPrincipal UserEntity user) {
-        System.out.printf("/////////////////////////////////api/mypage////////////////////////////////////////");
         ResMyPageDTO result = myPageService.getUserInfo(user);
         System.out.printf("getuserId" +result.getUserId());
         System.out.printf("path" + result.getImg_path());
