@@ -10,8 +10,6 @@ export default function RecruitmentDetail() {
     const navigate = useNavigate();
     const { jobId } = useParams();
 
-    console.log('잡아이디', jobId);
-
     const [loading, setLoading] = useState(true);
     const [works, setWorks] = useState([]);
     const [isCloseR, setIsCloseR] = useState();
@@ -21,6 +19,10 @@ export default function RecruitmentDetail() {
     // 상세 페이지 조회
     useEffect(() => {
         const fetchdata = async () => {
+            if(!localStorage.getItem('isLogin')){
+                alert("로그인이 필요합니다.")
+                navigate('/login');
+            }
             try {
                 const response = await axios({
                     method: 'GET',
@@ -103,7 +105,7 @@ export default function RecruitmentDetail() {
 
     return (
         <>
-            <div className="w-full flex justify-center">
+            <div className="max-w-4xl w-full flex justify-center">
                 <section className=" block">
                     <section className="flex flex-col justify-center">
                         <div className="w-full">

@@ -9,6 +9,7 @@ import { FaDAndD, FaLocationDot } from 'react-icons/fa6';
 import { FaPhone } from 'react-icons/fa6';
 import { BiCommentDetail } from 'react-icons/bi';
 import { FaCrown } from 'react-icons/fa6';
+import { PiCurrencyKrwFill } from 'react-icons/pi';
 
 ///////////////
 import 'swiper/css';
@@ -42,7 +43,7 @@ export default function Main() {
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
     />
-  </head>;
+  </head>
 
   const [mainData, setMainData] = useState([]);
 
@@ -54,7 +55,7 @@ export default function Main() {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollY >= 1100) {
+      if (scrollY >= 800) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -71,7 +72,7 @@ export default function Main() {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollY >= 1200) {
+      if (scrollY >= 900) {
         setIsVisible1(true);
       } else {
         setIsVisible1(false);
@@ -88,7 +89,7 @@ export default function Main() {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollY >= 1300) {
+      if (scrollY >= 1000) {
         setIsVisible2(true);
       } else {
         setIsVisible2(false);
@@ -220,12 +221,22 @@ export default function Main() {
         {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
         {/* className={`fade-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} */}
         <div className='bg-[#5495B1] w-full h-20'>
-          <div className='h-full w-full text-center justify-center items-center'>
-            이달의 문학왕
+          <div className='h-full w-full text-center justify-center items-center pt-10'>
+            {/* <div className='text-center mt-3'> */}
+            <div className='text-4xl pb-5 font-bold text-white'>
+              오늘의 문학왕
+            </div>
+            <div className='md:text-lx'>
+              <div className='text-2xl font-[SUIT-Regular] text-white'>
+                오늘의 문학왕은 누구일까요? 당신의 작품을 올리고 문학왕에
+                도전하세요!
+              </div>
+              {/* </div> */}
+            </div>
           </div>
         </div>
         <div className='bg-[#5495B1] h-[35rem] w-full flex'>
-          <div className='flex h-full w-full items-center pl-4 pr-4 justify-start'>
+          <div className='flex h-full w-full items-center pl-4 pr-4 justify-start '>
             {isVisible && essay0 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
@@ -237,7 +248,7 @@ export default function Main() {
                     animationDuration: 'var(--animate-duration)',
                     animationDelay: 'var(--animate-delay)',
                   }}
-                  className=' w-60 h-96 bg-white ml-20 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md'
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-20 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md'
                 >
                   <div className='self-center'>
                     <div className='h-10 w-full'>
@@ -270,7 +281,7 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
                 >
                   <div className='self-center pt-10'>
                     <div className='flex justify-center'>
@@ -301,7 +312,7 @@ export default function Main() {
                     WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                     MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
+                  className='animate__animated animate__fadeIn w-60 h-96 bg-white ml-40 shadow-2xl-black relative flex justify-center text-center pt-10 rounded-md '
                 >
                   <div className='self-center mt-10'>
                     <div className='flex justify-center'>
@@ -337,7 +348,7 @@ export default function Main() {
         <div className=' flex flex-col w-full bg-[#F28080] md:h-[30rem]'>
           <div className='flex justify-between'>
             <p className='text-4xl font-semibold p-6 md:p-9 items-start text-white '>
-              놀면 뭐하니!?
+              채용 정보
             </p>
             <div className='self-end text-slate-500 hover:underline '>
               <Link to='/recruitment' className='self-end pr-8 text-lg '>
@@ -358,7 +369,7 @@ export default function Main() {
                   }}
                   className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-2xl text-lg'
                 >
-                  <div className='animate-bounce pb-2 text-red-500 font-semibold'>
+                  <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold'>
                     NEW
                   </div>
                   <div className='pl-5 pt-2'>
@@ -374,14 +385,17 @@ export default function Main() {
                       <FaPhone className='self-center mr-2' />
                       <span>{recruit0.contact}</span>
                     </div>
-                    <div className='mb-4 flex items-center'>
+                    {/* <div className='mb-4 flex items-center'>
                       <BiCommentDetail className='self-center mr-2' />
                       <span>{recruit0.content}</span>
-                    </div>
+                    </div> */}
                   </div>
                   <div className='flex justify-end'>
-                    <div className='p-2'>{recruit0.moneyStandard}</div>
-                    <div className='p-2'>{recruit0.money}</div>
+                    <PiCurrencyKrwFill className='self-center mr-2' />
+                    <span className='p-2'>
+                      {recruit0.moneyStandard} {recruit0.money}
+                    </span>
+                    {/* <span className='p-2'>{recruit0.money}</span> */}
                   </div>
                 </div>
               )}
@@ -395,7 +409,7 @@ export default function Main() {
                   }}
                   className=' bg-white rounded-2xl h-72 lg:w-1/3 w-1/2 m-4 p-5 shadow-2xl text-lg'
                 >
-                  <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                  <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold sh'>
                     NEW
                   </div>
                   <div className='pl-5 pt-2'>
@@ -411,14 +425,17 @@ export default function Main() {
                       <FaPhone className='self-center mr-2' />
                       <span>{recruit1.contact}</span>
                     </div>
-                    <div className='mb-4 flex items-center'>
+                    {/* <div className='mb-4 flex items-center'>
                       <BiCommentDetail className='self-center mr-2' />
                       <span>{recruit1.content}</span>
-                    </div>
+                    </div> */}
                   </div>
                   <div className='flex justify-end'>
-                    <div className='p-2'>{recruit1.moneyStandard}</div>
-                    <div className='p-2'>{recruit1.money}</div>
+                    <PiCurrencyKrwFill className='self-center mr-2' />
+                    <span className='p-2'>
+                      {recruit0.moneyStandard} {recruit1.money}
+                    </span>
+                    {/* <span className='p-2'>{recruit1.money}</span> */}
                   </div>
                 </div>
               )}
@@ -431,7 +448,7 @@ export default function Main() {
                   }}
                   className='bg-white rounded-2xl h-72 w-1/3 m-4 p-5 hidden lg:block shadow-2xl text-lg'
                 >
-                  <div className='animate-bounce pb-2 text-red-500 font-semibold'>
+                  <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold'>
                     NEW
                   </div>
                   <div className='pl-5 pt-2'>
@@ -447,14 +464,17 @@ export default function Main() {
                       <FaPhone className='self-center mr-2' />
                       <span>{recruit2.contact}</span>
                     </div>
-                    <div className='mb-4 flex items-center'>
+                    {/* <div className='mb-4 flex items-center'>
                       <BiCommentDetail className='self-center mr-2' />
                       <span>{recruit2.content}</span>
-                    </div>
+                    </div> */}
                   </div>
                   <div className='flex justify-end'>
-                    <div className='p-2'>{recruit2.moneyStandard}</div>
-                    <div className='p-2'>{recruit2.money}</div>
+                    <PiCurrencyKrwFill className='self-center mr-2' />
+                    <span className='p-2'>
+                      {recruit2.moneyStandard} {recruit2.money}
+                    </span>
+                    {/* <span className='p-2'>{recruit0.money}</span> */}
                   </div>
                 </div>
               )}
@@ -487,7 +507,7 @@ export default function Main() {
                   }}
                 >
                   <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
-                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                    <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold sh'>
                       NEW
                     </div>
                     <div className='pl-5 pt-2'>
@@ -503,14 +523,17 @@ export default function Main() {
                         <FaPhone className='self-center mr-2' />
                         <span>{recruit0.contact}</span>
                       </div>
-                      <div className='mb-4 flex items-center'>
+                      {/* <div className='mb-4 flex items-center'>
                         <BiCommentDetail className='self-center mr-2' />
                         <span>{recruit0.content}</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className='flex justify-end'>
-                      <div className='p-2'>{recruit0.moneyStandard}</div>
-                      <div className='p-2'>{recruit0.money}</div>
+                      <PiCurrencyKrwFill className='self-center mr-2' />
+                      <span className='p-2'>
+                        {recruit0.moneyStandard} {recruit0.money}
+                      </span>
+                      {/* <span className='p-2'>{recruit0.money}</span> */}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -518,7 +541,7 @@ export default function Main() {
               {recruit1 && (
                 <SwiperSlide>
                   <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
-                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                    <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold sh'>
                       NEW
                     </div>
                     <div className='pl-5 pt-2'>
@@ -534,14 +557,17 @@ export default function Main() {
                         <FaPhone className='self-center mr-2' />
                         <span>{recruit1.contact}</span>
                       </div>
-                      <div className='mb-4 flex items-center'>
+                      {/* <div className='mb-4 flex items-center'>
                         <BiCommentDetail className='self-center mr-2' />
                         <span>{recruit1.content}</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className='flex justify-end'>
-                      <div className='p-2'>{recruit1.moneyStandard}</div>
-                      <div className='p-2'>{recruit1.money}</div>
+                      <PiCurrencyKrwFill className='self-center mr-2' />
+                      <span className='p-2'>
+                        {recruit1.moneyStandard} {recruit1.money}
+                      </span>
+                      {/* <span className='p-2'>{recruit0.money}</span> */}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -549,7 +575,7 @@ export default function Main() {
               {recruit2 && (
                 <SwiperSlide>
                   <div className=' bg-white rounded-2xl h-72 w-1/fullm-4 p-5 shadow-lg'>
-                    <div className='animate-bounce pb-2 text-red-500 font-semibold sh'>
+                    <div className='animate__animated animate__bounce animate__infinite pb-2 text-red-500 font-semibold sh'>
                       NEW
                     </div>
                     <div className='pl-5 pt-2'>
@@ -565,14 +591,17 @@ export default function Main() {
                         <FaPhone className='self-center mr-2' />
                         <span>{recruit2.contact}</span>
                       </div>
-                      <div className='mb-4 flex items-center'>
+                      {/* <div className='mb-4 flex items-center'>
                         <BiCommentDetail className='self-center mr-2' />
                         <span>{recruit2.content}</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className='flex justify-end'>
-                      <div className='p-2'>{recruit2.moneyStandard}</div>
-                      <div className='p-2'>{recruit2.money}</div>
+                      <PiCurrencyKrwFill className='self-center mr-2' />
+                      <span className='p-2'>
+                        {recruit2.moneyStandard} {recruit2.money}
+                      </span>
+                      {/* <span className='p-2'>{recruit0.money}</span> */}
                     </div>
                   </div>
                 </SwiperSlide>

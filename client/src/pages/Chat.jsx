@@ -83,7 +83,7 @@ const ChatApp = () => {
             <br />
             <br />
 
-            <div className="w-full flex justify-center items-center">
+            <div className="w-full flex justify-center items-center fade-in">
                 {/* content wrapper */}
                 <div className="xl:w-[950px] lg:w-3/4 w-full 2xl:h-[800px] h-[600px] shadow-xl flex flex-col justify-between">
                     <div className="h-full overflow-auto flex flex-col-reverse bg-slate-100 rounded-md">
