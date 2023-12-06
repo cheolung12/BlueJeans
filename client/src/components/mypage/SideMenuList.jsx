@@ -14,7 +14,7 @@ export default function SideMenuList({ sideMenu, setSideMenu }) {
 
             if (prev[type]) {
                 updatedMenu[type] = prev[type];
-              }
+            }
 
             return updatedMenu;
         });
@@ -39,7 +39,7 @@ export default function SideMenuList({ sideMenu, setSideMenu }) {
                 내가 찜한 게시물
             </div>
             <div
-                className={`flex justify-start items-center px-4 py-2 font-semibold lg:w-2/3 w-1/7 h-[60px] text-xl cursor-pointer  ${
+                className={`flex justify-start items-center px-4 py-2 font-semibold lg:w-2/3 w-1/7 h-[60px] text-xl cursor-pointer text-white  ${
                     myPost && 'bg-white lg:rounded-l-full rounded-l-full lg:rounded-r-none rounded-r-full text-blue-800'
                 }`}
                 onClick={() => changeSideMenu('myPost')}

@@ -103,7 +103,7 @@ export default function RecruitmentDetail() {
 
     return (
         <>
-            <div className="w-full flex justify-center">
+            <div className="max-w-4xl w-full flex justify-center">
                 <section className=" block">
                     <section className="flex flex-col justify-center">
                         <div className="w-full">

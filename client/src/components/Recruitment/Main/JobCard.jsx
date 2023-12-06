@@ -15,7 +15,7 @@ export default function JobCard({ dataList }) {
                             {/* key={data.id} state={{ dataDetail: data }} */}
                             <div class="m-1 w-1/2">
                                 <img
-                                    className=" w-full h-full object-none border border-solid rounded-lg "
+                                    className=" w-full h-full object-cover border border-solid rounded-lg "
                                     src={data.img_path}
                                     alt="근무 설명 이미지"
                                 />
