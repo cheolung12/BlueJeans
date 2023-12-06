@@ -60,24 +60,36 @@ export default function MyPage() {
   return (
     <div className='w-full h-screen'>
       <TopNavbar />
-      <div className='flex w-full h-full lg:flex-row flex-col'>
-        <div className='lg:w-1/3 w-full lg:h-full h-[500px] bg-slate-100 flex justify-center'>
+      <div className='flex w-full h-full lg:flex-row flex-col' >
+        <div
+          className='lg:w-1/3 w-full lg:h-full h-[500px]flex justify-center'
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${'/images/main-vt.png'})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            
+          }}
+        >
           <div className='w-full lg:mt-24 mt-5 lg:flex-row flex-col'>
             <div className='m-3 flex justify-center flex-col items-center space-y-2'>
-              <div className='w-24 h-24 rounded-full flex justify-center items-center bg-white'>
+              <div className='w-36 h-36 rounded-full flex justify-center items-center mb-2 bg-white'>
                 <img
                   className='w-full h-full overflow-hidden rounded-full flex justify-center items-center'
                   src={userInfo.img_path}
                   alt='회원 프로필 이미지'
                 />
               </div>
-              <div>{localStorage.getItem('nickname')} 님</div>
+              <div className='font-semibold text-3xl text-slate-100'>{localStorage.getItem('nickname')} 님</div>
             </div>
-            <SideMenuList sideMenu={sideMenu} setSideMenu={setSideMenu}/>
+            <SideMenuList sideMenu={sideMenu} setSideMenu={setSideMenu} />
             <WithDrawal />
           </div>
         </div>
-        <SideMenuContent sideMenu={sideMenu} userInfo={userInfo} setUserInfo={setUserInfo}/>
+        <SideMenuContent
+          sideMenu={sideMenu}
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+        />
       </div>
     </div>
   );
