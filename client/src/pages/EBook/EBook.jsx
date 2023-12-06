@@ -87,9 +87,9 @@ export default function EBook() {
 
   return (
     <div className='w-full'>
-      <div className='flex flex-col justify-center w-full pl-0 lg:pl-[197px] items-center lg:items-start'>
+      <div className='flex flex-col justify-center w-full pl-0 lg:pl-[233px] items-center lg:items-start'>
         <div
-          className='w-[93%] h-72 relative rounded-3xl'
+          className='w-[96%] h-72 relative rounded-3xl'
           style={{
             backgroundImage:
               'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',

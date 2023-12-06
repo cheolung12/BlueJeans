@@ -15,16 +15,6 @@ export default function BookCard({ id, thumbnail, title, author }) {
               alt='book'
               className='w-[14rem] h-[17.4rem]'
               style={{
-                // WebkitBoxShadow:
-                //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                // MozBoxShadow:
-                //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                // MsBoxShadow:
-                //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                // OBoxShadow:
-                //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                // boxShadow:
-                //   '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
                 boxShadow:
                   'rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em',
               }}

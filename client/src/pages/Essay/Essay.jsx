@@ -129,7 +129,7 @@ export default function Essay() {
       <div className='w-full flex flex-col justify-center'>
         <div className='flex justify-center lg:justify-start'>
           <div
-            className='w-[94%] sm:w-[79%] h-72 relative ml-0 lg:ml-[196px] sm:justify-center rounded-3xl'
+            className='w-[94%] sm:w-[79%] h-72 relative ml-0 lg:ml-[233px] sm:justify-center rounded-3xl'
             style={{
               backgroundImage:
                 'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/essay/KakaoTalk_Image_2023-12-05-16-50-29.jpeg")',
@@ -157,7 +157,7 @@ export default function Essay() {
 
         <br />
         <section className='flex flex-col items-center w-full justify-end'>
-          <div className='flex flex-col justify-end w-[82%] ml-0 lg:ml-[120px]'>
+          <div className='flex flex-col justify-end w-[82%] ml-0 lg:ml-[187px]'>
             <div className='flex w-full'>
               <nav className='flex flex-col lg:flex-row w-full justify-between items-center mb-4 my-2 sm:mx-8 mx-0'>
                 <Filter handleFilter={handleFilter} />
