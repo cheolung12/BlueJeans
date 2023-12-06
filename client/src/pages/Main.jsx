@@ -135,7 +135,7 @@ export default function Main() {
     <>
       <TopNavbar />
       <div>
-        <div className=' flex items-center justify-center'>
+        <div className=' flex items-center justify-center w-full'>
           <div
             className=' md:h-1/2 w-full flex flex-col items-center relative'
             style={{ backgroundPosition: 'bottom' }}
@@ -143,9 +143,9 @@ export default function Main() {
             <img
               src={lastMain}
               alt='main'
-              className='h-[45rem] w-full object-cover bg-bottom opacity-90'
+              className='md:h-[45rem] h-[40rem] w-full object-cover bg-bottom opacity-90'
             />
-            <div className='absolute bottom-0  left-0 w-full'>
+            <div className='absolute md:bottom-0 bottom-10  left-0 w-full'>
               {/* 글씨가 안보이고... 어색하다 ㅜ...? ㅠㅜ*/}
 
               <MainBar className='flex items-end' />

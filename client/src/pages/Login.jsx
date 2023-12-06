@@ -5,8 +5,8 @@ import axios from 'axios';
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    userID: '',
-    password: '',
+    userID: 'bluejeans',
+    password: 'wlstn123',
   });
   const [isFail, setIsFail] = useState(false);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
@@ -80,8 +80,8 @@ export default function Login() {
           data: loginData,
           withCredentials: true,
         });
-
-        if (res) {
+        console.log(res);
+        if (res.data !== 'login') {
           localStorage.setItem('isLogin', true);
           localStorage.setItem('userID', res.data.userID);
           localStorage.setItem('nickname', res.data.nickname);
@@ -92,7 +92,7 @@ export default function Login() {
           setIsFail(true);
         }
       } catch (error) {
-        console.error(error);
+        setIsFail(true);
       }
     } else if (!formData.userID) {
       fadingEffect('userID');
@@ -198,7 +198,7 @@ export default function Login() {
               className='signup-input'
             />
           </div>
-          <div class='flex items-center mb-4'>
+          <div class='flex items-center w-3/5 justify-start  mt-1 ml-2 '>
             <input
               id='rememberId'
               type='checkbox'

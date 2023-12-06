@@ -3,6 +3,7 @@ import Sktelecom from './Skeleton';
 import axios from 'axios';
 
 function Map({ userAddress }) {
+
   const mapContainerRef = useRef();
   const mapInstanceRef = useRef(null);
   const markersRef = useRef([]);
@@ -29,24 +30,18 @@ function Map({ userAddress }) {
         const nowPosition = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+
         };
 
-        if (!mapInstanceRef.current) {
-          initTmap(nowPosition);
-          setMapVisible(true);
-        }
-      } catch (error) {
-        console.error('에러:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+        const getCurrentPosition = () => {
+            return new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+        };
 
-    const getCurrentPosition = () => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-    };
+        handleGeoLocation();
+    }, []);
+
 
     handleGeoLocation();
   }, []);
@@ -113,7 +108,9 @@ function Map({ userAddress }) {
         } else {
           startLongitude = resultCoordinate.newLon;
           startLatitude = resultCoordinate.newLat;
+
         }
+    }, [userAddress]);
 
         //집주소 마커 스테이트
         setEndMarkerPosition({
@@ -134,22 +131,17 @@ function Map({ userAddress }) {
               currentMarkerPosition.latitude,
               currentMarkerPosition.longitude
             ),
+
             icon: imgUrlS,
             iconSize: new window.Tmapv2.Size(30, 40),
-            map: mapInstanceRef.current,
-          });
-          console.log('currentMarkerPosition', currentMarkerPosition);
-          markersRef.current.push(currentMarker);
+            map: map,
+        });
 
-          //마커
-          const endMarker = new window.Tmapv2.Marker({
-            position: new window.Tmapv2.LatLng(startLatitude, startLongitude),
-            icon: imgUrlE,
-            iconSize: new window.Tmapv2.Size(30, 40),
-            map: mapInstanceRef.current,
-          });
+        mapInstanceRef.current = map;
+        markersRef.current.push(currentMarker);
+        setCurrentMarkerPosition(nowPosition);
+    };
 
-          markersRef.current.push(endMarker);
 
           const lineCoordinates = [
             {
@@ -279,15 +271,9 @@ function Map({ userAddress }) {
       {loading && (
         <div className='text-red'>
           <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md' />
+
         </div>
-      )}
-      <div
-        ref={mapContainerRef}
-        id='TMapApp'
-        className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md'
-      ></div>
-    </div>
-  );
+    );
 }
 
 export default Map;

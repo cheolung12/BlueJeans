@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function TopNavbar() {
+    const navigate = useNavigate();
+
     const handleLogout = async () => {
         const res = await axios({
             method: 'GET',
@@ -10,10 +13,8 @@ export default function TopNavbar() {
             withCredentials: true,
         });
         if (res.data === 'redirect:/login') {
-            console.log('login');
             localStorage.clear();
-
-            window.location.reload();
+            navigate('/');
         } else {
             console.log('로그아웃 실패!');
         }
@@ -21,7 +22,7 @@ export default function TopNavbar() {
 
     return (
         <nav className="bg-white  w-full z-50">
-            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-2 px-4">
+            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-3 px-4">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     {/* <img src="/images/logo.png" className="h-8" alt="Flowbite Logo"  /> */}
                     <span className="self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap" style={{ fontFamily: 'Fredoka, sans-serif'}}>BlueJeans</span>
