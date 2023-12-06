@@ -4,6 +4,8 @@ import TopNavbar from '../components/common/TopNavbar';
 import SideMenuList from '../components/mypage/SideMenuList';
 import WithDrawal from '../components/mypage/WithDrawal';
 import SideMenuContent from '../components/mypage/SideMenuContent';
+import MyPageForm from '../components/mypage/MyPageForm';
+import SmallMyPagePosts from '../components/mypage/SmallMyPagePosts';
 
 export default function MyPage() {
     // 불러온 회원 정보
@@ -59,7 +61,7 @@ export default function MyPage() {
     return (
         <div className="w-full h-screen">
             <TopNavbar />
-            <div className="flex w-full h-full lg:flex-row flex-col">
+            <div className="lg:flex hidden w-full h-full lg:flex-row flex-col">
                 <div
                     className="lg:w-1/3 w-full lg:h-full h-[500px]flex justify-center"
                     style={{
@@ -84,6 +86,34 @@ export default function MyPage() {
                     </div>
                 </div>
                 <SideMenuContent sideMenu={sideMenu} userInfo={userInfo} setUserInfo={setUserInfo} />
+            </div>
+            {/**==============================작은 화면============================== */}
+            <div className="lg:hidden w-full h-full lg:flex-row flex-col">
+                <div className="space-y-3 flex flex-col justify-center items-center">
+                    <div className="mt-3 text-blue-900 font-semibold lg:text-3xl text-2xl">회원 정보 수정</div>
+                    <div className="py-5 flex flex-col justify-center items-center ">
+                        <MyPageForm userInfo={userInfo} setUserInfo={setUserInfo} />
+                    </div>
+                </div>
+                <hr />
+                <div className="space-y-3 flex flex-col justify-center items-center">
+                    <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 찜한 게시물</div>
+                    <div className="w-full flex justify-start">
+                        <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
+                            <SmallMyPagePosts postLists={userInfo.likedPost} />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="space-y-3 flex flex-col justify-center items-center">
+                    <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 작성한 게시물</div>
+                    <div className="w-full flex justify-start">
+                        <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
+                            <SmallMyPagePosts postLists={userInfo.writedPost} />
+                        </div>
+                    </div>
+                </div>
+                <WithDrawal />
             </div>
         </div>
     );

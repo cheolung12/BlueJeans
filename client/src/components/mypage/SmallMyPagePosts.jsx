@@ -10,7 +10,7 @@ import { IoMdBriefcase } from 'react-icons/io';
 import { FiBookOpen } from 'react-icons/fi';
 import { FaPenNib } from 'react-icons/fa6';
 
-export default function Mpp({ postLists }) {
+export default function SmallMyPagePosts({ postLists }) {
     return (
         <>
             {postLists &&
