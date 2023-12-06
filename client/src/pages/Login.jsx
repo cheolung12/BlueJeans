@@ -5,8 +5,8 @@ import axios from 'axios';
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    userID: '',
-    password: '',
+    userID: 'bluejeans',
+    password: 'wlstn123',
   });
   const [isFail, setIsFail] = useState(false);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
@@ -80,14 +80,16 @@ export default function Login() {
           data: loginData,
           withCredentials: true,
         });
-
-        if (res) {
+        console.log(res);
+        if (res.data !== 'login') {
           localStorage.setItem('isLogin', true);
           localStorage.setItem('userID', res.data.userID);
           localStorage.setItem('nickname', res.data.nickname);
           localStorage.setItem('address', res.data.address);
           // res.responseURL
           navigate('/');
+        } else {
+          setIsFail(true);
         }
       } catch (error) {
         setIsFail(true);
