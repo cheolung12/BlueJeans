@@ -6,6 +6,7 @@ import WithDrawal from '../components/mypage/WithDrawal';
 import SideMenuContent from '../components/mypage/SideMenuContent';
 import MyPageForm from '../components/mypage/MyPageForm';
 import SmallMyPagePosts from '../components/mypage/SmallMyPagePosts';
+import SwiperMyPosts from '../components/mypage/SwiperMyPosts';
 
 export default function MyPage() {
     // 불러온 회원 정보
@@ -96,22 +97,14 @@ export default function MyPage() {
                     </div>
                 </div>
                 <hr />
-                <div className="space-y-3 flex flex-col justify-center items-center">
+                <div className="space-y-3 mb-6 flex flex-col justify-center items-center">
                     <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 찜한 게시물</div>
-                    <div className="w-full flex justify-start">
-                        <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
-                            <SmallMyPagePosts postLists={userInfo.likedPost} />
-                        </div>
-                    </div>
+                    <SwiperMyPosts postLists={userInfo.likedPost} />
                 </div>
                 <hr />
                 <div className="space-y-3 flex flex-col justify-center items-center">
                     <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 작성한 게시물</div>
-                    <div className="w-full flex justify-start">
-                        <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
-                            <SmallMyPagePosts postLists={userInfo.writedPost} />
-                        </div>
-                    </div>
+                    <SwiperMyPosts postLists={userInfo.writedPost} />
                 </div>
                 <WithDrawal />
             </div>

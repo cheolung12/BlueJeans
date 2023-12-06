@@ -167,8 +167,6 @@ export default function Recruitment() {
 
                 <div className="w-full flex justify-center">
                     <section className="md:max-w-md lg:max-w-[900px] xl:max-w-4xl max-w-sm block">
-                        {/* 데이터 요청 버튼 
-                <button onClick={handleClick}>일자리 불러오기</button> */}
                         <div className="lg:w-[896px] w-full flex lg:flex-row flex-col items-center justify-between px-4">
                             {/* 인기순 & 최신순 셀렉트 */}
                             <nav className="lg:w-full w-[390px] flex lg:justify-normal justify-between items-center flex-row sm:px-3 md:px-1 lg:px-0 px-4">
