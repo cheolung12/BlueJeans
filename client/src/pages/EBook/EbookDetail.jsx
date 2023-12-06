@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ResButton from '../../components/common/ResButton';
 import ContentCard from '../../components/Ebook/Detail/ContentCard';
@@ -8,6 +8,7 @@ import { IoMdHeart } from 'react-icons/io';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
+  const navigate = useNavigate();
 
   const [booksContent, setBooksContent] = useState({
     title: '',
@@ -23,7 +24,6 @@ export default function EBookDetail() {
 
   const [isHeart, setIsHeart] = useState();
   const [allHeart, setAllIsHeart] = useState();
-  // const [isHovered, setIsHovered] = useState(false);
 
   //유효성
   const handleLogin = () => {
@@ -34,6 +34,10 @@ export default function EBookDetail() {
 
   // get요청
   useEffect(() => {
+    if(!localStorage.getItem('isLogin')){
+      alert("로그인이 필요합니다.")
+      navigate('/login');
+  }
     const fetchData = async () => {
       try {
         const response = await axios({

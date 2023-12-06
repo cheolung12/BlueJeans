@@ -33,7 +33,6 @@ export default function ChatInput({
             e.preventDefault();
             setEnterKeyPressed(true);
             if (listening) {
-              toggleListening();
               resetTranscript();
             }
             handleSendClick();
