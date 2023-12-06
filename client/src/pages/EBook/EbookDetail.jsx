@@ -151,25 +151,17 @@ export default function EBookDetail() {
                   <div
                     className='flex flex-col items-center cursor-pointer'
                     onClick={onClickHeart}
-                    // onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
                   >
                     <IoMdHeart className='text-4xl text-red-600' />
                     {allHeart}개
-                    {/* {isHovered && (
-                      <span className='text-gray-700'>좋아요 해제</span>
-                    )} */}
                   </div>
                 ) : (
                   <div
                     className='flex flex-col items-center cursor-pointer'
                     onClick={onClickHeart}
-                    // onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
                   >
                     <IoMdHeartEmpty className='text-4xl text-gray-700' />
                     {allHeart}개
-                    {/* {isHovered && <span className='text-gray-700'>좋아요</span>} */}
                   </div>
                 )}
               </div>
@@ -179,7 +171,6 @@ export default function EBookDetail() {
                 <Link
                   to={`/ebook/detail/viewer/${bookId}`}
                   key={booksContent.id}
-                  // state={{ id, title }}
                   onClick={handleLogin}
                 >
                   <ResButton text='바로 읽기' />
