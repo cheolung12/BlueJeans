@@ -56,12 +56,12 @@ public class ChatGptService {
         for (int i = 0; i < previousConversation.size(); i++) {
             System.out.println(previousConversation.get(i));
             if (i % 2 == 0) {
-                combinedQuestion.append("Q: ").append(previousConversation.get(i)).append("\n");
+                combinedQuestion.append("사용자: ").append(previousConversation.get(i)).append("\n");
             } else {
-                combinedQuestion.append("A: ").append(previousConversation.get(i)).append("\n");
+                combinedQuestion.append("진수: ").append(previousConversation.get(i)).append("\n");
             }
         }
-        combinedQuestion.append("Q: ").append(requestDto.getQuestion());
+        combinedQuestion.append("사용자: ").append(requestDto.getQuestion());
 
         String finalCombinedQuestion = combinedQuestion.toString();
         // 완성된 입력 값 출력
