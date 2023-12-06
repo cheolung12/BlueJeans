@@ -250,7 +250,7 @@ export default function MyPageForm({ userInfo, setUserInfo }) {
                             value={newPW.pw}
                             onChange={handlePWChange}
                             placeholder="비밀번호를 입력해주세요."
-                            className="w-72 m-1 h-full px-1 py-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
+                            className="md:w-72 w-56 m-1 h-full px-1 py-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         />
                     </div>
                     <div className="w-full h-full flex flex-row justify-center">
@@ -264,7 +264,7 @@ export default function MyPageForm({ userInfo, setUserInfo }) {
                             value={newPW.pwCheck}
                             onChange={handlePWChange}
                             placeholder="비밀번호를 한 번 더 입력해주세요."
-                            className="w-72 m-1 h-full px-1 py-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
+                            className="md:w-72 w-56 m-1 h-full px-1 py-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         />
                     </div>
                 </div>

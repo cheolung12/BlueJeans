@@ -58,10 +58,9 @@ const ChatApp = () => {
             <div
                 className="w-full h-72 relative rounded-3xl"
                 style={{
-                    backgroundImage:
-                        'url("https://images.unsplash.com/photo-1684369175833-4b445ad6bfb5?q=80&w=1592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+                    backgroundImage: 'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/chatBanner.jpg")',
                     backgroundSize: 'cover',
-                    backgroundPosition: '0px -170px',
+                    backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                 }}
             >
