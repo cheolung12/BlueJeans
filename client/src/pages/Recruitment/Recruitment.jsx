@@ -141,15 +141,7 @@ export default function Recruitment() {
 
   return (
     <>
-      <div className='pl-[196px] w-[94%]'>
-        {/* <Banner
-          imageUrl={
-            'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg'
-          }
-          maintext={'내 손안의 작은 도서관'}
-          text={'어디서든 즐겨 보세요!'}
-        /> */}
-
+      <div className='pl-0 lg:pl-[196px] w-[94%]'>
         <div
           className='w-[100%] h-72 relative rounded-3xl'
           style={{
@@ -162,14 +154,14 @@ export default function Recruitment() {
           }}
         >
           <div
-            className='w-full h-full flex justify-center absolute inset-0 overflow-hidden rounded-3xl'
+            className='w-full h-full flex justify-center items-center md:items-start absolute inset-0 overflow-hidden rounded-3xl'
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
           >
-            <div className='flex flex-col justify-start w-full pl-6 pt-6'>
-              <div className='text-white text-5xl font-bold pb-3 animate__animated animate__fadeInDown'>
+            <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
+              <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown'>
                 당신의 일자리를
               </div>
-              <div className='text-white text-3xl animate__animated animate__fadeInDown'>
+              <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
                 찾아 보세요~~!
               </div>
             </div>
@@ -234,7 +226,7 @@ export default function Recruitment() {
                     placeholder='찾고 있는 직무를 입력하세요...'
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    className='border rounded-full md:w-[23.5rem] lg:w-[25.5rem] w-[21.5rem] lg:h-[2.7rem] h-[2.4rem] border-gray-300 outline-none pl-3 sm:text-base text-sm'
+                    className='border-2 rounded-full md:w-[23.5rem] lg:w-[25.5rem] w-[21.5rem] lg:h-[2.7rem] h-[2.4rem] border-gray-300 focus:border-signatureColor outline-none pl-3 sm:text-base text-sm'
                     onKeyDown={handleKeyDown}
                   />
                   <button
