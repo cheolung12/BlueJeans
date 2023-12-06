@@ -38,24 +38,19 @@ const ChatApp = () => {
                 method: 'POST',
                 url: `${process.env.REACT_APP_SERVER}/chat/question`,
                 data: {
-                  question: inputText,
-                  previousConversation,
+                    question: inputText,
+                    previousConversation,
                 },
             });
             console.log(response.data);
-            const responseText = response.data.choices[0].text
-            .replace(/\n/g, '')
-            .replace('진수: ', ''); // 형식 맞추기
-            const updatedChatMessages = [
-                 ...newChatMessages,
-                 { text: responseText, isMine: false },
-                 ];
+            const responseText = response.data.choices[0].text.replace(/\n/g, '').replace('진수: ', ''); // 형식 맞추기
+            const updatedChatMessages = [...newChatMessages, { text: responseText, isMine: false }];
             setChatMessages(updatedChatMessages);
-          } catch (error) {
-              console.log('전송 오류: ', error);
-          } finally {
-              setIsLoading(false);
-          }
+        } catch (error) {
+            console.log('전송 오류: ', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
