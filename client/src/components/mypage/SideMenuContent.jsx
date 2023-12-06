@@ -1,5 +1,5 @@
 import React from 'react';
-import Mpp from './Mppp';
+import MyPagePosts from './MyPagePosts';
 import MyPageForm from './MyPageForm';
 
 export default function SideMenuContent({ sideMenu, userInfo, setUserInfo }) {
@@ -10,7 +10,7 @@ export default function SideMenuContent({ sideMenu, userInfo, setUserInfo }) {
             <div className="w-full h-full">
                 {myHome ? (
                     <div className="space-y-3">
-                        <div className="mt-3 text-blue-900 font-semibold lg:text-4xl text-2xl ">MY 홈</div>
+                        <div className="mt-3 text-blue-900 font-semibold lg:text-4xl text-2xl">회원 정보 수정</div>
                         <div className="py-5 flex flex-col justify-center items-center ">
                             <MyPageForm userInfo={userInfo} setUserInfo={setUserInfo} />
                         </div>
@@ -23,7 +23,7 @@ export default function SideMenuContent({ sideMenu, userInfo, setUserInfo }) {
                         <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 찜한 게시물</div>
                         <div className="w-full flex justify-start">
                             <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
-                                <Mpp postLists={userInfo.likedPost} />
+                                <MyPagePosts postLists={userInfo.likedPost} />
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ export default function SideMenuContent({ sideMenu, userInfo, setUserInfo }) {
                         <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 작성한 게시물</div>
                         <div className="w-full flex justify-start">
                             <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
-                                <Mpp postLists={userInfo.writedPost} />
+                                <MyPagePosts postLists={userInfo.writedPost} />
                             </div>
                         </div>
                     </div>

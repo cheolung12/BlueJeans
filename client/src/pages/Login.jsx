@@ -88,11 +88,9 @@ export default function Login() {
           localStorage.setItem('address', res.data.address);
           // res.responseURL
           navigate('/');
-        } else {
-          setIsFail(true);
         }
       } catch (error) {
-        console.error(error);
+        setIsFail(true);
       }
     } else if (!formData.userID) {
       fadingEffect('userID');
@@ -198,7 +196,7 @@ export default function Login() {
               className='signup-input'
             />
           </div>
-          <div class='flex items-center mb-4'>
+          <div class='flex items-center w-3/5 justify-start  mt-1 ml-2 '>
             <input
               id='rememberId'
               type='checkbox'
