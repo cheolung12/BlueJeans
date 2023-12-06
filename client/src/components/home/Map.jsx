@@ -315,9 +315,13 @@ function Map({ userAddress }) {
   return (
     <div className='w-full'>
       {loading && (
+<<<<<<< Updated upstream
         <div className='text-red'>
           <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md -z-10' />
         </div>
+=======
+        <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md' />
+>>>>>>> Stashed changes
       )}
       <div
         ref={mapContainerRef}

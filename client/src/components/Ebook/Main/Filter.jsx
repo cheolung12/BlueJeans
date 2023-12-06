@@ -19,7 +19,7 @@ function Filter({ handleFilter }) {
               : 'font-semibold '
           }`}
         >
-          <span className='leading-9 text-lg'>전체보기</span>
+          <span className='leading-9 text-md'>전체보기</span>
         </li>
         <li
           onClick={() => handleClick('likes')}
@@ -29,7 +29,7 @@ function Filter({ handleFilter }) {
               : 'font-semibold '
           }`}
         >
-          <span className='leading-9 text-lg'>인기순</span>
+          <span className='leading-9 text-md'>인기순</span>
         </li>
         <li
           onClick={() => handleClick('latest')}
@@ -39,7 +39,7 @@ function Filter({ handleFilter }) {
               : 'font-semibold '
           }`}
         >
-          <span className='leading-9 text-lg'>최신순</span>
+          <span className='leading-9 text-md'>최신순</span>
         </li>
       </ul>
     </div>
