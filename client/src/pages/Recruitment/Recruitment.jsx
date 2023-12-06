@@ -166,7 +166,7 @@ export default function Recruitment() {
                 <br />
 
                 <div className="w-full flex justify-center">
-                    <section className="md:max-w-md lg:max-w-[900px] xl:max-w-4xl max-w-sm block">
+                    <section className="sm:max-w-[500px] lg:max-w-[900px] xl:max-w-4xl max-w-sm block">
                         <div className="lg:w-[896px] w-full flex lg:flex-row flex-col items-center justify-between px-4">
                             {/* 인기순 & 최신순 셀렉트 */}
                             <nav className="lg:w-full w-[390px] flex lg:justify-normal justify-between items-center flex-row sm:px-3 md:px-1 lg:px-0 px-4">
