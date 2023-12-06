@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-modal';
 import ImageSlider from '../components/common/ImageSlider';
@@ -221,6 +221,7 @@ export default function Signup() {
 
   return (
     <div className='w-screen h-screen flex'>
+      <Link to="/" className="fixed top-4 left-4 self-center sm:text-4xl text-2xl  font-semibold whitespace-nowrap" style={{ fontFamily: 'Fredoka, sans-serif'}}>BlueJeans</Link>
       <ImageSlider />
       <div className='w-full h-full flex justify-center items-center'>
         <form

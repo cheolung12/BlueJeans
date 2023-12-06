@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { PiPlusLight } from 'react-icons/pi';
 import { PiMinusThin } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
 import { FaMinus } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 export default function BookViewer({ content }) {
   //버튼 누르면 이전, 다음 페이지로 이동
@@ -11,6 +13,24 @@ export default function BookViewer({ content }) {
   const [count, setCount] = useState(1);
   //폰트 사이즈 확대
   const [textSize, setTextSize] = useState(16);
+  const [bookContent, setBookContent] = useState([]);
+
+  useEffect(() => {
+    function splitTextIntoArray(text, chunkSize) {
+      const resultArray = [];
+      for (let i = 0; i < text.length; i += chunkSize) {
+        resultArray.push(text.substr(i, chunkSize));
+      }
+      return resultArray;
+    }
+
+    const chunkSize = 100;
+
+    const result = splitTextIntoArray(content, chunkSize);
+    setBookContent(result);
+    console.log('res', result);
+    console.log('배열', bookContent);
+  }, []);
 
   //이전 페이지 버튼
   const preHandler = () => {
@@ -50,7 +70,14 @@ export default function BookViewer({ content }) {
     <div className='w-full flex flex-col h-full'>
       <div className='flex justify-center'>
         {/* 확대, 축소 버튼 */}
-        <div className='flex justify-end my-4 w-[70rem] max-[640px]:w-[22rem] max-[800px]:w-[35rem] max-[1300px]:w-[35rem]'>
+        <div className='flex justify-between px-[54px] my-4 w-[70rem] max-[640px]:w-[22rem] max-[800px]:w-[35rem] max-[1300px]:w-[35rem]'>
+          <div className='flex justify-end items-center'>
+            <Link to='/ebook'>
+              <div className='w-32 h-12 inline-flex items-center justify-center px-4 py-2  text-white bg-signatureColor font-semibold rounded-lg shadow-sm max-[640px]:w-[6rem] max-[640px]:h-[2.5rem] hover:opacity-90'>
+                나가기
+              </div>
+            </Link>
+          </div>
           <div className='flex'>
             <div
               className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
@@ -110,21 +137,30 @@ export default function BookViewer({ content }) {
                   // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
                   style={{ transform: `translateX(-${70 * currentMove}rem)` }}
                 >
-                  <div
+                  {bookContent.map((item, index) => (
+                    <div
+                      key={index}
+                      className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                      style={{ fontSize: `${textSize}px` }}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                  {/* <div
                     className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
                     style={{ fontSize: `${textSize}px` }}
                   >
                     {content}
-                  </div>
-                  <div
+                  </div> */}
+                  {/* <div
                     className=' w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
                     style={{ fontSize: `${textSize}px` }}
                   >
                     {content}
-                  </div>
+                  </div> */}
                 </div>
 
-                <div
+                {/* <div
                   className='flex transition max-[800px]:flex-col max-[1300px]:flex-col'
                   // 가로축 위치를 이동시켜 현재 페이지에 맞는 페이지를 보여줌
                   style={{ transform: `translateX(-${70 * currentMove}rem)` }}
@@ -198,9 +234,15 @@ export default function BookViewer({ content }) {
                   >
                     {content}
                   </div>
-                </div>
+                </div> */}
 
-                {/* {data.map((item) => (
+                {/* for(let i=0; i<books.length; i++ ){
+                <div key={i}>
+                  {books[i]}
+                </div>
+              }
+
+                {data.map((item) => (
               <div key={item.id}>
                 <div
                   className={`flex transition`}

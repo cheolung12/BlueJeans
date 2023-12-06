@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ResButton from '../../components/common/ResButton';
 import ContentCard from '../../components/Ebook/Detail/ContentCard';
@@ -8,6 +8,7 @@ import { IoMdHeart } from 'react-icons/io';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
+  const navigate = useNavigate();
 
   const [booksContent, setBooksContent] = useState({
     title: '',
@@ -23,7 +24,6 @@ export default function EBookDetail() {
 
   const [isHeart, setIsHeart] = useState();
   const [allHeart, setAllIsHeart] = useState();
-  // const [isHovered, setIsHovered] = useState(false);
 
   //유효성
   const handleLogin = () => {
@@ -34,6 +34,10 @@ export default function EBookDetail() {
 
   // get요청
   useEffect(() => {
+    if(!localStorage.getItem('isLogin')){
+      alert("로그인이 필요합니다.")
+      navigate('/login');
+  }
     const fetchData = async () => {
       try {
         const response = await axios({
@@ -151,25 +155,17 @@ export default function EBookDetail() {
                   <div
                     className='flex flex-col items-center cursor-pointer'
                     onClick={onClickHeart}
-                    // onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
                   >
                     <IoMdHeart className='text-4xl text-red-600' />
                     {allHeart}개
-                    {/* {isHovered && (
-                      <span className='text-gray-700'>좋아요 해제</span>
-                    )} */}
                   </div>
                 ) : (
                   <div
                     className='flex flex-col items-center cursor-pointer'
                     onClick={onClickHeart}
-                    // onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
                   >
                     <IoMdHeartEmpty className='text-4xl text-gray-700' />
                     {allHeart}개
-                    {/* {isHovered && <span className='text-gray-700'>좋아요</span>} */}
                   </div>
                 )}
               </div>
@@ -179,7 +175,6 @@ export default function EBookDetail() {
                 <Link
                   to={`/ebook/detail/viewer/${bookId}`}
                   key={booksContent.id}
-                  // state={{ id, title }}
                   onClick={handleLogin}
                 >
                   <ResButton text='바로 읽기' />

@@ -16,7 +16,7 @@ const Info = () => {
         className='w-7 h-7 text-[#2e375d] relative z-10'
       >
         <FaQuestionCircle className='h-10 w-10 md:flex items-center' />
-        {!isToolTipVisible && (
+        {isToolTipVisible && (
           <div className='absolute right-full mt-2 text-black z-50'>
             <div className='z-20'>
               <HowToUse />

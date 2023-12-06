@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdBriefcase } from 'react-icons/io';
-import { FiBookOpen } from 'react-icons/fi';
+import { FaBookOpen } from 'react-icons/fa6';
 import { FaPenNib } from 'react-icons/fa6';
 import { MdChat } from 'react-icons/md';
-import { GoHome } from 'react-icons/go';
+import { IoHome } from 'react-icons/io5';
 
 export default function SideNavBar() {
   return (
@@ -18,7 +18,7 @@ export default function SideNavBar() {
         </Link>
         <Link to='/ebook' className='sideNav-link'>
           <p>
-            <FiBookOpen className='sideNav-icon text-[#FED001]' />
+            <FaBookOpen className='sideNav-icon text-[#FED001]' />
           </p>
           <p className='sideNav-text'>e-book</p>
         </Link>
@@ -36,7 +36,7 @@ export default function SideNavBar() {
         </Link>
         <Link to='findhome' className='sideNav-link'>
           <p>
-            <GoHome className='sideNav-icon text-[#8D62E9]' />
+            <IoHome className='sideNav-icon text-[#8D62E9]' />
           </p>
           <p className='sideNav-text'>집찾기</p>
         </Link>
