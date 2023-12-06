@@ -493,9 +493,9 @@ export default function MP() {
                             <div />
                         )}
                         {myHeart ? (
-                            <div className="space-y-3">
+                            <div className="space-y-3 overflow-y-scroll max-h-[60vw]">
                                 <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 찜한 게시물</div>
-                                <div className="w-full lg:overflow-hidden overflow-visible lg:overflow-y-scroll overflow-y-visible h-[60vw] grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 grid-cols-1 gap-4">
+                                <div className="flex flex-wrap justify-center">
                                     <Mppp postLists={userInfo.likedPost} />
                                 </div>
                             </div>

@@ -15,10 +15,10 @@ export default function Mpp({ postLists }) {
         <>
             {postLists.map((post) => {
                 return (
-                    <div className="m-2 fade-in" key={uuidv4()}>
+                    <div className="w-[280px] fade-in" key={uuidv4()}>
                         <Link
                             to={`/${post.type}/detail/${post.id}`}
-                            className="w-80 aspect-[1.5/1] border shadow-lg rounded-md flex flex-col justify-evenly"
+                            className="w-full aspect-[1.5/1] border shadow-lg rounded-md flex flex-col justify-evenly"
                         >
                             {post.img_path ? (
                                 <div
@@ -31,7 +31,7 @@ export default function Mpp({ postLists }) {
                             <div className="p-2">
                                 <div className="flex flex-col">
                                     {post.type ? (
-                                        <div className="flex  mb-2">
+                                        <div className="flex mb-2">
                                             {post.type === 'ebook' && (
                                                 <span className="flex items-center">
                                                     <FiBookOpen className="mr-2 text-[#FED001]" />
