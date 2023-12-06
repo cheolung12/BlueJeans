@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -84,6 +85,7 @@ public class MyPageService {
 
     public ResMyPageDTO getUserInfo(UserEntity user) {
         int userId = user.getId();
+        UserEntity userEntity = userRepository.findById(userId).orElse(null);
 
         List<MyPostsDTO> MyLikePosts= new ArrayList<>();
         List<MyPostsDTO> MyWritePosts = new ArrayList<>();
@@ -96,10 +98,10 @@ public class MyPageService {
         convertEssayEntitiesToDTO(MyWritePosts, essayRepository.findByUser_Id(userId));
 
         return ResMyPageDTO.builder()
-                .userId(user.getUserID())
-                .nickname(user.getNickname())
-                .address(user.getAddress())
-                .img_path(user.getImg_path())
+                .userId(userEntity.getUserID())
+                .nickname(userEntity.getNickname())
+                .address(userEntity.getAddress())
+                .img_path(userEntity.getImg_path())
                 .likedPost(MyLikePosts)
                 .writedPost(MyWritePosts)
                 .build();
@@ -117,7 +119,7 @@ public class MyPageService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + user.getUserID()));
 
         // 업데이트할 필드가 비어있지 않다면 새로운 값으로 업데이트
-        if (!updateUser.getPassword().isEmpty()) {
+        if (!Objects.equals(updateUser.getPassword(), "null")) {
             existingUser.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
         }
         if (!updateUser.getNickname().isEmpty()) {

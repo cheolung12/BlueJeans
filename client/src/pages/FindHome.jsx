@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import Map from '../components/home/Map';
 import AddressButton from '../components/home/AddressButton';
 import Info from '../components/home/Info';
+
+import Main from '../components/main/MainLast.css';
+import HowToUse from '../components/home/HowToUse';
+
 export default function FindHome() {
   const [userAddress, setUserAddress] = useState('');
 
   return (
     <>
+
       <div className='flex flex-col pl-0 lg:pl-[196px] w-[94%]'>
         <div
           className='w-full h-72 relative rounded-3xl'
@@ -35,17 +40,19 @@ export default function FindHome() {
 
         <br />
 
-        <div className=' w-full flex justify-center'>
-          <div className='flex flex-col space-y-4 xl:w-[1000px] w-full'>
-            <div className='flex justify-between w-full'>
-              <AddressButton
-                setUserAddress={setUserAddress}
-                className='btn'
-              ></AddressButton>
-              <Info></Info>
-            </div>
-            <Map userAddress={userAddress}></Map>
+       <div className=' w-full flex justify-center'>
+        <div className='flex flex-col space-y-4 xl:w-[1000px] w-full'>
+          <div className='flex justify-between w-full'>
+            <AddressButton
+              setUserAddress={setUserAddress}
+              className='btn'
+            ></AddressButton>
           </div>
+
+          <Map userAddress={userAddress}></Map>
+          <HowToUse />
+          </div>
+
         </div>
       </div>
     </>
