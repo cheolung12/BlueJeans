@@ -28,13 +28,12 @@
 .btn {
   width: 6rem;
   height: 6rem;
-  background-color: #8d62e9;
+  background-color: white;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px #8d62e9 inset, 0 0 0 2px rgba(255, 255, 255, 0.779),
-    0 8px;
+  box-shadow: 0 0 0 1px white inset, 0 0 0 2px rgba(255, 255, 255, 0.779), 0 8px;
 }
 .btn:active {
-  box-shadow: 0 0 0 1px #8d62e9 inset, 0 0 0 2px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 1px white inset, 0 0 0 2px rgba(255, 255, 255, 0.15);
 }
 
 :root {
