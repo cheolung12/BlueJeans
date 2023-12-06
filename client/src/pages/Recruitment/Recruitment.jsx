@@ -138,12 +138,11 @@ export default function Recruitment() {
         <>
             <div className="pl-0 lg:pl-[196px] w-[94%]">
                 <div
-                    className="w-[100%] h-72 relative rounded-3xl"
+                    className="w-[100%] h-72 relative rounded-3xl sm:bg-center bg-top"
                     style={{
-                        backgroundImage:
-                            'url("https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+                        backgroundImage: 'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/reBanner.jpg")',
                         backgroundSize: 'cover',
-                        backgroundPosition: '0px -140px',
+                        // backgroundPosition: '0px sm:-140px 0px',
                         backgroundRepeat: 'no-repeat',
                         boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
                     }}

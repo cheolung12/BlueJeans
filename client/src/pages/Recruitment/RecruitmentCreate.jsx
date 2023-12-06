@@ -200,7 +200,7 @@ export default function RecruitmentCreate() {
                         name="title"
                         type="text"
                         placeholder="제목을 입력하세요."
-                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         required
                     />
                 </div>
@@ -231,7 +231,7 @@ export default function RecruitmentCreate() {
                             <select
                                 value={moneyStandard}
                                 onChange={monStanChange}
-                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                             >
                                 <option value="시급">시급</option>
                                 <option value="일급">일급</option>
@@ -245,7 +245,7 @@ export default function RecruitmentCreate() {
                             </label>
                             <input
                                 id="money"
-                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400 remove-arrow"
+                                className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor remove-arrow"
                                 value={recruitmentData.money}
                                 onChange={handleInputChange}
                                 name="money"
@@ -272,7 +272,7 @@ export default function RecruitmentCreate() {
                         onClick={modalToggle}
                         readOnly
                         placeholder="클릭하면 주소검색창이 나타납니다."
-                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                     />
                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                         <DaumPostcode onComplete={completeHandler} height="100%" />
@@ -291,7 +291,7 @@ export default function RecruitmentCreate() {
                             </label>
                             <select
                                 className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs 
-                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                                 id="workTime1"
                                 value={workTime1}
                                 onChange={handleTimeChange1}
@@ -309,7 +309,7 @@ export default function RecruitmentCreate() {
                             </label>
                             <select
                                 className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs 
-                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                            block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                                 id="workTime2"
                                 value={workTime2}
                                 onChange={handleTimeChange2}
@@ -330,7 +330,7 @@ export default function RecruitmentCreate() {
                     </label>
                     <input
                         id="contact"
-                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         value={recruitmentData.contact}
                         maxlength="11"
                         onChange={handleInputChange}
@@ -353,7 +353,7 @@ export default function RecruitmentCreate() {
                         </label>
                     </div>
                     <input
-                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        className="w-100 m-2 sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         placeholder={placeholder}
                         disabled
                     />
@@ -368,7 +368,7 @@ export default function RecruitmentCreate() {
                     <textarea
                         id="content"
                         rows="7"
-                        className="m-2 w-100 p-2 sm:text-base text-xs resize-none border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-400"
+                        className="m-2 w-100 p-2 sm:text-base text-xs resize-none border rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:ring focus:ring-signatureColor"
                         value={recruitmentData.content}
                         onChange={handleInputChange}
                         name="content"
