@@ -40,6 +40,7 @@ public class RecruitDTO {
                 .workDay(dto.getWorkDay())
                 .workTime(dto.getWorkTime())
                 .img_path(fileURL)
+                .recruiting(true)
                 .build();
     }
 

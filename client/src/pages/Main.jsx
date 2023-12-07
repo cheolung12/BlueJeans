@@ -29,6 +29,10 @@ import axios from 'axios';
 
 import MainLast from '../components/main/MainLast.css';
 import HowToUse from '../components/home/HowToUse';
+import PopUps from '../components/main/PopUps';
+import Information from '../components/main/Information';
+
+
 
 export default function Main() {
   <head>
@@ -100,6 +104,8 @@ export default function Main() {
   return (
     <>
       <TopNavbar />
+      <Information />
+      {/* <PopUps /> */}
       <div>
         <div className=' flex items-center justify-center w-full'>
           <div

@@ -41,7 +41,7 @@ public class UserService {
                 .nickname(userDTO.getNickname())
                 .address(userDTO.getAddress())
                 .userType(Usertype.USER)
-                .img_path("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/defaultprofile.jpeg")
+                .img_path("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/20231206180213113jinsu.jpeg")
                 .build()).getId();
     }
 
