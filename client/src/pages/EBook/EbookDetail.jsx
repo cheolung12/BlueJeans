@@ -34,10 +34,10 @@ export default function EBookDetail() {
 
   // get요청
   useEffect(() => {
-    if(!localStorage.getItem('isLogin')){
-      alert("로그인이 필요합니다.")
+    if (!localStorage.getItem('isLogin')) {
+      alert('로그인이 필요합니다.');
       navigate('/login');
-  }
+    }
     const fetchData = async () => {
       try {
         const response = await axios({
@@ -131,20 +131,20 @@ export default function EBookDetail() {
 
             <div className='flex flex-col items-center justify-evenly w-[18rem] h-[29rem]'>
               <div className='text-center flex flex-col h-44 justify-between px-7'>
-                <h1 className='text-xl font-semibold mb-3'>
+                <h1 className='text-2xl font-semibold mb-3'>
                   {booksContent.title}
                 </h1>
-                <div className='text-lg font-medium mb-2'>
+                <div className='text-xl font-medium mb-2'>
                   {booksContent.author}
                 </div>
                 <div>
-                  <div className='text-sm mb-1'>
+                  <div className='text-md mb-1'>
                     출판사 : {booksContent.publisher}
                   </div>
-                  <div className='text-sm mb-1'>
+                  <div className='text-md mb-1'>
                     분류 : {booksContent.genre}
                   </div>
-                  <div className='text-sm mb-1'>ISBN : {booksContent.isbn}</div>
+                  <div className='text-md mb-1'>ISBN : {booksContent.isbn}</div>
                 </div>
               </div>
 

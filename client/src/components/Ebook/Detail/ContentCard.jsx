@@ -10,12 +10,14 @@ export default function ContentCard({ description }) {
         }}
       >
         <div className='w-full'>
-          <div className='px-7 py-1 text-xl font-bold'>줄거리</div>
+          <div className='px-7 py-1 text-2xl font-bold'>줄거리</div>
         </div>
         <div>
           <div>
             <div className='px-7 py-5'>
-              <span className='h-96 whitespace-pre-line'>{description}</span>
+              <span className='h-96 text-xl whitespace-pre-line'>
+                {description}
+              </span>
             </div>
           </div>
         </div>

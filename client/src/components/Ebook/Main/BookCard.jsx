@@ -21,8 +21,8 @@ export default function BookCard({ id, thumbnail, title, author }) {
             />
           </div>
           <div className='flex flex-col text-center w-[13rem] h-[6rem] text-black'>
-            <div className='font-semibold text-lg'>{title}</div>
-            <div className='text-md mt-2 text-neutral-500'>{author}</div>
+            <div className='font-semibold text-xl'>{title}</div>
+            <div className='text-lg mt-2 text-neutral-500'>{author}</div>
           </div>
         </div>
       </Link>
