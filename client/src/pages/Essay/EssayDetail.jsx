@@ -173,7 +173,7 @@ export default function EssayDetail() {
 
             <section>
               <div className='w-full h-[30rem] text-black mb-8'>
-                <div className='text-center text-lg md:text-xl pt-4 h-full whitespace-pre border-solid border-gray-300 border-2'>
+                <div className='text-center text-lg md:text-xl pt-5 pb-5 h-full whitespace-pre border-solid border-gray-300 border-2 overflow-auto'>
                   {essayContent.content}
                 </div>
               </div>
