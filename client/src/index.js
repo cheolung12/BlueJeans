@@ -4,7 +4,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
-import Main2 from './pages/Main2';
+import Main from './pages/Main';
 import Recruitment from './pages/Recruitment/Recruitment';
 import RecruitmentDetail from './pages/Recruitment/RecruitmentDetail';
 import Chat from './pages/Chat';
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: <NotFound />,
         children: [
-            { index: true, element: <Main2 /> },
+            { index: true, element: <Main /> },
             { path: 'signup', element: <Signup /> },
             { path: 'login', element: <Login /> },
             { path: 'mypage', element: <MyPage /> },
