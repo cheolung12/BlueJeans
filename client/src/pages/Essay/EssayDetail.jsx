@@ -28,28 +28,32 @@ export default function EssayDetail() {
   const [allHeart, setAllIsHeart] = useState();
 
   useEffect(() => {
-    const fetchdata = async () => {
-      if (!localStorage.getItem('isLogin')) {
-        alert('로그인이 필요합니다.');
-        navigate('/login');
-      }
-      try {
-        const response = await axios({
-          method: 'GET',
-          url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
-          withCredentials: true,
-        });
-        console.log(response); // 받은 데이터를 상태에 업데이트
-        setEssayContent(response.data);
-        setCommentList(response.data.comments);
-        setIsHeart(response.data.heart);
-        setAllIsHeart(response.data.like);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchdata();
+    const isLogin = localStorage.getItem('isLogin');
+    //로그인된 경우에는 좋아요 여부도 같이 반환
+    if (isLogin) {
+      const fetchdata = async () => {
+        try {
+          const response = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_SERVER}/essays/detail/islogin/${EssayId}`,
+            withCredentials: true,
+          });
+          console.log(response.data); // 받은 데이터를 상태에 업데이트
+          setEssayContent(response.data);
+          setCommentList(response.data.comments);
+          setIsHeart(response.data.heart);
+          setAllIsHeart(response.data.like);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchdata();
+      //로그인이 안된경우
+    } else {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
   }, [EssayId]);
 
   // 백일장 삭제
@@ -213,7 +217,7 @@ export default function EssayDetail() {
                       className='flex flex-col items-center cursor-pointer'
                       onClick={onClickHeart}
                     >
-                      <IoMdHeartEmpty className='text-5xl text-red-600 opacity-80' />
+                      <IoMdHeartEmpty className='text-5xl text-gray-700' />
                       {allHeart}개
                     </div>
                   )}
