@@ -5,7 +5,6 @@ import SideMenuList from '../components/mypage/SideMenuList';
 import WithDrawal from '../components/mypage/WithDrawal';
 import SideMenuContent from '../components/mypage/SideMenuContent';
 import MyPageForm from '../components/mypage/MyPageForm';
-import SmallMyPagePosts from '../components/mypage/SmallMyPagePosts';
 import SwiperMyPosts from '../components/mypage/SwiperMyPosts';
 
 export default function MyPage() {
