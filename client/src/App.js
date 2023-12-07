@@ -1,5 +1,5 @@
 import './App.css';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import TopNavbar from './components/common/TopNavbar';
 import SideNavBar from './components/common/SideNavBar';

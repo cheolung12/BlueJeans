@@ -18,7 +18,7 @@ export default function ChatInput({
       setInputText(transcript);
       inputRef.current.focus();
     }
-  }, [transcript, listening, setInputText]);
+  }, [transcript, listening, setInputText, inputRef]);
 
   return (
     <div className='border w-full h-full flex shadow-md rounded- px-2.5 py-2 sm:text-lg text-sm rounded-sm'>

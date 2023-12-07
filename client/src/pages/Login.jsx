@@ -120,10 +120,10 @@ export default function Login() {
         let start = cookieData.indexOf(cookieName);
         let cookieValue = '';
 
-        if (start != -1) {
+        if (start !== -1) {
             start += cookieName.length;
             let end = cookieData.indexOf(';', start);
-            if (end == -1) end = cookieData.length;
+            if (end === -1) end = cookieData.length;
             cookieValue = cookieData.substring(start, end);
         }
         return unescape(cookieValue);

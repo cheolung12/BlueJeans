@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import bookContents from '../../data/bookContents.json';
-// import bookList from '../../data/bookList.json';
 import BookViewer from '../../components/Ebook/Viewer/BookViewer';
 import BookTitle from '../../components/Ebook/Viewer/BookTitle';
-import ExitButton from '../../components/Ebook/Viewer/ExitButton';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 

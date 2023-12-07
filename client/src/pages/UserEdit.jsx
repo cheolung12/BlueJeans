@@ -153,13 +153,6 @@ export default function UserEdit() {
         }
     };
 
-    // input에 spacebar 입력 방지용
-    const blockSpace = (e) => {
-        if (e.key === ' ') {
-            e.preventDefault();
-        }
-    };
-
     // 아이디 or 닉네임 중복 확인
     const checkDuplication = async (type) => {
         const value = formData[type];

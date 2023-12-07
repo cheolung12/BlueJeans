@@ -194,7 +194,7 @@ export default function Main() {
                       <div className='font-bold text-lg'>
                         {essay0.nickname} 님
                       </div>
-                      <img src={essay0.img_path} className='w-24 h-24' />
+                      <img src={essay0.img_path} className='w-24 h-24'  alt='에세이1'/>
                       <div className='font-bold text-lg'>{essay0.title}</div>
                       <div className='flex items-center'>
                         <IoMdHeart className='text-lg text-[#FE8080] mr-2' />
@@ -224,7 +224,7 @@ export default function Main() {
                       <div className='font-bold text-lg'>
                         {essay1.nickname} 님
                       </div>
-                      <img src={essay1.img_path} className='w-24 h-24' />
+                      <img src={essay1.img_path} className='w-24 h-24' alt='에세이2' />
                       <div className='font-bold text-lg'>{essay1.title}</div>
                       <div className='flex items-center text-lg'>
                         <IoMdHeart className='text-lg text-[#FE8080] mr-2' />
@@ -253,7 +253,7 @@ export default function Main() {
                       <div className='font-bold text-lg'>
                         {essay2.nickname} 님
                       </div>
-                      <img src={essay2.img_path} className='w-24 h-24' />
+                      <img src={essay2.img_path} className='w-24 h-24' alt='에세이3' />
                       <div className='font-bold text-lg'>{essay2.title}</div>
                       <div className='flex items-center text-lg'>
                         <IoMdHeart className='text-lg text-[#FE8080] mr-2' />
@@ -276,7 +276,7 @@ export default function Main() {
             className='w-full h-screen bg-white flex justify-center items-center px-24'
           >
             <div className='flex w-full justify-between items-center'>
-              <img src='https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/%E1%84%92%E1%85%A1%E1%86%AF%E1%84%86%E1%85%A9%E1%84%82%E1%85%B5%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%85%E1%85%A5.jpeg' className='w-[800px] h-[450px]' />
+              <img src='https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/%E1%84%92%E1%85%A1%E1%86%AF%E1%84%86%E1%85%A9%E1%84%82%E1%85%B5%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%85%E1%85%A5.jpeg' alt='work' className='w-[800px] h-[450px]' />
               <div className='w-1/2 h-full justify-start items-center box-border pl-24'>
                 <div className='text-6xl font-bold mb-2'>소소한 용돈벌이</div>
                 <div className='text-6xl font-bold mb-8'>필요하시나요?</div>

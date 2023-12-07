@@ -67,7 +67,7 @@ export default function ExplainSection({ loading, data }) {
                 <Skeleton />
             ) : (
                 <div className="m-2 text-gray-600">
-                    {differenceInDays == 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
+                    {differenceInDays === 0 ? `${differenceInHours}시간 전 작성` : `${differenceInDays}일 전 작성`}
                 </div>
             )}
 
