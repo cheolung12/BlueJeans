@@ -44,10 +44,11 @@ export default function Main() {
   </head>;
 
   const [mainData, setMainData] = useState([]);
-
   const [isVisible, setIsVisible] = useState(false);
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
+  const bookTextRef = useRef(null);
+  const bookSliderRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,8 +102,8 @@ export default function Main() {
     };
   }, []);
 
-  //책전체
   useEffect(() => {
+    // 데이터 받아오기
     const fetchData = async () => {
       try {
         const res = await axios({
@@ -116,6 +117,29 @@ export default function Main() {
       }
     };
     fetchData();
+  }, []);
+
+  // 스크롤시 이벤트 등록
+  useEffect(() => {
+    const handleScroll = () => {
+      checkAndAddClass(bookTextRef, 'animate__fadeInLeft');
+      checkAndAddClass(bookSliderRef, 'animate__fadeIn');
+    };
+
+    const checkAndAddClass = (ref, animationName) => {
+      if (ref.current) {
+        const elementPosition = ref.current.offsetTop;
+        const scrollPosition = window.scrollY + window.innerHeight;
+        if (scrollPosition > elementPosition) {
+          ref.current.classList.add('animate__animated', animationName);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const ebookList = mainData?.ebookList || [];
@@ -152,73 +176,56 @@ export default function Main() {
           </div>
         </div>
         {/* 1 */}
-        <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center lg:flex-row lg:justify-center'>
-          <div className='w-full relative flex items-center justify-center'>
-            <div className='text-center mt-3'>
-              <div className='sm:text-4xl text-3xl pb-7 pt-4 font-bold '>
-                오늘의 추천도서
-              </div>
-              <div>
-                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
-                  1970년대의 감성부터 현대까지
-                </div>
-                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
-                  지금 봐도 세련된 문장으로 감동을 주는
-                </div>
-                <div className='text-xl sm:text-2xl mb-5'>
-                  작품을 만나 보세요!
-                </div>
-              </div>
+        <div className='w-full h-[37.5rem] bg-[#F2D001] flex flex-col items-center lg:flex-row lg:justify-center px-28'>
+          <div ref={bookTextRef} className='w-1/3 items-center justify-center'>
+            <div className='sm:text-6xl text-3xl mb-12 font-bold '>
+              오늘의 추천도서
+            </div>
+            <div className='space-y-1 text-lg sm:text-xl '>
+              <div>1970년대의 감성부터 현대까지</div>
+              <div>지금 봐도 세련된 문장으로 감동을 주는</div>
+              <div>작품을 만나 보세요!</div>
             </div>
           </div>
+          <div className='w-2/3 h-full flex items-center justify-center'>
+            <Swiper
+              ref={bookSliderRef}
+              className='w-full'
+              slidesPerView={1}
+              loop={true}
+              centeredSlides={true} //중앙설정
+              autoplay={{
+                delay: 2500,
+              }}
+              breakpoints={{
+                376: {
+                  slidesPerView: 1,
+                },
+                1024: {
+                  slidesPerView: 2,
+                },
+                1280: {
+                  slidesPerView: 3,
+                },
+              }}
+              spaceBetween={40}
+              modules={[Autoplay, Pagination, Navigation]}
+            >
+              {/* 요청해서 받은 랜덤 10개 값  */}
 
-          <Swiper
-            className='w-[19rem] h-[28rem] lg:w-[83rem] xl:w-[130rem]'
-            slidesPerView={1}
-            loop={true}
-            centeredSlides={false} //중앙설정
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            breakpoints={{
-              376: {
-                slidesPerView: 1,
-                spaceBetween: 10, //여백
-              },
-              1024: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-
-              1280: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-            }}
-            spaceBetween={10}
-            navigation={true}
-            modules={[Autoplay, Navigation]}
-          >
-            {/* 요청해서 받은 랜덤 10개 값  */}
-
-            {ebookList.map((book) => (
-              <SwiperSlide className='h-full w-full' key={book.id}>
-                <Link to={`/ebook/detail/${book.id}`}>
-                  <div>
+              {ebookList.map((book) => (
+                <SwiperSlide className='h-full' key={book.id}>
+                  <Link to={`/ebook/detail/${book.id}`} className=''>
                     <img
                       src={book.thumbnail}
                       alt={book.title}
-                      className='h-[25rem] w-80 p-5 md:p-0'
+                      className='h-[25rem] w-[300px] rounded-lg'
                     />
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
         {/* 2 */}
         {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
