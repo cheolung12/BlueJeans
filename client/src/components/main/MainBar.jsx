@@ -12,7 +12,7 @@ import { IoHome } from 'react-icons/io5';
 const MainBar = () => {
   return (
     <div className='flex items-end justify-center w-full h-full pl-4 pr-4'>
-      <div className='rounded-[30px] shadow-lg items-center justify-around z-20 flex bg-white w-full md:w-3/4 mb-4 md:mb-20 text-sm md:text-lg md:px-6 px-4 md:py-9 py-6'>
+      <div className='rounded-[30px] shadow-lg items-center justify-around  flex bg-white w-full md:w-3/4 mb-4 md:mb-20 text-sm md:text-lg md:px-6 px-4 md:py-9 py-6'>
         <Link
           to='/recruitment'
           className='w-full md:w-1/5 mb-2 md:mb-0  transition-transform hover:ease-linear transform hover:scale-105'

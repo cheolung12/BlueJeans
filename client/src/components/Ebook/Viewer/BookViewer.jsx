@@ -23,7 +23,7 @@ export default function BookViewer({ content }) {
       return resultArray;
     }
 
-    const chunkSize = 500;
+    const chunkSize = 630;
 
     const result = splitTextIntoArray(content, chunkSize);
     setBookContent((prevBookContent) => [...prevBookContent, ...result]);
@@ -69,13 +69,6 @@ export default function BookViewer({ content }) {
       <div className='flex justify-center'>
         {/* 확대, 축소 버튼 */}
         <div className='flex justify-between px-[54px] my-4 w-[70rem] max-[640px]:w-[22rem] max-[800px]:w-[35rem] max-[1300px]:w-[35rem]'>
-          <div className='flex justify-end items-center'>
-            <Link to='/ebook'>
-              <div className='w-32 h-12 inline-flex items-center justify-center px-4 py-2  text-white bg-signatureColor font-semibold rounded-lg shadow-sm max-[640px]:w-[6rem] max-[640px]:h-[2.5rem] hover:opacity-90'>
-                나가기
-              </div>
-            </Link>
-          </div>
           <div className='flex'>
             <button
               className='cursor-pointer p-1 border-[1px] rounded-xl bg-signatureColor w-[40px] h-[40px] flex justify-center items-center'
@@ -90,6 +83,14 @@ export default function BookViewer({ content }) {
             >
               <FaMinus className='text-xl text-white' />
             </button>
+          </div>
+
+          <div className='flex justify-end items-center'>
+            <Link to='/ebook'>
+              <div className='w-32 h-12 inline-flex items-center justify-center px-4 py-2  text-white bg-signatureColor font-semibold rounded-lg shadow-sm max-[640px]:w-[6rem] max-[640px]:h-[2.5rem] hover:opacity-90'>
+                나가기
+              </div>
+            </Link>
           </div>
         </div>
       </div>

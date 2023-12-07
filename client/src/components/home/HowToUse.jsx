@@ -50,15 +50,15 @@ const HowToUse = () => {
                     <div className='mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left'>
                       <Dialog.Title
                         as='h3'
-                        className='text-base font-semibold leading-6 text-gray-900'
+                        className='text-lg font-semibold leading-6 text-gray-900 mb-5'
                       >
                         집찾기 페이지 입니다
                       </Dialog.Title>
                       <div className='mt-2'>
                         <p className='text-lg text-black'>
-                          현 위치에서 집으로 가는 가장 빠르고 가까운 길을
-                          알려드립니다 상단에 집모양 버튼을 눌러서 경로를
-                          확인하세요
+                          지금 당신은 어디에 계신가요? <br /> 우리 함께 가장
+                          빠른 길을 찾아 집으로 가요! <br /> 상단의 집 모양
+                          버튼을 누르면 길을 확인 할 수 있어요
                         </p>
                       </div>
                     </div>

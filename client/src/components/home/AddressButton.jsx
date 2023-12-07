@@ -1,48 +1,40 @@
 import React from 'react';
 import { RiHomeHeartFill } from 'react-icons/ri';
 import axios from 'axios';
-
-// export default function AddressButton({ setUserAddress }) {
-//   const handleClick = async () => {
-//     try {
-//       const response = await axios({
-//         method: 'POST',
-//         url: `${process.env.REACT_APP_SERVER}/findhome`,
-//         withCredentials: true,
-//       });
-
-//       setUserAddress(response.data);
-//       console.log(response.data);
-//       // navigate(`/essay/detail/${EssayId}`);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <button onClick={handleClick} className=' w-30 text-[#2e375d]'>
-//         <RiHomeHeartFill className=' w-36 h-20 drop-shadow-md' />
-//         <p className=' text-lg text-black font-bold'>집찾기</p>
-//       </button>
-//     </>
-//   );
-// }
+import { useNavigate } from 'react-router-dom';
 
 export default function AddressButton({ setUserAddress }) {
-  const handleClick = () => {
-    setUserAddress(' 서울특별시 마포구 염리동 숭문길 47');
-    // setUserAddress('서울특별시 동작구 상도로41가길 17');
+  const isLogin = localStorage.getItem('isLogin');
+
+  const handleClick = async () => {
+    if (isLogin) {
+      try {
+        const response = await axios({
+          method: 'POST',
+          url: `${process.env.REACT_APP_SERVER}/findhome`,
+          withCredentials: true,
+        });
+
+        setUserAddress(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        alert('로그인이 필요합니다.');
+        window.location.href = '/login';
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
     <>
-      <div className='flex items-center justify-center'>
+      <div className='items-center'>
         <button onClick={handleClick} className='btn '>
-          <RiHomeHeartFill
-            style={{ width: 'fit-content' }}
-            className=' h-12 w-12'
-          />
+          <RiHomeHeartFill className=' h-12 w-full' />
           <p className='text-lg text-black font-bold'>집찾기</p>
         </button>
       </div>
