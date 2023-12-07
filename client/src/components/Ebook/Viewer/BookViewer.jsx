@@ -21,7 +21,7 @@ export default function BookViewer({ content }) {
       return resultArray;
     }
 
-    const chunkSize = 450;
+    const chunkSize = 640;
 
     const result = splitTextIntoArray(content, chunkSize);
     setBookContent((prevBookContent) => [...prevBookContent, ...result]);
