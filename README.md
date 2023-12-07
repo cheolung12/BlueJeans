@@ -31,6 +31,7 @@
 <br/><br />
 
 # 1. 프로젝트 소개
+
 <div align="center">
 
 ![Bluejeans (1)](https://github.com/cheolung12/BlueJeans/assets/94975268/34f14682-8b9d-4d23-9385-00a196e692b3)
@@ -39,15 +40,15 @@
 <b>
 블루진스는 즐거운 시니어 라이프를 위한 디지털 환경을 제공해주는 웹 서비스입니다.</b>
 
--   👩‍💼 노인 일자리 공고 게시판: 여전히 일에 대한 열정이 있는 시니어를 위한 맞춤 공고입니다.
+- 👩‍💼 노인 일자리 공고 게시판: 여전히 일에 대한 열정이 있는 시니어를 위한 맞춤 공고입니다.
 
--   📚 eBook (전자책): 언제 어디서든 간편하게 책을 읽을 수 있습니다. 나만의 서재를 만들어보세요.
+- 📚 eBook (전자책): 언제 어디서든 간편하게 책을 읽을 수 있습니다. 나만의 서재를 만들어보세요.
 
--   💬 챗봇 서비스: OPEN AI API를 활용한 챗봇을 통해 다양한 주제로 대화를 할 수 있습니다.
+- 💬 챗봇 서비스: OPEN AI API를 활용한 챗봇을 통해 다양한 주제로 대화를 할 수 있습니다.
 
--   ✒️ 백일장 이벤트: 노년의 특별한 순간을 기록하고 공유하여 소중한 경험을 함께 나눕니다.
-    >
--   🏡 집찾기 서비스: 집 주소 등록으로 언제 어디서나 안전한 경로를 제공하여 노인들의 실종 사고를 예방합니다.
+- ✒️ 백일장 이벤트: 노년의 특별한 순간을 기록하고 공유하여 소중한 경험을 함께 나눕니다.
+  >
+- 🏡 집찾기 서비스: 집 주소 등록으로 언제 어디서나 안전한 경로를 제공하여 노인들의 실종 사고를 예방합니다.
 
 <b>이러한 기능들을 통해 노인 고독사와 실종등 시니어 관련 사회적 문제를 해결하는 것이 목표입니다.</b>
 
@@ -144,7 +145,28 @@ Swagger 활용 -> 로컬에서 서버 실행 후 아래링크로 접속
 
 ## 5. 기능 소개
 
-<br />
+<img width="1421" alt="일자리" src="https://github.com/cheolung12/BlueJeans/assets/128415146/14774886-7405-410c-8bd7-55535f793baa">
+
+> 집근처 일자리 정보를 최신순 또는 인기순으로 확인이 가능합니다
+
+![ eBookBasicFont](https://github.com/cheolung12/BlueJeans/assets/128415146/786cdeef-f993-4927-9ef6-78528e0cd1cf)
+
+> 기본 사이즈
+
+![eBookLargeFont](https://github.com/cheolung12/BlueJeans/assets/128415146/99926c47-64f4-443f-a925-8436aaa44ef7)
+
+> 눈이 불편한 분들도 쉽게 어디서든 책을 읽을 수 있어요!
+
+<br>
+
+![jinsu](https://github.com/cheolung12/BlueJeans/assets/128415146/c8046a0a-38d6-4d3f-8127-20b6cbf31303)
+
+> 심심한 어르신들의 말동무가 되어주는 진수도 있어요 🤖
+
+<img width="1125" alt="스크린샷 2023-12-08 오전 3 16 46" src="https://github.com/cheolung12/BlueJeans/assets/128415146/1afb341f-91f2-4d86-b167-3d0ee62b743a">
+
+> 길을 잃더라도 집을 찾을 수 있어요
+> <br />
 
 ## 6. 로컬 실행 방법
 
@@ -154,21 +176,21 @@ Swagger 활용 -> 로컬에서 서버 실행 후 아래링크로 접속
 
 1. 로컬에서 teminal을 열어 아래의 명령어를 실행
 
-    ```
-    git clone https://github.com/cheolung12/BlueJeans.git
-    ```
+   ```
+   git clone https://github.com/cheolung12/BlueJeans.git
+   ```
 
 2. 복제가 완료되면 아래의 명령어를 실행하여 웹 클라이언트 폴더로 이동
 
-    ```
-    cd client
-    ```
+   ```
+   cd client
+   ```
 
 3. 실행에 필요한 패키지들을 설치하고 실행
-    ```
-    yarn install
-    yarn start
-    ```
+   ```
+   yarn install
+   yarn start
+   ```
 
 ### Backend
 
@@ -176,14 +198,14 @@ Swagger 활용 -> 로컬에서 서버 실행 후 아래링크로 접속
 
 1. 로컬에서 teminal을 열어 아래의 명령어를 실행
 
-    ```
-    git clone https://github.com/cheolung12/BlueJeans.git
-    ```
+   ```
+   git clone https://github.com/cheolung12/BlueJeans.git
+   ```
 
 2. 복제가 완료되면 아래의 명령어를 실행하여 웹 서버 폴더로 이동
 
-    ```
-    cd server
-    ```
+   ```
+   cd server
+   ```
 
 3. `/src/main/java/com.bluejeans.server/ServerApplication.java` 실행

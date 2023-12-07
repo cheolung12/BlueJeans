@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const Map = ({ userAddress }) => {
-  const [directionData, setDirectionData] = useState(null);
-  const [houseCoordinates, setHouseCoordinates] = useState(null);
-  const [nowCoordinates, setNowCoordinates] = useState(null);
-
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_MAP_JS_KEY}&autoload=false`;
@@ -39,7 +35,6 @@ const Map = ({ userAddress }) => {
                   const y = firstResult.y;
 
                   const houseCoordinates = new window.kakao.maps.LatLng(y, x);
-                  setHouseCoordinates(houseCoordinates);
 
                   houseMarker(map, houseCoordinates, '마커 메시지');
 
@@ -76,9 +71,6 @@ const Map = ({ userAddress }) => {
     });
 
     map.setCenter(locPosition);
-
-    // 현재 위치 좌표를 상태에 저장
-    setNowCoordinates(locPosition);
   };
 
   const houseMarker = (map, locPosition) => {
@@ -123,8 +115,6 @@ const Map = ({ userAddress }) => {
 
       const data = await response.json();
       const last = data.routes[0].sections[0].guides;
-      setDirectionData(data);
-      setDirectionData(data);
 
       // 폴리라인을 생성하고 지도에 추가
       const pathCoordinates = last.map((guide) => {
