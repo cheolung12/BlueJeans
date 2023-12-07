@@ -18,9 +18,9 @@ export default function WithDrawal() {
   };
 
   return (
-    <div className='mt-48 m-3 flex justify-center flex-col items-center space-y-2'>
+    <div className='text-center mt-28'>
       <div
-        className='text-gray-600 rounded-md px-3 py-2 cursor-pointer'
+        className='text-gray-800 font-semibold rounded-md px-3 py-2 cursor-pointer'
         onClick={exit}
       >
         회원 탈퇴

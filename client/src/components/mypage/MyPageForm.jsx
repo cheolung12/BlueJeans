@@ -222,7 +222,7 @@ export default function MyPageForm({ userInfo, setUserInfo }) {
             </div>
 
             <div className="flex flex-col justify-center items-center">
-                <div className="inline-flex items-center justify-center   text-gray-600  cursor-pointer font-semibold" onClick={editPwToggle}>
+                <div className="ml-2 inline-flex items-center justify-center   text-gray-600  cursor-pointer font-semibold" onClick={editPwToggle}>
                     {!editPW ? (
                         <span className="flex items-center">
                             비밀번호 변경하기
@@ -271,7 +271,7 @@ export default function MyPageForm({ userInfo, setUserInfo }) {
             )}
             <div className="flex flex-col justify-center items-center w-full">
                 <button
-                    className="mt-10 w-1/2 h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg hover:opacity-90 "
+                    className="mt-6 ml-2 w-[360px] h-[3rem] inline-flex items-center justify-center px-2 py-2  text-white bg-signatureColor rounded-lg hover:opacity-90 "
                     type="submit"
                 >
                     수정 하기
