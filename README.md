@@ -31,7 +31,7 @@
 <br/><br />
 
 # 1. 프로젝트 소개
-<div style="text-align: center;">
+<div align="center">
 
 ![Bluejeans (1)](https://github.com/cheolung12/BlueJeans/assets/94975268/34f14682-8b9d-4d23-9385-00a196e692b3)
 
