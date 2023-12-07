@@ -5,11 +5,13 @@ import ResButton from '../../components/common/ResButton';
 import ContentCard from '../../components/Ebook/Detail/ContentCard';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
+import EbookDetailSkeleton from '../../components/Ebook/Detail/EbookDetailSkeleton';
 
 export default function EBookDetail() {
   const { bookId } = useParams();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
   const [booksContent, setBooksContent] = useState({
     title: '',
     id: '',
@@ -48,6 +50,7 @@ export default function EBookDetail() {
         setBooksContent(response.data);
         setIsHeart(response.data.heart);
         setAllIsHeart(response.data.like);
+        setLoading(false);
 
         console.log(response);
         // console.log('찜하기 여부', response.data.heart);
@@ -90,44 +93,48 @@ export default function EBookDetail() {
               boxShadow: ' rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
             }}
           >
-            <div className='relative overflow-hidden rounded-t-lg'>
-              <div className='relative'>
-                {/* 배경이미지 */}
-                <img
-                  src={booksContent.thumbnail}
-                  alt='배경'
-                  className='w-96 h-[26rem] blur-lg rounded-2xl object-cover'
-                />
+            {loading ? (
+              <EbookDetailSkeleton />
+            ) : (
+              <div className='relative overflow-hidden rounded-t-lg'>
+                <div className='relative'>
+                  {/* 배경이미지 */}
+                  <img
+                    src={booksContent.thumbnail}
+                    alt='배경'
+                    className='w-96 h-[26rem] blur-lg rounded-2xl object-cover'
+                  />
 
-                {/* 그라데이션 */}
-                <div
-                  className='absolute top-[12rem] left-0 w-full h-[10rem] z-1'
-                  style={{
-                    background:
-                      'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.18) 20%, rgba(255, 255, 255, 0.42) 40%, rgba(255, 255, 255, 0.68) 60%, rgba(255, 255, 255, 0.88) 80%, rgb(255, 255, 255) 100%)',
-                  }}
-                ></div>
+                  {/* 그라데이션 */}
+                  <div
+                    className='absolute top-[12rem] left-0 w-full h-[10rem] z-1'
+                    style={{
+                      background:
+                        'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.18) 20%, rgba(255, 255, 255, 0.42) 40%, rgba(255, 255, 255, 0.68) 60%, rgba(255, 255, 255, 0.88) 80%, rgb(255, 255, 255) 100%)',
+                    }}
+                  ></div>
 
-                {/* 책 이미지 */}
-                <img
-                  src={booksContent.thumbnail}
-                  alt='이미지'
-                  className='w-[11rem] h-[16rem] absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1'
-                  style={{
-                    WebkitBoxShadow:
-                      '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                    MozBoxShadow:
-                      '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                    MsBoxShadow:
-                      '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                    OBoxShadow:
-                      '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                    boxShadow:
-                      '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
-                  }}
-                />
+                  {/* 책 이미지 */}
+                  <img
+                    src={booksContent.thumbnail}
+                    alt='이미지'
+                    className='w-[11rem] h-[16rem] absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1'
+                    style={{
+                      WebkitBoxShadow:
+                        '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                      MozBoxShadow:
+                        '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                      MsBoxShadow:
+                        '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                      OBoxShadow:
+                        '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                      boxShadow:
+                        '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className='flex flex-col items-center justify-evenly w-[18rem] h-[29rem]'>
               <div className='text-center flex flex-col h-44 justify-between px-7'>

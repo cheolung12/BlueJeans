@@ -125,7 +125,7 @@ export default function EBook() {
         >
           <div className='flex flex-col w-full h-full justify-evenly '>
             <p className='font-bold leading-9 mb-2 text-xl ml-3'>
-              지금 서점 인기 도서 👍🏻
+              지금 서점 추천 도서
             </p>
             <div className='flex flex-wrap justify-center sm:justify-between w-full'>
               {popularBook.map((book, index) => (
