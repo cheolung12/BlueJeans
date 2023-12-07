@@ -1,6 +1,7 @@
 import React from 'react';
 import { RiHomeHeartFill } from 'react-icons/ri';
 import axios from 'axios';
+import MainLast from '../main/MainLast.css';
 
 export default function AddressButton({ setUserAddress }) {
   const isLogin = localStorage.getItem('isLogin');
@@ -32,7 +33,7 @@ export default function AddressButton({ setUserAddress }) {
   return (
     <>
       <div className='items-center'>
-        <button onClick={handleClick} className='btn '>
+        <button onClick={handleClick} className='btn'>
           <RiHomeHeartFill className=' h-12 w-full' />
           <p className='text-lg text-black font-bold'>집찾기</p>
         </button>
