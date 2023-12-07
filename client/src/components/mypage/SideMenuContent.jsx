@@ -34,7 +34,7 @@ export default function SideMenuContent({ sideMenu, userInfo, setUserInfo }) {
                     <div className="space-y-3">
                         <div className="mt-3 mb-8 font-semibold lg:text-3xl text-2xl ">내가 작성한 게시물</div>
                         <div className="w-full flex justify-start">
-                            <div className="w-[580px] justify-items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 lg:w-[580px] 2xl:w-[860px]">
+                            <div className="w-full grid grid-cols-2 xl:grid-cols-3 gap-10">
                                 <MyPagePosts postLists={userInfo.writedPost} />
                             </div>
                         </div>
