@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function TopNavbar() {
+export default function TopNavbar({ isMain }) {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -21,7 +21,7 @@ export default function TopNavbar() {
     };
 
     return (
-        <nav className="bg-white  w-full z-50">
+        <nav className={ !isMain ? 'bg-white  w-full z-50' : 'bg-transparent absolute w-full z-50'}>
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl py-3 px-4">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     {/* <img src="/images/logo.png" className="h-8" alt="Flowbite Logo"  /> */}

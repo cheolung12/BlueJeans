@@ -8,7 +8,7 @@ export default function JobCardSkeleton() {
             <div className="flex flex-wrap justify-between">
                 {[...Array(10)].map((_, index) => (
                     <div className="p-2 lg:w-1/2 w-full" key={index}>
-                        <div className="p-2 h-48 flex flex-row justify-center border rounded-lg shadow-md">
+                        <div className="p-2 h-48 flex flex-row justify-center shadow-sm">
                             <div class="m-1 w-1/2">
                                 <Skeleton className=" w-full h-full" />
                             </div>

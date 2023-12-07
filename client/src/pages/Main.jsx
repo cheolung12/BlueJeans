@@ -32,11 +32,7 @@ import HowToUse from '../components/home/HowToUse';
 import PopUps from '../components/main/PopUps';
 import Information from '../components/main/Information';
 
-//////////state/////////
 
-window.addEventListener('scroll', () => {
-  // console.log(window.scrollX, window.scrollY);
-});
 
 export default function Main() {
   <head>
@@ -47,65 +43,13 @@ export default function Main() {
   </head>;
 
   const [mainData, setMainData] = useState([]);
-
-  const [isVisible, setIsVisible] = useState(false);
-  const [isVisible1, setIsVisible1] = useState(false);
-  const [isVisible2, setIsVisible2] = useState(false);
+  const bookTextRef = useRef(null);
+  const bookSliderRef = useRef(null);
+  const essayTextRef = useRef(null);
+  const essayContainerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-      if (scrollY >= 800) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-      if (scrollY >= 900) {
-        setIsVisible1(true);
-      } else {
-        setIsVisible1(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-      if (scrollY >= 1000) {
-        setIsVisible2(true);
-      } else {
-        setIsVisible2(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  //책전체
-  useEffect(() => {
+    // 데이터 받아오기
     const fetchData = async () => {
       try {
         const res = await axios({
@@ -113,12 +57,36 @@ export default function Main() {
           url: `${process.env.REACT_APP_SERVER}/main`,
         });
         setMainData(res.data);
-        // console.log('yk', res.data);
       } catch (error) {
         console.log('error', error);
       }
     };
     fetchData();
+  }, []);
+
+  // 스크롤시 이벤트 등록
+  useEffect(() => {
+    const handleScroll = () => {
+      checkAndAddClass(bookTextRef, 'animate__fadeInLeft');
+      checkAndAddClass(bookSliderRef, 'animate__fadeIn');
+      checkAndAddClass(essayTextRef, 'animate__fadeIn');
+      checkAndAddClass(essayContainerRef, 'animate__fadeInUp');
+    };
+
+    const checkAndAddClass = (ref, animationName) => {
+      if (ref.current) {
+        const elementPosition = ref.current.offsetTop;
+        const scrollPosition = window.scrollY + window.innerHeight;
+        if (scrollPosition > elementPosition + 50) {
+          ref.current.classList.add('animate__animated', animationName);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const ebookList = mainData?.ebookList || [];
@@ -157,89 +125,75 @@ export default function Main() {
           </div>
         </div>
         {/* 1 */}
-        <div className='h-[37.5rem] bg-[#F2D001] flex flex-col items-center lg:flex-row lg:justify-center'>
-          <div className='w-full relative flex items-center justify-center'>
-            <div className='text-center mt-3'>
-              <div className='sm:text-4xl text-3xl pb-7 pt-4 font-bold '>
-                오늘의 추천도서
-              </div>
-              <div>
-                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
-                  1970년대의 감성부터 현대까지
-                </div>
-                <div className='text-xl sm:text-2xl font-[SUIT-Regular]'>
-                  지금 봐도 세련된 문장으로 감동을 주는
-                </div>
-                <div className='text-xl sm:text-2xl mb-5'>
-                  작품을 만나 보세요!
-                </div>
-              </div>
+        <div className='w-full h-[37.5rem] bg-[#F2D001] flex flex-col items-center lg:flex-row lg:justify-center px-28'>
+          <div ref={bookTextRef} className='w-1/3 items-center justify-center'>
+            <div className='sm:text-6xl text-3xl mb-12 font-bold '>
+              오늘의 추천도서
+            </div>
+            <div className='space-y-1 text-lg sm:text-xl '>
+              <div>1970년대의 감성부터 현대까지</div>
+              <div>지금 봐도 세련된 문장으로 감동을 주는</div>
+              <div>작품을 만나 보세요!</div>
             </div>
           </div>
+          <div className='w-2/3 h-full flex items-center justify-center'>
+            <Swiper
+              ref={bookSliderRef}
+              className='w-full'
+              slidesPerView={1}
+              loop={true}
+              centeredSlides={true} //중앙설정
+              autoplay={{
+                delay: 2500,
+              }}
+              breakpoints={{
+                376: {
+                  slidesPerView: 1,
+                },
+                1024: {
+                  slidesPerView: 2,
+                },
+                1280: {
+                  slidesPerView: 3,
+                },
+              }}
+              spaceBetween={40}
+              modules={[Autoplay, Pagination, Navigation]}
+            >
+              {/* 요청해서 받은 랜덤 10개 값  */}
 
-          <Swiper
-            className='w-[19rem] h-[28rem] lg:w-[83rem] xl:w-[130rem]'
-            slidesPerView={1}
-            loop={true}
-            centeredSlides={false} //중앙설정
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            breakpoints={{
-              376: {
-                slidesPerView: 1,
-                spaceBetween: 10, //여백
-              },
-              1024: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-
-              1280: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-            }}
-            spaceBetween={10}
-            navigation={true}
-            modules={[Autoplay, Navigation]}
-          >
-            {/* 요청해서 받은 랜덤 10개 값  */}
-
-            {ebookList.map((book) => (
-              <SwiperSlide className='h-full w-full' key={book.id}>
-                <Link to={`/ebook/detail/${book.id}`}>
-                  <div>
+              {ebookList.map((book) => (
+                <SwiperSlide className='h-full' key={book.id}>
+                  <Link to={`/ebook/detail/${book.id}`} className=''>
                     <img
                       src={book.thumbnail}
                       alt={book.title}
-                      className='h-[25rem] w-80 p-5 md:p-0'
+                      className='h-[25rem] w-[300px] rounded-lg'
                     />
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
         {/* 2 */}
         {/* 좋아요 많은 순서대로 3개 보여주기 justify-evenly  */}
         {/* className={`fade-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`} */}
-        <div className='bg-[#5495B1] w-full h-full'>
-          <div className='h-full w-full text-center justify-center items-center pt-10'>
+        <div className='bg-[#5495B1] w-full h-full px-28'>
+          <div
+            ref={essayTextRef}
+            className='h-full w-full text-center justify-center items-center pt-10'
+          >
             {/* <div className='text-center mt-3'> */}
             <div className='flex flex-col'>
               <div className='sm:text-4xl text-3xl pb-5 font-bold text-white'>
                 오늘의 문학왕
               </div>
               <div className=''>
-                <div className='w-full text-xl sm:text-2xl font-[SUIT-Regular] text-white'>
+                <div className='w-full text-xl sm:text-2xl text-white'>
                   오늘의 문학왕은 누구일까요?
                 </div>
-                <div className='w-full text-xl sm:text-2xl font-[SUIT-Regular] text-white'>
+                <div className='w-full text-xl sm:text-2xl text-white'>
                   당신의 작품을 올리고 문학왕에 도전하세요!
                 </div>
               </div>
@@ -248,19 +202,23 @@ export default function Main() {
         </div>
 
         <div className='bg-[#5495B1] h-[35rem] w-full flex justify-evenly max-[1200px]:justify-center'>
-          <div className='flex h-full w-[70%] max-[800px]:justify-center max-[1200px]:justify-between items-center pl-4 pr-4 justify-between'>
-            {isVisible && essay0 && (
+          <div
+            ref={essayContainerRef}
+            className='flex h-full w-[70%] max-[800px]:justify-center max-[1200px]:justify-between items-center pl-4 pr-4 justify-between'
+          >
+            
+            {essay0 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
-                    transform: isVisible ? 'translateY(0)' : 'translateY(100%)',
-                    boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
-                    WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
-                    MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
-                    animationDuration: 'var(--animate-duration)',
-                    animationDelay: 'var(--animate-delay)',
+                    backgroundImage: 'url("/images/gold.png")',
+                    backgroundSize: 'cover', // 배경 이미지를 화면에 맞게 조절
+                    backgroundPosition: 'center',
+                    // boxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    // WebkitBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
+                    // MozBoxShadow: '22px 22px 8px -4px rgba(0,0,0,0.68)',
                   }}
-                  className='animate__animated animate__fadeIn w-60 h-96 bg-white shadow-2xl-black relative flex justify-center text-center rounded-md'
+                  className='w-60 h-96'
                 >
                   <div className='self-center'>
                     <div className='h-10 w-full'>
@@ -285,7 +243,7 @@ export default function Main() {
                 </div>
               </Link>
             )}
-            {isVisible1 && essay1 && (
+            {essay1 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
@@ -316,7 +274,7 @@ export default function Main() {
                 </div>
               </Link>
             )}
-            {isVisible2 && essay2 && (
+            {essay2 && (
               <Link to={`/essay/detail/${essayList.id}`}>
                 <div
                   style={{
@@ -329,7 +287,6 @@ export default function Main() {
                   <div className='self-center mt-10'>
                     <div className='flex justify-center'>
                       <div className='hidden lg:block sm:block sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-slate-500 shadow-xl rounded-xl  text-center'>
-                        {' '}
                         <img
                           className='w-full h-full object-cover'
                           src={essay2.img_path}
@@ -535,10 +492,6 @@ export default function Main() {
                         <FaPhone className='self-center mr-2' />
                         <span>{recruit0.contact}</span>
                       </div>
-                      {/* <div className='mb-4 flex items-center'>
-                        <BiCommentDetail className='self-center mr-2' />
-                        <span>{recruit0.content}</span>
-                      </div> */}
                     </div>
                     <div className='flex justify-end'>
                       <PiCurrencyKrwFill className='self-center mr-2' />
