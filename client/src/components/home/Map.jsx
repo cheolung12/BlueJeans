@@ -1,293 +1,158 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Sktelecom from './Skeleton';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-function Map({ userAddress }) {
-  const mapContainerRef = useRef();
-  const mapInstanceRef = useRef(null);
-  const markersRef = useRef([]);
-  let resultDrawArr = [];
-
-  const [endMarkerPosition, setEndMarkerPosition] = useState(null);
-  const [currentMarkerPosition, setCurrentMarkerPosition] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [mapVisible, setMapVisible] = useState(false);
-  const [showSktelecom, setShowSkelecom] = useState(false);
-  const [routeLine, setRouteLine] = useState();
-  const [arrPoint, setArrPoint] = useState([]);
-
-  const imgUrlS =
-    'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-
-  const imgUrlE =
-    'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+const Map = ({ userAddress }) => {
+  const [directionData, setDirectionData] = useState(null);
+  const [houseCoordinates, setHouseCoordinates] = useState(null);
+  const [nowCoordinates, setNowCoordinates] = useState(null);
 
   useEffect(() => {
-    const handleGeoLocation = async () => {
-      try {
-        const position = await getCurrentPosition();
-        const nowPosition = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        };
+    const script = document.createElement('script');
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_MAP_JS_KEY}&autoload=false`;
+    document.head.appendChild(script);
 
-        if (!mapInstanceRef.current) {
-          initTmap(nowPosition);
-          setMapVisible(true);
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        const mapContainer = document.getElementById('map');
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(async function (position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const mapOption = {
+              center: new window.kakao.maps.LatLng(lat, lon),
+              level: 3,
+            };
+
+            const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+            const locPosition = new window.kakao.maps.LatLng(lat, lon);
+            const message = '<div style="padding:5px;">여기 있으시군요!</div>';
+            nowMarker(map, locPosition, message);
+
+            const geocoder = new window.kakao.maps.services.Geocoder();
+            const callback = function (result, status) {
+              if (status === window.kakao.maps.services.Status.OK) {
+                if (result.length > 0) {
+                  const firstResult = result[0];
+                  const x = firstResult.x;
+                  const y = firstResult.y;
+
+                  const houseCoordinates = new window.kakao.maps.LatLng(y, x);
+                  setHouseCoordinates(houseCoordinates);
+
+                  houseMarker(map, houseCoordinates, '마커 메시지');
+
+                  // 사용자의 주소를 기반으로 좌표를 가져오면서 지도가 다 그려진 상태에서 호출
+                  fetchData(map, locPosition, houseCoordinates);
+                }
+              }
+            };
+
+            geocoder.addressSearch(userAddress, callback);
+          });
         }
-      } catch (error) {
-        console.error('에러:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const getCurrentPosition = () => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
       });
     };
-
-    handleGeoLocation();
-  }, []);
-
-  //////////////////////////////////////////
-  useEffect(() => {
-    if (userAddress) {
-      setLoading(true);
-      reAddress(userAddress);
-      drawWalkingRoute();
-    }
   }, [userAddress]);
 
-  const initTmap = (nowPosition) => {
-    const map = new window.Tmapv2.Map(
-      mapContainerRef.current.id,
-      {
-        center: new window.Tmapv2.LatLng(
-          nowPosition.latitude,
-          nowPosition.longitude
-        ),
-        zoom: 17,
-      },
-      []
-    );
-    console.log('nowPosition', nowPosition);
+  const nowMarker = (map, locPosition) => {
+    // 현재 위치 마커
+    const imageSrc =
+      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/debby-hudson-FmCSSSGge-0-unsplash.jpg';
+    const imageSize = new window.kakao.maps.Size(64, 69);
+    const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
-    const currentMarker = new window.Tmapv2.Marker({
-      position: new window.Tmapv2.LatLng(
-        nowPosition.latitude,
-        nowPosition.longitude
-      ),
-      icon: imgUrlS,
-      iconSize: new window.Tmapv2.Size(30, 40),
+    const markerImage = new window.kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
+
+    const marker = new window.kakao.maps.Marker({
       map: map,
+      position: locPosition,
+      image: markerImage,
     });
 
-    mapInstanceRef.current = map;
-    markersRef.current.push(currentMarker);
-    setCurrentMarkerPosition(nowPosition);
+    map.setCenter(locPosition);
+
+    // 현재 위치 좌표를 상태에 저장
+    setNowCoordinates(locPosition);
   };
 
-  //주소를 좌표로 변환해주는 함수
-  const reAddress = async (endpoint) => {
-    try {
-      const apiUrl = `https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&callback=result&coordType=WGS84GEO&fullAddr=${endpoint}&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
-      const response = await fetch(apiUrl);
+  const houseMarker = (map, locPosition) => {
+    // 집 위치 마커
+    const imageSrc =
+      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/debby-hudson-FmCSSSGge-0-unsplash.jpg';
+    const imageSize = new window.kakao.maps.Size(64, 69);
+    const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
-      if (!response.ok) {
-        throw new Error('네트워크 응답이 올바르지 않습니다.');
-      }
+    const markerImage = new window.kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
 
-      const data = await response.json();
+    const marker = new window.kakao.maps.Marker({
+      map: map,
+      position: locPosition,
+      image: markerImage,
+    });
 
-      //좌표로 변경된 집주소 데이터
-      const resultCoordinate = data.coordinateInfo.coordinate[0];
-
-      let startLatitude, startLongitude;
-
-      if (resultCoordinate) {
-        if (resultCoordinate.lon.length > 0) {
-          startLongitude = resultCoordinate.lon;
-          startLatitude = resultCoordinate.lat;
-        } else {
-          startLongitude = resultCoordinate.newLon;
-          startLatitude = resultCoordinate.newLat;
-        }
-
-        //집주소 마커 스테이트
-        setEndMarkerPosition({
-          latitude: startLatitude,
-          longitude: startLongitude,
-        });
-
-        console.log('start', { startLatitude, startLongitude });
-        const house = { startLatitude, startLongitude };
-        console.log('house', house);
-
-        if (mapInstanceRef.current) {
-          markersRef.current.forEach((marker) => marker.setMap(null));
-
-          //마커
-          const currentMarker = new window.Tmapv2.Marker({
-            position: new window.Tmapv2.LatLng(
-              currentMarkerPosition.latitude,
-              currentMarkerPosition.longitude
-            ),
-            icon: imgUrlS,
-            iconSize: new window.Tmapv2.Size(30, 40),
-            map: mapInstanceRef.current,
-          });
-          console.log('currentMarkerPosition', currentMarkerPosition);
-          markersRef.current.push(currentMarker);
-
-          //마커
-          const endMarker = new window.Tmapv2.Marker({
-            position: new window.Tmapv2.LatLng(startLatitude, startLongitude),
-            icon: imgUrlE,
-            iconSize: new window.Tmapv2.Size(30, 40),
-            map: mapInstanceRef.current,
-          });
-
-          markersRef.current.push(endMarker);
-
-          const lineCoordinates = [
-            {
-              latitude: currentMarkerPosition.latitude,
-              longitude: currentMarkerPosition.longitude,
-            },
-            { latitude: startLatitude, longitude: startLongitude },
-          ];
-
-          //drawLine 함수만 다시 정의해서 LindCoordinates 넣기
-          // drawLine(lineCoordinates);
-          //ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅜㅠㅜㅠㅜㅠㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ
-
-          centerMap(currentMarkerPosition, {
-            latitude: startLatitude,
-            longitude: startLongitude,
-          });
-          setMapVisible(true);
-          setShowSkelecom(false);
-        }
-      } else {
-        console.log('주소에 대한 좌표 정보가 없습니다.');
-        setMapVisible(false);
-        setShowSkelecom(false);
-      }
-    } catch (error) {
-      console.error('에러:', error);
-    } finally {
-      setLoading(false);
-    }
+    map.setCenter(locPosition);
   };
 
-  //좌표 중간 다시 찍어서 보여주기
-  const centerMap = (position1, position2) => {
-    if (mapInstanceRef.current && position1 && position2) {
-      const bounds = new window.Tmapv2.LatLngBounds();
-      bounds.extend(
-        new window.Tmapv2.LatLng(position1.latitude, position1.longitude)
-      );
-      bounds.extend(
-        new window.Tmapv2.LatLng(position2.latitude, position2.longitude)
-      );
-
-      const center = bounds.getCenter();
-      mapInstanceRef.current.setCenter(center);
-    }
-  };
-
-  //길 그리기
-  const drawWalkingRoute = async () => {
-    console.log(endMarkerPosition);
-    const requestData = {
-      startX: '126.945319',
-      startY: '37.548575',
-      endX: '126.9456645',
-      endY: '37.5476279',
-      startName: '출발지',
-      endName: '도착',
-    };
-
-    const apiUrl = `https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&appKey=${process.env.REACT_APP_T_MAP_API_KEY}`;
+  const fetchData = async (map, nowCoordinates, houseCoordinates) => {
+    const REST_API_KEY = process.env.REACT_APP_KAKAO_API_MAP_REST_KEY;
+    const origin = `${nowCoordinates.getLng()},${nowCoordinates.getLat()}`;
+    const destination = `${houseCoordinates.getLng()},${houseCoordinates.getLat()}`;
+    const url = `https://apis-navi.kakaomobility.com/v1/directions?origin=${origin}&destination=${destination}&waypoints=&priority=RECOMMEND&car_fuel=GASOLINE&car_hipass=false&alternatives=false&road_details=false`;
 
     try {
-      const response = await axios({
-        method: 'POST',
-        url: apiUrl,
-        data: requestData,
+      const response = await fetch(url, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `KakaoAK ${REST_API_KEY}`,
         },
       });
 
-      console.log('API 응답:', response);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-      const resultData = response.data;
-      console.log('경로 좌표들!!!', resultData);
+      const data = await response.json();
+      console.log('data!!!!!', data);
+      console.log('first', data.routes[0]);
+      console.log('second', data.routes[0].sections);
+      console.log('third', data.routes[0].sections[0].guides);
+      const last = data.routes[0].sections[0].guides;
+      setDirectionData(data);
+      console.log('tqtqtq', last);
+      setDirectionData(data);
 
-      drawLine(resultData);
-    } catch (error) {
-      console.error('에러:', error);
-    }
-  };
-
-  const drawLine = (resultData) => {
-    //경로를 담을 배열
-    let drawInfoArr = [];
-
-    if (resultData.features) {
-      resultData.features.forEach((feature) => {
-        if (feature.geometry.type === 'LineString') {
-          console.log('LineString 좌표:', feature.geometry.coordinates);
-
-          feature.geometry.coordinates.forEach((coord) => {
-            // console.log('coooooooood', coord);
-            const latlng = new window.Tmapv2.Point(coord[0], coord[1]);
-            const convertPoint =
-              new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-            //console.log('convertPoint', convertPoint);
-            const convertChange = new window.Tmapv2.LatLng(
-              convertPoint._lat,
-              convertPoint._lng
-            );
-
-            drawInfoArr.push(convertChange);
-            // drawPolyline(convertChange);
-          });
-        }
+      // 폴리라인을 생성하고 지도에 추가
+      const pathCoordinates = last.map((guide) => {
+        const { x, y } = guide;
+        return new window.kakao.maps.LatLng(y, x);
       });
-      console.log('drawInfoArr', drawInfoArr);
-      drawPolyline(drawInfoArr);
+
+      // 경로를 연결할 폴리라인 생성
+      const polyline = new window.kakao.maps.Polyline({
+        path: pathCoordinates,
+        strokeWeight: 5,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1,
+        strokeStyle: 'solid',
+      });
+
+      polyline.setMap(map);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   };
 
-  const drawPolyline = (coordinates) => {
-    console.log('그려줘...제발...ㅠ');
-    console.log('배열이다', coordinates);
-    let polyline = new window.Tmapv2.Polyline({
-      path: coordinates,
-      strokeColor: '#FF0000',
-      strokeWeight: 7,
-      map: mapInstanceRef.current,
-    });
-    setRouteLine(polyline);
-  };
-  return (
-    <div className='w-full'>
-      {loading && (
-        <div className='text-red'>
-          <Sktelecom className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md' />
-        </div>
-      )}
-      <div
-        ref={mapContainerRef}
-        id='TMapApp'
-        className='w-full h-[25rem] lg:h-[30rem] drop-shadow-md'
-      ></div>
-    </div>
-  );
-}
+  return <div id='map' style={{ width: '100%', height: '400px' }}></div>;
+};
 
 export default Map;
