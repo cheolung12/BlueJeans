@@ -60,14 +60,12 @@ public class MainPageService {
 
     public ResMainDTO getMainPost() {
 
-        List<ResRecruitDTO> RecruitLists = convertRecruitEntitiesToDTOList(recruitRepository.findLatestPosts());
         List<ResEBookDTO> EBookLists = convertEBookEntitiesToDTOList(ebookRepository.findRandomEBooks());
         List<ResEssayDTO> EssayLists = convertEssayEntitiesToDTOList(essayRepository.findFavoritePosts());
 
         return ResMainDTO.builder()
                 .EssayList(EssayLists)
                 .EBookList(EBookLists)
-                .RecruitList(RecruitLists)
                 .build();
     }
 
