@@ -16,7 +16,7 @@ export default function FindHome() {
           className='w-full h-72 relative rounded-3xl'
           style={{
             backgroundImage:
-              'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/ebook/KakaoTalk_Image_2023-12-04-22-08-30.jpeg")',
+              'url("https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/debby-hudson-FmCSSSGge-0-unsplash.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -28,10 +28,10 @@ export default function FindHome() {
           >
             <div className='flex flex-col justify-start w-full pl-0 md:pl-6 pt-6'>
               <div className='text-white text-3xl md:text-5xl text-center md:text-start font-bold pb-3 animate__animated animate__fadeInDown '>
-                집찾기
+                집으로 가는 길
               </div>
               <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
-                굿
+                쉽고 정확한 길 안내로 안전하게 집까지 안내
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@ export default function FindHome() {
         <br />
 
         <div className=' w-full flex justify-center'>
-          <div className='flex flex-col space-y-4 xl:w-[1000px] w-full'>
+          <div className=' flex-col space-y-4 lg:w-[1000px] w-full'>
             <div className='flex justify-between w-full'>
               <AddressButton
                 setUserAddress={setUserAddress}

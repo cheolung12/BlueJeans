@@ -28,6 +28,7 @@ import MainBar from '../components/main/MainBar';
 import axios from 'axios';
 
 import MainLast from '../components/main/MainLast.css';
+import HowToUse from '../components/home/HowToUse';
 
 //////////state/////////
 
