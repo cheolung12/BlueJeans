@@ -29,6 +29,7 @@ import MainBar from '../components/main/MainBar';
 import axios from 'axios';
 
 import MainLast from '../components/main/MainLast.css';
+import HowToUse from '../components/home/HowToUse';
 
 //////////state/////////
 
@@ -42,7 +43,7 @@ export default function Main() {
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
     />
-  </head>
+  </head>;
 
   const [mainData, setMainData] = useState([]);
 
