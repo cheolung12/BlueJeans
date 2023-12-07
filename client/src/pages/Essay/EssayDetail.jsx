@@ -173,7 +173,7 @@ export default function EssayDetail() {
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                   >
                     <div className='flex flex-col h-full justify-center items-center'>
-                      <div className='w-full text-2xl sm:text-3xl font-bold mb-2 text-white text-center'>
+                      <div className='w-full text-2xl sm:text-4xl font-bold mb-2 text-white text-center'>
                         {essayContent.title}
                       </div>
                       {/* <div>
@@ -183,7 +183,7 @@ export default function EssayDetail() {
                           className='w-14 h-14 rounded-full mb-2'
                         />
                       </div> */}
-                      <div className='w-full text-lg font-semibold text-center text-white'>
+                      <div className='w-full text-lg sm:text-2xl font-semibold text-center text-white'>
                         {essayContent.nickname}
                       </div>
                       <div className='w-full text-md text-center text-white mt-2'>
@@ -197,12 +197,7 @@ export default function EssayDetail() {
 
             <section>
               <div className='w-full h-[30rem] text-black mb-8'>
-                <div
-                  className='text-center text-lg pt-4 h-full whitespace-pre border-solid border-gray-300 border-2'
-                  // style={{
-                  //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-                  // }}
-                >
+                <div className='text-center text-lg md:text-xl pt-4 h-full whitespace-pre border-solid border-gray-300 border-2'>
                   {essayContent.content}
                 </div>
               </div>
@@ -221,7 +216,7 @@ export default function EssayDetail() {
                   <div className='text-lg font-bold sm:text-2xl'>
                     {essayContent.title}
                   </div>
-                  <div className='text-sm sm:text-md'>
+                  <div className='text-md sm:text-lg'>
                     {essayContent.nickname}
                   </div>
                 </div>
