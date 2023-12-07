@@ -122,13 +122,8 @@ const Map = ({ userAddress }) => {
       }
 
       const data = await response.json();
-      console.log('data!!!!!', data);
-      console.log('first', data.routes[0]);
-      console.log('second', data.routes[0].sections);
-      console.log('third', data.routes[0].sections[0].guides);
       const last = data.routes[0].sections[0].guides;
       setDirectionData(data);
-      console.log('tqtqtq', last);
       setDirectionData(data);
 
       // 폴리라인을 생성하고 지도에 추가
@@ -140,7 +135,7 @@ const Map = ({ userAddress }) => {
       const polyline = new window.kakao.maps.Polyline({
         path: pathCoordinates,
         strokeWeight: 5,
-        strokeColor: '#FF0000',
+        strokeColor: '#2C86ED',
         strokeOpacity: 1,
         strokeStyle: 'solid',
       });

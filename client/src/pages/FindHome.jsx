@@ -3,9 +3,6 @@ import Map from '../components/home/Map';
 import AddressButton from '../components/home/AddressButton';
 import Info from '../components/home/Info';
 
-import Main from '../components/main/MainLast.css';
-import HowToUse from '../components/home/HowToUse';
-
 export default function FindHome() {
   const [userAddress, setUserAddress] = useState('');
 
@@ -31,7 +28,7 @@ export default function FindHome() {
                 집으로 가는 길
               </div>
               <div className='text-white text-xl md:text-3xl text-center md:text-start animate__animated animate__fadeInDown'>
-                쉽고 정확한 길 안내로 안전하게 집까지 안내
+                쉽고 정확한 길 안내로 안전하게 집까지
               </div>
             </div>
           </div>
