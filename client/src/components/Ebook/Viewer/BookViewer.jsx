@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { PiPlusLight } from 'react-icons/pi';
-import { PiMinusThin } from 'react-icons/pi';
 import { FaPlus } from 'react-icons/fa6';
 import { FaMinus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -23,7 +21,7 @@ export default function BookViewer({ content }) {
       return resultArray;
     }
 
-    const chunkSize = 630;
+    const chunkSize = 450;
 
     const result = splitTextIntoArray(content, chunkSize);
     setBookContent((prevBookContent) => [...prevBookContent, ...result]);
@@ -138,7 +136,7 @@ export default function BookViewer({ content }) {
                   {bookContent.map((item, index) => (
                     <div
                       key={index}
-                      className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem]'
+                      className='w-[35rem] h-4/5 px-14 py-7 tracking-wider leading-loose max-[640px]:w-[22rem] whitespace-pre-wrap'
                       style={{ fontSize: `${textSize}px` }}
                     >
                       {item}
@@ -298,6 +296,10 @@ export default function BookViewer({ content }) {
           <div className='text-center py-7 max-[750px]:hidden max-[1300px]:hidden'>
             {/* 페이지 쪽수 */}
             <span className='my-3'>{count} / 5</span>
+            {/* <span className='my-3'>
+              {((currentMove + 1) % bookContent.length) + 1} /{' '}
+              {bookContent.length}
+            </span> */}
           </div>
         </div>
       </div>

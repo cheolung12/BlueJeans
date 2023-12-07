@@ -27,54 +27,30 @@ export default function EssayDetail() {
   const [isHeart, setIsHeart] = useState();
   const [allHeart, setAllIsHeart] = useState();
 
-  // get 요청
   useEffect(() => {
-    const isLogin = localStorage.getItem('isLogin');
-
-    //로그인된 경우에는 좋아요 여부도 같이 반환
-    if (isLogin) {
-      const fetchdata = async () => {
-        try {
-          const response = await axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_SERVER}/essays/detail/islogin/${EssayId}`,
-            withCredentials: true,
-          });
-          console.log(response.data); // 받은 데이터를 상태에 업데이트
-          setEssayContent(response.data);
-          setCommentList(response.data.comments);
-          setIsHeart(response.data.heart);
-          setAllIsHeart(response.data.like);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-      fetchdata();
-
-      //로그인이 안된경우
-    } else {
-      const fetchdata = async () => {
-        try {
-          const response = await axios({
-            method: 'GET',
-            url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
-          });
-          console.log(response.data);
-          setEssayContent(response.data);
-          setCommentList(response.data.comments);
-          setIsHeart(false);
-          setAllIsHeart(response.data.like);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-      fetchdata();
-    }
-  }, []);
-
-  // //새로운 댓글 업데이트
-  // const handleAdd = (comment) => setCommentList([comment, ...commentList]);
+    const fetchdata = async () => {
+      if (!localStorage.getItem('isLogin')) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+      }
+      try {
+        const response = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER}/essays/detail/${EssayId}`,
+          withCredentials: true,
+        });
+        console.log(response); // 받은 데이터를 상태에 업데이트
+        setEssayContent(response.data);
+        setCommentList(response.data.comments);
+        setIsHeart(response.data.heart);
+        setAllIsHeart(response.data.like);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchdata();
+  }, [EssayId]);
 
   // 백일장 삭제
   const handleDelete = async () => {
