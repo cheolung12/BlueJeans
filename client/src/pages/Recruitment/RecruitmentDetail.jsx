@@ -19,8 +19,8 @@ export default function RecruitmentDetail() {
     // 상세 페이지 조회
     useEffect(() => {
         const fetchdata = async () => {
-            if(!localStorage.getItem('isLogin')){
-                alert("로그인이 필요합니다.")
+            if (!localStorage.getItem('isLogin')) {
+                alert('로그인이 필요합니다.');
                 navigate('/login');
             }
             try {
@@ -141,7 +141,7 @@ export default function RecruitmentDetail() {
                             <ExplainSection loading={loading} data={works} />
                         </div>
                     </section>
-                    <nav className="pr-2 w-full flex justify-end">
+                    <nav className="mt-8 pr-2 w-full flex justify-end">
                         {localStorage.getItem('nickname') === works.nickname ? (
                             <div className="flex flex-row  space-x-2">
                                 <div
