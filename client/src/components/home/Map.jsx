@@ -59,7 +59,7 @@ const Map = ({ userAddress }) => {
   const nowMarker = (map, locPosition) => {
     // 현재 위치 마커
     const imageSrc =
-      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/debby-hudson-FmCSSSGge-0-unsplash.jpg';
+      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/nowPosition-removebg-preview.png';
     const imageSize = new window.kakao.maps.Size(64, 69);
     const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
@@ -84,7 +84,7 @@ const Map = ({ userAddress }) => {
   const houseMarker = (map, locPosition) => {
     // 집 위치 마커
     const imageSrc =
-      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/debby-hudson-FmCSSSGge-0-unsplash.jpg';
+      'https://bluejeansbucket2.s3.ap-northeast-2.amazonaws.com/user/housePosition-removebg-preview.png';
     const imageSize = new window.kakao.maps.Size(64, 69);
     const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
@@ -136,7 +136,6 @@ const Map = ({ userAddress }) => {
         const { x, y } = guide;
         return new window.kakao.maps.LatLng(y, x);
       });
-
       // 경로를 연결할 폴리라인 생성
       const polyline = new window.kakao.maps.Polyline({
         path: pathCoordinates,
@@ -152,7 +151,12 @@ const Map = ({ userAddress }) => {
     }
   };
 
-  return <div id='map' style={{ width: '100%', height: '400px' }}></div>;
+  return (
+    <div
+      id='map'
+      style={{ width: '100%', height: '400px', marginBottom: '30px' }}
+    ></div>
+  );
 };
 
 export default Map;
