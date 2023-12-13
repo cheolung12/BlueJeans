@@ -1,8 +1,6 @@
 <br />
 
-### <a href='' target="_blank">🔗 Demo Link</a>
-
-### <a href='' target="_blank"> 📣 Presentation </a>
+### <a href='https://www.bluejeansu.site' target="_blank">🔗 Demo Link</a>
 
 <br />
 
@@ -145,28 +143,27 @@ Swagger 활용 -> 로컬에서 서버 실행 후 아래링크로 접속
 
 ## 5. 기능 소개
 
+<span style="font-size:18px;">일자리 공고 : 집근처 일자리 정보를 최신순 또는 인기순으로 확인이 가능합니다</span>
 <img width="1421" alt="일자리" src="https://github.com/cheolung12/BlueJeans/assets/128415146/14774886-7405-410c-8bd7-55535f793baa">
 
-> 집근처 일자리 정보를 최신순 또는 인기순으로 확인이 가능합니다
+<br />
 
+<span style="font-size:18px;">전자책(e-book) : 확대 축소 버튼으로 글씨 크기를 조절하여 편안한 읽기 환경을 제공합니다. 눈이 불편한 분들도 쉽게 책을 읽을 수 있습니다.</span>
 ![ eBookBasicFont](https://github.com/cheolung12/BlueJeans/assets/128415146/786cdeef-f993-4927-9ef6-78528e0cd1cf)
-
-> 기본 사이즈
-
 ![eBookLargeFont](https://github.com/cheolung12/BlueJeans/assets/128415146/99926c47-64f4-443f-a925-8436aaa44ef7)
 
-> 눈이 불편한 분들도 쉽게 어디서든 책을 읽을 수 있어요!
+<br />
 
-<br>
-
+<span style="font-size:18px;">챗봇 :  심심한 어르신들의 말동무가 되어줍니다. 🤖</span>
 ![jinsu](https://github.com/cheolung12/BlueJeans/assets/128415146/c8046a0a-38d6-4d3f-8127-20b6cbf31303)
 
-> 심심한 어르신들의 말동무가 되어주는 진수도 있어요 🤖
+<br />
+
+<span style="font-size:18px;">집찾기 : 현재 위치 기준으로 회원정보에 있는 집주소까지의 경로를 보야줍니다.</span>
 
 <img width="1125" alt="스크린샷 2023-12-08 오전 3 16 46" src="https://github.com/cheolung12/BlueJeans/assets/128415146/1afb341f-91f2-4d86-b167-3d0ee62b743a">
 
-> 길을 잃더라도 집을 찾을 수 있어요
-> <br />
+<br />
 
 ## 6. 로컬 실행 방법
 
