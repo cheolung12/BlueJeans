@@ -1,0 +1,36 @@
+{
+  "mainJ": [
+    {
+      "no": "1",
+      "job": "화장실 청소",
+      "money": "10000",
+      "address": "송파구 법원로",
+      "contact": "01012341234",
+      "detail": "asdfalskdfj;laksjdf;l"
+    },
+    {
+      "no": "2",
+      "job": "베이비 시터",
+      "money": "10000",
+      "address": "공덕역 2번출구",
+      "contact": "01012341234",
+      "detail": "dlfjafsfskfalksflksdjfl"
+    },
+    {
+      "no": "3",
+      "job": "주차관리",
+      "money": "10000",
+      "address": "하남검단산",
+      "contact": "01012341234",
+      "detail": "fjdkfjslkdjflskjflkjl"
+    },
+    {
+      "no": "4",
+      "job": "치킨",
+      "money": "1111",
+      "address": "송파구",
+      "contact": "010",
+      "detail": "yk"
+    }
+  ]
+}

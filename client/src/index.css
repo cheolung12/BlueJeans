@@ -1,3 +1,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap');
+
+/* 폰트 */
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 중복되는 스타일 저장 */
+@layer utilities {
+  .signup-input-wrapper {
+    @apply flex flex-col items-start w-3/5 mb-4;
+  }
+  .signup-input-header {
+    @apply w-full mb-2 flex justify-between items-end;
+  }
+  .signup-input-label {
+    @apply text-base text-gray-600 font-semibold;
+  }
+  .signup-input {
+    @apply w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs block border rounded-lg text-gray-900 bg-gray-50 shadow-sm focus:outline-none focus-within:ring-2 focus:ring-signatureColor;
+  }
+  .signup-input-duplicable {
+    @apply flex justify-between items-center box-border w-full sm:h-12 h-9 p-2.5 sm:text-base text-xs border rounded-lg text-gray-900 bg-gray-50 shadow-sm  focus-within:ring-2 focus-within:ring-signatureColor;
+  }
+  .sideNav-link {
+    @apply flex flex-col justify-center items-center w-16 h-16 hover:ease-linear transform hover:scale-105;
+  }
+  .sideNav-icon {
+    @apply sm:w-12 w-8 sm:h-12 h-8 mb-1;
+  }
+  .sideNav-text {
+    @apply sm:text-lg text-base text-center font-semibold;
+  }
+}
+
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* animation */
+.fade-in {
+  opacity: 0;
+  animation: fade-in-animation 2s ease-in-out forwards;
+}
+
+@keyframes fade-in-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.backInUp {
+  opacity: 0.7;
+  animation: backInUp 1s ease forwards;
+}
+
+@keyframes backInUp {
+  0% {
+    transform: translateY(1200px) scale(0.7);
+    opacity: 0.7;
+  }
+
+  80% {
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
