@@ -43,7 +43,7 @@ const ChatApp = () => {
                 },
             });
             console.log(response.data);
-            const responseText = response.data.choices[0].text.replace(/\n/g, '').replace('진수: ', ''); // 형식 맞추기
+            const responseText = response.data.choices[0].text.replace(/\n/g, '').replace('A: ', ''); // 형식 맞추기
             const updatedChatMessages = [...newChatMessages, { text: responseText, isMine: false }];
             setChatMessages(updatedChatMessages);
         } catch (error) {
